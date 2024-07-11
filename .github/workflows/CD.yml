@@ -29,6 +29,9 @@ jobs:
       - name: Set up Gradle
         uses: gradle/gradle-build-action@v2
 
+      - name: Gradle 권한 부여
+        run: chmod +x gradlew
+
       - name: Gradle build
         run: ./gradlew build --exclude-task test --exclude-task asciidoctor
 
