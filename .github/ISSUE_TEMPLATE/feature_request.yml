@@ -1,0 +1,36 @@
+name: 🚀 SCG Project New Feature Request
+description: Propose new feature to SCG Project
+title: "🚀 "
+labels: ['enhancement', 'pending']
+body:
+  - type: textarea
+    attributes:
+      label: Describe Existing Problem ❓
+      id: feature-problem
+      description: |
+        해결하려는 문제를 자세히 설명해주세요!
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Describe Solution 💸
+      id: feature-solution
+      description: |
+        위의 문제를 해결하기 위해 어떤 기능을 추가하고 싶은 지 설명해주세요!
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Describe Alternatives 💼
+      id: feature-solution
+      description: |
+        위의 문제를 해결하기 위해 고민한 다른 방법들에 대해서도 자유롭게 서술해주세요!
+  - type: checkboxes
+    id: feature-checkboxes
+    attributes:
+      label: CheckList ✔️
+      description: |
+        Issue 올리기 전에 한 번 확인해주세요! 👍
+      options:
+        - label: 관련 Issue 가 이미 존재하는 지 확인해보셨나요?
+          required: true

@@ -1,0 +1,48 @@
+name: ❗ SCG Project Bug report
+description: Report bug to SCG Project
+title: "[BUG] "
+labels: ['bug', 'pending']
+body:
+  - type: textarea
+    attributes:
+      label: Description 📖
+      id: bug-description
+      description: |
+        발생한 버그에 대해 상세하게 설명해주세요
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Reproduction 🏗️
+      id: bug-reproduction
+      description: |
+        버그 reproduction 방법을 자세히 설명해주세요
+        사진, 동영상 혹은 해당 버그가 발생한 링크 등을 남기면 개발시간을 더욱 더 단축시킬 수 있습니다!🙇
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Logs 🪵
+      id: bug-log
+      description: |
+        버그가 발생했을 때의 Log를 남겨주시면 더욱 더 해결하는 데 도움이 됩니다!🙇
+      render: shell
+  - type: textarea
+    attributes:
+      label: Environment 🖥️
+      id: bug-environment
+      description: |
+        버그가 발생한 환경에 대해 설명해주세요 (브라우저, OS, 하드웨어 등)
+  - type: checkboxes
+    id: bug-checkboxes
+    attributes:
+      label: CheckList ✔️
+      description: |
+        Issue 올리기 전에 한 번 확인해주세요! 👍
+      options:
+        - label: 관련 Issue 가 이미 존재하는 지 확인해보셨나요?
+          required: true
