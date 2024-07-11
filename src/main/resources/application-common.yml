@@ -1,0 +1,8 @@
+spring:
+  auth:
+    jwt:
+      secretKey: secretsecretsecretsecretsecretsecretsecretsecret
+      refreshTokenExpiry: 36000000
+      accessTokenExpiry: 36000000
+
+server.port: 8000
