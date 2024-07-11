@@ -3,9 +3,9 @@ spring:
     activate:
       on-profile: prod
   datasource:
-    url: ${datasource}
-    username: ${user}
-    password: ${password}
+    url: ${DATABASE}
+    username: ${USER}
+    password: ${PASSWORD}
   jpa:
     open-in-view: false
     show-sql: true
