@@ -3,7 +3,7 @@ spring:
     activate:
       on-profile: local
   datasource:
-    url: jdbc:mysql://127.0.0.1:3307/grabtable
+    url: jdbc:mysql://127.0.0.1:3307/s-top
     username: root
     password: 1234
   jpa:
