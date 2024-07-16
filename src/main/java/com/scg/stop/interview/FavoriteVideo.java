@@ -1,4 +1,4 @@
-package com.scg.stop.project;
+package com.scg.stop.interview;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
@@ -18,17 +18,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-public class Comment {
+public class FavoriteVideo {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String content;
-
-    @Column(nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean anonymous;
 
     @CreatedDate
     @Column(updatable = false, nullable = false)
