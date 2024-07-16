@@ -3,11 +3,15 @@ package com.scg.stop.domain.gallery.domain;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
+import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.global.domain.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -32,4 +36,7 @@ public class Gallery extends BaseTimeEntity {
 
     @Column(nullable = false)
     private Integer month;
+
+    @OneToMany(mappedBy = "gallery")
+    private List<File> files = new ArrayList<>();
 }

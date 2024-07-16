@@ -9,6 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,4 +29,8 @@ public class Member {
     @Column(nullable = false)
     @Enumerated(value = STRING)
     private Role role;
+
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
 }
