@@ -1,4 +1,4 @@
-package com.scg.stop.proposal;
+package com.scg.stop;
 
 public enum ResponseStatus {
 
