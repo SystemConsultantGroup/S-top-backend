@@ -20,8 +20,4 @@ public class BaseResponseEntity extends BaseTimeEntity {
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
-
-    @Column(nullable = false)
-    @Enumerated(value = STRING)
-    private ResponseStatus status;
 }
