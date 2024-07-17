@@ -3,6 +3,8 @@ package com.scg.stop.domain.event.domain;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
+import com.scg.stop.global.domain.BaseNoticeEntity;
+import com.scg.stop.global.domain.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-public class EventPeriod {
+public class EventPeriod extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)

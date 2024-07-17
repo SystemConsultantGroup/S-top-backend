@@ -4,6 +4,7 @@ import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
+import com.scg.stop.global.domain.BaseTimeEntity;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,7 +23,7 @@ import org.hibernate.annotations.Type;
 @Entity
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-public class Quiz {
+public class Quiz extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
