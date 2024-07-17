@@ -1,5 +1,6 @@
 package com.scg.stop.domain.project.domain;
 
+import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -34,11 +35,11 @@ public class Comment extends BaseTimeEntity {
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private boolean isAnonymous;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "project_id")
     private Project project;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 }

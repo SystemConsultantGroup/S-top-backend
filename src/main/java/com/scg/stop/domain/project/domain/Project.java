@@ -64,18 +64,18 @@ public class Project extends BaseTimeEntity {
     @JoinColumn(name = "poster_id")
     private File poster;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(fetch = LAZY, mappedBy = "project")
     private List<Member> members = new ArrayList<>();
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(fetch = LAZY, mappedBy = "project")
     private List<Likes> likes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(fetch = LAZY, mappedBy = "project")
     private List<FavoriteProject> favorites = new ArrayList<>();
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(fetch = LAZY, mappedBy = "project")
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(fetch = LAZY, mappedBy = "project")
     private List<Inquiry> inquiries = new ArrayList<>();
 }

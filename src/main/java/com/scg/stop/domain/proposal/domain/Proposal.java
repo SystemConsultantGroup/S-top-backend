@@ -49,7 +49,7 @@ public class Proposal extends BaseTimeEntity {
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private boolean isAnonymous;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

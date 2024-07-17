@@ -1,5 +1,6 @@
 package com.scg.stop.domain.file.domain;
 
+import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -34,15 +35,15 @@ public class File extends BaseTimeEntity {
     @Column(nullable = false)
     private String mimeType;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "notice_id")
     private Notice notice;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "event_notice_id")
     private EventNotice eventNotice;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "gallery_id")
     private Gallery gallery;
 }

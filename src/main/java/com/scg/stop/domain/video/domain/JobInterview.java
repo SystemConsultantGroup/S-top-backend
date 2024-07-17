@@ -1,5 +1,6 @@
 package com.scg.stop.domain.video.domain;
 
+import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
 import jakarta.persistence.Entity;
@@ -13,6 +14,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = PROTECTED)
 public class JobInterview extends BaseVideoEntity {
 
-    @OneToMany(mappedBy = "jobInterview")
+    @OneToMany(fetch = LAZY, mappedBy = "jobInterview")
     private List<FavoriteVideo> favoriteVideos;
 }

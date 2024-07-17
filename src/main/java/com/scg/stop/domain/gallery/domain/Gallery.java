@@ -1,5 +1,6 @@
 package com.scg.stop.domain.gallery.domain;
 
+import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -37,6 +38,6 @@ public class Gallery extends BaseTimeEntity {
     @Column(nullable = false)
     private Integer month;
 
-    @OneToMany(mappedBy = "gallery")
+    @OneToMany(fetch = LAZY, mappedBy = "gallery")
     private List<File> files = new ArrayList<>();
 }

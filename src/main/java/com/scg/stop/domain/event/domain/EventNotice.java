@@ -1,5 +1,6 @@
 package com.scg.stop.domain.event.domain;
 
+import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.scg.stop.domain.file.domain.File;
@@ -16,6 +17,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = PROTECTED)
 public class EventNotice extends BaseNoticeEntity {
 
-    @OneToMany(mappedBy = "eventNotice")
+    @OneToMany(fetch = LAZY, mappedBy = "eventNotice")
     private List<File> files = new ArrayList<>();
 }

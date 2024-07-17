@@ -22,6 +22,6 @@ public class Talk extends BaseVideoEntity {
     @OneToOne(fetch = LAZY, mappedBy = "talk")
     private Quiz quiz;
 
-    @OneToMany(mappedBy = "talk")
+    @OneToMany(fetch = LAZY, mappedBy = "talk")
     private List<FavoriteVideo> favoriteVideos;
 }

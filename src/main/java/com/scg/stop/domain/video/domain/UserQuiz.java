@@ -1,5 +1,6 @@
 package com.scg.stop.domain.video.domain;
 
+import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -34,11 +35,11 @@ public class UserQuiz extends BaseTimeEntity {
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private boolean isSuccess = false;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 }

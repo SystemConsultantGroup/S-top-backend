@@ -1,5 +1,6 @@
 package com.scg.stop.domain.notice.domain;
 
+import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.scg.stop.domain.file.domain.File;
@@ -16,6 +17,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = PROTECTED)
 public class Notice extends BaseNoticeEntity {
 
-    @OneToMany(mappedBy = "notice")
+    @OneToMany(fetch = LAZY, mappedBy = "notice")
     private List<File> files = new ArrayList<>();
 }

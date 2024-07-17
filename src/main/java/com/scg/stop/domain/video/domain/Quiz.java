@@ -37,6 +37,6 @@ public class Quiz extends BaseTimeEntity {
     @JoinColumn(name = "talk_id")
     private Talk talk;
 
-    @OneToMany(mappedBy = "quiz")
+    @OneToMany(fetch = LAZY, mappedBy = "quiz")
     private List<UserQuiz> userQuizzes = new ArrayList<>();
 }

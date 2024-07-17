@@ -31,7 +31,7 @@ public class Student extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne()
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "dept_id")
     private Department department;
 }

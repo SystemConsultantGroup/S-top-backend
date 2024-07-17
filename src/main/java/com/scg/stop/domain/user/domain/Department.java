@@ -27,6 +27,6 @@ public class Department extends BaseTimeEntity {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "department")
+    @OneToMany(fetch = LAZY, mappedBy = "department")
     private List<Student> students = new ArrayList<>();
 }
