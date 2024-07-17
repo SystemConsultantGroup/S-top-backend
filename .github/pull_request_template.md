@@ -7,7 +7,7 @@ close/resolve/fix #{이슈 번호 기입}
 - [ ] 적절한 제목으로 수정했나요?
 - [ ] 상단에 이슈 번호를 기입했나요?
 - [ ] Target Branch를 올바르게 설정했나요?
-- [ ] Label을 알맞게 설정했나요?
+- [ ] Reviewers/Assignees/Labels/Projects를 알맞게 설정했나요?
 
 ## 작업 내역
 
