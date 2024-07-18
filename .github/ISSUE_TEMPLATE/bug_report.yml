@@ -48,4 +48,3 @@ body:
           required: true
         - label: Assignees 설정
         - label: Labels 설정
-        - label: Projects 설정
