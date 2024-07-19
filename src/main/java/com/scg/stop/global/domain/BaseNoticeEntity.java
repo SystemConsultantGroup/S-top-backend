@@ -7,8 +7,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Getter
+@SuperBuilder
+@NoArgsConstructor
 @MappedSuperclass
 public abstract class BaseNoticeEntity extends BaseTimeEntity{
 
@@ -26,5 +30,12 @@ public abstract class BaseNoticeEntity extends BaseTimeEntity{
     private Integer hitCount = 0;
 
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean isFixed;
+    private boolean fixed;
+
+    // Setter for update
+    public void update(String title, String content, boolean fixed) {
+        this.title = title;
+        this.content = content;
+        this.fixed = fixed;
+    }
 }
