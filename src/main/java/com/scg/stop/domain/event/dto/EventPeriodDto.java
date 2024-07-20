@@ -1,7 +1,6 @@
 package com.scg.stop.domain.event.dto;
 
 import com.scg.stop.domain.event.domain.EventPeriod;
-import com.scg.stop.domain.notice.domain.Notice;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;

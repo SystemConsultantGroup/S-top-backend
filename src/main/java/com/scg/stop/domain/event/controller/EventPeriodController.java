@@ -1,12 +1,8 @@
 package com.scg.stop.domain.event.controller;
 
-import com.scg.stop.domain.event.domain.EventPeriod;
 import com.scg.stop.domain.event.dto.EventPeriodDto;
-import com.scg.stop.domain.event.dto.EventPeriodRequest;
-import com.scg.stop.domain.event.dto.EventPeriodResponse;
 import com.scg.stop.domain.event.service.EventPeriodService;
 import jakarta.validation.Valid;
-import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +23,4 @@ public class EventPeriodController {
         EventPeriodDto.Response responseDto = eventPeriodService.createEventPeriod(requestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
-
-
 }
