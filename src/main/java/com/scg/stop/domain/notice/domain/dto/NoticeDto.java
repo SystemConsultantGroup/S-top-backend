@@ -1,6 +1,8 @@
 package com.scg.stop.domain.notice.domain.dto;
 
 import com.scg.stop.domain.notice.domain.Notice;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -12,19 +14,20 @@ public class NoticeDto {
     @NoArgsConstructor
     @Builder
     public static class Request {
-        private Long id;
+
+        @NotBlank
         private String title;
+
+        @NotBlank
         private String content;
-        private Integer hitCount;
+
+        @NotNull
         private boolean fixed;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
 
 
         // DTO -> Entity
         public Notice toEntity() {
             Notice notice =  Notice.builder()
-                    .id(id)
                     .title(title)
                     .content(content)
                     .hitCount(0)

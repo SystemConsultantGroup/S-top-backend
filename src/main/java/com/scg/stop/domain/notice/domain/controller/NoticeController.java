@@ -2,6 +2,7 @@ package com.scg.stop.domain.notice.domain.controller;
 
 import com.scg.stop.domain.notice.domain.dto.NoticeDto;
 import com.scg.stop.domain.notice.domain.service.NoticeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ public class NoticeController {
 
     // Create a new notice
     @PostMapping
-    public ResponseEntity<Long> createNotice(@RequestBody NoticeDto.Request dto) {
+    public ResponseEntity<Long> createNotice(@RequestBody @Valid NoticeDto.Request dto) {
         Long noticeId = noticeService.createNotice(dto);
         return new ResponseEntity<>(noticeId, HttpStatus.CREATED);
     }
@@ -24,22 +25,22 @@ public class NoticeController {
     // TODO: Implement GetNoticeList
 
     // Get a corresponding notice
-    @GetMapping("/{NoticeId}")
-    public ResponseEntity<NoticeDto.Response> getNotice(@PathVariable Long NoticeId) {
-        return ResponseEntity.ok(noticeService.getNotice(NoticeId));
+    @GetMapping("/{noticeId}")
+    public ResponseEntity<NoticeDto.Response> getNotice(@PathVariable Long noticeId) {
+        return ResponseEntity.ok(noticeService.getNotice(noticeId));
     }
 
     // Update a corresponding notice
-    @PutMapping("/{NoticeId}")
-    public ResponseEntity<Long> updateNotice(@PathVariable Long NoticeId, @RequestBody NoticeDto.Request dto) {
-        noticeService.updateNotice(NoticeId, dto);
-        return ResponseEntity.ok(NoticeId);
+    @PutMapping("/{noticeId}")
+    public ResponseEntity<Long> updateNotice(@PathVariable Long noticeId, @RequestBody @Valid NoticeDto.Request dto) {
+        noticeService.updateNotice(noticeId, dto);
+        return ResponseEntity.ok(noticeId);
     }
 
     // Delete a corresponding notice
-    @DeleteMapping("/{NoticeId}")
-    public ResponseEntity<Long> deleteNotice(@PathVariable Long NoticeId) {
-        noticeService.deleteNotice(NoticeId);
-        return ResponseEntity.ok(NoticeId);
+    @DeleteMapping("/{noticeId}")
+    public ResponseEntity<Long> deleteNotice(@PathVariable Long noticeId) {
+        noticeService.deleteNotice(noticeId);
+        return ResponseEntity.noContent().build();
     }
 }
