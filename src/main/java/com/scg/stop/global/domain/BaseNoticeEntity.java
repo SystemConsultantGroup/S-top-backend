@@ -1,7 +1,7 @@
 package com.scg.stop.global.domain;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
-
+import static lombok.AccessLevel.PROTECTED;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 
 @Getter
 @SuperBuilder
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @MappedSuperclass
 public abstract class BaseNoticeEntity extends BaseTimeEntity{
 

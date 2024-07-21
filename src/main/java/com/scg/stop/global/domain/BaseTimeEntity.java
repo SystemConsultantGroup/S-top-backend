@@ -1,5 +1,6 @@
 package com.scg.stop.global.domain;
 
+import static lombok.AccessLevel.PROTECTED;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
@@ -13,7 +14,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
 @MappedSuperclass
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @SuperBuilder
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseTimeEntity {
