@@ -18,6 +18,7 @@ public class EventPeriodController {
 
     private final EventPeriodService eventPeriodService;
 
+    // TODO : ADMIN 권한 확인
     @PostMapping
     public ResponseEntity<EventPeriodDto.Response> createEventPeriod(@RequestBody @Valid EventPeriodDto.Request requestDto) {
         EventPeriodDto.Response responseDto = eventPeriodService.createEventPeriod(requestDto);
