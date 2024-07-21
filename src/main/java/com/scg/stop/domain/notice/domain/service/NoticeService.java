@@ -4,8 +4,10 @@ import com.scg.stop.domain.notice.domain.Notice;
 import com.scg.stop.domain.notice.domain.dto.NoticeDto;
 import com.scg.stop.domain.notice.domain.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -44,7 +46,7 @@ public class NoticeService {
     @Transactional(readOnly = true)
     public NoticeDto.Response getNotice(Long id) {
         Notice notice = noticeRepository.findById(id).orElseThrow(() ->
-                new IllegalArgumentException("No corresponding notice found."));
+                new ResponseStatusException(HttpStatus.BAD_REQUEST, "요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
         return new NoticeDto.Response(notice);
     }
 
@@ -56,7 +58,7 @@ public class NoticeService {
     @Transactional
     public void updateNotice(Long id, NoticeDto.Request dto) {
         Notice notice = noticeRepository.findById(id).orElseThrow(() ->
-                new IllegalArgumentException("No corresponding notice found."));
+                new ResponseStatusException(HttpStatus.BAD_REQUEST, "요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
         notice.update(dto.getTitle(), dto.getContent(), dto.isFixed());
     }
 
@@ -67,7 +69,7 @@ public class NoticeService {
     @Transactional
     public void deleteNotice(Long noticeId) {
         Notice notice = noticeRepository.findById(noticeId).orElseThrow(() ->
-                new IllegalArgumentException("No corresponding notice found."));
+                new ResponseStatusException(HttpStatus.BAD_REQUEST, "요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
         noticeRepository.delete(notice);
     }
 }
