@@ -8,9 +8,11 @@ import jakarta.persistence.OneToMany;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
+@SuperBuilder
 @NoArgsConstructor(access = PROTECTED)
 public class JobInterview extends BaseVideoEntity {
 
