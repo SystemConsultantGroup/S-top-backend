@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class JobInterviewController {
     private final JobInterviewService jobInterviewService;
 
+    // only admin
     @PostMapping
     public ResponseEntity<JobInterviewDTO.Response> createJobInterview(@RequestBody @Valid JobInterviewDTO.Request jobInterviewDTO) {
         JobInterviewDTO.Response interview = jobInterviewService.createJobInterview(jobInterviewDTO);
@@ -41,6 +42,19 @@ public class JobInterviewController {
     public ResponseEntity<JobInterviewDTO.Response> getJobInterview(@PathVariable Long jobInterviewId) {
         return ResponseEntity.status(HttpStatus.OK).body(jobInterviewService.getJobInterview(jobInterviewId));
     }
+
+    @PutMapping("/{jobInterviewId}")
+    public ResponseEntity<JobInterviewDTO.Response> updateJobInterview(@PathVariable Long jobInterviewId, @RequestBody @Valid JobInterviewDTO.Request jobInterviewDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(jobInterviewService.updateJobInterview(jobInterviewId, jobInterviewDTO));
+    }
+
+    @DeleteMapping("/{jobInterviewId}")
+    public ResponseEntity<Void> deleteJobInterview(@PathVariable Long jobInterviewId) {
+        jobInterviewService.deleteJobInterviewById(jobInterviewId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+
 
 
 }
