@@ -1,14 +1,13 @@
 package com.scg.stop.domain.video.dto;
 
+import com.scg.stop.domain.video.domain.Category;
 import com.scg.stop.domain.video.domain.FavoriteVideo;
 import com.scg.stop.domain.video.domain.JobInterview;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JobInterviewDTO {
@@ -28,21 +27,26 @@ public class JobInterviewDTO {
         @NotNull(message = "연도를 입력해주세요.")
         private Integer year;
 
+        @NotNull(message = "카테고리를 입력해주세요.")
+        private Category category;
+
         public JobInterview toEntity() {
             return JobInterview.builder()
                     .year(year)
                     .title(title)
                     .youtubeId(youtubeId)
+                    .category(category)
                     .build();
         }
     }
 
+    @Getter
     public static class Response {
         private Long id;
         private String title;
         private String youtubeId;
         private Integer year;
-        private List<FavoriteVideo> favoriteVideos;
+        private Category category;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
@@ -52,7 +56,7 @@ public class JobInterviewDTO {
             title = jobInterview.getTitle();
             youtubeId = jobInterview.getYoutubeId();
             year = jobInterview.getYear();
-            favoriteVideos = jobInterview.getFavoriteVideos();
+            category = jobInterview.getCategory();
             createdAt = jobInterview.getCreatedAt();
             updatedAt = jobInterview.getUpdatedAt();
         }
