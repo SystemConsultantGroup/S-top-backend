@@ -41,6 +41,8 @@ public class EventPeriodDto {
     }
 
     @Getter
+    @Builder
+    @AllArgsConstructor
     public static class Response {
 
         private Long id;
