@@ -2,42 +2,72 @@ package com.scg.stop.domain.notice.domain.service;
 
 import com.scg.stop.domain.notice.domain.Notice;
 import com.scg.stop.domain.notice.domain.dto.NoticeDto;
+import com.scg.stop.domain.notice.domain.repository.NoticeRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface NoticeService {
+@Service
+@RequiredArgsConstructor
+public class NoticeService {
+    private final NoticeRepository noticeRepository;
 
     /**
-     * 공지 사항 등록
-     * @param dto notice request dto
-     * @return notice id (pk)
+     * Create a new notice
+     * @param dto Notice Request DTO
+     * @return ID of the created notice
      */
-    public Long createNotice(NoticeDto.Request dto);
-
-
-    /**
-     * 공지 사항 리스트 조회
-     * @return notice list
-     */
-    public List<Notice> getNoticeList();
+    @Transactional
+    public Long createNotice(NoticeDto.Request dto) {
+        Notice newNotice = dto.toEntity();
+        noticeRepository.save(newNotice);
+        return newNotice.getId();
+    }
 
     /**
-     * 개별 공지 사항 상세 조회
-     * @param id notice id (pk)
-     * @return notice response dto
+     * Get a list of notices
+     * @return List of notices
      */
-    public NoticeDto.Response getNotice(Long id);
+    // TODO: Implement GetNoticeList method
+    @Transactional(readOnly = true)
+    public List<Notice> getNoticeList() {
+        return noticeRepository.findAll();
+    }
 
     /**
-     * 공지 사항 수정
-     * @param id notice id (pk)
-     * @param dto notice request dto
+     * Get a corresponding notice
+     * @param id ID of the notice
+     * @return Notice Response DTO
      */
-    public void updateNotice(Long id, NoticeDto.Request dto);
+    @Transactional(readOnly = true)
+    public NoticeDto.Response getNotice(Long id) {
+        Notice notice = noticeRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("No corresponding notice found."));
+        return new NoticeDto.Response(notice);
+    }
 
     /**
-     * 공지 사항 삭제
-     * @param id notice id (pk)
+     * Update a corresponding notice
+     * @param id ID of the notice
+     * @param dto Notice Request DTO
      */
-    public void deleteNotice(Long id);
+    @Transactional
+    public void updateNotice(Long id, NoticeDto.Request dto) {
+        Notice notice = noticeRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("No corresponding notice found."));
+        notice.update(dto.getTitle(), dto.getContent(), dto.isFixed());
+    }
+
+    /**
+     * Delete a corresponding notice
+     * @param noticeId ID of the notice
+     */
+    @Transactional
+    public void deleteNotice(Long noticeId) {
+        Notice notice = noticeRepository.findById(noticeId).orElseThrow(() ->
+                new IllegalArgumentException("No corresponding notice found."));
+        noticeRepository.delete(notice);
+    }
 }
