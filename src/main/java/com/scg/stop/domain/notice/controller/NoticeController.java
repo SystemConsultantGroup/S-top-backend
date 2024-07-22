@@ -21,9 +21,8 @@ public class NoticeController {
 
     // Create a new notice
     @PostMapping
-    public ResponseEntity<Long> createNotice(@RequestBody @Valid NoticeRequestDto createNoticeDto) {
-        Long noticeId = noticeService.createNotice(createNoticeDto);
-        return new ResponseEntity<>(noticeId, HttpStatus.CREATED);
+    public ResponseEntity<NoticeResponseDto> createNotice(@RequestBody @Valid NoticeRequestDto createNoticeDto) {
+        return new ResponseEntity<>(noticeService.createNotice(createNoticeDto), HttpStatus.CREATED);
     }
 
     // Get a list of notices
@@ -44,9 +43,8 @@ public class NoticeController {
 
     // Update a corresponding notice
     @PutMapping("/{noticeId}")
-    public ResponseEntity<Long> updateNotice(@PathVariable Long noticeId, @RequestBody @Valid NoticeRequestDto responseNoticeDto) {
-        noticeService.updateNotice(noticeId, responseNoticeDto);
-        return ResponseEntity.ok(noticeId);
+    public ResponseEntity<NoticeResponseDto> updateNotice(@PathVariable Long noticeId, @RequestBody @Valid NoticeRequestDto updateNoticeDto) {
+        return ResponseEntity.ok(noticeService.updateNotice(noticeId, updateNoticeDto));
     }
 
     // Delete a corresponding notice

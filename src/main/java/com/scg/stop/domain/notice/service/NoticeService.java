@@ -21,10 +21,10 @@ public class NoticeService {
      * @param dto Notice Request DTO
      * @return ID of the created notice
      */
-    public Long createNotice(NoticeRequestDto dto) {
+    public NoticeResponseDto createNotice(NoticeRequestDto dto) {
         Notice newNotice = dto.toEntity();
         noticeRepository.save(newNotice);
-        return newNotice.getId();
+        return new NoticeResponseDto(newNotice);
     }
 
     /**
@@ -54,10 +54,14 @@ public class NoticeService {
      * @param dto Notice Request DTO
      */
     // TODO: revise to use updateNotice method in NoticeRepository not setter of Entity
-    public void updateNotice(Long id, NoticeRequestDto dto) {
+    public NoticeResponseDto updateNotice(Long id, NoticeRequestDto dto) {
+        int isUpdateSuccess = noticeRepository.updateNotice(id, dto);
+        if (isUpdateSuccess < 1) {
+            throw new IllegalArgumentException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다.");
+        }
         Notice notice = noticeRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
-        noticeRepository.updateNotice(id, dto);
+        return new NoticeResponseDto(notice);
     }
 
     // TODO: update notice hit count
