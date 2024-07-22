@@ -1,6 +1,6 @@
 package com.scg.stop.domain.video.service;
 
-import com.scg.stop.domain.video.domain.Category;
+import com.scg.stop.domain.video.domain.JobInterviewCategory;
 import com.scg.stop.domain.video.domain.JobInterview;
 import com.scg.stop.domain.video.dto.JobInterviewDto;
 import com.scg.stop.domain.video.repository.JobInterviewRepository;
@@ -23,7 +23,7 @@ public class JobInterviewService {
     }
 
     @Transactional(readOnly = true)
-    public Page<JobInterviewDto.Response> getJobInterviews(Integer year, Category category, String title, Pageable pageable) {
+    public Page<JobInterviewDto.Response> getJobInterviews(Integer year, JobInterviewCategory category, String title, Pageable pageable) {
         return jobInterviewRepository.findJobInterviews(year, category, title, pageable);
     }
 

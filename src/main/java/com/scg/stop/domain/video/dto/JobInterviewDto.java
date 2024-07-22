@@ -1,6 +1,6 @@
 package com.scg.stop.domain.video.dto;
 
-import com.scg.stop.domain.video.domain.Category;
+import com.scg.stop.domain.video.domain.JobInterviewCategory;
 import com.scg.stop.domain.video.domain.JobInterview;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -26,7 +26,7 @@ public class JobInterviewDto {
         private Integer year;
 
         @NotBlank(message = "카테고리를 입력해주세요.")
-        private Category category;
+        private JobInterviewCategory category;
 
         public JobInterview toEntity() {
             return JobInterview.builder()
@@ -44,7 +44,7 @@ public class JobInterviewDto {
         private String title;
         private String youtubeId;
         private Integer year;
-        private Category category;
+        private JobInterviewCategory category;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 

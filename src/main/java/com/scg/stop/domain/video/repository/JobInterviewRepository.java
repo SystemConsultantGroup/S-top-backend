@@ -1,6 +1,6 @@
 package com.scg.stop.domain.video.repository;
 
-import com.scg.stop.domain.video.domain.Category;
+import com.scg.stop.domain.video.domain.JobInterviewCategory;
 import com.scg.stop.domain.video.domain.JobInterview;
 import com.scg.stop.domain.video.dto.JobInterviewDto;
 import org.springframework.data.domain.Page;
@@ -22,7 +22,7 @@ public interface JobInterviewRepository extends JpaRepository<JobInterview, Long
             "AND (:category IS NULL OR j.category = :category) " +
             "AND (:title IS NULL OR j.title LIKE %:title%)")
     Page<JobInterviewDto.Response> findJobInterviews(@Param("year") Integer year,
-                                                     @Param("category")Category category,
+                                                     @Param("category") JobInterviewCategory category,
                                                      @Param("title") String title,
                                                      Pageable pageable);
 

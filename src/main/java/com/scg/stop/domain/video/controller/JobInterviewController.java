@@ -1,6 +1,6 @@
 package com.scg.stop.domain.video.controller;
 
-import com.scg.stop.domain.video.domain.Category;
+import com.scg.stop.domain.video.domain.JobInterviewCategory;
 import com.scg.stop.domain.video.dto.JobInterviewDto;
 import com.scg.stop.domain.video.service.JobInterviewService;
 import jakarta.validation.Valid;
@@ -29,7 +29,7 @@ public class JobInterviewController {
     public ResponseEntity<Page<JobInterviewDto.Response>> getJobInterviews(
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "year", required = false) Integer year,
-            @RequestParam(value = "category", required = false) Category category,
+            @RequestParam(value = "category", required = false) JobInterviewCategory category,
             @PageableDefault(page = 0, size = 10) Pageable pageable
     ) {
         Page<JobInterviewDto.Response> interviews = jobInterviewService.getJobInterviews(year, category, title, pageable);

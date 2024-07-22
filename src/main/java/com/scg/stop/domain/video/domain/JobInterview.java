@@ -21,7 +21,7 @@ public class JobInterview extends BaseVideoEntity {
 
     @Column(nullable = false)
     @Enumerated(value = STRING)
-    private Category category;
+    private JobInterviewCategory category;
 
     @OneToMany(fetch = LAZY, mappedBy = "jobInterview")
     private List<FavoriteVideo> favoriteVideos;

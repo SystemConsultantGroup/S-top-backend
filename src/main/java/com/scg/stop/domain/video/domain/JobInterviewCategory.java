@@ -1,6 +1,6 @@
 package com.scg.stop.domain.video.domain;
 
-public enum Category {
+public enum JobInterviewCategory {
 
     SENIOR,
     INTERN
