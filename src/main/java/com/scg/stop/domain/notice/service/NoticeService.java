@@ -1,7 +1,8 @@
 package com.scg.stop.domain.notice.service;
 
 import com.scg.stop.domain.notice.domain.Notice;
-import com.scg.stop.domain.notice.dto.NoticeDto;
+import com.scg.stop.domain.notice.dto.request.NoticeRequestDto;
+import com.scg.stop.domain.notice.dto.response.NoticeResponseDto;
 import com.scg.stop.domain.notice.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,7 +21,7 @@ public class NoticeService {
      * @param dto Notice Request DTO
      * @return ID of the created notice
      */
-    public Long createNotice(NoticeDto.Request dto) {
+    public Long createNotice(NoticeRequestDto dto) {
         Notice newNotice = dto.toEntity();
         noticeRepository.save(newNotice);
         return newNotice.getId();
@@ -31,7 +32,7 @@ public class NoticeService {
      * @return List of notices
      */
     @Transactional(readOnly = true)
-    public Page<NoticeDto.Response> getNoticeList(String title, Pageable pageable) {
+    public Page<NoticeResponseDto> getNoticeList(String title, Pageable pageable) {
         return noticeRepository.findNotices(title, pageable);
     }
 
@@ -41,10 +42,10 @@ public class NoticeService {
      * @return Notice Response DTO
      */
     @Transactional(readOnly = true)
-    public NoticeDto.Response getNotice(Long id) {
+    public NoticeResponseDto getNotice(Long id) {
         Notice notice = noticeRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
-        return new NoticeDto.Response(notice);
+        return new NoticeResponseDto(notice);
     }
 
     /**
@@ -53,10 +54,10 @@ public class NoticeService {
      * @param dto Notice Request DTO
      */
     // TODO: revise to use updateNotice method in NoticeRepository not setter of Entity
-    public void updateNotice(Long id, NoticeDto.Request dto) {
+    public void updateNotice(Long id, NoticeRequestDto dto) {
         Notice notice = noticeRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
-        notice.update(dto.getTitle(), dto.getContent(), dto.isFixed());
+        noticeRepository.updateNotice(id, dto);
     }
 
     // TODO: update notice hit count

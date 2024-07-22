@@ -1,6 +1,7 @@
 package com.scg.stop.domain.notice.controller;
 
-import com.scg.stop.domain.notice.dto.NoticeDto;
+import com.scg.stop.domain.notice.dto.request.NoticeRequestDto;
+import com.scg.stop.domain.notice.dto.response.NoticeResponseDto;
 import com.scg.stop.domain.notice.service.NoticeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,31 +21,31 @@ public class NoticeController {
 
     // Create a new notice
     @PostMapping
-    public ResponseEntity<Long> createNotice(@RequestBody @Valid NoticeDto.Request createNoticeDto) {
+    public ResponseEntity<Long> createNotice(@RequestBody @Valid NoticeRequestDto createNoticeDto) {
         Long noticeId = noticeService.createNotice(createNoticeDto);
         return new ResponseEntity<>(noticeId, HttpStatus.CREATED);
     }
 
     // Get a list of notices
     @GetMapping
-    public ResponseEntity<Page<NoticeDto.Response>> getNoticeList(
+    public ResponseEntity<Page<NoticeResponseDto>> getNoticeList(
             @RequestParam(value = "title", required = false) String title,
             @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        Page<NoticeDto.Response> noticeList = noticeService.getNoticeList(title, pageable);
+        Page<NoticeResponseDto> noticeList = noticeService.getNoticeList(title, pageable);
         return ResponseEntity.ok(noticeList);
     }
 
     // Get a corresponding notice
     @GetMapping("/{noticeId}")
-    public ResponseEntity<NoticeDto.Response> getNotice(@PathVariable Long noticeId) {
-        NoticeDto.Response notice = noticeService.getNotice(noticeId);
+    public ResponseEntity<NoticeResponseDto> getNotice(@PathVariable Long noticeId) {
+        NoticeResponseDto notice = noticeService.getNotice(noticeId);
         return ResponseEntity.ok(notice);
     }
 
     // Update a corresponding notice
     @PutMapping("/{noticeId}")
-    public ResponseEntity<Long> updateNotice(@PathVariable Long noticeId, @RequestBody @Valid NoticeDto.Request dto) {
-        noticeService.updateNotice(noticeId, dto);
+    public ResponseEntity<Long> updateNotice(@PathVariable Long noticeId, @RequestBody @Valid NoticeRequestDto responseNoticeDto) {
+        noticeService.updateNotice(noticeId, responseNoticeDto);
         return ResponseEntity.ok(noticeId);
     }
 
