@@ -10,10 +10,11 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Getter
-@SuperBuilder
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @MappedSuperclass
 public class BaseVideoEntity extends BaseTimeEntity {
@@ -30,4 +31,5 @@ public class BaseVideoEntity extends BaseTimeEntity {
 
     @Column(nullable = false)
     private Integer year;
+
 }

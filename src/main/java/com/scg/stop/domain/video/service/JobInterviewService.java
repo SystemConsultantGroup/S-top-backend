@@ -2,7 +2,8 @@ package com.scg.stop.domain.video.service;
 
 import com.scg.stop.domain.video.domain.JobInterviewCategory;
 import com.scg.stop.domain.video.domain.JobInterview;
-import com.scg.stop.domain.video.dto.JobInterviewDto;
+import com.scg.stop.domain.video.dto.request.JobInterviewRequest;
+import com.scg.stop.domain.video.dto.response.JobInterviewResponse;
 import com.scg.stop.domain.video.repository.JobInterviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,21 +17,21 @@ public class JobInterviewService {
     private final JobInterviewRepository jobInterviewRepository;
 
     @Transactional(readOnly = true)
-    public JobInterviewDto.Response getJobInterview(Long id) {
+    public JobInterviewResponse getJobInterview(Long id) {
         JobInterview jobInterview = jobInterviewRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("요청한 ID에 해당하는 잡페어 인터뷰가 없습니다."));
-        return new JobInterviewDto.Response(jobInterview);
+        return new JobInterviewResponse(jobInterview);
     }
 
     @Transactional(readOnly = true)
-    public Page<JobInterviewDto.Response> getJobInterviews(Integer year, JobInterviewCategory category, String title, Pageable pageable) {
+    public Page<JobInterviewResponse> getJobInterviews(Integer year, JobInterviewCategory category, String title, Pageable pageable) {
         return jobInterviewRepository.findJobInterviews(year, category, title, pageable);
     }
 
     @Transactional
-    public JobInterviewDto.Response createJobInterview(JobInterviewDto.Request req) {
+    public JobInterviewResponse createJobInterview(JobInterviewRequest req) {
         JobInterview newJobInterview = jobInterviewRepository.save(req.toEntity());
-        return new JobInterviewDto.Response(newJobInterview);
+        return new JobInterviewResponse(newJobInterview);
     }
 
     @Transactional
@@ -41,14 +42,14 @@ public class JobInterviewService {
     }
 
     @Transactional
-    public JobInterviewDto.Response updateJobInterview(Long id, JobInterviewDto.Request req) {
+    public JobInterviewResponse updateJobInterview(Long id, JobInterviewRequest req) {
         int result = jobInterviewRepository.updateJobInterview(id, req);
         if (result < 1) {
             throw new IllegalArgumentException("요청한 ID에 해당하는 잡페어 인터뷰가 없습니다.");
         }
         JobInterview jobInterview = jobInterviewRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("요청한 ID에 해당하는 잡페어 인터뷰가 없습니다."));
-        return new JobInterviewDto.Response(jobInterview);
+        return new JobInterviewResponse(jobInterview);
     }
 
 

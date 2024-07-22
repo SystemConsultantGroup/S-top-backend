@@ -1,7 +1,8 @@
 package com.scg.stop.domain.video.controller;
 
 import com.scg.stop.domain.video.domain.JobInterviewCategory;
-import com.scg.stop.domain.video.dto.JobInterviewDto;
+import com.scg.stop.domain.video.dto.request.JobInterviewRequest;
+import com.scg.stop.domain.video.dto.response.JobInterviewResponse;
 import com.scg.stop.domain.video.service.JobInterviewService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,29 +21,29 @@ public class JobInterviewController {
 
     // only admin
     @PostMapping
-    public ResponseEntity<JobInterviewDto.Response> createJobInterview(@RequestBody @Valid JobInterviewDto.Request jobInterviewDTO) {
-        JobInterviewDto.Response interview = jobInterviewService.createJobInterview(jobInterviewDTO);
+    public ResponseEntity<JobInterviewResponse> createJobInterview(@RequestBody @Valid JobInterviewRequest jobInterviewDTO) {
+        JobInterviewResponse interview = jobInterviewService.createJobInterview(jobInterviewDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(interview);
     }
 
     @GetMapping
-    public ResponseEntity<Page<JobInterviewDto.Response>> getJobInterviews(
+    public ResponseEntity<Page<JobInterviewResponse>> getJobInterviews(
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "year", required = false) Integer year,
             @RequestParam(value = "category", required = false) JobInterviewCategory category,
             @PageableDefault(page = 0, size = 10) Pageable pageable
     ) {
-        Page<JobInterviewDto.Response> interviews = jobInterviewService.getJobInterviews(year, category, title, pageable);
+        Page<JobInterviewResponse> interviews = jobInterviewService.getJobInterviews(year, category, title, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(interviews);
     }
 
     @GetMapping("/{jobInterviewId}")
-    public ResponseEntity<JobInterviewDto.Response> getJobInterview(@PathVariable Long jobInterviewId) {
+    public ResponseEntity<JobInterviewResponse> getJobInterview(@PathVariable Long jobInterviewId) {
         return ResponseEntity.status(HttpStatus.OK).body(jobInterviewService.getJobInterview(jobInterviewId));
     }
 
     @PutMapping("/{jobInterviewId}")
-    public ResponseEntity<JobInterviewDto.Response> updateJobInterview(@PathVariable Long jobInterviewId, @RequestBody @Valid JobInterviewDto.Request jobInterviewDTO) {
+    public ResponseEntity<JobInterviewResponse> updateJobInterview(@PathVariable Long jobInterviewId, @RequestBody @Valid JobInterviewRequest jobInterviewDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(jobInterviewService.updateJobInterview(jobInterviewId, jobInterviewDTO));
     }
 
