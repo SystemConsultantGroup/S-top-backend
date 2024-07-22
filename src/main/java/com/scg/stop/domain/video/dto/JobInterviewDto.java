@@ -2,6 +2,7 @@ package com.scg.stop.domain.video.dto;
 
 import com.scg.stop.domain.video.domain.JobInterviewCategory;
 import com.scg.stop.domain.video.domain.JobInterview;
+import com.scg.stop.global.validation.ValidEnum;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -25,7 +26,7 @@ public class JobInterviewDto {
         @NotNull(message = "연도를 입력해주세요.")
         private Integer year;
 
-        @NotBlank(message = "카테고리를 입력해주세요.")
+        @ValidEnum(enumClass = JobInterviewCategory.class)
         private JobInterviewCategory category;
 
         public JobInterview toEntity() {
