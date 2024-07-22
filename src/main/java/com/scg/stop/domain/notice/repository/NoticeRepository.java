@@ -13,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface NoticeRepository extends JpaRepository<Notice, Long> {
 
-    // TODO: update hitCount
+    @Modifying
+    @Query("UPDATE Notice n set n.hitCount = n.hitCount + 1 where n.id = :id")
+    int increaseHitCount(Long id);
 
     @Transactional
     @Modifying

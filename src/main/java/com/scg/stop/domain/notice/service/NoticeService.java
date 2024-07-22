@@ -41,8 +41,9 @@ public class NoticeService {
      * @param id ID of the notice
      * @return Notice Response DTO
      */
-    @Transactional(readOnly = true)
     public NoticeResponseDto getNotice(Long id) {
+        // TODO: do i need to check if the notice exists when operating increaseHitCount?
+        noticeRepository.increaseHitCount(id);
         Notice notice = noticeRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
         return new NoticeResponseDto(notice);
@@ -53,7 +54,6 @@ public class NoticeService {
      * @param id ID of the notice
      * @param dto Notice Request DTO
      */
-    // TODO: revise to use updateNotice method in NoticeRepository not setter of Entity
     public NoticeResponseDto updateNotice(Long id, NoticeRequestDto dto) {
         int isUpdateSuccess = noticeRepository.updateNotice(id, dto);
         if (isUpdateSuccess < 1) {
@@ -63,8 +63,6 @@ public class NoticeService {
                 new IllegalArgumentException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
         return new NoticeResponseDto(notice);
     }
-
-    // TODO: update notice hit count
 
     /**
      * Delete a corresponding notice
