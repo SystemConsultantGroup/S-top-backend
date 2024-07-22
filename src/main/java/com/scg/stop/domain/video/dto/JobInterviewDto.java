@@ -1,16 +1,13 @@
 package com.scg.stop.domain.video.dto;
 
 import com.scg.stop.domain.video.domain.Category;
-import com.scg.stop.domain.video.domain.FavoriteVideo;
 import com.scg.stop.domain.video.domain.JobInterview;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-public class JobInterviewDTO {
+public class JobInterviewDto {
 
     @Data
     @AllArgsConstructor
