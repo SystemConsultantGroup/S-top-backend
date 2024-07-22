@@ -1,4 +1,4 @@
-package com.scg.stop.domain.notice.domain.dto;
+package com.scg.stop.domain.notice.dto;
 
 import com.scg.stop.domain.notice.domain.Notice;
 import jakarta.validation.constraints.NotBlank;

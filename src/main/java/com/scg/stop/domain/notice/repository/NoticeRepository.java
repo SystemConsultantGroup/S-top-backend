@@ -1,7 +1,7 @@
-package com.scg.stop.domain.notice.domain.repository;
+package com.scg.stop.domain.notice.repository;
 
 import com.scg.stop.domain.notice.domain.Notice;
-import com.scg.stop.domain.notice.domain.dto.NoticeDto;
+import com.scg.stop.domain.notice.dto.NoticeDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

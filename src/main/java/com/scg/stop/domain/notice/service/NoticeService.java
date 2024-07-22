@@ -1,15 +1,13 @@
-package com.scg.stop.domain.notice.domain.service;
+package com.scg.stop.domain.notice.service;
 
 import com.scg.stop.domain.notice.domain.Notice;
-import com.scg.stop.domain.notice.domain.dto.NoticeDto;
-import com.scg.stop.domain.notice.domain.repository.NoticeRepository;
+import com.scg.stop.domain.notice.dto.NoticeDto;
+import com.scg.stop.domain.notice.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional
