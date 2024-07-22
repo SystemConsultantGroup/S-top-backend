@@ -11,14 +11,22 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
-@SuperBuilder
 @NoArgsConstructor(access = PROTECTED)
 public class Notice extends BaseNoticeEntity {
 
     @OneToMany(fetch = LAZY, mappedBy = "notice")
     private List<File> files = new ArrayList<>();
+
+    // constructor for static method
+    private Notice(String title, String content, boolean fixed, Integer hitCount) {
+        super(title, content, fixed, hitCount);
+    }
+
+    // static method for creating instance using constructor
+    public static Notice createNotice(String title, String content, boolean fixed) {
+        return new Notice(title, content, fixed, 0);
+    }
 }

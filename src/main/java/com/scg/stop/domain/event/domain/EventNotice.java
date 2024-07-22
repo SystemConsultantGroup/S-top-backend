@@ -11,11 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
-@SuperBuilder
 @NoArgsConstructor(access = PROTECTED)
 public class EventNotice extends BaseNoticeEntity {
 
