@@ -4,10 +4,10 @@ import com.scg.stop.domain.notice.domain.Notice;
 import com.scg.stop.domain.notice.domain.dto.NoticeDto;
 import com.scg.stop.domain.notice.domain.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -32,10 +32,9 @@ public class NoticeService {
      * Get a list of notices
      * @return List of notices
      */
-    // TODO: Implement GetNoticeList method
     @Transactional(readOnly = true)
-    public List<Notice> getNoticeList() {
-        return noticeRepository.findAll();
+    public Page<NoticeDto.Response> getNoticeList(String title, Pageable pageable) {
+        return noticeRepository.findNotices(title, pageable);
     }
 
     /**
@@ -46,7 +45,7 @@ public class NoticeService {
     @Transactional(readOnly = true)
     public NoticeDto.Response getNotice(Long id) {
         Notice notice = noticeRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.BAD_REQUEST, "요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
+                new IllegalArgumentException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
         return new NoticeDto.Response(notice);
     }
 
@@ -55,12 +54,15 @@ public class NoticeService {
      * @param id ID of the notice
      * @param dto Notice Request DTO
      */
+    // TODO: revise to use updateNotice method in NoticeRepository not setter of Entity
     @Transactional
     public void updateNotice(Long id, NoticeDto.Request dto) {
         Notice notice = noticeRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.BAD_REQUEST, "요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
+                new IllegalArgumentException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
         notice.update(dto.getTitle(), dto.getContent(), dto.isFixed());
     }
+
+    // TODO: update notice hit count
 
     /**
      * Delete a corresponding notice
@@ -69,7 +71,7 @@ public class NoticeService {
     @Transactional
     public void deleteNotice(Long noticeId) {
         Notice notice = noticeRepository.findById(noticeId).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.BAD_REQUEST, "요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
+                new IllegalArgumentException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
         noticeRepository.delete(notice);
     }
 }
