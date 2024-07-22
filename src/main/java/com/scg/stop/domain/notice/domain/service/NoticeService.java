@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class NoticeService {
     private final NoticeRepository noticeRepository;
@@ -21,7 +22,6 @@ public class NoticeService {
      * @param dto Notice Request DTO
      * @return ID of the created notice
      */
-    @Transactional
     public Long createNotice(NoticeDto.Request dto) {
         Notice newNotice = dto.toEntity();
         noticeRepository.save(newNotice);
@@ -55,7 +55,6 @@ public class NoticeService {
      * @param dto Notice Request DTO
      */
     // TODO: revise to use updateNotice method in NoticeRepository not setter of Entity
-    @Transactional
     public void updateNotice(Long id, NoticeDto.Request dto) {
         Notice notice = noticeRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
@@ -68,7 +67,6 @@ public class NoticeService {
      * Delete a corresponding notice
      * @param noticeId ID of the notice
      */
-    @Transactional
     public void deleteNotice(Long noticeId) {
         Notice notice = noticeRepository.findById(noticeId).orElseThrow(() ->
                 new IllegalArgumentException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
