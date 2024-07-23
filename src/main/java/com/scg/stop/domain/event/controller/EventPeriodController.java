@@ -1,6 +1,7 @@
 package com.scg.stop.domain.event.controller;
 
-import com.scg.stop.domain.event.dto.EventPeriodDto;
+import com.scg.stop.domain.event.dto.EventPeriodRequest;
+import com.scg.stop.domain.event.dto.EventPeriodResponse;
 import com.scg.stop.domain.event.service.EventPeriodService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +21,8 @@ public class EventPeriodController {
 
     // TODO : ADMIN 권한 확인
     @PostMapping
-    public ResponseEntity<EventPeriodDto.Response> createEventPeriod(@RequestBody @Valid EventPeriodDto.Request requestDto) {
-        EventPeriodDto.Response responseDto = eventPeriodService.createEventPeriod(requestDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
+    public ResponseEntity<EventPeriodResponse> createEventPeriod(@RequestBody @Valid EventPeriodRequest createEventPeriodRequest) {
+        EventPeriodResponse eventPeriodResponse = eventPeriodService.createEventPeriod(createEventPeriodRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(eventPeriodResponse);
     }
 }
