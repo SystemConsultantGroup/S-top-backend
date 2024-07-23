@@ -1,13 +1,17 @@
 package com.scg.stop.domain.notice.dto.response;
 
 import com.scg.stop.domain.notice.domain.Notice;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import static lombok.AccessLevel.PROTECTED;
+
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor(access = PROTECTED)
 public class NoticeResponseDto {
     private Long id;
     private String title;
@@ -21,13 +25,16 @@ public class NoticeResponseDto {
 
     // Entity -> DTO
     // TODO: handle attached files uuid
-    public NoticeResponseDto(Notice notice) {
-        this.id = notice.getId();
-        this.title = notice.getTitle();
-        this.content = notice.getContent();
-        this.hitCount = notice.getHitCount();
-        this.fixed = notice.isFixed();
-        this.createdAt = notice.getCreatedAt();
-        this.updatedAt = notice.getUpdatedAt();
+    public static NoticeResponseDto from(Notice notice) {
+       return new NoticeResponseDto(
+              notice.getId(),
+              notice.getTitle(),
+              notice.getContent(),
+              notice.getHitCount(),
+              notice.isFixed(),
+              notice.getCreatedAt(),
+              notice.getUpdatedAt(),
+              null
+         );
     }
 }

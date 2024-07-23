@@ -21,10 +21,11 @@ public class NoticeService {
      * @param dto Notice Request DTO
      * @return ID of the created notice
      */
+    // TODO: Admin check
     public NoticeResponseDto createNotice(NoticeRequestDto dto) {
         Notice newNotice = dto.toEntity();
         noticeRepository.save(newNotice);
-        return new NoticeResponseDto(newNotice);
+        return NoticeResponseDto.from(newNotice);
     }
 
     /**
@@ -46,7 +47,7 @@ public class NoticeService {
         noticeRepository.increaseHitCount(id);
         Notice notice = noticeRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
-        return new NoticeResponseDto(notice);
+        return NoticeResponseDto.from(notice);
     }
 
     /**
@@ -54,6 +55,7 @@ public class NoticeService {
      * @param id ID of the notice
      * @param dto Notice Request DTO
      */
+    // TODO: Admin check
     public NoticeResponseDto updateNotice(Long id, NoticeRequestDto dto) {
         int isUpdateSuccess = noticeRepository.updateNotice(id, dto);
         if (isUpdateSuccess < 1) {
@@ -61,13 +63,14 @@ public class NoticeService {
         }
         Notice notice = noticeRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
-        return new NoticeResponseDto(notice);
+        return NoticeResponseDto.from(notice);
     }
 
     /**
      * Delete a corresponding notice
      * @param noticeId ID of the notice
      */
+    // TODO: Admin check
     public void deleteNotice(Long noticeId) {
         Notice notice = noticeRepository.findById(noticeId).orElseThrow(() ->
                 new IllegalArgumentException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));

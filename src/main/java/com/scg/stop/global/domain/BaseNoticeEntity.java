@@ -31,12 +31,4 @@ public abstract class BaseNoticeEntity extends BaseTimeEntity{
 
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private boolean fixed;
-
-//    // protected constructor for static factory method
-//    protected BaseNoticeEntity(String title, String content, boolean fixed, Integer hitCount) {
-//        this.title = title;
-//        this.content = content;
-//        this.fixed = fixed;
-//        this.hitCount = hitCount;
-//    }
 }

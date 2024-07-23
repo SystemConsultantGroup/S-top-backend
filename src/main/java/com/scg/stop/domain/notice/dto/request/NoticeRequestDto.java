@@ -23,6 +23,6 @@ public class NoticeRequestDto {
 
     // DTO -> Entity
     public Notice toEntity() {
-        return Notice.createNotice(title, content, fixed);
+        return Notice.from(this);
     }
 }
