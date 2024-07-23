@@ -9,11 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class EventPeriodService {
 
     private final EventPeriodRepository eventPeriodRepository;
 
-    @Transactional
     public EventPeriodDto.Response createEventPeriod(EventPeriodDto.Request requestDto) {
         EventPeriod newEventPeriod = eventPeriodRepository.save(requestDto.toEntity());
         return new EventPeriodDto.Response(newEventPeriod);

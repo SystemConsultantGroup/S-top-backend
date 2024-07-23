@@ -1,7 +1,6 @@
 package com.scg.stop.domain.event.domain;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
-import static lombok.AccessLevel.PROTECTED;
 
 import com.scg.stop.global.domain.BaseTimeEntity;
 import jakarta.persistence.Column;
@@ -10,13 +9,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import java.time.LocalDateTime;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
-@SuperBuilder
-@NoArgsConstructor(access = PROTECTED)
 public class EventPeriod extends BaseTimeEntity {
 
     @Id
