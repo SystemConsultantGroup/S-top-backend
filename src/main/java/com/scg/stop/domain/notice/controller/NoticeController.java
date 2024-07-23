@@ -22,7 +22,7 @@ public class NoticeController {
     // Create a new notice
     @PostMapping
     public ResponseEntity<NoticeResponseDto> createNotice(@RequestBody @Valid NoticeRequestDto createNoticeDto) {
-        return new ResponseEntity<>(noticeService.createNotice(createNoticeDto), HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(noticeService.createNotice(createNoticeDto));
     }
 
     // Get a list of notices
@@ -31,20 +31,20 @@ public class NoticeController {
             @RequestParam(value = "title", required = false) String title,
             @PageableDefault(page = 0, size = 10) Pageable pageable) {
         Page<NoticeResponseDto> noticeList = noticeService.getNoticeList(title, pageable);
-        return ResponseEntity.ok(noticeList);
+        return ResponseEntity.status(HttpStatus.OK).body(noticeList);
     }
 
     // Get a corresponding notice
     @GetMapping("/{noticeId}")
     public ResponseEntity<NoticeResponseDto> getNotice(@PathVariable Long noticeId) {
         NoticeResponseDto notice = noticeService.getNotice(noticeId);
-        return ResponseEntity.ok(notice);
+        return ResponseEntity.status(HttpStatus.OK).body(notice);
     }
 
     // Update a corresponding notice
     @PutMapping("/{noticeId}")
     public ResponseEntity<NoticeResponseDto> updateNotice(@PathVariable Long noticeId, @RequestBody @Valid NoticeRequestDto updateNoticeDto) {
-        return ResponseEntity.ok(noticeService.updateNotice(noticeId, updateNoticeDto));
+        return ResponseEntity.status(HttpStatus.OK).body(noticeService.updateNotice(noticeId, updateNoticeDto));
     }
 
     // Delete a corresponding notice

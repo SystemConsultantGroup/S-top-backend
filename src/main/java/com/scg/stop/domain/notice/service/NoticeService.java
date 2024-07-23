@@ -4,6 +4,7 @@ import com.scg.stop.domain.notice.domain.Notice;
 import com.scg.stop.domain.notice.dto.request.NoticeRequestDto;
 import com.scg.stop.domain.notice.dto.response.NoticeResponseDto;
 import com.scg.stop.domain.notice.repository.NoticeRepository;
+import com.scg.stop.global.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,7 +47,7 @@ public class NoticeService {
         // TODO: do i need to check if the notice exists when operating increaseHitCount?
         noticeRepository.increaseHitCount(id);
         Notice notice = noticeRepository.findById(id).orElseThrow(() ->
-                new IllegalArgumentException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
+                new BadRequestException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
         return NoticeResponseDto.from(notice);
     }
 
@@ -59,10 +60,10 @@ public class NoticeService {
     public NoticeResponseDto updateNotice(Long id, NoticeRequestDto dto) {
         int isUpdateSuccess = noticeRepository.updateNotice(id, dto);
         if (isUpdateSuccess < 1) {
-            throw new IllegalArgumentException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다.");
+            throw new BadRequestException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다.");
         }
         Notice notice = noticeRepository.findById(id).orElseThrow(() ->
-                new IllegalArgumentException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
+                new BadRequestException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
         return NoticeResponseDto.from(notice);
     }
 
@@ -73,7 +74,7 @@ public class NoticeService {
     // TODO: Admin check
     public void deleteNotice(Long noticeId) {
         Notice notice = noticeRepository.findById(noticeId).orElseThrow(() ->
-                new IllegalArgumentException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
+                new BadRequestException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
         noticeRepository.delete(notice);
     }
 }

@@ -6,12 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor(access = PROTECTED)
+@AllArgsConstructor
 public class NoticeResponseDto {
     private Long id;
     private String title;
@@ -20,7 +21,7 @@ public class NoticeResponseDto {
     private boolean fixed;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private String[] fileUuids; // attached files uuid
+//     private List<String> fileUuids; // attached files uuid
 
 
     // Entity -> DTO
@@ -33,8 +34,7 @@ public class NoticeResponseDto {
               notice.getHitCount(),
               notice.isFixed(),
               notice.getCreatedAt(),
-              notice.getUpdatedAt(),
-              null
+              notice.getUpdatedAt()
          );
     }
 }

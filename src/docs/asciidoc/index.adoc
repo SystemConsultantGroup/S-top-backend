@@ -5,4 +5,4 @@
 :toclevels: 3
 :seclinks:
 
-// include::eventPeriod.adoc[] 컨트롤러별로 주석 지우고 문서 추가
+include::notice.adoc[]

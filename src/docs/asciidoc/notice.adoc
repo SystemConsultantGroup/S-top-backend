@@ -1,0 +1,24 @@
+== 공지 사항 API
+:source-highlighter: highlightjs
+
+---
+=== 공지 사항 생성 (POST /notices)
+==== 201 Created
+====
+operation::notice-controller-test/create-notice[snippets="http-request,request-fields,http-response,response-fields"]
+====
+
+==== 400 Bad Request
+===== 1. 공지 사항 제목이 입력되지 않은 경우
+=====
+**field 가 "" 인 경우**
+
+operation::notice-controller-test/create-notice-with-invalid-title[snippets="http-request,http-response"]
+=====
+
+===== 2. 공지 사항 내용이 입력되지 않은 경우
+=====
+**field 가 "" 인 경우**
+
+operation::notice-controller-test/create-notice-with-invalid-content[snippets="http-request,http-response"]
+=====
