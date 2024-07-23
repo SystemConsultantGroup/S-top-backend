@@ -1,5 +1,6 @@
 package com.scg.stop.domain.notice.domain;
 
+import static jakarta.persistence.CascadeType.REMOVE;
 import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = PROTECTED)
 public class Notice extends BaseNoticeEntity {
 
-    @OneToMany(fetch = LAZY, mappedBy = "notice")
+    @OneToMany(fetch = LAZY, mappedBy = "notice", cascade = REMOVE, orphanRemoval = true)
     private List<File> files = new ArrayList<>();
 
     // constructor for static method
