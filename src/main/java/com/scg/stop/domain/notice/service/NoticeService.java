@@ -20,7 +20,7 @@ public class NoticeService {
     /**
      * Create a new notice
      * @param dto Notice Request DTO
-     * @return ID of the created notice
+     * @return Notice Response DTO
      */
     // TODO: Admin check
     public NoticeResponseDto createNotice(NoticeRequestDto dto) {
@@ -31,6 +31,8 @@ public class NoticeService {
 
     /**
      * Get a list of notices
+     * @param title Title of the notice (optional)
+     * @param pageable Pageable
      * @return List of notices
      */
     @Transactional(readOnly = true)
@@ -55,6 +57,7 @@ public class NoticeService {
      * Update a corresponding notice
      * @param id ID of the notice
      * @param dto Notice Request DTO
+     * @return Notice Response DTO
      */
     // TODO: Admin check
     public NoticeResponseDto updateNotice(Long id, NoticeRequestDto dto) {

@@ -23,6 +23,6 @@ public interface NoticeRepository extends JpaRepository<Notice, Long> {
     int updateNotice(@Param("id") Long id, @Param("dto")NoticeRequestDto dto);
 
     @Query("SELECT n FROM Notice n " +
-            "WHERE (:title IS NULL OR n.title = :title)")
+            "WHERE (:title IS NULL OR n.title LIKE %:title%)")
     Page<NoticeResponseDto> findNotices(@Param("title") String title, Pageable pageable);
 }
