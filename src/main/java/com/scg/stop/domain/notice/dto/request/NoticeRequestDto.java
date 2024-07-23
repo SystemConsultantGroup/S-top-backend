@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,8 +23,6 @@ public class NoticeRequestDto {
     @NotNull(message = "고정 여부를 입력해주세요.")
     private boolean fixed;
 
-    // DTO -> Entity
-    public Notice toEntity() {
-        return Notice.from(this);
-    }
+    private List<Long> fileIds;
+
 }

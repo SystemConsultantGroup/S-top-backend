@@ -1,6 +1,7 @@
 package com.scg.stop.domain.notice.controller;
 
 import com.scg.stop.domain.notice.dto.request.NoticeRequestDto;
+import com.scg.stop.domain.notice.dto.response.NoticeListElementResponse;
 import com.scg.stop.domain.notice.dto.response.NoticeResponseDto;
 import com.scg.stop.domain.notice.service.NoticeService;
 import jakarta.validation.Valid;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/notices")
 @RestController
+// TODO: Admin check
+// TODO: Attach files handling
 public class NoticeController {
 
     private final NoticeService noticeService;
@@ -27,10 +30,10 @@ public class NoticeController {
 
     // Get a list of notices
     @GetMapping
-    public ResponseEntity<Page<NoticeResponseDto>> getNoticeList(
+    public ResponseEntity<Page<NoticeListElementResponse>> getNoticeList(
             @RequestParam(value = "title", required = false) String title,
             @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        Page<NoticeResponseDto> noticeList = noticeService.getNoticeList(title, pageable);
+        Page<NoticeListElementResponse> noticeList = noticeService.getNoticeList(title, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(noticeList);
     }
 

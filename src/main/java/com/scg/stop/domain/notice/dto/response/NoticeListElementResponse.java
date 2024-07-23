@@ -8,35 +8,28 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static lombok.AccessLevel.PROTECTED;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class NoticeResponseDto {
+public class NoticeListElementResponse {
     private Long id;
     private String title;
-    private String content;
     private Integer hitCount;
     private boolean fixed;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private List<FileResponse> fileResponses;
 
     // Entity -> DTO
     // TODO: handle attached files uuid
-    public static NoticeResponseDto from(Notice notice, List<FileResponse> fileResponses) {
-       return new NoticeResponseDto(
+    public static NoticeListElementResponse from(Notice notice) {
+        return new NoticeListElementResponse(
                 notice.getId(),
                 notice.getTitle(),
-                notice.getContent(),
                 notice.getHitCount(),
                 notice.isFixed(),
                 notice.getCreatedAt(),
-                notice.getUpdatedAt(),
-                fileResponses
-         );
+                notice.getUpdatedAt()
+        );
     }
 }

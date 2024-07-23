@@ -2,6 +2,7 @@ package com.scg.stop.domain.notice.repository;
 
 import com.scg.stop.domain.notice.domain.Notice;
 import com.scg.stop.domain.notice.dto.request.NoticeRequestDto;
+import com.scg.stop.domain.notice.dto.response.NoticeListElementResponse;
 import com.scg.stop.domain.notice.dto.response.NoticeResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,5 +16,5 @@ public interface NoticeRepository extends JpaRepository<Notice, Long> {
 
     @Query("SELECT n FROM Notice n " +
             "WHERE (:title IS NULL OR n.title LIKE %:title%)")
-    Page<NoticeResponseDto> findNotices(@Param("title") String title, Pageable pageable);
+    Page<NoticeListElementResponse> findNotices(@Param("title") String title, Pageable pageable);
 }

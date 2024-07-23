@@ -24,18 +24,21 @@ public class Notice extends BaseNoticeEntity {
 
     // constructor for static method
     // TODO: hanlde attached files
-    private Notice(String title, String content, Integer hitCount, boolean fixed) {
+    private Notice(String title, String content, Integer hitCount, boolean fixed, List<File> files) {
         super(null, title, content, hitCount, fixed);
+        files.forEach(file -> file.setNotice(this));
+
     }
 
     // static method for creating new notice entity
     // TODO: hanlde attached files
-    public static Notice from(NoticeRequestDto requestDto) {
+    public static Notice from(NoticeRequestDto requestDto, List<File> files) {
         return new Notice(
             requestDto.getTitle(),
             requestDto.getContent(),
             0,
-            requestDto.isFixed()
+            requestDto.isFixed(),
+                files
         );
     }
 
