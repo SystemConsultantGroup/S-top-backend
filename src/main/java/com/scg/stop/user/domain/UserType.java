@@ -1,4 +1,4 @@
-package com.scg.stop.domain.user.domain;
+package com.scg.stop.user.domain;
 
 public enum UserType {
 

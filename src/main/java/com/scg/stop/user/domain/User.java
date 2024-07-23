@@ -1,4 +1,4 @@
-package com.scg.stop.domain.user.domain;
+package com.scg.stop.user.domain;
 
 import static jakarta.persistence.EnumType.*;
 import static jakarta.persistence.FetchType.LAZY;
