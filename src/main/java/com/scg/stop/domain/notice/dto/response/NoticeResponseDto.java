@@ -1,7 +1,6 @@
 package com.scg.stop.domain.notice.dto.response;
 
 import com.scg.stop.domain.notice.domain.Notice;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

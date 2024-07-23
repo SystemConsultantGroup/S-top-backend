@@ -21,12 +21,12 @@ public class Notice extends BaseNoticeEntity {
     private List<File> files = new ArrayList<>();
 
     // constructor for static method
-    private Notice(String title, String content, boolean fixed, Integer hitCount) {
-        super(title, content, fixed, hitCount);
+    private Notice(String title, String content, Integer hitCount, boolean fixed) {
+        super(null, title, content, hitCount, fixed);
     }
 
     // static method for creating instance using constructor
     public static Notice createNotice(String title, String content, boolean fixed) {
-        return new Notice(title, content, fixed, 0);
+        return new Notice(title, content, 0, fixed);
     }
 }

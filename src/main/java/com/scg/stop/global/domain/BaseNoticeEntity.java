@@ -6,11 +6,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = PROTECTED)
+@AllArgsConstructor(access = PROTECTED)
 @MappedSuperclass
 public abstract class BaseNoticeEntity extends BaseTimeEntity{
 
@@ -30,11 +32,11 @@ public abstract class BaseNoticeEntity extends BaseTimeEntity{
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private boolean fixed;
 
-    // protected constructor for static factory method
-    protected BaseNoticeEntity(String title, String content, boolean fixed, Integer hitCount) {
-        this.title = title;
-        this.content = content;
-        this.fixed = fixed;
-        this.hitCount = hitCount;
-    }
+//    // protected constructor for static factory method
+//    protected BaseNoticeEntity(String title, String content, boolean fixed, Integer hitCount) {
+//        this.title = title;
+//        this.content = content;
+//        this.fixed = fixed;
+//        this.hitCount = hitCount;
+//    }
 }
