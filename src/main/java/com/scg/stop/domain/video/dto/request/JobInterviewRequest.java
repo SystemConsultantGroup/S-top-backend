@@ -23,10 +23,10 @@ public class JobInterviewRequest {
     private Integer year;
 
     @ValidEnum(enumClass = JobInterviewCategory.class)
-    @NotNull
+    @NotNull(message = "카테고리를 입력해주세요.")
     private JobInterviewCategory category;
 
     public JobInterview toEntity() {
-        return JobInterview.createJobInterview(title, youtubeId, year, category);
+        return JobInterview.from(this);
     }
 }

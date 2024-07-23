@@ -20,7 +20,7 @@ public class JobInterviewService {
     public JobInterviewResponse getJobInterview(Long id) {
         JobInterview jobInterview = jobInterviewRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("요청한 ID에 해당하는 잡페어 인터뷰가 없습니다."));
-        return new JobInterviewResponse(jobInterview);
+        return JobInterviewResponse.from(jobInterview);
     }
 
     @Transactional(readOnly = true)
@@ -31,7 +31,7 @@ public class JobInterviewService {
     @Transactional
     public JobInterviewResponse createJobInterview(JobInterviewRequest req) {
         JobInterview newJobInterview = jobInterviewRepository.save(req.toEntity());
-        return new JobInterviewResponse(newJobInterview);
+        return JobInterviewResponse.from(newJobInterview);
     }
 
     @Transactional
@@ -49,7 +49,7 @@ public class JobInterviewService {
         }
         JobInterview jobInterview = jobInterviewRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("요청한 ID에 해당하는 잡페어 인터뷰가 없습니다."));
-        return new JobInterviewResponse(jobInterview);
+        return JobInterviewResponse.from(jobInterview);
     }
 
 
