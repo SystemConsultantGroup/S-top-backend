@@ -36,20 +36,20 @@ public class NoticeController {
 
     // Get a corresponding notice
     @GetMapping("/{noticeId}")
-    public ResponseEntity<NoticeResponseDto> getNotice(@PathVariable Long noticeId) {
+    public ResponseEntity<NoticeResponseDto> getNotice(@PathVariable("noticeId") Long noticeId) {
         NoticeResponseDto notice = noticeService.getNotice(noticeId);
         return ResponseEntity.status(HttpStatus.OK).body(notice);
     }
 
     // Update a corresponding notice
     @PutMapping("/{noticeId}")
-    public ResponseEntity<NoticeResponseDto> updateNotice(@PathVariable Long noticeId, @RequestBody @Valid NoticeRequestDto updateNoticeDto) {
+    public ResponseEntity<NoticeResponseDto> updateNotice(@PathVariable("noticeId") Long noticeId, @RequestBody @Valid NoticeRequestDto updateNoticeDto) {
         return ResponseEntity.status(HttpStatus.OK).body(noticeService.updateNotice(noticeId, updateNoticeDto));
     }
 
     // Delete a corresponding notice
     @DeleteMapping("/{noticeId}")
-    public ResponseEntity<Long> deleteNotice(@PathVariable Long noticeId) {
+    public ResponseEntity<Long> deleteNotice(@PathVariable("noticeId") Long noticeId) {
         noticeService.deleteNotice(noticeId);
         return ResponseEntity.noContent().build();
     }
