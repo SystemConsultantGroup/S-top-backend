@@ -1,7 +1,8 @@
 package com.scg.stop.domain.event.service;
 
 import com.scg.stop.domain.event.domain.EventPeriod;
-import com.scg.stop.domain.event.dto.EventPeriodDto;
+import com.scg.stop.domain.event.dto.EventPeriodRequest;
+import com.scg.stop.domain.event.dto.EventPeriodResponse;
 import com.scg.stop.domain.event.repository.EventPeriodRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,21 @@ public class EventPeriodService {
 
     private final EventPeriodRepository eventPeriodRepository;
 
-    public EventPeriodDto.Response createEventPeriod(EventPeriodDto.Request requestDto) {
-        EventPeriod newEventPeriod = eventPeriodRepository.save(requestDto.toEntity());
-        return new EventPeriodDto.Response(newEventPeriod);
+    public EventPeriodResponse createEventPeriod(EventPeriodRequest createEventPeriodRequest) {
+        // 연도 중복 판단
+        if (eventPeriodRepository.existsByYear(createEventPeriodRequest.getYear())) {
+            throw new IllegalStateException("이미 존재하는 연도입니다");
+        }
+
+        // Request DTO -> Entity
+        EventPeriod eventPeriod = EventPeriod.from(createEventPeriodRequest);
+
+        // Save
+        EventPeriod newEventPeriod = eventPeriodRepository.save(eventPeriod);
+
+        // Response DTO -> Entity
+        EventPeriodResponse eventPeriodResponse = EventPeriodResponse.from(newEventPeriod);
+
+        return eventPeriodResponse;
     }
 }
