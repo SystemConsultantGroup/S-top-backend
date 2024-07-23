@@ -15,7 +15,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @MappedSuperclass
 @NoArgsConstructor(access = PROTECTED)
-@SuperBuilder
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseTimeEntity {
 
