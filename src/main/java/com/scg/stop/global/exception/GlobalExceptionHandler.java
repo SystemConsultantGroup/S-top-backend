@@ -18,6 +18,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
@@ -26,6 +27,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             HttpHeaders headers,
             HttpStatusCode status,
             WebRequest request) {
+
+        log.warn(ex.getMessage(), ex);
 
         Map<String, Object> body = new HashMap<>();
 
@@ -42,15 +45,24 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
+//    @ExceptionHandler(BadRequestException.class)
+//    public ResponseEntity<Object> handleBadRequestException(BadRequestException ex) {
+//        Map<String, Object> body = new HashMap<>();
+//
+//        body.put("status", 400);
+//        body.put("timestamp", LocalDateTime.now());
+//        body.put("error", HttpStatus.BAD_REQUEST);
+//        body.put("message", ex.getMessage());
+//
+//        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+//    }
+
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<Object> handleBadRequestException(BadRequestException ex) {
-        Map<String, Object> body = new HashMap<>();
+    public ResponseEntity<ExceptionResponse> handleBadRequestException(BadRequestException ex) {
 
-        body.put("status", 400);
-        body.put("timestamp", LocalDateTime.now());
-        body.put("error", HttpStatus.BAD_REQUEST);
-        body.put("message", ex.getMessage());
+        log.warn(ex.getMessage(), ex);
 
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+        return ResponseEntity.badRequest()
+                .body(new ExceptionResponse(ex.getCode(), ex.getMessage()));
     }
 }

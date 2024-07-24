@@ -1,5 +1,7 @@
 package com.scg.stop.domain.event.service;
 
+import static com.scg.stop.global.exception.ExceptionCode.DUPLICATED_YEAR;
+
 import com.scg.stop.domain.event.domain.EventPeriod;
 import com.scg.stop.domain.event.dto.EventPeriodRequest;
 import com.scg.stop.domain.event.dto.EventPeriodResponse;
@@ -18,7 +20,7 @@ public class EventPeriodService {
 
     public EventPeriodResponse createEventPeriod(EventPeriodRequest createEventPeriodRequest) {
         if (eventPeriodRepository.existsByYear(createEventPeriodRequest.getYear())) {
-            throw new BadRequestException(createEventPeriodRequest.getYear() + "년의 행사 기간이 이미 존재합니다.");
+            throw new BadRequestException(DUPLICATED_YEAR);
         }
         EventPeriod newEventPeriod = eventPeriodRepository.save(EventPeriod.from(createEventPeriodRequest));
         return EventPeriodResponse.from(newEventPeriod);
