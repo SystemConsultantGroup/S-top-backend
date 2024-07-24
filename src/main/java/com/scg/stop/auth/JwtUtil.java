@@ -1,6 +1,8 @@
 package com.scg.stop.auth;
 
 import com.scg.stop.auth.domain.UserToken;
+import com.scg.stop.global.exception.ExceptionCode;
+import com.scg.stop.global.exception.SocialLoginException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
@@ -69,7 +71,7 @@ public class JwtUtil {
         try {
             parseToken(refreshToken);
         } catch (JwtException e) {
-            throw new InvalidJwtException();
+            throw new SocialLoginException(ExceptionCode.INVALID_REFRESH_TOKEN);
         }
     }
 
