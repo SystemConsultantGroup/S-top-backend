@@ -9,6 +9,7 @@ import com.scg.stop.domain.project.domain.Comment;
 import com.scg.stop.domain.project.domain.FavoriteProject;
 import com.scg.stop.domain.project.domain.Inquiry;
 import com.scg.stop.domain.project.domain.Likes;
+import com.scg.stop.domain.project.domain.Role;
 import com.scg.stop.domain.proposal.domain.Proposal;
 import com.scg.stop.domain.video.domain.FavoriteVideo;
 import com.scg.stop.domain.video.domain.UserQuiz;
@@ -46,9 +47,12 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false, unique = true)
     private String nickname;
 
+    @Column()
+    private String socialLoginId;
+
     @Column(nullable = false)
     @Enumerated(value = STRING)
-    private UserType type;
+    private Role role;
 
     private String signupSource;
 
