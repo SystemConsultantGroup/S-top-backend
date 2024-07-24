@@ -38,4 +38,12 @@ public class Notice extends BaseNoticeEntity {
             requestDto.isFixed()
         );
     }
+
+    public void updateNotice(NoticeRequestDto requestDto) {
+        updateBaseNoticeEntity(requestDto.getTitle(), requestDto.getContent(), requestDto.isFixed());
+    }
+
+    public void increaseHitCount() {
+        super.increaseHitCount();
+    }
 }

@@ -31,4 +31,14 @@ public abstract class BaseNoticeEntity extends BaseTimeEntity{
 
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private boolean fixed;
+
+    protected void updateBaseNoticeEntity(String title, String content, boolean fixed) {
+        this.title = title;
+        this.content = content;
+        this.fixed = fixed;
+    }
+
+    protected void increaseHitCount() {
+        this.hitCount++;
+    }
 }

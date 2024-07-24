@@ -46,10 +46,9 @@ public class NoticeService {
      * @return Notice Response DTO
      */
     public NoticeResponseDto getNotice(Long id) {
-        // TODO: do i need to check if the notice exists when operating increaseHitCount?
-        noticeRepository.increaseHitCount(id);
         Notice notice = noticeRepository.findById(id).orElseThrow(() ->
                 new BadRequestException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
+        notice.increaseHitCount();
         return NoticeResponseDto.from(notice);
     }
 
@@ -61,12 +60,9 @@ public class NoticeService {
      */
     // TODO: Admin check
     public NoticeResponseDto updateNotice(Long id, NoticeRequestDto dto) {
-        int isUpdateSuccess = noticeRepository.updateNotice(id, dto);
-        if (isUpdateSuccess < 1) {
-            throw new BadRequestException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다.");
-        }
         Notice notice = noticeRepository.findById(id).orElseThrow(() ->
                 new BadRequestException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
+        notice.updateNotice(dto);
         return NoticeResponseDto.from(notice);
     }
 
