@@ -27,4 +27,19 @@ public class ProjectResponse {
     private List<String> techStack;
     private int likeCount;
     private boolean bookMark;
+
+    public static ProjectResponse of(List<String> studentsName, String professorName, Project project){
+        return new ProjectResponse(
+                project.getThumbnail().getUuid(),
+                project.getName(),
+                project.getTeam(),
+                studentsName,
+                professorName,
+                project.getType(),
+                project.getCategory(),
+                List.of(project.getTechStack().split(", ")),
+                project.getLikes().size(),
+                !project.getFavorites().isEmpty()
+        );
+    }
 }
