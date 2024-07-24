@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ExceptionCode {
 
-    INVALID_REQUEST(1000, "올바르지 않은 요청입니다."),
+    INVALID_REQUEST(1000, "요청 형식이 올바르지 않습니다."),
 
     DUPLICATED_YEAR(1001, "해당 연도의 행사 기간이 이미 존재합니다.");
 
