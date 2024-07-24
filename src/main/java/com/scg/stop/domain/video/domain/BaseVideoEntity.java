@@ -29,4 +29,10 @@ public class BaseVideoEntity extends BaseTimeEntity {
     @Column(nullable = false)
     private Integer year;
 
+    public void updateBaseVideoEntity(String title, String youtubeId, Integer year) {
+        this.title = title;
+        this.youtubeId = youtubeId;
+        this.year = year;
+    }
+
 }

@@ -42,4 +42,9 @@ public class JobInterview extends BaseVideoEntity {
                 request.getCategory()
         );
     }
+
+    public void updateJobInterview(JobInterviewRequest request) {
+        this.updateBaseVideoEntity(request.getTitle(), request.getYoutubeId(), request.getYear());
+        this.category = request.getCategory();
+    }
 }

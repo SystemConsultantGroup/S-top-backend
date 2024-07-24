@@ -13,10 +13,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface JobInterviewRepository extends JpaRepository<JobInterview, Long> {
-    @Transactional
-    @Modifying
-    @Query("UPDATE JobInterview j SET j.title = :#{#dto.title}, j.youtubeId = :#{#dto.youtubeId}, j.year = :#{#dto.year} WHERE j.id = :id")
-    int updateJobInterview(@Param("id") Long id, @Param("dto") JobInterviewRequest dto);
 
     @Query("SELECT j FROM JobInterview j " +
             "WHERE (:year IS NULL OR j.year = :year) " +

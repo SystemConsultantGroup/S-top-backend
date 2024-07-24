@@ -41,12 +41,9 @@ public class JobInterviewService {
     }
 
     public JobInterviewResponse updateJobInterview(Long id, JobInterviewRequest req) {
-        int result = jobInterviewRepository.updateJobInterview(id, req);
-        if (result < 1) {
-            throw new IllegalArgumentException("요청한 ID에 해당하는 잡페어 인터뷰가 없습니다.");
-        }
         JobInterview jobInterview = jobInterviewRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("요청한 ID에 해당하는 잡페어 인터뷰가 없습니다."));
+        jobInterview.updateJobInterview(req);
         return JobInterviewResponse.from(jobInterview);
     }
 }
