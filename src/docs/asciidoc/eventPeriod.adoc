@@ -3,15 +3,6 @@
 
 ---
 === 행사 기간 생성 (POST /eventPeriods)
-==== 201 Crated
 ====
 operation::event-period-controller-test/create-event-period[snippets="http-request,request-fields,http-response,response-fields"]
-====
-
-==== 400 Bad Request
-====
-**null 필드가 있는 경우**
-
-operation::event-period-controller-test/create-event-period-with-invalid-year[snippets="http-request"]
-operation::event-period-controller-test/create-event-period-with-invalid-year[snippets="http-response"]
 ====

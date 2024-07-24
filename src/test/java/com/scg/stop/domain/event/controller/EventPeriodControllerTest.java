@@ -74,24 +74,21 @@ class EventPeriodControllerTest extends AbstractControllerTest {
                 ));
     }
 
-//    @DisplayName("이벤트 연도를 입력하지 않으면 예외가 발생한다.")
-//    @Test
-//    void createEventPeriodWithInvalidYear() throws Exception {
-//
-//        // given
-//        EventPeriodDto.Request request = EventPeriodDto.Request.builder()
-//                .start(LocalDateTime.now())
-//                .end(LocalDateTime.now().plusDays(1))
-//                .build();
-//
-//        // when
-//        ResultActions result = mockMvc.perform(
-//                post("/eventPeriods")
-//                        .contentType(APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(request))
-//        );
-//
-//        // then
-//        result.andExpect(status().isBadRequest());
-//    }
+    @DisplayName("이벤트 연도를 입력하지 않으면 예외가 발생한다.")
+    @Test
+    void createEventPeriodWithInvalidYear() throws Exception {
+
+        // given
+        EventPeriodRequest request = new EventPeriodRequest( null, LocalDateTime.now(), LocalDateTime.now().plusDays(10));
+
+        // when
+        ResultActions result = mockMvc.perform(
+                post("/eventPeriods")
+                        .contentType(APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request))
+        );
+
+        // then
+        result.andExpect(status().isBadRequest());
+    }
 }
