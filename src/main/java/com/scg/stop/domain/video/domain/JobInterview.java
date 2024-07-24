@@ -6,10 +6,8 @@ import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.scg.stop.domain.video.dto.request.JobInterviewRequest;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -28,7 +26,7 @@ public class JobInterview extends BaseVideoEntity {
     @Enumerated(value = STRING)
     private JobInterviewCategory category;
 
-    @OneToMany(fetch = LAZY, mappedBy = "jobInterview")
+    @OneToMany(fetch = LAZY, mappedBy = "jobInterview", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<FavoriteVideo> favoriteVideos;
 
     private JobInterview(String title, String youtubeId, Integer year, JobInterviewCategory category) {
