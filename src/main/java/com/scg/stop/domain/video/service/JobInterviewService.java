@@ -30,7 +30,7 @@ public class JobInterviewService {
     }
 
     public JobInterviewResponse createJobInterview(JobInterviewRequest req) {
-        JobInterview newJobInterview = jobInterviewRepository.save(req.toEntity());
+        JobInterview newJobInterview = jobInterviewRepository.save(JobInterview.from(req));
         return JobInterviewResponse.from(newJobInterview);
     }
 
