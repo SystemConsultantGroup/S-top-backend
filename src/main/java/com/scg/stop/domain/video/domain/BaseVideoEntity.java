@@ -7,9 +7,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
-import lombok.Getter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Getter
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @MappedSuperclass
 public class BaseVideoEntity extends BaseTimeEntity {
 
@@ -25,4 +28,11 @@ public class BaseVideoEntity extends BaseTimeEntity {
 
     @Column(nullable = false)
     private Integer year;
+
+    public void updateBaseVideoEntity(String title, String youtubeId, Integer year) {
+        this.title = title;
+        this.youtubeId = youtubeId;
+        this.year = year;
+    }
+
 }
