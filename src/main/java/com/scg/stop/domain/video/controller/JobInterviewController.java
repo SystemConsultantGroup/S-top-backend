@@ -38,17 +38,20 @@ public class JobInterviewController {
     }
 
     @GetMapping("/{jobInterviewId}")
-    public ResponseEntity<JobInterviewResponse> getJobInterview(@PathVariable Long jobInterviewId) {
+    public ResponseEntity<JobInterviewResponse> getJobInterview(@PathVariable("jobInterviewId") Long jobInterviewId) {
         return ResponseEntity.status(HttpStatus.OK).body(jobInterviewService.getJobInterview(jobInterviewId));
     }
 
     @PutMapping("/{jobInterviewId}")
-    public ResponseEntity<JobInterviewResponse> updateJobInterview(@PathVariable Long jobInterviewId, @RequestBody @Valid JobInterviewRequest jobInterviewDTO) {
+    public ResponseEntity<JobInterviewResponse> updateJobInterview(
+            @PathVariable("jobInterviewId")Long jobInterviewId,
+            @RequestBody @Valid JobInterviewRequest jobInterviewDTO
+    ) {
         return ResponseEntity.status(HttpStatus.OK).body(jobInterviewService.updateJobInterview(jobInterviewId, jobInterviewDTO));
     }
 
     @DeleteMapping("/{jobInterviewId}")
-    public ResponseEntity<Void> deleteJobInterview(@PathVariable Long jobInterviewId) {
+    public ResponseEntity<Void> deleteJobInterview(@PathVariable("jobInterviewId") Long jobInterviewId) {
         jobInterviewService.deleteJobInterviewById(jobInterviewId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
