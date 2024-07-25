@@ -1,0 +1,8 @@
+== 행사 기간 API
+:source-highlighter: highlightjs
+
+---
+=== 행사 기간 생성 (POST /eventPeriods)
+====
+operation::event-period-controller-test/create-event-period[snippets="http-request,request-fields,http-response,response-fields"]
+====

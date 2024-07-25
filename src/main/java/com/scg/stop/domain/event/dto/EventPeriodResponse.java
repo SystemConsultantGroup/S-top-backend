@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor(access = PRIVATE)
+@AllArgsConstructor
 public class EventPeriodResponse {
 
     private Long id;
