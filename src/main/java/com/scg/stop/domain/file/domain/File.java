@@ -46,4 +46,8 @@ public class File extends BaseTimeEntity {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "gallery_id")
     private Gallery gallery;
+
+    public void setGallery(Gallery gallery) {
+        this.gallery = gallery;
+    }
 }

@@ -2,6 +2,7 @@ package com.scg.stop.domain.file.dto.response;
 
 import static lombok.AccessLevel.PRIVATE;
 
+import com.scg.stop.domain.file.domain.File;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,4 +19,15 @@ public class FileResponse {
     private String mimeType;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    public static FileResponse from(File file) {
+        return new FileResponse(
+                file.getId(),
+                file.getUuid(),
+                file.getName(),
+                file.getMimeType(),
+                file.getCreatedAt(),
+                file.getUpdatedAt()
+        );
+    }
 }

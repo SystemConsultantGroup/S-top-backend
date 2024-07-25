@@ -3,6 +3,7 @@ package com.scg.stop.domain.gallery.dto.response;
 import static lombok.AccessLevel.PRIVATE;
 
 import com.scg.stop.domain.file.dto.response.FileResponse;
+import com.scg.stop.domain.gallery.domain.Gallery;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -22,4 +23,17 @@ public class GalleryResponse {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private List<FileResponse> files;
+
+    public static GalleryResponse of(Gallery gallery, List<FileResponse> fileResponses) {
+        return new GalleryResponse(
+                gallery.getId(),
+                gallery.getTitle(),
+                gallery.getContent(),
+                gallery.getYear(),
+                gallery.getMonth(),
+                gallery.getCreatedAt(),
+                gallery.getUpdatedAt(),
+                fileResponses
+        );
+    }
 }

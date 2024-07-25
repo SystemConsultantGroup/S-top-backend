@@ -19,6 +19,7 @@ public class GalleryController {
 
     private final GalleryService galleryService;
 
+    // TODO Auth 설정 추가
     @PostMapping
     public ResponseEntity<GalleryResponse> createGallery(@RequestBody @Valid CreateGalleryRequest createGalleryRequest) {
         GalleryResponse galleryResponse = galleryService.createGallery(createGalleryRequest);
