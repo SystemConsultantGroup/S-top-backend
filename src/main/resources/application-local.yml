@@ -3,9 +3,9 @@ spring:
     activate:
       on-profile: local
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/s-top
+    url: jdbc:mysql://127.0.0.1:3307/stop
     username: root
-    password: 0008
+    password: 1234
   jpa:
     open-in-view: false
     show-sql: true
