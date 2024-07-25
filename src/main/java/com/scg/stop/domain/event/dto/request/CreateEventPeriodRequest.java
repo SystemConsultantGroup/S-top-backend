@@ -1,7 +1,6 @@
-package com.scg.stop.domain.event.dto;
+package com.scg.stop.domain.event.dto.request;
 
 import static lombok.AccessLevel.PRIVATE;
-import static lombok.AccessLevel.PROTECTED;
 
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -13,7 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Getter
 @NoArgsConstructor(access = PRIVATE)
 @AllArgsConstructor
-public class EventPeriodRequest {
+public class CreateEventPeriodRequest {
 
     @NotNull(message = "연도를 입력해주세요.")
     private Integer year;

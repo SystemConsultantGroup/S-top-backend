@@ -4,7 +4,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
-import com.scg.stop.domain.event.dto.EventPeriodRequest;
+import com.scg.stop.domain.event.dto.request.CreateEventPeriodRequest;
 import com.scg.stop.global.domain.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,12 +34,12 @@ public class EventPeriod extends BaseTimeEntity {
     @Column(nullable = false)
     private LocalDateTime end;
 
-    public static EventPeriod from(EventPeriodRequest eventPeriodRequest) {
+    public static EventPeriod from(CreateEventPeriodRequest createEventPeriodRequest) {
         return new EventPeriod(
                 null,
-                eventPeriodRequest.getYear(),
-                eventPeriodRequest.getStart(),
-                eventPeriodRequest.getEnd()
+                createEventPeriodRequest.getYear(),
+                createEventPeriodRequest.getStart(),
+                createEventPeriodRequest.getEnd()
         );
     }
 }

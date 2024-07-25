@@ -12,8 +12,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
-import com.scg.stop.domain.event.dto.EventPeriodRequest;
-import com.scg.stop.domain.event.dto.EventPeriodResponse;
+import com.scg.stop.domain.event.dto.request.CreateEventPeriodRequest;
+import com.scg.stop.domain.event.dto.response.EventPeriodResponse;
 import com.scg.stop.domain.event.service.EventPeriodService;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.DisplayName;
@@ -43,10 +43,10 @@ class EventPeriodControllerTest extends AbstractControllerTest {
     void createEventPeriod() throws Exception {
 
         // given
-        EventPeriodRequest request = new EventPeriodRequest(2024, LocalDateTime.now(), LocalDateTime.now().plusDays(10));
+        CreateEventPeriodRequest request = new CreateEventPeriodRequest(2024, LocalDateTime.now(), LocalDateTime.now().plusDays(10));
         EventPeriodResponse response = new EventPeriodResponse(1L, 2024, LocalDateTime.now(), LocalDateTime.now().plusDays(10), LocalDateTime.now(), LocalDateTime.now());
 
-        when(eventPeriodService.createEventPeriod(any(EventPeriodRequest.class))).thenReturn(response);
+        when(eventPeriodService.createEventPeriod(any(CreateEventPeriodRequest.class))).thenReturn(response);
 
         // when
         ResultActions result = mockMvc.perform(
@@ -79,7 +79,7 @@ class EventPeriodControllerTest extends AbstractControllerTest {
     void createEventPeriodWithInvalidYear() throws Exception {
 
         // given
-        EventPeriodRequest request = new EventPeriodRequest( null, LocalDateTime.now(), LocalDateTime.now().plusDays(10));
+        CreateEventPeriodRequest request = new CreateEventPeriodRequest( null, LocalDateTime.now(), LocalDateTime.now().plusDays(10));
 
         // when
         ResultActions result = mockMvc.perform(
