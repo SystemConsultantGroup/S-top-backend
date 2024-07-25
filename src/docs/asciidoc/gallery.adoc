@@ -1,0 +1,8 @@
+== 갤러리 API
+:source-highlighter: highlightjs
+
+---
+=== 갤러리 게시글 생성 (POST /galleries)
+====
+operation::gallery-controller-test/create-gallery[snippets="http-request,request-fields,http-response,response-fields"]
+====
