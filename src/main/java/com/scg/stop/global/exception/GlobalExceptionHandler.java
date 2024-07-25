@@ -1,13 +1,13 @@
 package com.scg.stop.global.exception;
 
-import java.time.LocalDateTime;
+import static com.scg.stop.global.exception.ExceptionCode.INVALID_REQUEST;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -30,32 +30,23 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         log.warn(ex.getMessage(), ex);
 
         Map<String, Object> body = new HashMap<>();
-
-        body.put("status", 400);
-        body.put("timestamp", LocalDateTime.now());
-        body.put("error", HttpStatus.BAD_REQUEST);
-
         List<String> errors = ex.getBindingResult().getFieldErrors()
                 .stream()
                 .map(e -> e.getDefaultMessage())
                 .collect(Collectors.toList());
-        body.put("messages", errors);
+        body.put("details", errors);
+        body.put("code", INVALID_REQUEST.getCode());
+        body.put("message", INVALID_REQUEST.getMessage());
 
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+        return ResponseEntity.badRequest().body(body);
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<Object> handleBadRequestException(BadRequestException ex) {
+    public ResponseEntity<ExceptionResponse> handleBadRequestException(BadRequestException ex) {
 
         log.warn(ex.getMessage(), ex);
 
-        Map<String, Object> body = new HashMap<>();
-
-        body.put("status", 400);
-        body.put("timestamp", LocalDateTime.now());
-        body.put("error", HttpStatus.BAD_REQUEST);
-        body.put("message", ex.getMessage());
-
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+        return ResponseEntity.badRequest()
+                .body(new ExceptionResponse(ex.getCode(), ex.getMessage()));
     }
 }
