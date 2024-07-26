@@ -7,22 +7,19 @@ import static lombok.AccessLevel.PROTECTED;
 
 import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.global.domain.BaseTimeEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = PROTECTED)
+@AllArgsConstructor
 public class Project extends BaseTimeEntity {
 
     @Id
@@ -64,7 +61,7 @@ public class Project extends BaseTimeEntity {
     @JoinColumn(name = "poster_id")
     private File poster;
 
-    @OneToMany(fetch = LAZY, mappedBy = "project")
+    @OneToMany(fetch = LAZY, mappedBy = "project", cascade = CascadeType.ALL)
     private List<Member> members = new ArrayList<>();
 
     @OneToMany(fetch = LAZY, mappedBy = "project")
