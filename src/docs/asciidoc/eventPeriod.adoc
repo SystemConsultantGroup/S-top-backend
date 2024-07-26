@@ -11,3 +11,8 @@ operation::event-period-controller-test/create-event-period[snippets="http-reque
 ====
 operation::event-period-controller-test/get-event-periods[snippets="http-request,http-response,response-fields"]
 ====
+
+=== 행사 기간 삭제 (DELETE /eventPeriods/:eventPeriodId)
+====
+operation::event-period-controller-test/delete-event-periods[snippets="path-parameters,http-request,http-response"]
+====
