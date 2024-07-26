@@ -6,12 +6,13 @@ import com.scg.stop.auth.domain.request.LoginRequest;
 import com.scg.stop.auth.domain.request.RegisterRequest;
 import com.scg.stop.auth.domain.response.AccessTokenResponse;
 import com.scg.stop.auth.service.AuthService;
-import com.scg.stop.domain.project.domain.Role;
 import com.scg.stop.user.domain.User;
+import com.scg.stop.user.domain.UserType;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -54,10 +55,12 @@ public class AuthController {
 
     //TODO: 추가 회원가입로직 작성
     @PostMapping("/register")
-    public ResponseEntity<Void> register(
+    public ResponseEntity<User> register(
             @RequestBody RegisterRequest registerRequest,
-            @AuthUser(roles = {Role.PROFESSOR, Role.STUDENT}) User user) {
-        return ResponseEntity.created();
+            @AuthUser(userTypes = {UserType.TEMP}) User user) {
+        User finishedUser = authService.finishRegister(user, registerRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(finishedUser);
+
     }
 
     @PostMapping("/reissue")
@@ -78,10 +81,5 @@ public class AuthController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/login/test")
-    public String test(@RequestParam String code) {
-        log.info("code={}", code);
-        return "ok";
-    }
 }
 
