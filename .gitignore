@@ -38,3 +38,4 @@ out/
 
 /src/main/resources/application-local.yml
 /src/main/resources/application-oauth.yml
+/src/main/resources/static/docs/
