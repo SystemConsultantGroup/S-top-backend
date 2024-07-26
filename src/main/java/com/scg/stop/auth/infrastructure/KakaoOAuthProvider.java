@@ -24,7 +24,7 @@ import org.springframework.web.client.RestTemplate;
 public class KakaoOAuthProvider {
     private final RestTemplate restTemplate;
     private final String clientId;
-    private final String clientSecret;
+//    private final String clientSecret;
     private final String redirectUri;
     private final String tokenUri;
     private final String userInfoUri;
@@ -32,13 +32,13 @@ public class KakaoOAuthProvider {
     public KakaoOAuthProvider(
             RestTemplate restTemplate,
             @Value("${spring.security.oauth2.client.registration.kakao.client-id}") String clientId,
-            @Value("${spring.security.oauth2.client.registration.kakao.client-secret}") String clientSecret,
+//            @Value("${spring.security.oauth2.client.registration.kakao.client-secret}") String clientSecret,
             @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}") String redirectUri,
             @Value("${spring.security.oauth2.client.provider.kakao.token-uri}") String tokenUri,
             @Value("${spring.security.oauth2.client.provider.kakao.user-info-uri}") String userInfoUri) {
         this.restTemplate = restTemplate;
         this.clientId = clientId;
-        this.clientSecret = clientSecret;
+//        this.clientSecret = clientSecret;
         this.redirectUri = redirectUri;
         this.tokenUri = tokenUri;
         this.userInfoUri = userInfoUri;
@@ -75,7 +75,7 @@ public class KakaoOAuthProvider {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("code", code);
         params.add("client_id", clientId);
-        params.add("client_secret", clientSecret);
+//        params.add("client_secret", clientSecret);
         params.add("redirect_uri", redirectUri);
         params.add("grant_type", "authorization_code");
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(params, headers);

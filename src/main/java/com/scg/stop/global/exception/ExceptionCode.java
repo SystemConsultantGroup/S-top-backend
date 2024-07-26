@@ -15,7 +15,8 @@ public enum ExceptionCode {
     FAILED_TO_VALIDATE_TOKEN(3002,"토큰 검증에 실패했습니다."),
     INVALID_ACCESS_TOKEN(3003,"유효하지 않은 Access Token 입니다."),
 
-    NOT_FOUND_USER_ID(4000, "유저 id 를 찾을 수 없습니다.");
+    NOT_FOUND_USER_ID(4000, "유저 id 를 찾을 수 없습니다."),
+    REGISTER_NOT_FINISHED(4001, "회원가입이 필요합니다.");
 
     private final int code;
     private final String message;

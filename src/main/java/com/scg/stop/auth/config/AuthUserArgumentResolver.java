@@ -7,6 +7,7 @@ import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.global.exception.InvalidJwtException;
 import com.scg.stop.user.domain.User;
+import com.scg.stop.user.domain.UserType;
 import com.scg.stop.user.repository.UserRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,6 +30,7 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
+    private final String registerPath = "/register";
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
                                   NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
@@ -38,16 +40,23 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
         if (request == null) {
             throw new InvalidJwtException(ExceptionCode.FAILED_TO_VALIDATE_TOKEN);
         }
-
+        String contextPath = request.getContextPath();
         String refreshToken = extractRefreshToken(request);
         String accessToken = extractAccessToken(request);
 
         //검증
         if (jwtUtil.isAccessTokenValid(accessToken)) {
             User extractedUser = extractUser(accessToken);
-            Role[] allowedRoles = Objects.requireNonNull(parameter.getParameterAnnotation(AuthUser.class)).roles();
-            for (Role allowedRole: allowedRoles){
-                if (extractedUser.getRole().equals(allowedRole)){
+            UserType extractedUserType = extractUser(accessToken).getUserType();
+
+            // TEMP USER 이고 REGISTER PATH 로 요청이면 REGISTER 페이지로 안내
+            // 그 외 TEMP USER 는 전부 예외 처리
+            if (extractedUserType.equals(UserType.TEMP) && !contextPath.equals(registerPath)) {
+                throw new BadRequestException(ExceptionCode.REGISTER_NOT_FINISHED);
+            }
+            UserType[] allowedTypes = Objects.requireNonNull(parameter.getParameterAnnotation(AuthUser.class)).userTypes();
+            for (UserType allowedType: allowedTypes){
+                if (extractedUserType.equals(allowedType)){
                     return extractedUser;
                 }
             }
