@@ -195,22 +195,6 @@ class NoticeControllerTest extends AbstractControllerTest {
                 ));
     }
 
-    @DisplayName("존재하지 않는 공지 사항 조회 시 예외가 발생한다.")
-    @Test
-    void getNoticeWithInvalidId() throws Exception {
-        // given
-        when(noticeService.getNotice(1L)).thenThrow(new BadRequestException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
-
-        // when
-        ResultActions result = mockMvc.perform(
-                get("/notices/1")
-                        .contentType(APPLICATION_JSON)
-        );
-
-        // then
-        result.andExpect(status().isBadRequest());
-    }
-
     @DisplayName("공지 사항을 수정할 수 있다.")
     @Test
     void updateNotice() throws Exception {

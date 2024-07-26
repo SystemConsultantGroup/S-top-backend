@@ -9,6 +9,7 @@ import com.scg.stop.domain.notice.dto.response.NoticeListElementResponse;
 import com.scg.stop.domain.notice.dto.response.NoticeResponse;
 import com.scg.stop.domain.notice.repository.NoticeRepository;
 import com.scg.stop.global.exception.BadRequestException;
+import com.scg.stop.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,7 +37,7 @@ public class NoticeService {
     public NoticeResponse createNotice(NoticeRequest request) {
         List<File> attachedFiles = fileRepository.findByIdIn(request.getFileIds());
         if (attachedFiles.size() != request.getFileIds().size()) {
-            throw new BadRequestException("요청한 파일 ID에 해당하는 파일이 존재하지 않습니다.");
+            throw new BadRequestException(ExceptionCode.FILE_NOT_FOUND);
         }
 
         Notice newNotice = Notice.from(request.getTitle(), request.getContent(), request.isFixed(), attachedFiles);
@@ -66,7 +67,7 @@ public class NoticeService {
      */
     public NoticeResponse getNotice(Long id) {
         Notice notice = noticeRepository.findById(id).orElseThrow(() ->
-                new BadRequestException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
+                new BadRequestException(ExceptionCode.NOTICE_NOT_FOUND));
         notice.increaseHitCount();
 
         List <FileResponse> fileResponses = notice.getFiles().stream()
@@ -84,12 +85,12 @@ public class NoticeService {
     // TODO: Admin check
     public NoticeResponse updateNotice(Long id, NoticeRequest request) {
         Notice notice = noticeRepository.findById(id).orElseThrow(() ->
-                new BadRequestException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
+                new BadRequestException(ExceptionCode.NOTICE_NOT_FOUND));
         notice.updateNotice(request.getTitle(), request.getContent(), request.isFixed());
 
         List<File> attachedFiles = fileRepository.findByIdIn(request.getFileIds());
         if (attachedFiles.size() != request.getFileIds().size()) {
-            throw new BadRequestException("요청한 파일 ID에 해당하는 파일이 존재하지 않습니다.");
+            throw new BadRequestException(ExceptionCode.FILE_NOT_FOUND);
         }
 
         // Find files that are no longer attached
@@ -125,7 +126,7 @@ public class NoticeService {
     // TODO: Admin check
     public void deleteNotice(Long noticeId) {
         Notice notice = noticeRepository.findById(noticeId).orElseThrow(() ->
-                new BadRequestException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
+                new BadRequestException(ExceptionCode.NOTICE_NOT_FOUND));
         noticeRepository.delete(notice);
     }
 }
