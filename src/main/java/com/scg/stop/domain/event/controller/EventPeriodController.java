@@ -35,12 +35,12 @@ public class EventPeriodController {
     @GetMapping
     public ResponseEntity<List<EventPeriodResponse>> getEventPeriods() {
         List<EventPeriodResponse> eventPeriodResponses = eventPeriodService.getEventPeriods();
-        return ResponseEntity.ok().body(eventPeriodResponses);
+        return ResponseEntity.status(HttpStatus.OK).body(eventPeriodResponses);
     }
 
     @DeleteMapping("/{eventPeriodId}")
     public ResponseEntity<Void> deleteEventPeriod(@PathVariable("eventPeriodId") Long eventPeriodId) {
         eventPeriodService.deleteEventPeriod(eventPeriodId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

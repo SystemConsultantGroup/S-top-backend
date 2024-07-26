@@ -38,6 +38,6 @@ public class EventPeriodService {
         return eventPeriodResponses;
     }
 
-    public void deleteEventPeriod(Long id) {
+    public void deleteEventPeriod(Long eventPeriodId) {
     }
 }
