@@ -37,4 +37,7 @@ public class EventPeriodService {
                 .collect(Collectors.toList());
         return eventPeriodResponses;
     }
+
+    public void deleteEventPeriod(Long id) {
+    }
 }
