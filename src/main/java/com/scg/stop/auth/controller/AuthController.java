@@ -6,6 +6,7 @@ import com.scg.stop.auth.domain.request.LoginRequest;
 import com.scg.stop.auth.domain.request.RegisterRequest;
 import com.scg.stop.auth.domain.response.AccessTokenResponse;
 import com.scg.stop.auth.service.AuthService;
+import com.scg.stop.user.domain.AccessType;
 import com.scg.stop.user.domain.User;
 import com.scg.stop.user.domain.UserType;
 import jakarta.servlet.http.HttpServletResponse;
@@ -57,7 +58,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<User> register(
             @RequestBody RegisterRequest registerRequest,
-            @AuthUser(userTypes = {UserType.TEMP}) User user) {
+            @AuthUser(accessType = {AccessType.ALL}) User user) {
         User finishedUser = authService.finishRegister(user, registerRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(finishedUser);
 

@@ -53,8 +53,13 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
             // TEMP USER 이고 REGISTER PATH 로 요청이면 REGISTER 페이지로 안내
             // 그 외 TEMP USER 는 전부 예외 처리
             String registerPath = "/register";
-            if (extractedUserType.equals(UserType.TEMP) && !contextPath.equals(registerPath)) {
-                throw new BadRequestException(ExceptionCode.REGISTER_NOT_FINISHED);
+            if (extractedUserType.equals(UserType.TEMP) ) {
+                if (contextPath.equals(registerPath)) {
+                    return extractedUser;
+                }
+                else {
+                    throw new BadRequestException(ExceptionCode.REGISTER_NOT_FINISHED);
+                }
             }
             AccessType[] allowedTypes = Objects.requireNonNull(parameter.getParameterAnnotation(AuthUser.class)).accessType();
             List<AccessType> accessTypeList = Arrays.asList(allowedTypes);
