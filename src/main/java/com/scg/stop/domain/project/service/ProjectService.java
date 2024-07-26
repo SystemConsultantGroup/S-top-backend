@@ -23,16 +23,15 @@ public class ProjectService {
         Page<Project> projects = projectRepository.findProjects(title, year, category, pageable);
 
         Page<ProjectResponse> projectResponses = projects.map(project -> {
-            List<String> studentsName = project.getMembers().stream()
+            List<String> studentNames = project.getMembers().stream()
                     .filter(member -> member.getRole() == Role.STUDENT)
                     .map(Member::getName)
                     .collect(Collectors.toList());
-            String professorName = project.getMembers().stream()
+            List<String> professorNames = project.getMembers().stream()
                     .filter(member -> member.getRole() == Role.PROFESSOR)
                     .map(Member::getName)
-                    .findFirst()
-                    .orElse("");
-            return ProjectResponse.of(studentsName, professorName, project);
+                    .collect(Collectors.toList());
+            return ProjectResponse.of(studentNames, professorNames, project);
         });
 
         return projectResponses;
