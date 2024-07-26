@@ -2,6 +2,7 @@ package com.scg.stop.domain.project.dto.response;
 
 import static lombok.AccessLevel.PRIVATE;
 
+import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.domain.project.domain.Member;
 import com.scg.stop.domain.project.domain.Project;
 import com.scg.stop.domain.project.domain.ProjectCategory;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor(access = PRIVATE)
 public class ProjectResponse {
-    private String thumbnailUuid; // ToDo: File Entity 통째로 보내주는 것으로 논의?
+    private File thumbnailInfo;
     private String projectName;
     private String teamName;
     private List<String> studentNames;
@@ -30,7 +31,7 @@ public class ProjectResponse {
 
     public static ProjectResponse of(List<String> studentNames, List<String> professorNames, Project project){
         return new ProjectResponse(
-                project.getThumbnail().getUuid(),
+                project.getThumbnail(),
                 project.getName(),
                 project.getTeam(),
                 studentNames,
