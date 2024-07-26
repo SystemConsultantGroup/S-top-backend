@@ -1,7 +1,7 @@
 package com.scg.stop.domain.event.service;
 
 import static com.scg.stop.global.exception.ExceptionCode.DUPLICATED_YEAR;
-import static org.hamcrest.Matchers.any;
+import static com.scg.stop.global.exception.ExceptionCode.NOT_FOUND_EVENT_PERIOD;
 
 import com.scg.stop.domain.event.domain.EventPeriod;
 import com.scg.stop.domain.event.dto.request.CreateEventPeriodRequest;
@@ -39,5 +39,8 @@ public class EventPeriodService {
     }
 
     public void deleteEventPeriod(Long eventPeriodId) {
+        EventPeriod eventPeriod = eventPeriodRepository.findById(eventPeriodId)
+                .orElseThrow(() -> new BadRequestException(NOT_FOUND_EVENT_PERIOD));
+        eventPeriodRepository.delete(eventPeriod);
     }
 }
