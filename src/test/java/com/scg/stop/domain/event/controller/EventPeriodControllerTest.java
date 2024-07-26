@@ -2,11 +2,16 @@ package com.scg.stop.domain.event.controller;
 
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -17,7 +22,6 @@ import com.scg.stop.domain.event.dto.request.CreateEventPeriodRequest;
 import com.scg.stop.domain.event.dto.response.EventPeriodResponse;
 import com.scg.stop.domain.event.service.EventPeriodService;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -46,8 +50,10 @@ class EventPeriodControllerTest extends AbstractControllerTest {
     @DisplayName("이벤트 기간을 생성할 수 있다.")
     void createEventPeriod() throws Exception {
         // given
-        CreateEventPeriodRequest request = new CreateEventPeriodRequest(2024, LocalDateTime.now(), LocalDateTime.now().plusDays(10));
-        EventPeriodResponse response = new EventPeriodResponse(1L, 2024, LocalDateTime.now(), LocalDateTime.now().plusDays(10), LocalDateTime.now(), LocalDateTime.now());
+        CreateEventPeriodRequest request = new CreateEventPeriodRequest(2024, LocalDateTime.now(),
+                LocalDateTime.now().plusDays(10));
+        EventPeriodResponse response = new EventPeriodResponse(1L, 2024, LocalDateTime.now(),
+                LocalDateTime.now().plusDays(10), LocalDateTime.now(), LocalDateTime.now());
 
         when(eventPeriodService.createEventPeriod(any(CreateEventPeriodRequest.class))).thenReturn(response);
 
@@ -81,7 +87,8 @@ class EventPeriodControllerTest extends AbstractControllerTest {
     @DisplayName("이벤트 연도를 입력하지 않으면 예외가 발생한다.")
     void createEventPeriodWithInvalidYear() throws Exception {
         // given
-        CreateEventPeriodRequest request = new CreateEventPeriodRequest( null, LocalDateTime.now(), LocalDateTime.now().plusDays(10));
+        CreateEventPeriodRequest request = new CreateEventPeriodRequest(null, LocalDateTime.now(),
+                LocalDateTime.now().plusDays(10));
 
         // when
         ResultActions result = mockMvc.perform(
@@ -100,8 +107,10 @@ class EventPeriodControllerTest extends AbstractControllerTest {
     void getEventPeriods() throws Exception {
         // given
         List<EventPeriodResponse> responses = Arrays.asList(
-                new EventPeriodResponse(1L, 2024, LocalDateTime.now(), LocalDateTime.now().plusDays(10), LocalDateTime.now(), LocalDateTime.now()),
-                new EventPeriodResponse(2L, 2025, LocalDateTime.now(), LocalDateTime.now().plusDays(10), LocalDateTime.now(), LocalDateTime.now())
+                new EventPeriodResponse(1L, 2024, LocalDateTime.now(), LocalDateTime.now().plusDays(10),
+                        LocalDateTime.now(), LocalDateTime.now()),
+                new EventPeriodResponse(2L, 2025, LocalDateTime.now(), LocalDateTime.now().plusDays(10),
+                        LocalDateTime.now(), LocalDateTime.now())
         );
         when(eventPeriodService.getEventPeriods()).thenReturn(responses);
 
@@ -119,6 +128,22 @@ class EventPeriodControllerTest extends AbstractControllerTest {
                                 fieldWithPath("[].createdAt").type(JsonFieldType.STRING).description("생성일"),
                                 fieldWithPath("[].updatedAt").type(JsonFieldType.STRING).description("변경일")
                         )
+                ));
+    }
+
+    @Test
+    @DisplayName("요청한 ID에 해당하는 행사 기간을 삭제할 수 있다.")
+    void deleteEventPeriods() throws Exception {
+        // given
+        doNothing().when(eventPeriodService).deleteEventPeriod(anyLong());
+
+        // when
+        ResultActions result = mockMvc.perform(delete("/eventPeriods/{eventPeriodId}", 1L).contentType(APPLICATION_JSON));
+
+        // then
+        result.andExpect(status().isNoContent())
+                .andDo(restDocs.document(
+                        pathParameters(parameterWithName("eventPeriodId").description("삭제할 행사 기간의 ID"))
                 ));
     }
 }
