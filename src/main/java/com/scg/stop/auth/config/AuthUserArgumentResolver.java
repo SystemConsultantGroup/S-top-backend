@@ -2,16 +2,17 @@ package com.scg.stop.auth.config;
 
 import com.scg.stop.auth.annotation.AuthUser;
 import com.scg.stop.auth.JwtUtil;
-import com.scg.stop.domain.project.domain.Role;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.global.exception.InvalidJwtException;
+import com.scg.stop.user.domain.AccessType;
 import com.scg.stop.user.domain.User;
 import com.scg.stop.user.domain.UserType;
 import com.scg.stop.user.repository.UserRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,10 +31,10 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
-    private final String registerPath = "/register";
+
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-                                  NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+                                  NativeWebRequest webRequest, WebDataBinderFactory binderFactory)  {
 
         HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
 
@@ -51,18 +52,31 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
 
             // TEMP USER 이고 REGISTER PATH 로 요청이면 REGISTER 페이지로 안내
             // 그 외 TEMP USER 는 전부 예외 처리
+            String registerPath = "/register";
             if (extractedUserType.equals(UserType.TEMP) && !contextPath.equals(registerPath)) {
                 throw new BadRequestException(ExceptionCode.REGISTER_NOT_FINISHED);
             }
-            UserType[] allowedTypes = Objects.requireNonNull(parameter.getParameterAnnotation(AuthUser.class)).userTypes();
-            for (UserType allowedType: allowedTypes){
-                if (extractedUserType.equals(allowedType)){
-                    return extractedUser;
-                }
+            AccessType[] allowedTypes = Objects.requireNonNull(parameter.getParameterAnnotation(AuthUser.class)).accessType();
+            List<AccessType> accessTypeList = Arrays.asList(allowedTypes);
+
+            if (accessTypeList.contains(AccessType.ALL)) {
+                return extractedUser;
+            }
+            else if (extractedUserType.equals(UserType.ADMIN)) {
+                if (accessTypeList.contains(AccessType.ADMIN)) return extractedUser;
+            }
+            else if (extractedUserType.equals(UserType.COMPANY) || extractedUserType.equals(UserType.INACTIVE_COMPANY)){
+                if (accessTypeList.contains(AccessType.COMPANY)) return extractedUser;
+            }
+            else if (extractedUserType.equals(UserType.PROFESSOR) || extractedUserType.equals(UserType.INACTIVE_PROFESSOR)) {
+                if (accessTypeList.contains(AccessType.PROFESSOR)) return extractedUser;
+            }
+            else if (extractedUserType.equals(UserType.STUDENT)) {
+                if (accessTypeList.contains(AccessType.STUDENT)) return extractedUser;
             }
         }
 
-        throw new InvalidJwtException(ExceptionCode.FAILED_TO_VALIDATE_TOKEN);
+        throw new BadRequestException(ExceptionCode.NOT_AUTHORIZED);
     }
 
     @Override
