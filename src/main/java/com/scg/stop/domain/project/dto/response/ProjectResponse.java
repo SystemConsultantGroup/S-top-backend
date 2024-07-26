@@ -17,24 +17,24 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor(access = PRIVATE)
 public class ProjectResponse {
-    private String thumbnailUrl;
+    private String thumbnailUuid; // ToDo: File Entity 통째로 보내주는 것으로 논의?
     private String projectName;
     private String teamName;
-    private List<String> studentsName;
-    private String professorName;
+    private List<String> studentNames;
+    private List<String> professorNames;
     private ProjectType projectType;
     private ProjectCategory projectCategory;
     private List<String> techStack;
     private int likeCount;
     private boolean bookMark;
 
-    public static ProjectResponse of(List<String> studentsName, String professorName, Project project){
+    public static ProjectResponse of(List<String> studentNames, List<String> professorNames, Project project){
         return new ProjectResponse(
                 project.getThumbnail().getUuid(),
                 project.getName(),
                 project.getTeam(),
-                studentsName,
-                professorName,
+                studentNames,
+                professorNames,
                 project.getType(),
                 project.getCategory(),
                 List.of(project.getTechStack().split(", ")),
