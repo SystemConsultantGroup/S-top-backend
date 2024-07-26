@@ -5,11 +5,11 @@ import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
 
+import com.scg.stop.auth.domain.request.RegisterRequest;
 import com.scg.stop.domain.project.domain.Comment;
 import com.scg.stop.domain.project.domain.FavoriteProject;
 import com.scg.stop.domain.project.domain.Inquiry;
 import com.scg.stop.domain.project.domain.Likes;
-import com.scg.stop.domain.project.domain.Role;
 import com.scg.stop.domain.proposal.domain.Proposal;
 import com.scg.stop.domain.video.domain.FavoriteVideo;
 import com.scg.stop.domain.video.domain.UserQuiz;
@@ -47,12 +47,15 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false, unique = true)
     private String nickname;
 
-    @Column()
+    @Column(nullable = false)
     private String socialLoginId;
+
+//    @Column(nullable = false)
+//    private SocialType socialType;
 
     @Column(nullable = false)
     @Enumerated(value = STRING)
-    private Role role;
+    private UserType userType;
 
     private String signupSource;
 
@@ -82,4 +85,17 @@ public class User extends BaseTimeEntity {
 
     @OneToMany(fetch = LAZY, mappedBy = "user")
     private List<Inquiry> inquiries = new ArrayList<>();
+
+    public User(String socialLoginId) {
+        this.socialLoginId = socialLoginId;
+    }
+
+    public void register(String name, String email, String phone, UserType userType, Student studentInfo, String signupSource ) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.userType = userType;
+        if (studentInfo != null)  this.studentInfo = studentInfo;
+        this.signupSource = signupSource;
+    }
 }

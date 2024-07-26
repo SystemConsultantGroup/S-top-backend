@@ -1,7 +1,7 @@
 package com.scg.stop.user.domain;
 
 public enum UserType {
-
+    TEMP,
     STUDENT,
     PROFESSOR,
     COMPANY,
