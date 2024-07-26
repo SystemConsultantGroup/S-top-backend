@@ -2,7 +2,7 @@ name: Java CI with Gradle
 
 on:
   pull_request:
-    branches: ["main"]
+    branches: ["main", "develop"]
   workflow_dispatch:
 
 jobs:
@@ -36,6 +36,9 @@ jobs:
 #          redis-version: "7.2.5"
 #          redis-port: 6379
 
+      - name: gradlew 권한 부여
+        run: chmod +x gradlew
+        
       - name: Build with Gradle Wrapper
         run: ./gradlew build
 
