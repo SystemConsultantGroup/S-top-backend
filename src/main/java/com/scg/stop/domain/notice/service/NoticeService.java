@@ -4,9 +4,9 @@ import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.domain.file.dto.response.FileResponse;
 import com.scg.stop.domain.file.repository.FileRepository;
 import com.scg.stop.domain.notice.domain.Notice;
-import com.scg.stop.domain.notice.dto.request.NoticeRequestDto;
+import com.scg.stop.domain.notice.dto.request.NoticeRequest;
 import com.scg.stop.domain.notice.dto.response.NoticeListElementResponse;
-import com.scg.stop.domain.notice.dto.response.NoticeResponseDto;
+import com.scg.stop.domain.notice.dto.response.NoticeResponse;
 import com.scg.stop.domain.notice.repository.NoticeRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ public class NoticeService {
      * @return Notice Response DTO
      */
     // TODO: Admin check
-    public NoticeResponseDto createNotice(NoticeRequestDto requestDto) {
+    public NoticeResponse createNotice(NoticeRequest requestDto) {
         List<File> files = fileRepository.findByIdIn(requestDto.getFileIds());
         if (files.size() != requestDto.getFileIds().size()) {
             throw new BadRequestException("요청한 파일 ID에 해당하는 파일이 존재하지 않습니다.");
@@ -45,7 +45,7 @@ public class NoticeService {
         List<FileResponse> fileResponses = files.stream()
                 .map(FileResponse::from)
                 .collect(Collectors.toList());
-        return NoticeResponseDto.from(newNotice, fileResponses);
+        return NoticeResponse.from(newNotice, fileResponses);
     }
 
     /**
@@ -64,7 +64,7 @@ public class NoticeService {
      * @param id ID of the notice
      * @return Notice Response DTO
      */
-    public NoticeResponseDto getNotice(Long id) {
+    public NoticeResponse getNotice(Long id) {
         Notice notice = noticeRepository.findById(id).orElseThrow(() ->
                 new BadRequestException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
         notice.increaseHitCount();
@@ -72,7 +72,7 @@ public class NoticeService {
         List <FileResponse> fileResponses = notice.getFiles().stream()
                 .map(FileResponse::from)
                 .collect(Collectors.toList());
-        return NoticeResponseDto.from(notice, fileResponses);
+        return NoticeResponse.from(notice, fileResponses);
     }
 
     /**
@@ -82,7 +82,7 @@ public class NoticeService {
      * @return Notice Response DTO
      */
     // TODO: Admin check
-    public NoticeResponseDto updateNotice(Long id, NoticeRequestDto dto) {
+    public NoticeResponse updateNotice(Long id, NoticeRequest dto) {
         Notice notice = noticeRepository.findById(id).orElseThrow(() ->
                 new BadRequestException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
         notice.updateNotice(dto);
@@ -114,7 +114,7 @@ public class NoticeService {
                 .map(FileResponse::from)
                 .collect(Collectors.toList());
 
-        return NoticeResponseDto.from(notice, fileResponses);
+        return NoticeResponse.from(notice, fileResponses);
     }
 
 

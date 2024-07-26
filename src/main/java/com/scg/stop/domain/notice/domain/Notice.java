@@ -5,7 +5,7 @@ import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.scg.stop.domain.file.domain.File;
-import com.scg.stop.domain.notice.dto.request.NoticeRequestDto;
+import com.scg.stop.domain.notice.dto.request.NoticeRequest;
 import com.scg.stop.global.domain.BaseNoticeEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -32,7 +32,7 @@ public class Notice extends BaseNoticeEntity {
 
     // static method for creating new notice entity
     // TODO: hanlde attached files
-    public static Notice from(NoticeRequestDto requestDto, List<File> files) {
+    public static Notice from(NoticeRequest requestDto, List<File> files) {
         return new Notice(
             requestDto.getTitle(),
             requestDto.getContent(),
@@ -42,7 +42,7 @@ public class Notice extends BaseNoticeEntity {
         );
     }
 
-    public void updateNotice(NoticeRequestDto requestDto) {
+    public void updateNotice(NoticeRequest requestDto) {
         updateBaseNoticeEntity(requestDto.getTitle(), requestDto.getContent(), requestDto.isFixed());
     }
 
