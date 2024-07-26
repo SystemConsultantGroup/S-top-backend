@@ -4,9 +4,11 @@ import com.scg.stop.auth.JwtUtil;
 import com.scg.stop.auth.domain.RefreshToken;
 import com.scg.stop.auth.domain.UserToken;
 import com.scg.stop.auth.domain.request.LoginRequest;
+import com.scg.stop.auth.domain.request.RegisterRequest;
 import com.scg.stop.auth.infrastructure.KakaoOAuthProvider;
 import com.scg.stop.auth.infrastructure.KakaoUserInfo;
 import com.scg.stop.auth.repository.RefreshTokenRepository;
+import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.global.exception.InvalidJwtException;
 import com.scg.stop.user.domain.User;
@@ -28,7 +30,7 @@ public class AuthService {
         String kakaoAccessToken = kakaoOAuthProvider.fetchKakaoAccessToken(loginRequest.getCode());
         KakaoUserInfo userInfo = kakaoOAuthProvider.getUserInfo(kakaoAccessToken);
 
-        User user = findOrCreateUser(userInfo.getSocialLoginId(), userInfo.getNickname());
+        User user = findOrCreateUser(userInfo.getSocialLoginId());
 
         UserToken userToken = jwtUtil.createLoginToken(user.getId().toString());
         RefreshToken refreshToken = new RefreshToken(userToken.getRefreshToken(), user.getId());
@@ -36,14 +38,25 @@ public class AuthService {
         return userToken;
     }
 
-    // TODO: 카카오 & 네이버 둘다 회원가능 가능?? 하나만?
-    private User findOrCreateUser(String socialLoginId, String nickname) {
+    // 카카오 & 네이버 중 하나만 회원가입 가능
+    private User findOrCreateUser(String socialLoginId) {
         return userRepository.findBySocialLoginId(socialLoginId)
-                .orElseGet(() -> createUser(socialLoginId, nickname, );
+                .orElseGet(() -> createUser(socialLoginId));
     }
 
-    private User createUser(String socialLoginId, String nickname, String profileImageUrl) {
-        return userRepository.save(new User(socialLoginId, ));
+    public User finishRegister(User user, RegisterRequest registerRequest) {
+        User foundUser = userRepository.findById(user.getId())
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_USER_ID));
+        foundUser.register(registerRequest.getName(),
+                registerRequest.getEmail(),
+                registerRequest.getPhoneNumber(),
+                registerRequest.getUserType(),
+                registerRequest.getStudentInfo(),
+                registerRequest.getSignUpSource());
+        return foundUser;
+    }
+    private User createUser(String socialLoginId) {
+        return userRepository.save(new User(socialLoginId));
     }
 
     public void logout(String refreshToken) {
