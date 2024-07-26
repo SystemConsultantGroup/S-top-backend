@@ -21,11 +21,11 @@ public class EventPeriodService {
 
     private final EventPeriodRepository eventPeriodRepository;
 
-    public EventPeriodResponse createEventPeriod(CreateEventPeriodRequest createEventPeriodRequest) {
-        if (eventPeriodRepository.existsByYear(createEventPeriodRequest.getYear())) {
+    public EventPeriodResponse createEventPeriod(CreateEventPeriodRequest request) {
+        if (eventPeriodRepository.existsByYear(request.getYear())) {
             throw new BadRequestException(DUPLICATED_YEAR);
         }
-        EventPeriod newEventPeriod = eventPeriodRepository.save(EventPeriod.from(createEventPeriodRequest));
+        EventPeriod newEventPeriod = eventPeriodRepository.save(EventPeriod.of(request.getYear(), request.getStart(), request.getEnd()));
         return EventPeriodResponse.from(newEventPeriod);
     }
 
