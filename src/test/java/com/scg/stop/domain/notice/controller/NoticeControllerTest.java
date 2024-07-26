@@ -1,27 +1,35 @@
 package com.scg.stop.domain.notice.controller;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
-import com.scg.stop.domain.notice.dto.request.NoticeRequestDto;
-import com.scg.stop.domain.notice.dto.response.NoticeResponseDto;
+import com.scg.stop.domain.file.dto.response.FileResponse;
+import com.scg.stop.domain.notice.dto.request.NoticeRequest;
+import com.scg.stop.domain.notice.dto.response.NoticeListElementResponse;
+import com.scg.stop.domain.notice.dto.response.NoticeResponse;
 import com.scg.stop.domain.notice.service.NoticeService;
+import com.scg.stop.global.exception.BadRequestException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -37,16 +45,21 @@ class NoticeControllerTest extends AbstractControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    // TODO: Auth 설정 추가
-    // TODO: handle attached files
     @Test
     @DisplayName("공지 사항을 생성할 수 있다.")
+        // TODO: Auth user check
+        // TODO: attached files check
     void createNotice() throws Exception {
 
         // given
-        NoticeRequestDto request = new NoticeRequestDto("title", "content", true);
-        NoticeResponseDto response = new NoticeResponseDto(1L, "title", "content", 0, true, LocalDateTime.now(), LocalDateTime.now());
+        NoticeRequest request = new NoticeRequest("title", "content", true, List.of(1L,2L, 3L));
 
+        List<FileResponse> fileResponses = Arrays.asList(
+                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "사진1.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
+                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "사진2.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
+                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "사진3.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now())
+        );
+        NoticeResponse response = new NoticeResponse(1L, "title", "content", 0, true, LocalDateTime.now(), LocalDateTime.now(), fileResponses);
 
         when(noticeService.createNotice(any())).thenReturn(response);
 
@@ -57,14 +70,14 @@ class NoticeControllerTest extends AbstractControllerTest {
                         .content(objectMapper.writeValueAsString(request))
         );
 
-
         // then
         result.andExpect(status().isCreated())
                 .andDo(restDocs.document(
                         requestFields(
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("공지 사항 제목"),
                                 fieldWithPath("content").type(JsonFieldType.STRING).description("공지 사항 내용"),
-                                fieldWithPath("fixed").type(JsonFieldType.BOOLEAN).description("공지 사항 고정 여부")
+                                fieldWithPath("fixed").type(JsonFieldType.BOOLEAN).description("공지 사항 고정 여부"),
+                                fieldWithPath("fileIds").type(JsonFieldType.ARRAY).description("첨부 파일 ID 목록")
                         ),
                         responseFields(
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("공지 사항 ID"),
@@ -73,46 +86,196 @@ class NoticeControllerTest extends AbstractControllerTest {
                                 fieldWithPath("hitCount").type(JsonFieldType.NUMBER).description("공지 사항 조회수"),
                                 fieldWithPath("fixed").type(JsonFieldType.BOOLEAN).description("공지 사항 고정 여부"),
                                 fieldWithPath("createdAt").type(JsonFieldType.STRING).description("공지 사항 생성일"),
-                                fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("공지 사항 수정일")
+                                fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("공지 사항 수정일"),
+                                fieldWithPath("fileResponses").type(JsonFieldType.ARRAY).description("첨부 파일 목록"),
+                                fieldWithPath("fileResponses[].id").type(JsonFieldType.NUMBER).description("파일 ID"),
+                                fieldWithPath("fileResponses[].uuid").type(JsonFieldType.STRING).description("파일 고유 식별자"),
+                                fieldWithPath("fileResponses[].name").type(JsonFieldType.STRING).description("파일 이름"),
+                                fieldWithPath("fileResponses[].mimeType").type(JsonFieldType.STRING).description("파일 MIME 타입"),
+                                fieldWithPath("fileResponses[].createdAt").type(JsonFieldType.STRING).description("파일 생성 시간"),
+                                fieldWithPath("fileResponses[].updatedAt").type(JsonFieldType.STRING).description("파일 수정 시간")
+                        )
+
+                ));
+    }
+
+    @DisplayName("공지 사항 리스트를 조회할 수 있다.")
+    @Test
+    void getNoticeList() throws Exception {
+
+        // given
+
+        NoticeListElementResponse notice1 = new NoticeListElementResponse(1L, "test 1", 0, true, LocalDateTime.now(), LocalDateTime.now());
+        NoticeListElementResponse notice2 = new NoticeListElementResponse(2L, "test 2", 0, true, LocalDateTime.now(), LocalDateTime.now());
+        Page<NoticeListElementResponse> page = new PageImpl<>(List.of(notice1, notice2), PageRequest.of(0, 10), 2);
+
+        when(noticeService.getNoticeList(any(), any())).thenReturn(page);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                get("/notices")
+                        .param("title", "test")
+                        .contentType(APPLICATION_JSON)
+        );
+
+        // then
+        result.andExpect(status().isOk())
+                .andDo(restDocs.document(
+                        responseFields(
+                                fieldWithPath("content[].id").type(JsonFieldType.NUMBER).description("공지 사항 ID"),
+                                fieldWithPath("content[].title").type(JsonFieldType.STRING).description("공지 사항 제목"),
+                                fieldWithPath("content[].hitCount").type(JsonFieldType.NUMBER).description("공지 사항 조회수"),
+                                fieldWithPath("content[].fixed").type(JsonFieldType.BOOLEAN).description("공지 사항 고정 여부"),
+                                fieldWithPath("content[].createdAt").type(JsonFieldType.STRING).description("공지 사항 생성일"),
+                                fieldWithPath("content[].updatedAt").type(JsonFieldType.STRING).description("공지 사항 수정일"),
+                                fieldWithPath("pageable").type(JsonFieldType.OBJECT).description("페이지 정보"),
+                                fieldWithPath("pageable.pageNumber").type(JsonFieldType.NUMBER).description("현재 페이지 번호"),
+                                fieldWithPath("pageable.pageSize").type(JsonFieldType.NUMBER).description("페이지 당 요소 수"),
+                                fieldWithPath("pageable.sort.empty").type(JsonFieldType.BOOLEAN).description("정렬 정보가 비어있는지 여부"),
+                                fieldWithPath("pageable.sort.sorted").type(JsonFieldType.BOOLEAN).description("정렬된 상태인지 여부"),
+                                fieldWithPath("pageable.sort.unsorted").type(JsonFieldType.BOOLEAN).description("정렬되지 않은 상태인지 여부"),
+                                fieldWithPath("pageable.offset").type(JsonFieldType.NUMBER).description("오프셋"),
+                                fieldWithPath("pageable.paged").type(JsonFieldType.BOOLEAN).description("페이징된 여부"),
+                                fieldWithPath("pageable.unpaged").type(JsonFieldType.BOOLEAN).description("페이징되지 않은 여부"),
+                                fieldWithPath("totalElements").type(JsonFieldType.NUMBER).description("전체 요소 수"),
+                                fieldWithPath("totalPages").type(JsonFieldType.NUMBER).description("전체 페이지 수"),
+                                fieldWithPath("size").type(JsonFieldType.NUMBER).description("페이지 당 요소 수"),
+                                fieldWithPath("number").type(JsonFieldType.NUMBER).description("현재 페이지 번호"),
+                                fieldWithPath("numberOfElements").type(JsonFieldType.NUMBER).description("현재 페이지 요소 수"),
+                                fieldWithPath("first").type(JsonFieldType.BOOLEAN).description("첫 페이지 여부"),
+                                fieldWithPath("last").type(JsonFieldType.BOOLEAN).description("마지막 페이지 여부"),
+                                fieldWithPath("sort.empty").type(JsonFieldType.BOOLEAN).description("정렬 정보가 비어있는지 여부"),
+                                fieldWithPath("sort.unsorted").type(JsonFieldType.BOOLEAN).description("정렬되지 않은 상태인지 여부"),
+                                fieldWithPath("sort.sorted").type(JsonFieldType.BOOLEAN).description("정렬된 상태인지 여부"),
+                                fieldWithPath("empty").type(JsonFieldType.BOOLEAN).description("비어있는 페이지 여부")
                         )
                 ));
     }
 
-    @DisplayName("공지 사항 제목을 입력하지 않으면 예외가 발생한다.")
+    @DisplayName("공지 사항을 조회할 수 있다.")
     @Test
-    void createNoticeWithInvalidTitle() throws Exception {
+    void getNotice() throws Exception {
 
         // given
-        NoticeRequestDto request = new NoticeRequestDto("", "content", true);
+        List<FileResponse> fileResponses = Arrays.asList(
+                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "사진1.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
+                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "사진2.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
+                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "사진3.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now())
+        );
+        NoticeResponse response = new NoticeResponse(1L, "title", "content", 1, true, LocalDateTime.now(), LocalDateTime.now(), fileResponses);
+
+        when(noticeService.getNotice(1L)).thenReturn(response);
 
         // when
         ResultActions result = mockMvc.perform(
-                post("/notices")
+                get("/notices/1")
                         .contentType(APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request))
+        );
+
+        // then
+        result.andExpect(status().isOk())
+                .andDo(restDocs.document(
+                        responseFields(
+                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("공지 사항 ID"),
+                                fieldWithPath("title").type(JsonFieldType.STRING).description("공지 사항 제목"),
+                                fieldWithPath("content").type(JsonFieldType.STRING).description("공지 사항 내용"),
+                                fieldWithPath("hitCount").type(JsonFieldType.NUMBER).description("공지 사항 조회수"),
+                                fieldWithPath("fixed").type(JsonFieldType.BOOLEAN).description("공지 사항 고정 여부"),
+                                fieldWithPath("createdAt").type(JsonFieldType.STRING).description("공지 사항 생성일"),
+                                fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("공지 사항 수정일"),
+                                fieldWithPath("fileResponses").type(JsonFieldType.ARRAY).description("첨부 파일 목록"),
+                                fieldWithPath("fileResponses[].id").type(JsonFieldType.NUMBER).description("파일 ID"),
+                                fieldWithPath("fileResponses[].uuid").type(JsonFieldType.STRING).description("파일 고유 식별자"),
+                                fieldWithPath("fileResponses[].name").type(JsonFieldType.STRING).description("파일 이름"),
+                                fieldWithPath("fileResponses[].mimeType").type(JsonFieldType.STRING).description("파일 MIME 타입"),
+                                fieldWithPath("fileResponses[].createdAt").type(JsonFieldType.STRING).description("파일 생성 시간"),
+                                fieldWithPath("fileResponses[].updatedAt").type(JsonFieldType.STRING).description("파일 수정 시간")
+                        )
+
+                ));
+    }
+
+    @DisplayName("존재하지 않는 공지 사항 조회 시 예외가 발생한다.")
+    @Test
+    void getNoticeWithInvalidId() throws Exception {
+        // given
+        when(noticeService.getNotice(1L)).thenThrow(new BadRequestException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
+
+        // when
+        ResultActions result = mockMvc.perform(
+                get("/notices/1")
+                        .contentType(APPLICATION_JSON)
         );
 
         // then
         result.andExpect(status().isBadRequest());
     }
 
-    @DisplayName("공지 사항 내용을 입력하지 않으면 예외가 발생한다.")
+    @DisplayName("공지 사항을 수정할 수 있다.")
     @Test
-    void createNoticeWithInvalidContent() throws Exception {
+    void updateNotice() throws Exception {
 
         // given
-        NoticeRequestDto request = new NoticeRequestDto("title", "", true);
+        NoticeRequest request = new NoticeRequest("updated title", "updated content", false, List.of(2L, 3L));
+        List<FileResponse> fileResponses = Arrays.asList(
+                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "사진2.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
+                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "사진3.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now())
+        );
+        NoticeResponse response = new NoticeResponse(1L, "updated title", "updated content", 0, false, LocalDateTime.now(), LocalDateTime.now(), fileResponses);
+
+        when(noticeService.updateNotice(any(), any())).thenReturn(response);
 
         // when
         ResultActions result = mockMvc.perform(
-                post("/notices")
+                put("/notices/1")
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
         );
 
         // then
-        result.andExpect(status().isBadRequest());
+        result.andExpect(status().isOk())
+                .andDo(restDocs.document(
+                        requestFields(
+                                fieldWithPath("title").type(JsonFieldType.STRING).description("공지 사항 제목"),
+                                fieldWithPath("content").type(JsonFieldType.STRING).description("공지 사항 내용"),
+                                fieldWithPath("fixed").type(JsonFieldType.BOOLEAN).description("공지 사항 고정 여부"),
+                                fieldWithPath("fileIds").type(JsonFieldType.ARRAY).description("첨부 파일 ID 목록")
+                        ),
+                        responseFields(
+                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("공지 사항 ID"),
+                                fieldWithPath("title").type(JsonFieldType.STRING).description("공지 사항 제목"),
+                                fieldWithPath("content").type(JsonFieldType.STRING).description("공지 사항 내용"),
+                                fieldWithPath("hitCount").type(JsonFieldType.NUMBER).description("공지 사항 조회수"),
+                                fieldWithPath("fixed").type(JsonFieldType.BOOLEAN).description("공지 사항 고정 여부"),
+                                fieldWithPath("createdAt").type(JsonFieldType.STRING).description("공지 사항 생성일"),
+                                fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("공지 사항 수정일"),
+                                fieldWithPath("fileResponses").type(JsonFieldType.ARRAY).description("첨부 파일 목록"),
+                                fieldWithPath("fileResponses[].id").type(JsonFieldType.NUMBER).description("파일 ID"),
+                                fieldWithPath("fileResponses[].uuid").type(JsonFieldType.STRING).description("파일 고유 식별자"),
+                                fieldWithPath("fileResponses[].name").type(JsonFieldType.STRING).description("파일 이름"),
+                                fieldWithPath("fileResponses[].mimeType").type(JsonFieldType.STRING).description("파일 MIME 타입"),
+                                fieldWithPath("fileResponses[].createdAt").type(JsonFieldType.STRING).description("파일 생성 시간"),
+                                fieldWithPath("fileResponses[].updatedAt").type(JsonFieldType.STRING).description("파일 수정 시간")
+                        )
+
+                ));
     }
 
-    // TODO: fixed field 의 경우 default 가 false 이므로 비어있는 경우를 상정?
+
+    @DisplayName("공지 사항을 삭제할 수 있다.")
+    @Test
+    void deleteNotice() throws Exception {
+
+        // given
+        doNothing().when(noticeService).deleteNotice(1L);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                delete("/notices/1")
+                        .contentType(APPLICATION_JSON)
+        );
+
+        // then
+        result.andExpect(status().isNoContent());
+    }
 }
