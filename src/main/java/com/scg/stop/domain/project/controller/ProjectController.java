@@ -25,8 +25,8 @@ public class ProjectController {
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "year", required = false) Integer year,
             @RequestParam(value = "category", required = false) ProjectCategory category,
-            @PageableDefault(page = 0, size = 10) Pageable pagealbe){
-        Page<ProjectResponse> projects = projectService.getProjects(title, year, category, pagealbe);
+            @PageableDefault(page = 0, size = 10) Pageable pageable){
+        Page<ProjectResponse> projects = projectService.getProjects(title, year, category, pageable);
         return ResponseEntity.ok(projects);
     }
 }
