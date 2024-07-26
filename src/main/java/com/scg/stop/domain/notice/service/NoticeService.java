@@ -29,20 +29,20 @@ public class NoticeService {
 
     /**
      * Create a new notice
-     * @param requestDto Notice Request DTO
+     * @param request Notice Request DTO
      * @return Notice Response DTO
      */
     // TODO: Admin check
-    public NoticeResponse createNotice(NoticeRequest requestDto) {
-        List<File> files = fileRepository.findByIdIn(requestDto.getFileIds());
-        if (files.size() != requestDto.getFileIds().size()) {
+    public NoticeResponse createNotice(NoticeRequest request) {
+        List<File> attachedFiles = fileRepository.findByIdIn(request.getFileIds());
+        if (attachedFiles.size() != request.getFileIds().size()) {
             throw new BadRequestException("요청한 파일 ID에 해당하는 파일이 존재하지 않습니다.");
         }
 
-        Notice newNotice = Notice.from(requestDto, files);
+        Notice newNotice = Notice.from(request.getTitle(), request.getContent(), request.isFixed(), attachedFiles);
         noticeRepository.save(newNotice);
 
-        List<FileResponse> fileResponses = files.stream()
+        List<FileResponse> fileResponses = attachedFiles.stream()
                 .map(FileResponse::from)
                 .collect(Collectors.toList());
         return NoticeResponse.from(newNotice, fileResponses);
@@ -78,24 +78,24 @@ public class NoticeService {
     /**
      * Update a corresponding notice
      * @param id ID of the notice
-     * @param dto Notice Request DTO
+     * @param request Notice Request DTO
      * @return Notice Response DTO
      */
     // TODO: Admin check
-    public NoticeResponse updateNotice(Long id, NoticeRequest dto) {
+    public NoticeResponse updateNotice(Long id, NoticeRequest request) {
         Notice notice = noticeRepository.findById(id).orElseThrow(() ->
                 new BadRequestException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
-        notice.updateNotice(dto);
+        notice.updateNotice(request.getTitle(), request.getContent(), request.isFixed());
 
-        // File handling
-        List<File> files = fileRepository.findByIdIn(dto.getFileIds());
-        if (files.size() != dto.getFileIds().size()) {
+        List<File> attachedFiles = fileRepository.findByIdIn(request.getFileIds());
+        if (attachedFiles.size() != request.getFileIds().size()) {
             throw new BadRequestException("요청한 파일 ID에 해당하는 파일이 존재하지 않습니다.");
         }
 
         // Find files that are no longer attached
         List<File> filesToRemove = new ArrayList<>(notice.getFiles());
-        filesToRemove.removeAll(files);
+        filesToRemove.removeAll(attachedFiles);
+
         // Remove files that are no longer attached from the file table
         filesToRemove.forEach(file -> {
             notice.getFiles().remove(file);
@@ -103,7 +103,7 @@ public class NoticeService {
         });
 
         // Add new files and set noticeId
-        files.forEach(file -> {
+        attachedFiles.forEach(file -> {
             if (!notice.getFiles().contains(file)) {
                 file.setNotice(notice);
                 notice.getFiles().add(file);
