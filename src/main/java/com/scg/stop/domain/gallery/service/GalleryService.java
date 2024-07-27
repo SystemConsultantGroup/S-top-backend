@@ -20,12 +20,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class GalleryService {
 
     private final GalleryRepository galleryRepository;
     private final FileRepository fileRepository;
 
+    @Transactional
     public GalleryResponse createGallery(CreateGalleryRequest request) {
         List<File> files = fileRepository.findByIdIn(request.getFileIds());
         if (files.size() != request.getFileIds().size()) {
@@ -41,6 +41,7 @@ public class GalleryService {
         return GalleryResponse.of(savedGallery, fileResponses);
     }
 
+    @Transactional(readOnly = true)
     public Page<GalleryResponse> getGalleries(Integer year, Integer month, Pageable pageable) {
         Page<Gallery> galleries = galleryRepository.findGalleries(year, month, pageable);
         return galleries.map(this::entityToGalleryResponse);
