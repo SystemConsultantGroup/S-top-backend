@@ -5,6 +5,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.scg.stop.domain.file.domain.File;
+import com.scg.stop.domain.gallery.dto.request.CreateGalleryRequest;
 import com.scg.stop.global.domain.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,7 +26,6 @@ public class Gallery extends BaseTimeEntity {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-
     @Column(nullable = false)
     private String title;
 
@@ -40,4 +40,17 @@ public class Gallery extends BaseTimeEntity {
 
     @OneToMany(fetch = LAZY, mappedBy = "gallery")
     private List<File> files = new ArrayList<>();
+
+    private Gallery(String title, String content, Integer year, Integer month, List<File> files) {
+        this.title = title;
+        this.content = content;
+        this.year = year;
+        this.month = month;
+        this.files = files;
+        files.forEach(file -> file.setGallery(this));
+    }
+
+    public static Gallery of(String title, String content, Integer year, Integer month, List<File> files) {
+        return new Gallery(title, content, year, month, files);
+    }
 }
