@@ -4,6 +4,7 @@ import com.scg.stop.user.domain.Student;
 import com.scg.stop.user.domain.UserType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,14 +18,15 @@ public class RegisterRequest {
     @NotBlank(message = "전화번호를 입력해주세요.")
     private String phoneNumber;
 
-    @NotBlank(message = "유저유형을 입력해주세요.")
+    @NotNull(message = "회원 유형을 입력해주세요.")
     private UserType userType;
 
     @NotBlank(message = "이메일을 입력해주세요.")
     private String email;
 
-    @NotBlank(message = "가입 경로를 입력해주세요")
     private String signUpSource;
 
-    private Student studentInfo;
+    //TODO: 학생의 경우 학번/학과 필수 입력
+
+
 }
