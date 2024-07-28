@@ -26,8 +26,8 @@ public class AuthService {
     private final JwtUtil jwtUtil;
     private final KakaoOAuthProvider kakaoOAuthProvider;
 
-    public UserToken login(LoginRequest loginRequest) {
-        String kakaoAccessToken = kakaoOAuthProvider.fetchKakaoAccessToken(loginRequest.getCode());
+    public UserToken login(String accessCode) {
+        String kakaoAccessToken = kakaoOAuthProvider.fetchKakaoAccessToken(accessCode);
         KakaoUserInfo userInfo = kakaoOAuthProvider.getUserInfo(kakaoAccessToken);
 
         User user = findOrCreateUser(userInfo.getSocialLoginId());

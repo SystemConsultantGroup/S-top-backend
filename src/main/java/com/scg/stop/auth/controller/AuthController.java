@@ -10,6 +10,7 @@ import com.scg.stop.user.domain.AccessType;
 import com.scg.stop.user.domain.User;
 import com.scg.stop.user.domain.UserType;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -18,6 +19,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -34,12 +36,12 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping(value = "/login/kakao")
+    @PostMapping(value = "/login/kakao/{accessCode}")
     public ResponseEntity<AccessTokenResponse> kakaoLogin(
-            @RequestBody LoginRequest loginRequest,
+            @PathVariable("accessCode") String accessCode ,
             HttpServletResponse response
     ) {
-        UserToken userTokens = authService.login(loginRequest);
+        UserToken userTokens = authService.login(accessCode);
 
         ResponseCookie cookie = ResponseCookie.from("refresh-token", userTokens.getRefreshToken())
                 .maxAge(ONE_WEEK_SECONDS)
@@ -54,10 +56,9 @@ public class AuthController {
         return ResponseEntity.ok(new AccessTokenResponse(userTokens.getAccessToken()));
     }
 
-    //TODO: 추가 회원가입로직 작성
     @PostMapping("/register")
     public ResponseEntity<User> register(
-            @RequestBody RegisterRequest registerRequest,
+            @RequestBody @Valid RegisterRequest registerRequest,
             @AuthUser(accessType = {AccessType.ALL}) User user) {
         User finishedUser = authService.finishRegister(user, registerRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(finishedUser);
