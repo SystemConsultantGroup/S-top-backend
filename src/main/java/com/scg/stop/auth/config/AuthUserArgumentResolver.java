@@ -42,7 +42,7 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
         if (request == null) {
             throw new InvalidJwtException(ExceptionCode.FAILED_TO_VALIDATE_TOKEN);
         }
-        String contextPath = request.getContextPath();
+        String contextPath = request.getRequestURI();
         String refreshToken = extractRefreshToken(request);
         String accessToken = extractAccessToken(request);
 
@@ -53,7 +53,7 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
 
             // TEMP USER 이고 REGISTER PATH 로 요청이면 REGISTER 페이지로 안내
             // 그 외 TEMP USER 는 전부 예외 처리
-            String registerPath = "/register";
+            String registerPath = "/auth/register";
             if (extractedUserType.equals(UserType.TEMP) ) {
                 if (contextPath.equals(registerPath)) {
                     return extractedUser;
