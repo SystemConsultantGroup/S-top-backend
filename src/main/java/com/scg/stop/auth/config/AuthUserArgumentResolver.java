@@ -5,6 +5,7 @@ import com.scg.stop.auth.JwtUtil;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.global.exception.InvalidJwtException;
+import com.scg.stop.global.exception.UnauthorizedException;
 import com.scg.stop.user.domain.AccessType;
 import com.scg.stop.user.domain.User;
 import com.scg.stop.user.domain.UserType;
@@ -81,7 +82,7 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
             }
         }
 
-        throw new BadRequestException(ExceptionCode.NOT_AUTHORIZED);
+        throw new UnauthorizedException(ExceptionCode.NOT_AUTHORIZED);
     }
 
     @Override
