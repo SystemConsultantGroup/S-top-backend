@@ -6,7 +6,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,7 +21,6 @@ import com.scg.stop.domain.notice.dto.request.NoticeRequest;
 import com.scg.stop.domain.notice.dto.response.NoticeListElementResponse;
 import com.scg.stop.domain.notice.dto.response.NoticeResponse;
 import com.scg.stop.domain.notice.service.NoticeService;
-import com.scg.stop.global.exception.BadRequestException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +30,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -48,20 +49,19 @@ class NoticeControllerTest extends AbstractControllerTest {
     @Test
     @DisplayName("공지 사항을 생성할 수 있다.")
         // TODO: Auth user check
-        // TODO: attached files check
     void createNotice() throws Exception {
 
         // given
-        NoticeRequest request = new NoticeRequest("title", "content", true, List.of(1L,2L, 3L));
+        NoticeRequest request = new NoticeRequest("공지 사항 제목", "공지 사항 내용", true, List.of(1L,2L, 3L));
 
-        List<FileResponse> fileResponses = Arrays.asList(
-                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "사진1.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "사진2.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "사진3.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now())
+        List<FileResponse> files = Arrays.asList(
+                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "예시 첨부 파일 1.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
+                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "예시 첨부 파일 2.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
+                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "예시 첨부 파일 3.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now())
         );
-        NoticeResponse response = new NoticeResponse(1L, "title", "content", 0, true, LocalDateTime.now(), LocalDateTime.now(), fileResponses);
+        NoticeResponse response = new NoticeResponse(1L, "공지 사항 제목", "공지 사항 내용", 0, true, LocalDateTime.now(), LocalDateTime.now(), files);
 
-        when(noticeService.createNotice(any())).thenReturn(response);
+        when(noticeService.createNotice(any(NoticeRequest.class))).thenReturn(response);
 
         // when
         ResultActions result = mockMvc.perform(
@@ -77,7 +77,7 @@ class NoticeControllerTest extends AbstractControllerTest {
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("공지 사항 제목"),
                                 fieldWithPath("content").type(JsonFieldType.STRING).description("공지 사항 내용"),
                                 fieldWithPath("fixed").type(JsonFieldType.BOOLEAN).description("공지 사항 고정 여부"),
-                                fieldWithPath("fileIds").type(JsonFieldType.ARRAY).description("첨부 파일 ID 목록")
+                                fieldWithPath("fileIds").type(JsonFieldType.ARRAY).description("첨부 파일 ID 목록").optional()
                         ),
                         responseFields(
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("공지 사항 ID"),
@@ -104,9 +104,8 @@ class NoticeControllerTest extends AbstractControllerTest {
     void getNoticeList() throws Exception {
 
         // given
-
-        NoticeListElementResponse notice1 = new NoticeListElementResponse(1L, "test 1", 0, true, LocalDateTime.now(), LocalDateTime.now());
-        NoticeListElementResponse notice2 = new NoticeListElementResponse(2L, "test 2", 0, true, LocalDateTime.now(), LocalDateTime.now());
+        NoticeListElementResponse notice1 = new NoticeListElementResponse(1L, "공지 사항 1", 10, true, LocalDateTime.now(), LocalDateTime.now());
+        NoticeListElementResponse notice2 = new NoticeListElementResponse(2L, "공지 사항 2", 10, false, LocalDateTime.now(), LocalDateTime.now());
         Page<NoticeListElementResponse> page = new PageImpl<>(List.of(notice1, notice2), PageRequest.of(0, 10), 2);
 
         when(noticeService.getNoticeList(any(), any())).thenReturn(page);
@@ -114,13 +113,15 @@ class NoticeControllerTest extends AbstractControllerTest {
         // when
         ResultActions result = mockMvc.perform(
                 get("/notices")
-                        .param("title", "test")
                         .contentType(APPLICATION_JSON)
         );
 
         // then
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
+                        queryParameters(
+                                parameterWithName("title").description("찾고자 하는 공지 사항 제목").optional()
+                        ),
                         responseFields(
                                 fieldWithPath("content[].id").type(JsonFieldType.NUMBER).description("공지 사항 ID"),
                                 fieldWithPath("content[].title").type(JsonFieldType.STRING).description("공지 사항 제목"),
@@ -157,24 +158,27 @@ class NoticeControllerTest extends AbstractControllerTest {
     void getNotice() throws Exception {
 
         // given
-        List<FileResponse> fileResponses = Arrays.asList(
-                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "사진1.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "사진2.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "사진3.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now())
+        List<FileResponse> files = Arrays.asList(
+                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "예시 첨부 파일 1.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
+                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "예시 첨부 파일 2.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
+                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "예시 첨부 파일 3.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now())
         );
-        NoticeResponse response = new NoticeResponse(1L, "title", "content", 1, true, LocalDateTime.now(), LocalDateTime.now(), fileResponses);
+        NoticeResponse response = new NoticeResponse(1L, "공지 사항 제목", "content", 10, true, LocalDateTime.now(), LocalDateTime.now(), files);
 
-        when(noticeService.getNotice(1L)).thenReturn(response);
+        when(noticeService.getNotice(any())).thenReturn(response);
 
         // when
         ResultActions result = mockMvc.perform(
-                get("/notices/1")
+                get("/notices/{noticeId}", 1L)
                         .contentType(APPLICATION_JSON)
         );
 
         // then
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
+                        pathParameters(
+                                parameterWithName("noticeId").description("조회할 공지 사항 ID")
+                        ),
                         responseFields(
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("공지 사항 ID"),
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("공지 사항 제목"),
@@ -200,18 +204,19 @@ class NoticeControllerTest extends AbstractControllerTest {
     void updateNotice() throws Exception {
 
         // given
-        NoticeRequest request = new NoticeRequest("updated title", "updated content", false, List.of(2L, 3L));
-        List<FileResponse> fileResponses = Arrays.asList(
-                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "사진2.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "사진3.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now())
+        NoticeRequest request = new NoticeRequest("수정된 공지 사항 제목", "수정된 공지 사항 내용", false, List.of(1L, 2L, 3L));
+        List<FileResponse> files = Arrays.asList(
+                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "예시 첨부 파일 1.jpg", "image/jpeg",LocalDateTime.of(2024, 1, 1, 12, 0), LocalDateTime.now()),
+                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "예시 첨부 파일 2.jpg", "image/jpeg", LocalDateTime.of(2024, 1, 1, 12, 0), LocalDateTime.now()),
+                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "예시 첨부 파일 3.jpg", "image/jpeg", LocalDateTime.of(2024, 1, 1, 12, 0), LocalDateTime.now())
         );
-        NoticeResponse response = new NoticeResponse(1L, "updated title", "updated content", 0, false, LocalDateTime.now(), LocalDateTime.now(), fileResponses);
+        NoticeResponse response = new NoticeResponse(1L, "수정된 공지 사항 제목", "수정된 공지 사항 내용", 10, false, LocalDateTime.of(2024, 1, 1, 12, 0), LocalDateTime.now(), files);
 
-        when(noticeService.updateNotice(any(), any())).thenReturn(response);
+        when(noticeService.updateNotice(anyLong(), any(NoticeRequest.class))).thenReturn(response);
 
         // when
         ResultActions result = mockMvc.perform(
-                put("/notices/1")
+                put("/notices/{noticeId}", 1L)
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
         );
@@ -219,11 +224,14 @@ class NoticeControllerTest extends AbstractControllerTest {
         // then
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
+                        pathParameters(
+                                parameterWithName("noticeId").description("수정할 공지 사항 ID")
+                        ),
                         requestFields(
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("공지 사항 제목"),
                                 fieldWithPath("content").type(JsonFieldType.STRING).description("공지 사항 내용"),
                                 fieldWithPath("fixed").type(JsonFieldType.BOOLEAN).description("공지 사항 고정 여부"),
-                                fieldWithPath("fileIds").type(JsonFieldType.ARRAY).description("첨부 파일 ID 목록")
+                                fieldWithPath("fileIds").type(JsonFieldType.ARRAY).description("첨부 파일 ID 목록").optional()
                         ),
                         responseFields(
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("공지 사항 ID"),
@@ -251,15 +259,20 @@ class NoticeControllerTest extends AbstractControllerTest {
     void deleteNotice() throws Exception {
 
         // given
-        doNothing().when(noticeService).deleteNotice(1L);
+        doNothing().when(noticeService).deleteNotice(anyLong());
 
         // when
         ResultActions result = mockMvc.perform(
-                delete("/notices/1")
+                delete("/notices/{noticeId}", 1L)
                         .contentType(APPLICATION_JSON)
         );
 
         // then
-        result.andExpect(status().isNoContent());
+        result.andExpect(status().isNoContent())
+                .andDo(restDocs.document(
+                        pathParameters(
+                                parameterWithName("noticeId").description("삭제할 공지 사항 ID")
+                        )
+                ));
     }
 }
