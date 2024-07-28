@@ -35,9 +35,12 @@ public class NoticeService {
      */
     // TODO: Admin check
     public NoticeResponse createNotice(NoticeRequest request) {
-        List<File> attachedFiles = fileRepository.findByIdIn(request.getFileIds());
-        if (attachedFiles.size() != request.getFileIds().size()) {
-            throw new BadRequestException(ExceptionCode.FILE_NOT_FOUND);
+        List<File> attachedFiles = new ArrayList<>();
+        if (request.getFileIds() != null && !request.getFileIds().isEmpty()) {
+            attachedFiles = fileRepository.findByIdIn(request.getFileIds());
+            if (attachedFiles.size() != request.getFileIds().size()) {
+                throw new BadRequestException(ExceptionCode.FILE_NOT_FOUND);
+            }
         }
 
         Notice newNotice = Notice.from(request.getTitle(), request.getContent(), request.isFixed(), attachedFiles);
@@ -70,7 +73,7 @@ public class NoticeService {
                 new BadRequestException(ExceptionCode.NOTICE_NOT_FOUND));
         notice.increaseHitCount();
 
-        List <FileResponse> files = notice.getFiles().stream()
+        List<FileResponse> files = notice.getFiles().stream()
                 .map(FileResponse::from)
                 .collect(Collectors.toList());
         return NoticeResponse.from(notice, files);
@@ -88,9 +91,12 @@ public class NoticeService {
                 new BadRequestException(ExceptionCode.NOTICE_NOT_FOUND));
         notice.updateNotice(request.getTitle(), request.getContent(), request.isFixed());
 
-        List<File> attachedFiles = fileRepository.findByIdIn(request.getFileIds());
-        if (attachedFiles.size() != request.getFileIds().size()) {
-            throw new BadRequestException(ExceptionCode.FILE_NOT_FOUND);
+        List<File> attachedFiles = new ArrayList<>();
+        if (request.getFileIds() != null && !request.getFileIds().isEmpty()) {
+            attachedFiles = fileRepository.findByIdIn(request.getFileIds());
+            if (attachedFiles.size() != request.getFileIds().size()) {
+                throw new BadRequestException(ExceptionCode.FILE_NOT_FOUND);
+            }
         }
 
         // Find files that are no longer attached
@@ -117,7 +123,6 @@ public class NoticeService {
 
         return NoticeResponse.from(notice, files);
     }
-
 
     /**
      * Delete a corresponding notice

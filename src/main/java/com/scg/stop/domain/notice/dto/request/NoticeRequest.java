@@ -22,7 +22,6 @@ public class NoticeRequest {
     @NotNull(message = "고정 여부를 입력해주세요.")
     private boolean fixed;
 
-    @NotNull(message = "첨부 파일 ID를 입력해주세요.")
     private List<Long> fileIds;
 
 }
