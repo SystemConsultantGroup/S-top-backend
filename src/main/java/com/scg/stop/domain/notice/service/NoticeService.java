@@ -43,10 +43,10 @@ public class NoticeService {
         Notice newNotice = Notice.from(request.getTitle(), request.getContent(), request.isFixed(), attachedFiles);
         noticeRepository.save(newNotice);
 
-        List<FileResponse> fileResponses = attachedFiles.stream()
+        List<FileResponse> files = attachedFiles.stream()
                 .map(FileResponse::from)
                 .collect(Collectors.toList());
-        return NoticeResponse.from(newNotice, fileResponses);
+        return NoticeResponse.from(newNotice, files);
     }
 
     /**
@@ -70,10 +70,10 @@ public class NoticeService {
                 new BadRequestException(ExceptionCode.NOTICE_NOT_FOUND));
         notice.increaseHitCount();
 
-        List <FileResponse> fileResponses = notice.getFiles().stream()
+        List <FileResponse> files = notice.getFiles().stream()
                 .map(FileResponse::from)
                 .collect(Collectors.toList());
-        return NoticeResponse.from(notice, fileResponses);
+        return NoticeResponse.from(notice, files);
     }
 
     /**
@@ -111,11 +111,11 @@ public class NoticeService {
             }
         });
 
-        List<FileResponse> fileResponses = notice.getFiles().stream()
+        List<FileResponse> files = notice.getFiles().stream()
                 .map(FileResponse::from)
                 .collect(Collectors.toList());
 
-        return NoticeResponse.from(notice, fileResponses);
+        return NoticeResponse.from(notice, files);
     }
 
 

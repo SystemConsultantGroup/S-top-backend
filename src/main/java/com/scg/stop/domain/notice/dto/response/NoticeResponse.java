@@ -20,11 +20,11 @@ public class NoticeResponse {
     private boolean fixed;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private List<FileResponse> fileResponses;
+    private List<FileResponse> files;
 
     // Entity -> DTO
     // TODO: handle attached files uuid
-    public static NoticeResponse from(Notice notice, List<FileResponse> fileResponses) {
+    public static NoticeResponse from(Notice notice, List<FileResponse> files) {
        return new NoticeResponse(
                 notice.getId(),
                 notice.getTitle(),
@@ -33,7 +33,7 @@ public class NoticeResponse {
                 notice.isFixed(),
                 notice.getCreatedAt(),
                 notice.getUpdatedAt(),
-                fileResponses
+                files
          );
     }
 }

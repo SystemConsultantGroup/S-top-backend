@@ -87,13 +87,13 @@ class NoticeControllerTest extends AbstractControllerTest {
                                 fieldWithPath("fixed").type(JsonFieldType.BOOLEAN).description("공지 사항 고정 여부"),
                                 fieldWithPath("createdAt").type(JsonFieldType.STRING).description("공지 사항 생성일"),
                                 fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("공지 사항 수정일"),
-                                fieldWithPath("fileResponses").type(JsonFieldType.ARRAY).description("첨부 파일 목록"),
-                                fieldWithPath("fileResponses[].id").type(JsonFieldType.NUMBER).description("파일 ID"),
-                                fieldWithPath("fileResponses[].uuid").type(JsonFieldType.STRING).description("파일 고유 식별자"),
-                                fieldWithPath("fileResponses[].name").type(JsonFieldType.STRING).description("파일 이름"),
-                                fieldWithPath("fileResponses[].mimeType").type(JsonFieldType.STRING).description("파일 MIME 타입"),
-                                fieldWithPath("fileResponses[].createdAt").type(JsonFieldType.STRING).description("파일 생성 시간"),
-                                fieldWithPath("fileResponses[].updatedAt").type(JsonFieldType.STRING).description("파일 수정 시간")
+                                fieldWithPath("files").type(JsonFieldType.ARRAY).description("첨부 파일 목록"),
+                                fieldWithPath("files[].id").type(JsonFieldType.NUMBER).description("파일 ID"),
+                                fieldWithPath("files[].uuid").type(JsonFieldType.STRING).description("파일 고유 식별자"),
+                                fieldWithPath("files[].name").type(JsonFieldType.STRING).description("파일 이름"),
+                                fieldWithPath("files[].mimeType").type(JsonFieldType.STRING).description("파일 MIME 타입"),
+                                fieldWithPath("files[].createdAt").type(JsonFieldType.STRING).description("파일 생성 시간"),
+                                fieldWithPath("files[].updatedAt").type(JsonFieldType.STRING).description("파일 수정 시간")
                         )
 
                 ));
@@ -183,13 +183,13 @@ class NoticeControllerTest extends AbstractControllerTest {
                                 fieldWithPath("fixed").type(JsonFieldType.BOOLEAN).description("공지 사항 고정 여부"),
                                 fieldWithPath("createdAt").type(JsonFieldType.STRING).description("공지 사항 생성일"),
                                 fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("공지 사항 수정일"),
-                                fieldWithPath("fileResponses").type(JsonFieldType.ARRAY).description("첨부 파일 목록"),
-                                fieldWithPath("fileResponses[].id").type(JsonFieldType.NUMBER).description("파일 ID"),
-                                fieldWithPath("fileResponses[].uuid").type(JsonFieldType.STRING).description("파일 고유 식별자"),
-                                fieldWithPath("fileResponses[].name").type(JsonFieldType.STRING).description("파일 이름"),
-                                fieldWithPath("fileResponses[].mimeType").type(JsonFieldType.STRING).description("파일 MIME 타입"),
-                                fieldWithPath("fileResponses[].createdAt").type(JsonFieldType.STRING).description("파일 생성 시간"),
-                                fieldWithPath("fileResponses[].updatedAt").type(JsonFieldType.STRING).description("파일 수정 시간")
+                                fieldWithPath("files").type(JsonFieldType.ARRAY).description("첨부 파일 목록"),
+                                fieldWithPath("files[].id").type(JsonFieldType.NUMBER).description("파일 ID"),
+                                fieldWithPath("files[].uuid").type(JsonFieldType.STRING).description("파일 고유 식별자"),
+                                fieldWithPath("files[].name").type(JsonFieldType.STRING).description("파일 이름"),
+                                fieldWithPath("files[].mimeType").type(JsonFieldType.STRING).description("파일 MIME 타입"),
+                                fieldWithPath("files[].createdAt").type(JsonFieldType.STRING).description("파일 생성 시간"),
+                                fieldWithPath("files[].updatedAt").type(JsonFieldType.STRING).description("파일 수정 시간")
                         )
 
                 ));
@@ -233,13 +233,13 @@ class NoticeControllerTest extends AbstractControllerTest {
                                 fieldWithPath("fixed").type(JsonFieldType.BOOLEAN).description("공지 사항 고정 여부"),
                                 fieldWithPath("createdAt").type(JsonFieldType.STRING).description("공지 사항 생성일"),
                                 fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("공지 사항 수정일"),
-                                fieldWithPath("fileResponses").type(JsonFieldType.ARRAY).description("첨부 파일 목록"),
-                                fieldWithPath("fileResponses[].id").type(JsonFieldType.NUMBER).description("파일 ID"),
-                                fieldWithPath("fileResponses[].uuid").type(JsonFieldType.STRING).description("파일 고유 식별자"),
-                                fieldWithPath("fileResponses[].name").type(JsonFieldType.STRING).description("파일 이름"),
-                                fieldWithPath("fileResponses[].mimeType").type(JsonFieldType.STRING).description("파일 MIME 타입"),
-                                fieldWithPath("fileResponses[].createdAt").type(JsonFieldType.STRING).description("파일 생성 시간"),
-                                fieldWithPath("fileResponses[].updatedAt").type(JsonFieldType.STRING).description("파일 수정 시간")
+                                fieldWithPath("files").type(JsonFieldType.ARRAY).description("첨부 파일 목록"),
+                                fieldWithPath("files[].id").type(JsonFieldType.NUMBER).description("파일 ID"),
+                                fieldWithPath("files[].uuid").type(JsonFieldType.STRING).description("파일 고유 식별자"),
+                                fieldWithPath("files[].name").type(JsonFieldType.STRING).description("파일 이름"),
+                                fieldWithPath("files[].mimeType").type(JsonFieldType.STRING).description("파일 MIME 타입"),
+                                fieldWithPath("files[].createdAt").type(JsonFieldType.STRING).description("파일 생성 시간"),
+                                fieldWithPath("files[].updatedAt").type(JsonFieldType.STRING).description("파일 수정 시간")
                         )
 
                 ));
