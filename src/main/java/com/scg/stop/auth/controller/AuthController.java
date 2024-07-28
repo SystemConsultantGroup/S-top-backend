@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/auth")
+@RequestMapping("/auth")
 @Slf4j
 public class AuthController {
     private static final int ONE_WEEK_SECONDS = 604800;
