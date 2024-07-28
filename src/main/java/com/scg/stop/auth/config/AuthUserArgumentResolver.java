@@ -77,7 +77,7 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
             else if (extractedUserType.equals(UserType.PROFESSOR) || extractedUserType.equals(UserType.INACTIVE_PROFESSOR)) {
                 if (accessTypeList.contains(AccessType.PROFESSOR)) return extractedUser;
             }
-            else if (extractedUserType.equals(UserType.STUDENT)) {
+            else if (extractedUserType.equals(UserType.STUDENT) || extractedUserType.equals(UserType.OTHERS)) {
                 if (accessTypeList.contains(AccessType.STUDENT)) return extractedUser;
             }
         }
