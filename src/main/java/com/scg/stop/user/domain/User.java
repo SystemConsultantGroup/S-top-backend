@@ -44,14 +44,8 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false, unique = true)
-    private String nickname;
-
     @Column(nullable = false)
     private String socialLoginId;
-
-//    @Column(nullable = false)
-//    private SocialType socialType;
 
     @Column(nullable = false)
     @Enumerated(value = STRING)
