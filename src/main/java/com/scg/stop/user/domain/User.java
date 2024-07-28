@@ -81,6 +81,7 @@ public class User extends BaseTimeEntity {
     private List<Inquiry> inquiries = new ArrayList<>();
 
     public User(String socialLoginId) {
+        this.userType = UserType.TEMP;
         this.socialLoginId = socialLoginId;
     }
 
