@@ -120,7 +120,9 @@ class NoticeControllerTest extends AbstractControllerTest {
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
                         queryParameters(
-                                parameterWithName("title").description("찾고자 하는 공지 사항 제목").optional()
+                                parameterWithName("title").description("찾고자 하는 공지 사항 제목").optional(),
+                                parameterWithName("page").description("페이지 번호 [default: 0]").optional(),
+                                parameterWithName("size").description("페이지 크기 [default: 10]").optional()
                         ),
                         responseFields(
                                 fieldWithPath("content[].id").type(JsonFieldType.NUMBER).description("공지 사항 ID"),
