@@ -1,5 +1,6 @@
 package com.scg.stop.auth.domain.request;
 
+import com.scg.stop.auth.domain.StudentInfoDto;
 import com.scg.stop.user.domain.Student;
 import com.scg.stop.user.domain.UserType;
 import jakarta.validation.constraints.NotBlank;
@@ -26,7 +27,6 @@ public class RegisterRequest {
 
     private String signUpSource;
 
-    //TODO: 학생의 경우 학번/학과 필수 입력
-
+    private StudentInfoDto studentInfo;
 
 }

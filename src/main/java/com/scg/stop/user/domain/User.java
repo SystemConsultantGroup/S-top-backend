@@ -85,12 +85,11 @@ public class User extends BaseTimeEntity {
         this.socialLoginId = socialLoginId;
     }
 
-    public void register(String name, String email, String phone, UserType userType, Student studentInfo, String signupSource ) {
+    public void register(String name, String email, String phone, UserType userType, String signupSource ) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.userType = userType;
-        if (studentInfo != null)  this.studentInfo = studentInfo;
         this.signupSource = signupSource;
     }
 }

@@ -3,15 +3,20 @@ package com.scg.stop.auth.service;
 import com.scg.stop.auth.JwtUtil;
 import com.scg.stop.auth.domain.RefreshToken;
 import com.scg.stop.auth.domain.UserToken;
-import com.scg.stop.auth.domain.request.LoginRequest;
 import com.scg.stop.auth.domain.request.RegisterRequest;
+import com.scg.stop.auth.domain.response.RegisterResponse;
 import com.scg.stop.auth.infrastructure.KakaoOAuthProvider;
 import com.scg.stop.auth.infrastructure.KakaoUserInfo;
 import com.scg.stop.auth.repository.RefreshTokenRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.global.exception.InvalidJwtException;
+import com.scg.stop.user.domain.Department;
+import com.scg.stop.user.domain.Student;
 import com.scg.stop.user.domain.User;
+import com.scg.stop.user.domain.UserType;
+import com.scg.stop.user.repository.DepartmentRepository;
+import com.scg.stop.user.repository.StudentRepository;
 import com.scg.stop.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class AuthService {
     private final RefreshTokenRepository refreshTokenRepository;
+    private final StudentRepository studentRepository;
+    private final DepartmentRepository departmentRepository;
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
     private final KakaoOAuthProvider kakaoOAuthProvider;
@@ -44,16 +51,25 @@ public class AuthService {
                 .orElseGet(() -> createUser(socialLoginId));
     }
 
-    public User finishRegister(User user, RegisterRequest registerRequest) {
+    public RegisterResponse finishRegister(User user, RegisterRequest registerRequest) {
         User foundUser = userRepository.findById(user.getId())
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_USER_ID));
+        if (foundUser.getUserType().equals(UserType.STUDENT)) {
+            Department department = departmentRepository.findByName(
+                    registerRequest.getStudentInfo().getDepartment())
+                    .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_DEPARTMENT));//TODO: department가 null인경우 예외처리
+
+            Student student = Student.of(registerRequest.getStudentInfo().getStudentNumber(),
+                    foundUser
+                    , department);
+            studentRepository.save(student);
+        }
         foundUser.register(registerRequest.getName(),
                 registerRequest.getEmail(),
                 registerRequest.getPhoneNumber(),
                 registerRequest.getUserType(),
-                registerRequest.getStudentInfo(),
                 registerRequest.getSignUpSource());
-        return foundUser;
+        return RegisterResponse.from(foundUser);
     }
     private User createUser(String socialLoginId) {
         return userRepository.save(new User(socialLoginId));
