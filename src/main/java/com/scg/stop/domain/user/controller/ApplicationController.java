@@ -24,6 +24,7 @@ public class ApplicationController {
     @GetMapping
     public ResponseEntity<Page<ApplicationListResponse>> getApplications(
             @PageableDefault(page = 0, size = 10) Pageable pageable
+            // TODO @AuthUser(accessType = {AccessType.ADMIN}) User.user
     ) {
         Page<ApplicationListResponse> applications = applicationService.getApplications(pageable);
         return ResponseEntity.ok().body(applications);
