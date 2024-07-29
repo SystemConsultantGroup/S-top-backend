@@ -2,9 +2,11 @@ package com.scg.stop.domain.video.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
+import com.scg.stop.domain.video.domain.JobInterview;
 import com.scg.stop.domain.video.domain.JobInterviewCategory;
 import com.scg.stop.domain.video.dto.request.JobInterviewRequest;
 import com.scg.stop.domain.video.dto.response.JobInterviewResponse;
+import com.scg.stop.domain.video.repository.JobInterviewRepository;
 import com.scg.stop.domain.video.service.JobInterviewService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -107,6 +109,7 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
         //then
         result.andExpect(status().isBadRequest());
     }
+
 
 
 
