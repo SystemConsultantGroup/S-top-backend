@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/notices")
 @RestController
 // TODO: Admin check
-// TODO: Attach files handling
 public class NoticeController {
 
     private final NoticeService noticeService;

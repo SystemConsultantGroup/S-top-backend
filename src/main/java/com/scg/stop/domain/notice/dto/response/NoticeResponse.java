@@ -23,7 +23,6 @@ public class NoticeResponse {
     private List<FileResponse> files;
 
     // Entity -> DTO
-    // TODO: handle attached files uuid
     public static NoticeResponse from(Notice notice, List<FileResponse> files) {
        return new NoticeResponse(
                 notice.getId(),
