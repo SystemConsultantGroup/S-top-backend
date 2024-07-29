@@ -5,8 +5,4 @@
 :toclevels: 3
 :seclinks:
 
-=== 커스텀 예외 코드
-
-include::{snippets}/exception-code-controller-test/get-exception-codes/exception-response-fields.adoc[]
-
-// include::eventPeriod.adoc[] 컨트롤러별로 주석 지우고 문서 추가
+include::jobInterview.adoc[]
