@@ -35,13 +35,13 @@ public class User extends BaseTimeEntity {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column
     private String phone;
 
-    @Column(nullable = false)
+    @Column
     private String email;
 
     @Column(nullable = false)
