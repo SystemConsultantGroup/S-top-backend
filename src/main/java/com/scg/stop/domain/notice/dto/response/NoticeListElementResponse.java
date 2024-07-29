@@ -17,7 +17,7 @@ public class NoticeListElementResponse {
     private boolean fixed;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
+    
     // Entity -> DTO
     public static NoticeListElementResponse from(Notice notice) {
         return new NoticeListElementResponse(

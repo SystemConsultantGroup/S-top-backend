@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface EventNoticeRepository extends JpaRepository<EventNotice, Long> {
+    
     @Query("SELECT n FROM EventNotice n " +
             "WHERE (:title IS NULL OR n.title LIKE %:title%)")
     Page<EventNoticeListElementResponse> findNotices(@Param("title") String title, Pageable pageable);

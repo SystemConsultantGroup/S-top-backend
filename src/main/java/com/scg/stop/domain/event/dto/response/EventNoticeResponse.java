@@ -1,6 +1,7 @@
 package com.scg.stop.domain.event.dto.response;
 
 import com.scg.stop.domain.event.domain.EventNotice;
+import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.domain.file.dto.response.FileResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,8 +23,13 @@ public class EventNoticeResponse {
     private LocalDateTime updatedAt;
     private List<FileResponse> files;
 
-    // Entity -> DTO
-    public static EventNoticeResponse from(EventNotice eventNotice, List<FileResponse> files) {
+    // create a new EventNoticeResponse object
+    public static EventNoticeResponse from(EventNotice eventNotice, List<File> files) {
+
+        List<FileResponse> fileResponses = files.stream()
+                .map(FileResponse::from)
+                .collect(java.util.stream.Collectors.toList());
+
         return new EventNoticeResponse(
                 eventNotice.getId(),
                 eventNotice.getTitle(),
@@ -32,7 +38,7 @@ public class EventNoticeResponse {
                 eventNotice.isFixed(),
                 eventNotice.getCreatedAt(),
                 eventNotice.getUpdatedAt(),
-                files
+                fileResponses
         );
     }
 }

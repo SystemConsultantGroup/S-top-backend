@@ -1,19 +1,18 @@
 package com.scg.stop.domain.notice.domain;
 
-import static jakarta.persistence.CascadeType.REMOVE;
-import static jakarta.persistence.FetchType.LAZY;
-import static jakarta.persistence.GenerationType.IDENTITY;
-import static lombok.AccessLevel.PROTECTED;
-
 import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.global.domain.BaseTimeEntity;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import static jakarta.persistence.CascadeType.REMOVE;
+import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
@@ -50,13 +49,13 @@ public class Notice extends BaseTimeEntity {
     }
 
     // static method for creating new notice entity
-    public static Notice from(String title, String content, boolean fixed,List<File> files) {
+    public static Notice from(String title, String content, boolean fixed, List<File> files) {
         return new Notice(
-            title,
-            content,
-            0,
-            fixed,
-            files
+                title,
+                content,
+                0,
+                fixed,
+                files
         );
     }
 

@@ -1,21 +1,7 @@
 package com.scg.stop.domain.notice.controller;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.*;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-
 import com.scg.stop.domain.file.dto.response.FileResponse;
 import com.scg.stop.domain.notice.dto.request.NoticeRequest;
 import com.scg.stop.domain.notice.dto.response.NoticeListElementResponse;
@@ -30,9 +16,22 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(NoticeController.class)
 @MockBean(JpaMetamodelMappingContext.class)
@@ -51,7 +50,7 @@ class NoticeControllerTest extends AbstractControllerTest {
     void createNotice() throws Exception {
 
         // given
-        NoticeRequest request = new NoticeRequest("공지 사항 제목", "공지 사항 내용", true, List.of(1L,2L, 3L));
+        NoticeRequest request = new NoticeRequest("공지 사항 제목", "공지 사항 내용", true, List.of(1L, 2L, 3L));
 
         List<FileResponse> files = Arrays.asList(
                 new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "예시 첨부 파일 1.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
@@ -107,7 +106,7 @@ class NoticeControllerTest extends AbstractControllerTest {
         NoticeListElementResponse notice2 = new NoticeListElementResponse(2L, "공지 사항 2", 10, false, LocalDateTime.now(), LocalDateTime.now());
         Page<NoticeListElementResponse> page = new PageImpl<>(List.of(notice1, notice2), PageRequest.of(0, 10), 2);
 
-        when(noticeService.getNoticeList(any(), any())).thenReturn(page);
+        when(noticeService.getNoticeList(any(), any(Pageable.class))).thenReturn(page);
 
         // when
         ResultActions result = mockMvc.perform(
@@ -166,7 +165,7 @@ class NoticeControllerTest extends AbstractControllerTest {
         );
         NoticeResponse response = new NoticeResponse(1L, "공지 사항 제목", "content", 10, true, LocalDateTime.now(), LocalDateTime.now(), files);
 
-        when(noticeService.getNotice(any())).thenReturn(response);
+        when(noticeService.getNotice(anyLong())).thenReturn(response);
 
         // when
         ResultActions result = mockMvc.perform(
@@ -207,7 +206,7 @@ class NoticeControllerTest extends AbstractControllerTest {
         // given
         NoticeRequest request = new NoticeRequest("수정된 공지 사항 제목", "수정된 공지 사항 내용", false, List.of(1L, 2L, 3L));
         List<FileResponse> files = Arrays.asList(
-                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "예시 첨부 파일 1.jpg", "image/jpeg",LocalDateTime.of(2024, 1, 1, 12, 0), LocalDateTime.now()),
+                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "예시 첨부 파일 1.jpg", "image/jpeg", LocalDateTime.of(2024, 1, 1, 12, 0), LocalDateTime.now()),
                 new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "예시 첨부 파일 2.jpg", "image/jpeg", LocalDateTime.of(2024, 1, 1, 12, 0), LocalDateTime.now()),
                 new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "예시 첨부 파일 3.jpg", "image/jpeg", LocalDateTime.of(2024, 1, 1, 12, 0), LocalDateTime.now())
         );

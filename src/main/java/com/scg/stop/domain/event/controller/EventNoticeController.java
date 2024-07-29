@@ -24,7 +24,8 @@ public class EventNoticeController {
 
     // Create a new eventNotice
     @PostMapping
-    public ResponseEntity<EventNoticeResponse> createEventNotice(@RequestBody @Valid EventNoticeRequest createEventNoticeDto) {
+    public ResponseEntity<EventNoticeResponse> createEventNotice(
+            @RequestBody @Valid EventNoticeRequest createEventNoticeDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(eventNoticeService.createEventNotice(createEventNoticeDto));
     }
 
@@ -39,20 +40,24 @@ public class EventNoticeController {
 
     // Get a corresponding eventNotice
     @GetMapping("/{eventNoticeId}")
-    public ResponseEntity<EventNoticeResponse> getEventNotice(@PathVariable("eventNoticeId") Long eventNoticeId) {
+    public ResponseEntity<EventNoticeResponse> getEventNotice(
+            @PathVariable("eventNoticeId") Long eventNoticeId) {
         EventNoticeResponse eventNotice = eventNoticeService.getEventNotice(eventNoticeId);
         return ResponseEntity.status(HttpStatus.OK).body(eventNotice);
     }
 
     // Update a corresponding eventNotice
     @PutMapping("/{eventNoticeId}")
-    public ResponseEntity<EventNoticeResponse> updateEventNotice(@PathVariable("eventNoticeId") Long eventNoticeId, @RequestBody @Valid EventNoticeRequest updateEventNoticeDto) {
+    public ResponseEntity<EventNoticeResponse> updateEventNotice(
+            @PathVariable("eventNoticeId") Long eventNoticeId,
+            @RequestBody @Valid EventNoticeRequest updateEventNoticeDto) {
         return ResponseEntity.status(HttpStatus.OK).body(eventNoticeService.updateEventNotice(eventNoticeId, updateEventNoticeDto));
     }
 
     // Delete a corresponding eventNotice
     @DeleteMapping("/{eventNoticeId}")
-    public ResponseEntity<Long> deleteEventNotice(@PathVariable("eventNoticeId") Long eventNoticeId) {
+    public ResponseEntity<Long> deleteEventNotice(
+            @PathVariable("eventNoticeId") Long eventNoticeId) {
         eventNoticeService.deleteEventNotice(eventNoticeId);
         return ResponseEntity.noContent().build();
     }

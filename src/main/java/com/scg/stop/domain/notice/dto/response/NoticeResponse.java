@@ -1,5 +1,6 @@
 package com.scg.stop.domain.notice.dto.response;
 
+import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.domain.file.dto.response.FileResponse;
 import com.scg.stop.domain.notice.domain.Notice;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
@@ -22,9 +24,14 @@ public class NoticeResponse {
     private LocalDateTime updatedAt;
     private List<FileResponse> files;
 
-    // Entity -> DTO
-    public static NoticeResponse from(Notice notice, List<FileResponse> files) {
-       return new NoticeResponse(
+    // create a new NoticeResponse object
+    public static NoticeResponse from(Notice notice, List<File> files) {
+
+        List<FileResponse> fileResponses = files.stream()
+                .map(FileResponse::from)
+                .collect(Collectors.toList());
+
+        return new NoticeResponse(
                 notice.getId(),
                 notice.getTitle(),
                 notice.getContent(),
@@ -32,7 +39,7 @@ public class NoticeResponse {
                 notice.isFixed(),
                 notice.getCreatedAt(),
                 notice.getUpdatedAt(),
-                files
-         );
+                fileResponses
+        );
     }
 }

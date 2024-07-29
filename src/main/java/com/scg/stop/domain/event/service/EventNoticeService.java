@@ -1,13 +1,11 @@
 package com.scg.stop.domain.event.service;
 
-
 import com.scg.stop.domain.event.domain.EventNotice;
 import com.scg.stop.domain.event.dto.request.EventNoticeRequest;
 import com.scg.stop.domain.event.dto.response.EventNoticeListElementResponse;
 import com.scg.stop.domain.event.dto.response.EventNoticeResponse;
 import com.scg.stop.domain.event.repository.EventNoticeRepository;
 import com.scg.stop.domain.file.domain.File;
-import com.scg.stop.domain.file.dto.response.FileResponse;
 import com.scg.stop.domain.file.repository.FileRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
@@ -17,9 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -29,7 +25,6 @@ public class EventNoticeService {
     private final EventNoticeRepository eventNoticeRepository;
     private final FileRepository fileRepository;
 
-
     /**
      * Create a new event notice
      *
@@ -38,21 +33,15 @@ public class EventNoticeService {
      */
     // TODO: Admin check
     public EventNoticeResponse createEventNotice(EventNoticeRequest request) {
-        List<File> attachedFiles = new ArrayList<>();
-        if (request.getFileIds() != null && !request.getFileIds().isEmpty()) {
-            attachedFiles = fileRepository.findByIdIn(request.getFileIds());
-            if (attachedFiles.size() != request.getFileIds().size()) {
-                throw new BadRequestException(ExceptionCode.FILE_NOT_FOUND);
-            }
-        }
-
-        EventNotice newEventNotice = EventNotice.from(request.getTitle(), request.getContent(), request.isFixed(), attachedFiles);
+        List<File> attachedFiles = getAttachedFiles(request.getFileIds());
+        EventNotice newEventNotice = EventNotice.from(
+                request.getTitle(),
+                request.getContent(),
+                request.isFixed(),
+                attachedFiles);
         eventNoticeRepository.save(newEventNotice);
 
-        List<FileResponse> files = attachedFiles.stream()
-                .map(FileResponse::from)
-                .collect(Collectors.toList());
-        return EventNoticeResponse.from(newEventNotice, files);
+        return EventNoticeResponse.from(newEventNotice, attachedFiles);
     }
 
     /**
@@ -70,65 +59,37 @@ public class EventNoticeService {
     /**
      * Get a corresponding event notice
      *
-     * @param id ID of the event notice
+     * @param eventNoticeId ID of the event notice
      * @return Event Notice Response DTO
      */
-    public EventNoticeResponse getEventNotice(Long id) {
-        EventNotice eventNotice = eventNoticeRepository.findById(id).orElseThrow(() ->
+    public EventNoticeResponse getEventNotice(Long eventNoticeId) {
+        EventNotice eventNotice = eventNoticeRepository.findById(eventNoticeId).orElseThrow(() ->
                 new BadRequestException(ExceptionCode.EVENT_NOTICE_NOT_FOUND));
         eventNotice.increaseHitCount();
 
-        List<FileResponse> files = eventNotice.getFiles().stream()
-                .map(FileResponse::from)
-                .collect(Collectors.toList());
-        return EventNoticeResponse.from(eventNotice, files);
+        return EventNoticeResponse.from(eventNotice, eventNotice.getFiles());
     }
-
 
     /**
      * Update a corresponding event notice
      *
-     * @param id      ID of the event notice
-     * @param request Event Notice Request DTO
+     * @param eventNoticeId ID of the event notice
+     * @param request       Event Notice Request DTO
      * @return Event Notice Response DTO
      */
     // TODO: Admin check
-    public EventNoticeResponse updateEventNotice(Long id, EventNoticeRequest request) {
-        EventNotice eventNotice = eventNoticeRepository.findById(id).orElseThrow(() ->
+    public EventNoticeResponse updateEventNotice(Long eventNoticeId, EventNoticeRequest request) {
+        EventNotice eventNotice = eventNoticeRepository.findById(eventNoticeId).orElseThrow(() ->
                 new BadRequestException(ExceptionCode.EVENT_NOTICE_NOT_FOUND));
-        eventNotice.updateEventNotice(request.getTitle(), request.getContent(), request.isFixed());
+        eventNotice.updateEventNotice(
+                request.getTitle(),
+                request.getContent(),
+                request.isFixed());
 
-        List<File> attachedFiles = new ArrayList<>();
-        if (request.getFileIds() != null && !request.getFileIds().isEmpty()) {
-            attachedFiles = fileRepository.findByIdIn(request.getFileIds());
-            if (attachedFiles.size() != request.getFileIds().size()) {
-                throw new BadRequestException(ExceptionCode.FILE_NOT_FOUND);
-            }
-        }
+        List<File> attachedFiles = getAttachedFiles(request.getFileIds());
+        updateEventNoticeFiles(eventNotice, attachedFiles);
 
-        // Find files that are no longer attached
-        List<File> filesToRemove = new ArrayList<>(eventNotice.getFiles());
-        filesToRemove.removeAll(attachedFiles);
-
-        // Remove files that are no longer attached from the file table
-        filesToRemove.forEach(file -> {
-            eventNotice.getFiles().remove(file);
-            fileRepository.delete(file);
-        });
-
-        // Add new files and set noticeId
-        attachedFiles.forEach(file -> {
-            if (!eventNotice.getFiles().contains(file)) {
-                file.setEventNotice(eventNotice);
-                eventNotice.getFiles().add(file);
-            }
-        });
-
-        List<FileResponse> files = eventNotice.getFiles().stream()
-                .map(FileResponse::from)
-                .collect(Collectors.toList());
-
-        return EventNoticeResponse.from(eventNotice, files);
+        return EventNoticeResponse.from(eventNotice, attachedFiles);
     }
 
     /**
@@ -142,4 +103,35 @@ public class EventNoticeService {
                 new BadRequestException(ExceptionCode.EVENT_NOTICE_NOT_FOUND));
         eventNoticeRepository.delete(eventNotice);
     }
+
+    // helper method for getting attached files
+    private List<File> getAttachedFiles(List<Long> fileIds) {
+        if (fileIds == null || fileIds.isEmpty()) {
+            return List.of();
+        }
+        List<File> attachedFiles = fileRepository.findByIdIn(fileIds);
+        if (attachedFiles.size() != fileIds.size()) {
+            throw new BadRequestException(ExceptionCode.FILE_NOT_FOUND);
+        }
+        return attachedFiles;
+    }
+
+    // helper method for updating attached files
+    private void updateEventNoticeFiles(EventNotice eventNotice, List<File> attachedFiles) {
+        List<File> currentFiles = eventNotice.getFiles();
+        List<File> filesToRemove = currentFiles.stream()
+                .filter(file -> !attachedFiles.contains(file))
+                .toList();
+        filesToRemove.forEach(file -> {
+            currentFiles.remove(file);
+            fileRepository.delete(file);
+        });
+        attachedFiles.forEach(file -> {
+            if (!currentFiles.contains(file)) {
+                file.setEventNotice(eventNotice);
+                currentFiles.add(file);
+            }
+        });
+    }
+    
 }
