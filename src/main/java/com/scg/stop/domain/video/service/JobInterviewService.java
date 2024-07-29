@@ -6,6 +6,7 @@ import com.scg.stop.domain.video.dto.request.JobInterviewRequest;
 import com.scg.stop.domain.video.dto.response.JobInterviewResponse;
 import com.scg.stop.domain.video.repository.JobInterviewRepository;
 import com.scg.stop.global.exception.BadRequestException;
+import com.scg.stop.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +22,7 @@ public class JobInterviewService {
     @Transactional(readOnly = true)
     public JobInterviewResponse getJobInterview(Long id) {
         JobInterview jobInterview = jobInterviewRepository.findById(id).orElseThrow(() ->
-                new BadRequestException("요청한 ID에 해당하는 잡페어 인터뷰가 없습니다."));
+                new BadRequestException(ExceptionCode.ID_NOT_FOUND));
         return JobInterviewResponse.from(jobInterview);
     }
 
@@ -37,13 +38,13 @@ public class JobInterviewService {
 
     public void deleteJobInterviewById(Long id) {
         JobInterview jobInterview = jobInterviewRepository.findById(id).orElseThrow(() ->
-                new BadRequestException("요청한 ID에 해당하는 잡페어 인터뷰가 없습니다."));
+                new BadRequestException(ExceptionCode.ID_NOT_FOUND));
         jobInterviewRepository.delete(jobInterview);
     }
 
     public JobInterviewResponse updateJobInterview(Long id, JobInterviewRequest req) {
         JobInterview jobInterview = jobInterviewRepository.findById(id).orElseThrow(() ->
-                new BadRequestException("요청한 ID에 해당하는 잡페어 인터뷰가 없습니다."));
+                new BadRequestException(ExceptionCode.ID_NOT_FOUND));
         jobInterview.updateJobInterview(req);
         return JobInterviewResponse.from(jobInterview);
     }
