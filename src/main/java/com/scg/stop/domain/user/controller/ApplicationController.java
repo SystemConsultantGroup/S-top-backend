@@ -1,5 +1,6 @@
 package com.scg.stop.domain.user.controller;
 
+import com.scg.stop.domain.user.dto.response.ApplicationDetailResponse;
 import com.scg.stop.domain.user.dto.response.ApplicationListResponse;
 import com.scg.stop.domain.user.service.ApplicationService;
 import lombok.RequiredArgsConstructor;

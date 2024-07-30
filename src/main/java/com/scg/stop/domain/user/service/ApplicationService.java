@@ -1,18 +1,19 @@
 package com.scg.stop.domain.user.service;
 
 import static com.scg.stop.domain.user.domain.UserType.*;
+import static com.scg.stop.global.exception.ExceptionCode.ALREADY_VERIFIED_USER;
+import static com.scg.stop.global.exception.ExceptionCode.NOT_FOUND_APPLICATION_ID;
 
 import com.scg.stop.domain.user.domain.Application;
 import com.scg.stop.domain.user.domain.User;
 import com.scg.stop.domain.user.domain.UserType;
+import com.scg.stop.domain.user.dto.response.ApplicationDetailResponse;
 import com.scg.stop.domain.user.dto.response.ApplicationListResponse;
 import com.scg.stop.domain.user.repository.ApplicationRepository;
 import com.scg.stop.domain.user.repository.UserRepository;
 import com.scg.stop.global.exception.BadRequestException;
-import com.scg.stop.global.exception.ExceptionCode;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
