@@ -1,5 +1,7 @@
 package com.scg.stop.domain.project.dto.request;
 
+import static lombok.AccessLevel.PROTECTED;
+
 import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.domain.project.domain.*;
 import jakarta.validation.constraints.NotBlank;
@@ -13,7 +15,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 public class ProjectRequest {
 
     @NotNull(message = "썸네일 ID를 입력해주세요")
@@ -49,9 +51,9 @@ public class ProjectRequest {
     @NotNull(message = "멤버를 입력해주세요")
     private List<MemberRequest> members;
 
-    public Project toEntity(File thumbnail, File poster) {
+    public Project toEntity(Long id, File thumbnail, File poster) {
         Project project =  new Project(
-                null,
+                id,
                 projectName,
                 projectType,
                 projectCategory,
