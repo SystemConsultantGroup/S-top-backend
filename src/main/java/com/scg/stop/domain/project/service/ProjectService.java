@@ -2,12 +2,20 @@ package com.scg.stop.domain.project.service;
 
 import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.domain.file.repository.FileRepository;
+import com.scg.stop.domain.project.domain.Member;
 import com.scg.stop.domain.project.domain.Project;
+import com.scg.stop.domain.project.domain.Role;
 import com.scg.stop.domain.project.dto.request.ProjectRequest;
+import com.scg.stop.domain.project.dto.response.ProjectDetailResponse;
 import com.scg.stop.domain.project.repository.ProjectRepository;
+import com.scg.stop.global.exception.BadRequestException;
+import com.scg.stop.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -15,15 +23,57 @@ public class ProjectService {
     private final ProjectRepository projectRepository;
     private final FileRepository fileRepository;
     @Transactional
-    public void createProject(ProjectRequest projectRequest) {
+    public ProjectDetailResponse createProject(ProjectRequest projectRequest) {
         File thumbnail = fileRepository.findById(projectRequest.getThumbnailId())
-                .orElseThrow(() -> new IllegalArgumentException("썸네일을 찾을 수 없습니다"));
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT_THUMBNAIL));
         File poster = fileRepository.findById(projectRequest.getPosterId())
-                .orElseThrow(() -> new IllegalArgumentException("포스터를 찾을 수 없습니다"));
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT_POSTER));
 
-        // ToDo: BadRequestException dev 브랜치에 있을듯..
-        Project project = projectRequest.toEntity(thumbnail, poster);
+        Project project = projectRequest.toEntity(null, thumbnail, poster);
 
         projectRepository.save(project);
+
+        return getProject(project.getId());
+    }
+
+    @Transactional
+    public ProjectDetailResponse getProject(Long projectId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException("프로젝트를 찾을 수 없습니다"));
+
+        List<String> studentNames = project.getMembers().stream()
+                .filter(member -> member.getRole() == Role.STUDENT)
+                .map(Member::getName)
+                .collect(Collectors.toList());
+        List<String> professerNames = project.getMembers().stream()
+                .filter(member -> member.getRole() == Role.PROFESSOR)
+                .map(Member::getName)
+                .collect(Collectors.toList());
+
+        return ProjectDetailResponse.of(studentNames, professerNames, project);
+    }
+
+    @Transactional
+    public ProjectDetailResponse updateProject(Long projectId, ProjectRequest projectRequest) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
+
+        File thumbnail = fileRepository.findById(projectRequest.getThumbnailId())
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT_THUMBNAIL));
+        File poster = fileRepository.findById(projectRequest.getPosterId())
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT_POSTER));
+
+        Project newProject = projectRequest.toEntity(projectId, thumbnail, poster);
+        project.update(newProject);
+
+        return getProject(projectId);
+    }
+
+    @Transactional
+    public void deleteProject(Long projectId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
+
+        projectRepository.delete(project);
     }
 }
