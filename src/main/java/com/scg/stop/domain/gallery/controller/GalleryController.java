@@ -1,6 +1,7 @@
 package com.scg.stop.domain.gallery.controller;
 
 import com.scg.stop.domain.gallery.dto.request.CreateGalleryRequest;
+import com.scg.stop.domain.gallery.dto.request.UpdateGalleryRequest;
 import com.scg.stop.domain.gallery.dto.response.GalleryResponse;
 import com.scg.stop.domain.gallery.service.GalleryService;
 import jakarta.validation.Valid;
@@ -42,6 +43,16 @@ public class GalleryController {
         return ResponseEntity.ok(galleryResponse);
     }
 
+    // TODO Auth 설정 추가
+    @PutMapping("/{galleryId}")
+    public ResponseEntity<GalleryResponse> updateGallery(
+            @PathVariable("galleryId") Long galleryId,
+            @RequestBody @Valid UpdateGalleryRequest updateGalleryRequest) {
+        GalleryResponse galleryResponse = galleryService.updateGallery(galleryId, updateGalleryRequest);
+        return ResponseEntity.ok(galleryResponse);
+    }
+
+    // TODO Auth 설정 추가
     @DeleteMapping("/{galleryId}")
     public ResponseEntity<Void> deleteGallery(@PathVariable("galleryId") Long galleryId) {
         galleryService.deleteGallery(galleryId);

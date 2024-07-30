@@ -53,4 +53,14 @@ public class Gallery extends BaseTimeEntity {
     public static Gallery of(String title, String content, Integer year, Integer month, List<File> files) {
         return new Gallery(title, content, year, month, files);
     }
+
+    public void update(String title, String content, Integer year, Integer month, List<File> files) {
+        this.title = title;
+        this.content = content;
+        this.year = year;
+        this.month = month;
+        this.files.clear();
+        this.files.addAll(files);
+        files.forEach(file -> file.setGallery(this));
+    }
 }

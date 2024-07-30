@@ -21,3 +21,8 @@ operation::gallery-controller-test/get-gallery[snippets="http-request,path-param
 ====
 operation::gallery-controller-test/delete-gallery[snippets="http-request,path-parameters"]
 ====
+
+=== 갤러리 게시글 수정 (PUT /galleries/{galleryId})
+====
+operation::gallery-controller-test/update-gallery[snippets="http-request,path-parameters,request-fields,http-response,response-fields"]
+====
