@@ -32,7 +32,7 @@ public class GalleryService {
             throw new BadRequestException(NOT_FOUND_FILE_ID);
         }
 
-        Gallery gallery = Gallery.of(request, files);
+        Gallery gallery = Gallery.of(request.getTitle(), request.getContent(), request.getYear(), request.getMonth(), files);
         Gallery savedGallery = galleryRepository.save(gallery);
 
         List<FileResponse> fileResponses = files.stream()
