@@ -11,3 +11,8 @@ operation::gallery-controller-test/create-gallery[snippets="http-request,request
 ====
 operation::gallery-controller-test/get-galleries[snippets="http-request,query-parameters,http-response,response-fields"]
 ====
+
+=== 갤러리 게시글 조회 (GET /galleries/{galleryId})
+====
+operation::gallery-controller-test/get-gallery[snippets="http-request,path-parameters,http-response,response-fields"]
+====

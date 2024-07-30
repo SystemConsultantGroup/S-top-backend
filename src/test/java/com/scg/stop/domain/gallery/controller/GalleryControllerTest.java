@@ -8,9 +8,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -179,4 +178,58 @@ class GalleryControllerTest extends AbstractControllerTest {
                         )
                 ));
     }
+
+    @Test
+    @DisplayName("id로 갤러리 게시글을 조회할 수 있다.")
+    void getGallery() throws Exception {
+
+        // given
+        List<FileResponse> fileResponses = Arrays.asList(
+                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "사진1.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
+                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "사진2.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
+                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "사진3.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now())
+        );
+        GalleryResponse galleryResponse = new GalleryResponse(
+                1L,
+                "새내기 배움터",
+                "2024년 새내기 배움터",
+                2024,
+                4,
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                fileResponses
+        );
+        when(galleryService.getGallery(1L)).thenReturn(galleryResponse);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                get("/galleries/{galleryId}", 1L)
+                        .contentType(APPLICATION_JSON)
+        );
+
+        // then
+        result.andExpect(status().isOk())
+                .andDo(restDocs.document(
+                        pathParameters(
+                                parameterWithName("galleryId").description("조회할 갤러리 ID")
+                        ),
+                        responseFields(
+                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("갤러리 ID"),
+                                fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
+                                fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
+                                fieldWithPath("year").type(JsonFieldType.NUMBER).description("연도"),
+                                fieldWithPath("month").type(JsonFieldType.NUMBER).description("월"),
+                                fieldWithPath("createdAt").type(JsonFieldType.STRING).description("생성일"),
+                                fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("수정일"),
+                                fieldWithPath("files").type(JsonFieldType.ARRAY).description("파일 목록"),
+                                fieldWithPath("files[].id").type(JsonFieldType.NUMBER).description("파일 ID"),
+                                fieldWithPath("files[].uuid").type(JsonFieldType.STRING).description("파일 UUID"),
+                                fieldWithPath("files[].name").type(JsonFieldType.STRING).description("파일 이름"),
+                                fieldWithPath("files[].mimeType").type(JsonFieldType.STRING).description("파일 MIME 타입"),
+                                fieldWithPath("files[].createdAt").type(JsonFieldType.STRING).description("파일 생성일"),
+                                fieldWithPath("files[].updatedAt").type(JsonFieldType.STRING).description("파일 수정일")
+                        )
+                ));
+    }
+
 }
