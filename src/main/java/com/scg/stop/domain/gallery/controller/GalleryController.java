@@ -41,4 +41,10 @@ public class GalleryController {
         GalleryResponse galleryResponse = galleryService.getGallery(galleryId);
         return ResponseEntity.ok(galleryResponse);
     }
+
+    @DeleteMapping("/{galleryId}")
+    public ResponseEntity<Void> deleteGallery(@PathVariable("galleryId") Long galleryId) {
+        galleryService.deleteGallery(galleryId);
+        return ResponseEntity.noContent().build();
+    }
 }

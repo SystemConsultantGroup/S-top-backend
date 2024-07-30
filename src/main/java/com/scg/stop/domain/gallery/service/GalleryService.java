@@ -60,4 +60,10 @@ public class GalleryService {
                 .collect(Collectors.toList());
         return GalleryResponse.of(gallery, fileResponses);
     }
+
+    public void deleteGallery(Long galleryId) {
+        Gallery gallery = galleryRepository.findById(galleryId)
+                .orElseThrow(() -> new IllegalArgumentException("요청한 ID(" + galleryId + ")에 해당하는 갤러리가 없습니다."));
+        galleryRepository.delete(gallery);
+    }
 }
