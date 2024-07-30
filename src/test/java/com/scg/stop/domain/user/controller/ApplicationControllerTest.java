@@ -7,12 +7,14 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
 import com.scg.stop.domain.user.domain.UserType;
+import com.scg.stop.domain.user.dto.response.ApplicationDetailResponse;
 import com.scg.stop.domain.user.dto.response.ApplicationListResponse;
 import com.scg.stop.domain.user.service.ApplicationService;
 import java.time.LocalDateTime;
@@ -48,7 +50,7 @@ class ApplicationControllerTest extends AbstractControllerTest {
 
     // TODO Auth 설정 추가
     @Test
-    @DisplayName("교수/기업관계자의 가입 신청 정보 리스트를 조회할 수 있다.")
+    @DisplayName("교수/기업관계자의 인증 신청 정보 리스트를 조회할 수 있다.")
     void getApplications() throws Exception  {
 
         // given
@@ -97,14 +99,52 @@ class ApplicationControllerTest extends AbstractControllerTest {
                                 fieldWithPath("sort.sorted").type(JsonFieldType.BOOLEAN).description("정렬된 상태인지 여부"),
                                 fieldWithPath("empty").type(JsonFieldType.BOOLEAN).description("비어있는 페이지 여부"),
                                 //content
-                                fieldWithPath("content[].id").type(JsonFieldType.NUMBER).description("가입 신청 ID"),
-                                fieldWithPath("content[].name").type(JsonFieldType.STRING).description("가입 신청자 이름"),
+                                fieldWithPath("content[].id").type(JsonFieldType.NUMBER).description("인증 신청 ID"),
+                                fieldWithPath("content[].name").type(JsonFieldType.STRING).description("인증 신청자 이름"),
                                 fieldWithPath("content[].division").type(JsonFieldType.STRING).description("소속").optional(),
                                 fieldWithPath("content[].position").type(JsonFieldType.STRING).description("직책").optional(),
                                 fieldWithPath("content[].userType").type(JsonFieldType.STRING).description("회원 유형 [INACTIVE_PROFESSOR, INACTIVE_COMPANY]"),
-                                fieldWithPath("content[].createdAt").type(JsonFieldType.STRING).description("가입 신청 정보 생성일"),
-                                fieldWithPath("content[].updatedAt").type(JsonFieldType.STRING).description("가입 신청 정보 수정일")
+                                fieldWithPath("content[].createdAt").type(JsonFieldType.STRING).description("인증 신청 정보 생성일"),
+                                fieldWithPath("content[].updatedAt").type(JsonFieldType.STRING).description("인증 신청 정보 수정일")
                         )
                 ));
+    }
+
+    // TODO Auth 설정 추가
+    @Test
+    @DisplayName("인증 신청 상세 정보를 조회할 수 있다.")
+    void getApplication() throws Exception {
+
+        // given
+        Long applicationId = 1L;
+        ApplicationDetailResponse response = new ApplicationDetailResponse(
+                applicationId, "김영한", "010-1111-2222", "email@gmail.com", "배민", "CEO", UserType.INACTIVE_COMPANY, LocalDateTime.now(), LocalDateTime.now()
+        );
+
+        when(applicationService.getApplication(applicationId)).thenReturn(response);
+
+        // when
+        ResultActions result = mockMvc.perform(get("/applications/{applicationId}", applicationId)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        // then
+        result.andExpect(status().isOk())
+                .andDo(restDocs.document(
+                        pathParameters(
+                                parameterWithName("applicationId").description("인증 신청 ID")
+                        ),
+                        responseFields(
+                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("인증 신청 ID"),
+                                fieldWithPath("name").type(JsonFieldType.STRING).description("인증 신청자 이름"),
+                                fieldWithPath("phone").type(JsonFieldType.STRING).description("인증 신청자 전화번호"),
+                                fieldWithPath("email").type(JsonFieldType.STRING).description("인증 신청자 이메일"),
+                                fieldWithPath("division").type(JsonFieldType.STRING).description("소속").optional(),
+                                fieldWithPath("position").type(JsonFieldType.STRING).description("직책").optional(),
+                                fieldWithPath("userType").type(JsonFieldType.STRING).description("회원 유형 [INACTIVE_PROFESSOR, INACTIVE_COMPANY]"),
+                                fieldWithPath("createdAt").type(JsonFieldType.STRING).description("인증 신청 정보 생성일"),
+                                fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("인증 신청 정보 수정일")
+                        )
+                ));
+
     }
 }

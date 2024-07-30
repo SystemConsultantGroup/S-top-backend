@@ -2,7 +2,11 @@
 :source-highlighter: highlightjs
 
 ---
-=== 가입 신청 정보 리스트 조회 (GET /applications)
+=== 인증 신청 리스트 조회 (GET /applications)
 ====
 operation::application-controller-test/get-applications[snippets="http-request,query-parameters,http-response,response-fields"]
+====
+=== 인증 신청자 상세 정보 조회 (GET /applications)
+====
+operation::application-controller-test/get-application[snippets="http-request,path-parameters,http-response,response-fields"]
 ====

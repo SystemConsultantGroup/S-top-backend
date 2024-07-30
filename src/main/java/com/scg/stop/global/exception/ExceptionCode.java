@@ -13,7 +13,7 @@ public enum ExceptionCode {
     DUPLICATED_YEAR(1001, "해당 연도의 행사 기간이 이미 존재합니다."),
 
     // user domain
-    NOT_FOUND_APPLICATION_ID(4010, "ID에 해당하는 가입 신청 정보가 존재하지 않습니다."),
+    NOT_FOUND_APPLICATION_ID(4010, "ID에 해당하는 인증 신청 정보가 존재하지 않습니다."),
     ALREADY_VERIFIED_USER(4011, "이미 인증 된 회원입니다.");
 
     private final int code;
