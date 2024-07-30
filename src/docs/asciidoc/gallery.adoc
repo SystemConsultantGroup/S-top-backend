@@ -16,3 +16,8 @@ operation::gallery-controller-test/get-galleries[snippets="http-request,query-pa
 ====
 operation::gallery-controller-test/get-gallery[snippets="http-request,path-parameters,http-response,response-fields"]
 ====
+
+=== 갤러리 게시글 삭제 (DELETE /galleries/{galleryId})
+====
+operation::gallery-controller-test/delete-gallery[snippets="http-request,path-parameters"]
+====

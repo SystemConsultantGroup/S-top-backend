@@ -3,6 +3,7 @@ package com.scg.stop.domain.gallery.controller;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -232,4 +233,26 @@ class GalleryControllerTest extends AbstractControllerTest {
                 ));
     }
 
+    @Test
+    @DisplayName("갤러리 게시글을 삭제할 수 있다.")
+    void deleteGallery() throws Exception {
+
+        // given
+        Long galleryId = 1L;
+        doNothing().when(galleryService).deleteGallery(galleryId);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                delete("/galleries/{galleryId}", galleryId)
+                        .contentType(APPLICATION_JSON)
+        );
+
+        // then
+        result.andExpect(status().isNoContent())
+                .andDo(restDocs.document(
+                        pathParameters(
+                                parameterWithName("galleryId").description("삭제할 갤러리 ID")
+                        )
+                ));
+    }
 }
