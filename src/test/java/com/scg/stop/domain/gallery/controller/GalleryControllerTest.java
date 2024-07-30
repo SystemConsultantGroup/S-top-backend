@@ -144,7 +144,9 @@ class GalleryControllerTest extends AbstractControllerTest {
                 .andDo(restDocs.document(
                         queryParameters(
                                 parameterWithName("year").optional().description("연도"),
-                                parameterWithName("month").optional().description("월")
+                                parameterWithName("month").optional().description("월"),
+                                parameterWithName("page").optional().description("페이지 번호 [default: 0]"),
+                                parameterWithName("size").optional().description("페이지 크기 [default: 10]")
                         ),
                         responseFields(
                                 fieldWithPath("totalElements").type(JsonFieldType.NUMBER).description("전체 데이터 수"),
@@ -166,7 +168,6 @@ class GalleryControllerTest extends AbstractControllerTest {
                                 fieldWithPath("content[].files[].createdAt").type(JsonFieldType.STRING).description("파일 생성일"),
                                 fieldWithPath("content[].files[].updatedAt").type(JsonFieldType.STRING).description("파일 수정일"),
                                 fieldWithPath("number").type(JsonFieldType.NUMBER).description("현재 페이지 번호"),
-//                                fieldWithPath("sort").ignored(),
                                 fieldWithPath("sort.empty").type(JsonFieldType.BOOLEAN).description("정렬 정보"),
                                 fieldWithPath("sort.sorted").type(JsonFieldType.BOOLEAN).description("정렬 정보"),
                                 fieldWithPath("sort.unsorted").type(JsonFieldType.BOOLEAN).description("정렬 정보"),
