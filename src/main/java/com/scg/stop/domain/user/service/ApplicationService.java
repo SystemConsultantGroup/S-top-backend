@@ -1,6 +1,8 @@
 package com.scg.stop.domain.user.service;
 
 import static com.scg.stop.domain.user.domain.UserType.*;
+import static com.scg.stop.global.exception.ExceptionCode.ALREADY_VERIFIED_USER;
+import static com.scg.stop.global.exception.ExceptionCode.NOT_FOUND_APPLICATION_ID;
 
 import com.scg.stop.domain.user.domain.Application;
 import com.scg.stop.domain.user.domain.User;
@@ -8,9 +10,12 @@ import com.scg.stop.domain.user.domain.UserType;
 import com.scg.stop.domain.user.dto.response.ApplicationDetailResponse;
 import com.scg.stop.domain.user.dto.response.ApplicationListResponse;
 import com.scg.stop.domain.user.repository.ApplicationRepository;
+import com.scg.stop.global.exception.BadRequestException;
+import com.scg.stop.global.exception.ExceptionCode;
 import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,6 +35,13 @@ public class ApplicationService {
     }
 
     public ApplicationDetailResponse getApplication(Long applicationId) {
-        return null;
+        Application application = applicationRepository.findById(applicationId)
+                .orElseThrow(() -> new BadRequestException(NOT_FOUND_APPLICATION_ID));
+
+        List<UserType> activeUserTypes = Arrays.asList(COMPANY, PROFESSOR);
+        if(activeUserTypes.contains(application.getUser().getUserType())) {
+            throw new BadRequestException(ALREADY_VERIFIED_USER);
+        }
+        return ApplicationDetailResponse.from(application);
     }
 }

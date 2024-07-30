@@ -2,6 +2,7 @@ package com.scg.stop.domain.user.dto.response;
 
 import static lombok.AccessLevel.PRIVATE;
 
+import com.scg.stop.domain.user.domain.Application;
 import com.scg.stop.domain.user.domain.UserType;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -22,4 +23,18 @@ public class ApplicationDetailResponse {
     private UserType userType;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    public static ApplicationDetailResponse from(Application application) {
+        return new ApplicationDetailResponse(
+                application.getId(),
+                application.getUser().getName(),
+                application.getUser().getPhone(),
+                application.getUser().getEmail(),
+                application.getDivision(),
+                application.getPosition(),
+                application.getUser().getUserType(),
+                application.getCreatedAt(),
+                application.getUpdatedAt()
+        );
+    }
 }
