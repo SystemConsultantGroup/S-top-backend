@@ -24,10 +24,10 @@ public class UpdateGalleryRequest {
     private String content;
 
     @NotNull(message = "연도를 입력해주세요.")
-    private int year;
+    private Integer year;
 
     @NotNull(message = "월을 입력해주세요.")
-    private int month;
+    private Integer month;
 
     @Size(min = 1, message = "1개 이상의 파일을 첨부해야 합니다.")
     @NotNull(message = "파일을 첨부해주세요.")
