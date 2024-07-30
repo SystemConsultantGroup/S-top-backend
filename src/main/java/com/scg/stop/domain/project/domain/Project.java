@@ -64,15 +64,29 @@ public class Project extends BaseTimeEntity {
     @OneToMany(fetch = LAZY, mappedBy = "project", cascade = CascadeType.ALL)
     private List<Member> members = new ArrayList<>();
 
-    @OneToMany(fetch = LAZY, mappedBy = "project")
+    @OneToMany(fetch = LAZY, mappedBy = "project", cascade = CascadeType.REMOVE)
     private List<Likes> likes = new ArrayList<>();
 
-    @OneToMany(fetch = LAZY, mappedBy = "project")
+    @OneToMany(fetch = LAZY, mappedBy = "project", cascade = CascadeType.REMOVE)
     private List<FavoriteProject> favorites = new ArrayList<>();
 
-    @OneToMany(fetch = LAZY, mappedBy = "project")
+    @OneToMany(fetch = LAZY, mappedBy = "project", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(fetch = LAZY, mappedBy = "project")
+    @OneToMany(fetch = LAZY, mappedBy = "project", cascade = CascadeType.REMOVE)
     private List<Inquiry> inquiries = new ArrayList<>();
+
+    public void update(Project project) {
+        this.name = project.getName();
+        this.type = project.getType();
+        this.category = project.getCategory();
+        this.team = project.getTeam();
+        this.youtubeId = project.getYoutubeId();
+        this.techStack = project.getTechStack();
+        this.year = project.getYear();
+        this.awardStatus = project.getAwardStatus();
+        this.thumbnail = project.getThumbnail();
+        this.poster = project.getPoster();
+        this.members = project.getMembers();
+    }
 }
