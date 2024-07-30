@@ -2,9 +2,14 @@ package com.scg.stop.configuration;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 
+import com.scg.stop.auth.config.AuthUserArgumentResolver;
+import com.scg.stop.auth.repository.RefreshTokenRepository;
+import com.scg.stop.user.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
@@ -24,6 +29,15 @@ public abstract class AbstractControllerTest {
 
     @Autowired
     protected MockMvc mockMvc;
+
+//    @MockBean
+//    protected AuthUserArgumentResolver authUserArgumentResolver;
+
+    @MockBean
+    protected RefreshTokenRepository refreshTokenRepository;
+
+    @MockBean
+    protected UserRepository userRepository;
 
     @BeforeEach
     void setUp(

@@ -1,0 +1,63 @@
+== AuthController
+
+=== 카카오 소셜 로그인 (POST /auth/login/kakao/)
+
+==== 요청
+
+include::{snippets}/auth-controller-test/kakao-social-login/http-request.adoc[]
+
+==== 응답
+
+include::{snippets}/auth-controller-test/kakao-social-login/http-response.adoc[]
+
+=== Access Token 재발급 (POST /auth/reissue)
+
+==== 요청
+
+include::{snippets}/auth-controller-test/reissue-token/http-request.adoc[]
+
+==== 응답
+
+include::{snippets}/auth-controller-test/reissue-token/http-response.adoc[]
+
+=== 회원가입  (POST /auth/register)
+
+==== 요청
+
+include::{snippets}/auth-controller-test/register/http-request.adoc[]
+
+==== 응답
+
+include::{snippets}/auth-controller-test/register/http-response.adoc[]
+
+
+
+=== 카카오 소셜 로그인 (POST /auth/login/kakao)
+
+==== 요청
+
+include::{snippets}/auth-controller-test/kakao-social-login/http-request.adoc[]
+
+==== 응답
+
+include::{snippets}/auth-controller-test/kakao-social-login/http-response.adoc[]
+
+=== Access Token 재발급 (POST /auth/reissue)
+
+==== 요청
+
+include::{snippets}/auth-controller-test/reissue-token/http-request.adoc[]
+
+==== 응답
+
+include::{snippets}/auth-controller-test/reissue-token/http-response.adoc[]
+
+=== 로그아웃 (POST /auth/logout)
+
+==== 요청
+
+include::{snippets}/auth-controller-test/logout/http-request.adoc[]
+
+==== 응답
+
+include::{snippets}/auth-controller-test/logout/http-response.adoc[]
