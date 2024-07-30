@@ -91,11 +91,12 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
     }
 
     private String extractAccessToken(HttpServletRequest request) {
+        final String BEARER = "Bearer ";
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (authHeader == null) {
+        if (authHeader == null || !authHeader.startsWith(BEARER)) {
             throw new InvalidJwtException(ExceptionCode.INVALID_ACCESS_TOKEN);
         }
-        return authHeader.split(" ")[1];
+        return authHeader.substring(BEARER.length()).trim();
     }
 
     private String extractRefreshToken(HttpServletRequest request) {
