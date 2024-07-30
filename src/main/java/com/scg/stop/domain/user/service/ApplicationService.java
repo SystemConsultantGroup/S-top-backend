@@ -5,6 +5,7 @@ import static com.scg.stop.domain.user.domain.UserType.*;
 import com.scg.stop.domain.user.domain.Application;
 import com.scg.stop.domain.user.domain.User;
 import com.scg.stop.domain.user.domain.UserType;
+import com.scg.stop.domain.user.dto.response.ApplicationDetailResponse;
 import com.scg.stop.domain.user.dto.response.ApplicationListResponse;
 import com.scg.stop.domain.user.repository.ApplicationRepository;
 import java.util.Arrays;
@@ -26,5 +27,9 @@ public class ApplicationService {
         List<UserType> targetUserTypes = Arrays.asList(INACTIVE_COMPANY, INACTIVE_PROFESSOR);
         Page<Application> filteredApplications = applicationRepository.findByUserTypeIn(targetUserTypes, pageable);
         return filteredApplications.map(ApplicationListResponse::from);
+    }
+
+    public ApplicationDetailResponse getApplication(Long applicationId) {
+        return null;
     }
 }
