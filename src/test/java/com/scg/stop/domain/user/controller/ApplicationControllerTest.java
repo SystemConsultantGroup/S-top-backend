@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
@@ -145,6 +146,42 @@ class ApplicationControllerTest extends AbstractControllerTest {
                                 fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("인증 신청 정보 수정일")
                         )
                 ));
+    }
 
+    // TODO Auth 설정 추가
+    @Test
+    @DisplayName("교수/기업 인증")
+    void updateApplication() throws Exception {
+
+        // given
+        Long applicationId = 1L;
+        ApplicationDetailResponse response = new ApplicationDetailResponse(
+                applicationId, "김영한", "010-1111-2222", "email@gmail.com", "배민", "CEO", UserType.COMPANY, LocalDateTime.now(), LocalDateTime.now()
+        );
+
+        when(applicationService.updateApplication(applicationId)).thenReturn(response);
+
+        // when
+        ResultActions result = mockMvc.perform(patch("/applications/{applicationId}", applicationId)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        // then
+        result.andExpect(status().isOk())
+                .andDo(restDocs.document(
+                        pathParameters(
+                                parameterWithName("applicationId").description("인증 신청 ID")
+                        ),
+                        responseFields(
+                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("인증 신청 ID"),
+                                fieldWithPath("name").type(JsonFieldType.STRING).description("인증 신청자 이름"),
+                                fieldWithPath("phone").type(JsonFieldType.STRING).description("인증 신청자 전화번호"),
+                                fieldWithPath("email").type(JsonFieldType.STRING).description("인증 신청자 이메일"),
+                                fieldWithPath("division").type(JsonFieldType.STRING).description("소속").optional(),
+                                fieldWithPath("position").type(JsonFieldType.STRING).description("직책").optional(),
+                                fieldWithPath("userType").type(JsonFieldType.STRING).description("회원 유형 [PROFESSOR, COMPANY]"),
+                                fieldWithPath("createdAt").type(JsonFieldType.STRING).description("인증 신청 정보 생성일"),
+                                fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("인증 신청 정보 수정일")
+                        )
+                ));
     }
 }

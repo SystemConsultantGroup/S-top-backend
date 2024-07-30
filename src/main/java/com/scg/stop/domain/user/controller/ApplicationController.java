@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +39,12 @@ public class ApplicationController {
         return ResponseEntity.ok().body(application);
     }
 
-//    @PatchMapping("/{applicationId}")
-//    public void updateApplication(@PathVariable String applicationId) {}
+    @PatchMapping("/{applicationId}")
+    public ResponseEntity<ApplicationDetailResponse> updateApplication(
+            @PathVariable("applicationId") Long applicationId
+            // TODO @AuthUser(accessType = {AccessType.ADMIN}) user
+    ) {
+        ApplicationDetailResponse application = applicationService.updateApplication(applicationId);
+        return ResponseEntity.ok().body(application);
+    }
 }
