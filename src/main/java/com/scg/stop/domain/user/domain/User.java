@@ -78,4 +78,12 @@ public class User extends BaseTimeEntity {
 
     @OneToMany(fetch = LAZY, mappedBy = "user")
     private List<Inquiry> inquiries = new ArrayList<>();
+
+    public void updateApplication() {
+        if (userType == UserType.INACTIVE_COMPANY) {
+            userType = UserType.COMPANY;
+        } else if (userType == UserType.INACTIVE_PROFESSOR) {
+            userType = UserType.PROFESSOR;
+        }
+    }
 }

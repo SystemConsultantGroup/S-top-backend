@@ -23,15 +23,27 @@ public class ApplicationController {
     @GetMapping
     public ResponseEntity<Page<ApplicationListResponse>> getApplications(
             @PageableDefault(page = 0, size = 10) Pageable pageable
-            // TODO @AuthUser(accessType = {AccessType.ADMIN}) User.user
+            // TODO @AuthUser(accessType = {AccessType.ADMIN}) user
     ) {
         Page<ApplicationListResponse> applications = applicationService.getApplications(pageable);
         return ResponseEntity.ok().body(applications);
     }
 
-//    @GetMapping("/{applicationId}")
-//    public void getApplication(@PathVariable String applicationId) {}
-//
-//    @PatchMapping("/{applicationId}")
-//    public void updateApplication(@PathVariable String applicationId) {}
+    @GetMapping("/{applicationId}")
+    public ResponseEntity<ApplicationDetailResponse> getApplication(
+            @PathVariable("applicationId") Long applicationId
+            // TODO @AuthUser(accessType = {AccessType.ADMIN}) user
+    ) {
+        ApplicationDetailResponse application = applicationService.getApplication(applicationId);
+        return ResponseEntity.ok().body(application);
+    }
+
+    @PatchMapping("/{applicationId}")
+    public ResponseEntity<ApplicationDetailResponse> updateApplication(
+            @PathVariable("applicationId") Long applicationId
+            // TODO @AuthUser(accessType = {AccessType.ADMIN}) user
+    ) {
+        ApplicationDetailResponse application = applicationService.updateApplication(applicationId);
+        return ResponseEntity.ok().body(application);
+    }
 }
