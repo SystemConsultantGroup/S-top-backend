@@ -35,6 +35,10 @@ jobs:
 #        with:
 #          redis-version: "7.2.5"
 #          redis-port: 6379
+      - name: set Config
+        run: |
+          echo "${{ secrets.OAUTH_YML }}" | base64 --decode > src/main/resources/application-oauth.yml
+          find src
 
       - name: gradlew 권한 부여
         run: chmod +x gradlew
@@ -52,9 +56,8 @@ jobs:
 #          min-coverage-overall: 50
 #          min-coverage-changed-files: 50
 #          update-comment: true
-
-#      - name: SonarQube test and analyze
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#        run: ./gradlew test sonar --info --stacktrace
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: '**/test-results/**/*.xml'
