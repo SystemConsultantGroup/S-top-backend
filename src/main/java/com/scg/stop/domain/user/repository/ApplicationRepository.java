@@ -13,5 +13,4 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
 
     @Query("SELECT a FROM Application a WHERE a.user.userType IN :userTypes")
     Page<Application> findByUserTypeIn(@Param("userTypes") List<UserType> userTypes, Pageable pageable);
-
 }

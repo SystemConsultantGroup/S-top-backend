@@ -1,0 +1,8 @@
+== 가입 신청 관리 API
+:source-highlighter: highlightjs
+
+---
+=== 가입 신청 정보 리스트 조회 (GET /applications)
+====
+operation::application-controller-test/get-applications[snippets="http-request,query-parameters,http-response,response-fields"]
+====
