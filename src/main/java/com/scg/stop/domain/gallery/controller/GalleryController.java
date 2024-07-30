@@ -35,4 +35,10 @@ public class GalleryController {
         Page<GalleryResponse> galleries = galleryService.getGalleries(year, month, pageable);
         return ResponseEntity.ok(galleries);
     }
+
+    @GetMapping("/{galleryId}")
+    public ResponseEntity<GalleryResponse> getGallery(@PathVariable("galleryId") Long galleryId) {
+        GalleryResponse galleryResponse = galleryService.getGallery(galleryId);
+        return ResponseEntity.ok(galleryResponse);
+    }
 }

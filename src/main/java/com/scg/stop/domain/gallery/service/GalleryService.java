@@ -20,12 +20,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class GalleryService {
 
     private final GalleryRepository galleryRepository;
     private final FileRepository fileRepository;
 
-    @Transactional
     public GalleryResponse createGallery(CreateGalleryRequest request) {
         List<File> files = fileRepository.findByIdIn(request.getFileIds());
         if (files.size() != request.getFileIds().size()) {
@@ -45,6 +45,13 @@ public class GalleryService {
     public Page<GalleryResponse> getGalleries(Integer year, Integer month, Pageable pageable) {
         Page<Gallery> galleries = galleryRepository.findGalleries(year, month, pageable);
         return galleries.map(this::entityToGalleryResponse);
+    }
+
+    @Transactional(readOnly = true)
+    public GalleryResponse getGallery(Long galleryId) {
+        Gallery gallery = galleryRepository.findById(galleryId)
+                .orElseThrow(() -> new IllegalArgumentException("요청한 ID(" + galleryId + ")에 해당하는 갤러리가 없습니다."));
+        return entityToGalleryResponse(gallery);
     }
 
     private GalleryResponse entityToGalleryResponse(Gallery gallery) {
