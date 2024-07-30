@@ -1,5 +1,7 @@
 package com.scg.stop.domain.project.dto.request;
 
+import static lombok.AccessLevel.PROTECTED;
+
 import com.scg.stop.domain.project.domain.Member;
 import com.scg.stop.domain.project.domain.Project;
 import com.scg.stop.domain.project.domain.Role;
@@ -9,8 +11,9 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 public class MemberRequest {
+
     private String name;
     private Role role;
 
