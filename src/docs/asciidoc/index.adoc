@@ -1,0 +1,8 @@
+= S-TOP Rest Docs
+:doctype: book
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+:seclinks:
+
+include::notice.adoc[]

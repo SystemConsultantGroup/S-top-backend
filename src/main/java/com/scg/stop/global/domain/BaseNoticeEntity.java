@@ -6,13 +6,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 @Getter
-@SuperBuilder
 @NoArgsConstructor(access = PROTECTED)
+@AllArgsConstructor(access = PROTECTED)
 @MappedSuperclass
 public abstract class BaseNoticeEntity extends BaseTimeEntity{
 
@@ -32,10 +32,13 @@ public abstract class BaseNoticeEntity extends BaseTimeEntity{
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private boolean fixed;
 
-    // Setter for update
-    public void update(String title, String content, boolean fixed) {
+    protected void updateBaseNoticeEntity(String title, String content, boolean fixed) {
         this.title = title;
         this.content = content;
         this.fixed = fixed;
+    }
+
+    protected void increaseHitCount() {
+        this.hitCount++;
     }
 }

@@ -1,37 +1,65 @@
 package com.scg.stop.domain.notice.service;
 
+import com.scg.stop.domain.file.domain.File;
+import com.scg.stop.domain.file.dto.response.FileResponse;
+import com.scg.stop.domain.file.repository.FileRepository;
 import com.scg.stop.domain.notice.domain.Notice;
-import com.scg.stop.domain.notice.dto.NoticeDto;
+import com.scg.stop.domain.notice.dto.request.NoticeRequest;
+import com.scg.stop.domain.notice.dto.response.NoticeListElementResponse;
+import com.scg.stop.domain.notice.dto.response.NoticeResponse;
 import com.scg.stop.domain.notice.repository.NoticeRepository;
+import com.scg.stop.global.exception.BadRequestException;
+import com.scg.stop.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class NoticeService {
+
     private final NoticeRepository noticeRepository;
+    private final FileRepository fileRepository;
 
     /**
      * Create a new notice
-     * @param dto Notice Request DTO
-     * @return ID of the created notice
+     * @param request Notice Request DTO
+     * @return Notice Response DTO
      */
-    public Long createNotice(NoticeDto.Request dto) {
-        Notice newNotice = dto.toEntity();
+    // TODO: Admin check
+    public NoticeResponse createNotice(NoticeRequest request) {
+        List<File> attachedFiles = new ArrayList<>();
+        if (request.getFileIds() != null && !request.getFileIds().isEmpty()) {
+            attachedFiles = fileRepository.findByIdIn(request.getFileIds());
+            if (attachedFiles.size() != request.getFileIds().size()) {
+                throw new BadRequestException(ExceptionCode.FILE_NOT_FOUND);
+            }
+        }
+
+        Notice newNotice = Notice.from(request.getTitle(), request.getContent(), request.isFixed(), attachedFiles);
         noticeRepository.save(newNotice);
-        return newNotice.getId();
+
+        List<FileResponse> files = attachedFiles.stream()
+                .map(FileResponse::from)
+                .collect(Collectors.toList());
+        return NoticeResponse.from(newNotice, files);
     }
 
     /**
      * Get a list of notices
+     * @param title Title of the notice (optional)
+     * @param pageable Pageable
      * @return List of notices
      */
     @Transactional(readOnly = true)
-    public Page<NoticeDto.Response> getNoticeList(String title, Pageable pageable) {
+    public Page<NoticeListElementResponse> getNoticeList(String title, Pageable pageable) {
         return noticeRepository.findNotices(title, pageable);
     }
 
@@ -40,34 +68,70 @@ public class NoticeService {
      * @param id ID of the notice
      * @return Notice Response DTO
      */
-    @Transactional(readOnly = true)
-    public NoticeDto.Response getNotice(Long id) {
+    public NoticeResponse getNotice(Long id) {
         Notice notice = noticeRepository.findById(id).orElseThrow(() ->
-                new IllegalArgumentException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
-        return new NoticeDto.Response(notice);
+                new BadRequestException(ExceptionCode.NOTICE_NOT_FOUND));
+        notice.increaseHitCount();
+
+        List<FileResponse> files = notice.getFiles().stream()
+                .map(FileResponse::from)
+                .collect(Collectors.toList());
+        return NoticeResponse.from(notice, files);
     }
 
     /**
      * Update a corresponding notice
      * @param id ID of the notice
-     * @param dto Notice Request DTO
+     * @param request Notice Request DTO
+     * @return Notice Response DTO
      */
-    // TODO: revise to use updateNotice method in NoticeRepository not setter of Entity
-    public void updateNotice(Long id, NoticeDto.Request dto) {
+    // TODO: Admin check
+    public NoticeResponse updateNotice(Long id, NoticeRequest request) {
         Notice notice = noticeRepository.findById(id).orElseThrow(() ->
-                new IllegalArgumentException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
-        notice.update(dto.getTitle(), dto.getContent(), dto.isFixed());
-    }
+                new BadRequestException(ExceptionCode.NOTICE_NOT_FOUND));
+        notice.updateNotice(request.getTitle(), request.getContent(), request.isFixed());
 
-    // TODO: update notice hit count
+        List<File> attachedFiles = new ArrayList<>();
+        if (request.getFileIds() != null && !request.getFileIds().isEmpty()) {
+            attachedFiles = fileRepository.findByIdIn(request.getFileIds());
+            if (attachedFiles.size() != request.getFileIds().size()) {
+                throw new BadRequestException(ExceptionCode.FILE_NOT_FOUND);
+            }
+        }
+
+        // Find files that are no longer attached
+        List<File> filesToRemove = new ArrayList<>(notice.getFiles());
+        filesToRemove.removeAll(attachedFiles);
+
+        // Remove files that are no longer attached from the file table
+        filesToRemove.forEach(file -> {
+            notice.getFiles().remove(file);
+            fileRepository.delete(file);
+        });
+
+        // Add new files and set noticeId
+        attachedFiles.forEach(file -> {
+            if (!notice.getFiles().contains(file)) {
+                file.setNotice(notice);
+                notice.getFiles().add(file);
+            }
+        });
+
+        List<FileResponse> files = notice.getFiles().stream()
+                .map(FileResponse::from)
+                .collect(Collectors.toList());
+
+        return NoticeResponse.from(notice, files);
+    }
 
     /**
      * Delete a corresponding notice
      * @param noticeId ID of the notice
      */
+    // TODO: Admin check
     public void deleteNotice(Long noticeId) {
         Notice notice = noticeRepository.findById(noticeId).orElseThrow(() ->
-                new IllegalArgumentException("요청한 ID에 해당하는 공지사항이 존재하지 않습니다."));
+                new BadRequestException(ExceptionCode.NOTICE_NOT_FOUND));
         noticeRepository.delete(notice);
     }
 }
