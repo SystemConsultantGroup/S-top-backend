@@ -1,6 +1,4 @@
-package com.scg.stop.domain.event.dto;
-
-import static lombok.AccessLevel.PRIVATE;
+package com.scg.stop.domain.event.dto.response;
 
 import com.scg.stop.domain.event.domain.EventPeriod;
 import java.time.LocalDateTime;

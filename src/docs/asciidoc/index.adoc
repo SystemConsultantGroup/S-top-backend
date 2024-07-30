@@ -5,4 +5,7 @@
 :toclevels: 2
 :seclinks:
 
+=== 커스텀 예외 코드
+include::{snippets}/exception-code-controller-test/get-exception-codes/exception-response-fields.adoc[]
+
 include::eventPeriod.adoc[]

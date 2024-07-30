@@ -1,10 +1,8 @@
 package com.scg.stop.domain.event.domain;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
-import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
-import com.scg.stop.domain.event.dto.EventPeriodRequest;
 import com.scg.stop.global.domain.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-@AllArgsConstructor(access = PRIVATE)
+@AllArgsConstructor
 public class EventPeriod extends BaseTimeEntity {
 
     @Id
@@ -34,12 +32,7 @@ public class EventPeriod extends BaseTimeEntity {
     @Column(nullable = false)
     private LocalDateTime end;
 
-    public static EventPeriod from(EventPeriodRequest eventPeriodRequest) {
-        return new EventPeriod(
-                null,
-                eventPeriodRequest.getYear(),
-                eventPeriodRequest.getStart(),
-                eventPeriodRequest.getEnd()
-        );
+    public static EventPeriod of(Integer year, LocalDateTime start, LocalDateTime end) {
+        return new EventPeriod(null, year, start, end);
     }
 }
