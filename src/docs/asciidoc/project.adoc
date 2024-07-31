@@ -1,0 +1,32 @@
+== 프로젝트 API
+:source-highlighter: highlightjs
+
+---
+=== 공지 사항 생성 (POST /notices)
+==== 201 Created
+====
+operation::project-controller-test/create-project[snippets="http-request,request-fields,http-response,response-fields"]
+====
+
+
+---
+=== 공지 사항 조회 (GET /notices/{noticeId})
+==== 200 OK
+====
+operation::project-controller-test/get-project[snippets="path-parameters,http-request,http-response,response-fields"]
+====
+
+
+---
+=== 공지 사항 수정 (PUT /notices/{noticeId})
+==== 200 OK
+====
+operation::project-controller-test/update-project[snippets="path-parameters,http-request,request-fields,http-response,response-fields"]
+====
+
+---
+=== 공지 사항 삭제 (DELETE /notices/{noticeId})
+==== 204 No Content
+====
+operation::project-controller-test/delete-project[snippets="path-parameters,http-request,http-response"]
+====
