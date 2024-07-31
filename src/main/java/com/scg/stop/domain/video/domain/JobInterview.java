@@ -2,10 +2,12 @@ package com.scg.stop.domain.video.domain;
 
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.scg.stop.domain.video.dto.request.JobInterviewRequest;
+import com.scg.stop.global.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -20,7 +22,20 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @AllArgsConstructor(access = PRIVATE)
 @NoArgsConstructor(access = PROTECTED)
-public class JobInterview extends BaseVideoEntity {
+public class JobInterview extends BaseTimeEntity {
+
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false)
+    private String youtubeId;
+
+    @Column(nullable = false)
+    private Integer year;
 
     @Column(nullable = false)
     @Enumerated(value = STRING)
@@ -30,7 +45,9 @@ public class JobInterview extends BaseVideoEntity {
     private List<FavoriteVideo> favoriteVideos;
 
     private JobInterview(String title, String youtubeId, Integer year, JobInterviewCategory category) {
-        super(null, title, youtubeId, year);
+        this.title = title;
+        this.youtubeId = youtubeId;
+        this.year = year;
         this.category = category;
     }
 
@@ -44,7 +61,9 @@ public class JobInterview extends BaseVideoEntity {
     }
 
     public void updateJobInterview(JobInterviewRequest request) {
-        this.updateBaseVideoEntity(request.getTitle(), request.getYoutubeId(), request.getYear());
+        this.title = request.getTitle();
+        this.youtubeId = request.getYoutubeId();
+        this.year = request.getYear();
         this.category = request.getCategory();
     }
 }

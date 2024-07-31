@@ -44,7 +44,7 @@ public class Project extends BaseTimeEntity {
     private String team;
 
     @Column(nullable = false)
-    private String videoUrl;
+    private String youtubeId;
 
     @Column(nullable = false)
     private String techStack;

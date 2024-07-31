@@ -48,7 +48,7 @@ public class User extends BaseTimeEntity {
 
     @Column(nullable = false)
     @Enumerated(value = STRING)
-    private UserType type;
+    private UserType userType;
 
     private String signupSource;
 
