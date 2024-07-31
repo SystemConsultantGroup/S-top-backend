@@ -37,6 +37,7 @@ public class ProjectService {
         return getProject(project.getId());
     }
 
+    @Transactional(readOnly = true)
     public ProjectDetailResponse getProject(Long projectId) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
