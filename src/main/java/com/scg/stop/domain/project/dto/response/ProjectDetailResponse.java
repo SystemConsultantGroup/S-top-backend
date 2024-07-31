@@ -49,7 +49,7 @@ public class ProjectDetailResponse {
                 sutudentNames,
                 professorNames,
                 project.getLikes().size(),
-                !project.getFavorites().isEmpty()
+                !project.getFavorites().isEmpty() // ToDo: 인증 설정 추가할 때, 인증된 사용자의 즐겨찾기 여부 확인 로직으로 변경
         );
     }
 }
