@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
+
 import com.scg.stop.domain.project.domain.AwardStatus;
 import com.scg.stop.domain.project.domain.ProjectCategory;
 import com.scg.stop.domain.project.domain.ProjectType;
@@ -27,7 +28,7 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
-import org.springframework.http.MediaType;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
@@ -79,7 +80,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
         result.andExpect(status().isCreated())
                 .andDo(restDocs.document(
                         requestFields(
-                                fieldWithPath("thumbnailId").description("썸네일 ID"),
+                                fieldWithPath("thumbnailId").type(JsonFieldType.NUMBER).description("썸네일 ID"),
                                 fieldWithPath("posterId").description("포스터 ID"),
                                 fieldWithPath("projectName").description("프로젝트 이름"),
                                 fieldWithPath("projectType").description("프로젝트 타입"),
