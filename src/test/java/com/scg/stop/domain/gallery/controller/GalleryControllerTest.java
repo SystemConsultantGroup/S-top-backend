@@ -1,6 +1,5 @@
 package com.scg.stop.domain.gallery.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -15,12 +14,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
 import com.scg.stop.domain.file.dto.response.FileResponse;
-import com.scg.stop.domain.gallery.dto.request.CreateGalleryRequest;
-import com.scg.stop.domain.gallery.dto.request.UpdateGalleryRequest;
+import com.scg.stop.domain.gallery.dto.request.GalleryRequest;
 import com.scg.stop.domain.gallery.dto.response.GalleryResponse;
 import com.scg.stop.domain.gallery.service.GalleryService;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -59,7 +56,7 @@ class GalleryControllerTest extends AbstractControllerTest {
                 new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "사진2.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
                 new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "사진3.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now())
         );
-        CreateGalleryRequest request = new CreateGalleryRequest("새내기 배움터", "2024년 새내기 배움터", 2024, 4, fileIds);
+        GalleryRequest request = new GalleryRequest("새내기 배움터", "2024년 새내기 배움터", 2024, 4, fileIds);
         GalleryResponse response = new GalleryResponse(
                 1L,
                 "새내기 배움터",
@@ -70,7 +67,7 @@ class GalleryControllerTest extends AbstractControllerTest {
                 LocalDateTime.now(),
                 fileResponses
         );
-        when(galleryService.createGallery(any(CreateGalleryRequest.class))).thenReturn(response);
+        when(galleryService.createGallery(any(GalleryRequest.class))).thenReturn(response);
 
         // when
         ResultActions result = mockMvc.perform(
@@ -244,7 +241,7 @@ class GalleryControllerTest extends AbstractControllerTest {
                 new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "사진2.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
                 new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "사진3.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now())
         );
-        UpdateGalleryRequest request = new UpdateGalleryRequest("수정된 제목", "수정된 내용", 2024, 5, fileIds);
+        GalleryRequest request = new GalleryRequest("수정된 제목", "수정된 내용", 2024, 5, fileIds);
         GalleryResponse response = new GalleryResponse(
                 1L,
                 "수정된 제목",
@@ -255,7 +252,7 @@ class GalleryControllerTest extends AbstractControllerTest {
                 LocalDateTime.now(),
                 fileResponses
         );
-        when(galleryService.updateGallery(anyLong(), any(UpdateGalleryRequest.class))).thenReturn(response);
+        when(galleryService.updateGallery(anyLong(), any(GalleryRequest.class))).thenReturn(response);
 
         // when
         ResultActions result = mockMvc.perform(

@@ -7,8 +7,7 @@ import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.domain.file.dto.response.FileResponse;
 import com.scg.stop.domain.file.repository.FileRepository;
 import com.scg.stop.domain.gallery.domain.Gallery;
-import com.scg.stop.domain.gallery.dto.request.CreateGalleryRequest;
-import com.scg.stop.domain.gallery.dto.request.UpdateGalleryRequest;
+import com.scg.stop.domain.gallery.dto.request.GalleryRequest;
 import com.scg.stop.domain.gallery.dto.response.GalleryResponse;
 import com.scg.stop.domain.gallery.repository.GalleryRepository;
 import com.scg.stop.global.exception.BadRequestException;
@@ -28,7 +27,7 @@ public class GalleryService {
     private final GalleryRepository galleryRepository;
     private final FileRepository fileRepository;
 
-    public GalleryResponse createGallery(CreateGalleryRequest request) {
+    public GalleryResponse createGallery(GalleryRequest request) {
         List<File> files = fileRepository.findByIdIn(request.getFileIds());
         if (files.size() != request.getFileIds().size()) {
             throw new BadRequestException(NOT_FOUND_FILE_ID);
@@ -63,7 +62,7 @@ public class GalleryService {
         return GalleryResponse.of(gallery, fileResponses);
     }
 
-    public GalleryResponse updateGallery(Long galleryId, UpdateGalleryRequest request) {
+    public GalleryResponse updateGallery(Long galleryId, GalleryRequest request) {
         Gallery gallery = galleryRepository.findById(galleryId)
                 .orElseThrow(() -> new BadRequestException(NOT_FOUND_GALLERY_ID));
 

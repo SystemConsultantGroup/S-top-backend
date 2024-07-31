@@ -1,13 +1,11 @@
 package com.scg.stop.domain.gallery.controller;
 
-import com.scg.stop.domain.gallery.dto.request.CreateGalleryRequest;
-import com.scg.stop.domain.gallery.dto.request.UpdateGalleryRequest;
+import com.scg.stop.domain.gallery.dto.request.GalleryRequest;
 import com.scg.stop.domain.gallery.dto.response.GalleryResponse;
 import com.scg.stop.domain.gallery.service.GalleryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -23,8 +21,8 @@ public class GalleryController {
 
     // TODO Auth 설정 추가
     @PostMapping
-    public ResponseEntity<GalleryResponse> createGallery(@RequestBody @Valid CreateGalleryRequest createGalleryRequest) {
-        GalleryResponse galleryResponse = galleryService.createGallery(createGalleryRequest);
+    public ResponseEntity<GalleryResponse> createGallery(@RequestBody @Valid GalleryRequest galleryRequest) {
+        GalleryResponse galleryResponse = galleryService.createGallery(galleryRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(galleryResponse);
     }
 
@@ -47,8 +45,8 @@ public class GalleryController {
     @PutMapping("/{galleryId}")
     public ResponseEntity<GalleryResponse> updateGallery(
             @PathVariable("galleryId") Long galleryId,
-            @RequestBody @Valid UpdateGalleryRequest updateGalleryRequest) {
-        GalleryResponse galleryResponse = galleryService.updateGallery(galleryId, updateGalleryRequest);
+            @RequestBody @Valid GalleryRequest galleryRequest) {
+        GalleryResponse galleryResponse = galleryService.updateGallery(galleryId, galleryRequest);
         return ResponseEntity.ok(galleryResponse);
     }
 
