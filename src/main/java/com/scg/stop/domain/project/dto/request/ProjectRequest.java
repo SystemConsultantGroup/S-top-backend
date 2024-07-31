@@ -4,6 +4,8 @@ import static lombok.AccessLevel.PROTECTED;
 
 import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.domain.project.domain.*;
+import com.scg.stop.global.exception.BadRequestException;
+import com.scg.stop.global.exception.ExceptionCode;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -52,6 +54,8 @@ public class ProjectRequest {
     private List<MemberRequest> members;
 
     public Project toEntity(Long id, File thumbnail, File poster) {
+        validateMembers(); // 요청받은 멤버들이 모두 유효한지 검증
+
         Project project =  new Project(
                 id,
                 projectName,
@@ -78,5 +82,11 @@ public class ProjectRequest {
         project.getMembers().addAll(memberEntities);
 
         return project;
+    }
+
+    private void validateMembers() {
+        if (!members.stream().allMatch(MemberRequest::validate)) {
+            throw new BadRequestException(ExceptionCode.INVALID_MEMBER);
+        }
     }
 }
