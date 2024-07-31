@@ -53,11 +53,11 @@ public class Project extends BaseTimeEntity {
     @Enumerated(value = STRING)
     private AwardStatus awardStatus = AwardStatus.NONE;
 
-    @OneToOne(fetch = LAZY)
+    @OneToOne(fetch = LAZY, orphanRemoval = true)
     @JoinColumn(name = "thumbnail_id")
     private File thumbnail;
 
-    @OneToOne(fetch = LAZY)
+    @OneToOne(fetch = LAZY, orphanRemoval = true)
     @JoinColumn(name = "poster_id")
     private File poster;
 
