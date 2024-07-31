@@ -4,6 +4,8 @@ import com.scg.stop.domain.video.domain.Talk;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @AllArgsConstructor
 public class TalkResponse {
@@ -12,6 +14,8 @@ public class TalkResponse {
     public String youtubeId;
     public Integer year;
     public boolean hasQuiz;
+    public LocalDateTime createdAt;
+    public LocalDateTime updatedAt;
     //TODO: QUIZ
 
     public static TalkResponse from(Talk talk) {
@@ -20,7 +24,9 @@ public class TalkResponse {
                 talk.getTitle(),
                 talk.getYoutubeId(),
                 talk.getYear(),
-                talk.isHasQuiz()
+                talk.isHasQuiz(),
+                talk.getCreatedAt(),
+                talk.getUpdatedAt()
         );
     }
 
