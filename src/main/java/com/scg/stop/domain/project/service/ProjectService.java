@@ -18,11 +18,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class ProjectService {
     private final ProjectRepository projectRepository;
     private final FileRepository fileRepository;
-    @Transactional
+
     public ProjectDetailResponse createProject(ProjectRequest projectRequest) {
         File thumbnail = fileRepository.findById(projectRequest.getThumbnailId())
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT_THUMBNAIL));
@@ -36,10 +37,9 @@ public class ProjectService {
         return getProject(project.getId());
     }
 
-    @Transactional
     public ProjectDetailResponse getProject(Long projectId) {
         Project project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new IllegalArgumentException("프로젝트를 찾을 수 없습니다"));
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
 
         List<String> studentNames = project.getMembers().stream()
                 .filter(member -> member.getRole() == Role.STUDENT)
@@ -53,7 +53,6 @@ public class ProjectService {
         return ProjectDetailResponse.of(studentNames, professerNames, project);
     }
 
-    @Transactional
     public ProjectDetailResponse updateProject(Long projectId, ProjectRequest projectRequest) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
@@ -69,7 +68,6 @@ public class ProjectService {
         return getProject(projectId);
     }
 
-    @Transactional
     public void deleteProject(Long projectId) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
