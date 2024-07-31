@@ -26,7 +26,7 @@ public class ProjectController {
 
     @GetMapping("/{projectId}")
     public ResponseEntity<ProjectDetailResponse> getProject(
-            @PathVariable Long projectId
+            @PathVariable("projectId") Long projectId
     ) {
         ProjectDetailResponse projectDetailResponse = projectService.getProject(projectId);
         return ResponseEntity.status(HttpStatus.OK).body(projectDetailResponse);
@@ -34,7 +34,7 @@ public class ProjectController {
 
     @PutMapping("/{projectId}")
     public ResponseEntity<ProjectDetailResponse> updateProject(
-            @PathVariable Long projectId,
+            @PathVariable("projectId") Long projectId,
             @RequestBody @Valid ProjectRequest projectRequest
     ) {
         ProjectDetailResponse projectDetailResponse = projectService.updateProject(projectId, projectRequest);
@@ -43,7 +43,7 @@ public class ProjectController {
 
     @DeleteMapping("/{projectId}")
     public ResponseEntity<Void> deleteProject(
-            @PathVariable Long projectId
+            @PathVariable("projectId") Long projectId
     ) {
         projectService.deleteProject(projectId);
         return ResponseEntity.noContent().build();
