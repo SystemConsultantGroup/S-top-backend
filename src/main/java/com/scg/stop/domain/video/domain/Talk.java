@@ -4,6 +4,7 @@ import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
+import com.scg.stop.domain.video.dto.request.TalkRequest;
 import com.scg.stop.global.domain.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -41,4 +42,19 @@ public class Talk extends BaseTimeEntity {
 
     @OneToMany(fetch = LAZY, mappedBy = "talk")
     private List<FavoriteVideo> favoriteVideos;
+
+    public Talk(String title, String youtubeId, Integer year, boolean hasQuiz) {
+        this.title = title;
+        this.youtubeId = youtubeId;
+        this.year = year;
+        this.hasQuiz = hasQuiz;
+    }
+    public static Talk from(TalkRequest request) {
+        return new Talk(
+                request.getTitle(),
+                request.getYoutubeId(),
+                request.getYear(),
+                request.isHasQuiz()
+        );
+    }
 }
