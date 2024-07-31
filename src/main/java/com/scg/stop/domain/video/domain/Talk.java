@@ -57,4 +57,11 @@ public class Talk extends BaseTimeEntity {
                 request.isHasQuiz()
         );
     }
+
+    public void updateTalk(TalkRequest request) {
+        this.title= request.getTitle();
+        this.youtubeId = request.getYoutubeId();
+        this.year = request.getYear();
+        this.hasQuiz = request.isHasQuiz();
+    }
 }
