@@ -1,6 +1,7 @@
 package com.scg.stop.domain.gallery.service;
 
 import static com.scg.stop.global.exception.ExceptionCode.NOT_FOUND_FILE_ID;
+import static com.scg.stop.global.exception.ExceptionCode.NOT_FOUND_GALLERY_ID;
 
 import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.domain.file.dto.response.FileResponse;
@@ -51,7 +52,7 @@ public class GalleryService {
     @Transactional(readOnly = true)
     public GalleryResponse getGallery(Long galleryId) {
         Gallery gallery = galleryRepository.findById(galleryId)
-                .orElseThrow(() -> new IllegalArgumentException("요청한 ID(" + galleryId + ")에 해당하는 갤러리가 없습니다."));
+                .orElseThrow(() -> new BadRequestException(NOT_FOUND_GALLERY_ID));
         return entityToGalleryResponse(gallery);
     }
 
@@ -64,7 +65,7 @@ public class GalleryService {
 
     public GalleryResponse updateGallery(Long galleryId, UpdateGalleryRequest request) {
         Gallery gallery = galleryRepository.findById(galleryId)
-                .orElseThrow(() -> new IllegalArgumentException("요청한 ID(" + galleryId + ")에 해당하는 갤러리가 없습니다."));
+                .orElseThrow(() -> new BadRequestException(NOT_FOUND_GALLERY_ID));
 
         List<File> files = fileRepository.findByIdIn(request.getFileIds());
         if (files.size() != request.getFileIds().size()) {
@@ -82,7 +83,7 @@ public class GalleryService {
 
     public void deleteGallery(Long galleryId) {
         Gallery gallery = galleryRepository.findById(galleryId)
-                .orElseThrow(() -> new IllegalArgumentException("요청한 ID(" + galleryId + ")에 해당하는 갤러리가 없습니다."));
+                .orElseThrow(() -> new BadRequestException(NOT_FOUND_GALLERY_ID));
         galleryRepository.delete(gallery);
     }
 }
