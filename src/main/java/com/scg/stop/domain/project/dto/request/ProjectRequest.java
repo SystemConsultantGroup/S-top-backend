@@ -6,6 +6,7 @@ import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.domain.project.domain.*;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -48,6 +49,7 @@ public class ProjectRequest {
     @NotNull(message = "수상 여부를 입력해주세요")
     private final AwardStatus awardStatus;
 
+    @Valid
     @NotNull(message = "멤버를 입력해주세요")
     private final List<MemberRequest> members;
 
@@ -64,7 +66,7 @@ public class ProjectRequest {
             AwardStatus awardStatus,
             List<MemberRequest> members
     ) {
-        validateMembers(members); // 요청받은 멤버들이 모두 유효한지 검증
+
         validateTechStack(techStack); // 요청받은 기술 스택이 유효한지 검증
 
         this.thumbnailId = thumbnailId;
@@ -107,12 +109,6 @@ public class ProjectRequest {
         project.getMembers().addAll(memberEntities);
 
         return project;
-    }
-
-    private void validateMembers(List<MemberRequest> members) {
-        if (!members.stream().allMatch(MemberRequest::validate)) {
-            throw new BadRequestException(ExceptionCode.INVALID_MEMBER);
-        }
     }
 
     private void validateTechStack(String techStack) {

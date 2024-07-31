@@ -15,7 +15,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
 public class MemberRequest {
+
+    @NotBlank(message = "멤버 이름을 입력해주세요")
     private String name;
+
+    @NotNull(message = "멤버 역할을 입력해주세요")
     private Role role;
 
     public Member toEntity(Project project) {
@@ -25,10 +29,5 @@ public class MemberRequest {
                 role,
                 project
         );
-    }
-
-    // members.stream().allMatch(MemberRequest::validate); 이 코드를 사용가능하게 작성해봐
-    public static boolean validate(MemberRequest memberRequest) {
-        return memberRequest.getName() != null && !memberRequest.getName().isBlank() && memberRequest.getRole() != null;
     }
 }
