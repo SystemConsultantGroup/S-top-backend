@@ -62,8 +62,8 @@ public class AuthControllerTest extends AbstractControllerTest {
     @MockBean
     JwtUtil jwtUtil;
 
-    @MockBean
-    AuthUserArgumentResolver authUserArgumentResolver;
+//    @MockBean
+//    AuthUserArgumentResolver authUserArgumentResolver;
     @Test
     @DisplayName("카카오 소셜 로그인을 할 수 있다.")
     void kakaoSocialLogin() throws Exception {
@@ -72,7 +72,7 @@ public class AuthControllerTest extends AbstractControllerTest {
         when(authService.login(any()))
                 .thenReturn(new UserToken(ACCESS_TOKEN, REFRESH_TOKEN));
 
-        MvcResult mvcResult = mockMvc.perform(RestDocumentationRequestBuilders.post("/auth/login/kakao?code=codefromkakaologin"))
+        MvcResult mvcResult = mockMvc.perform(RestDocumentationRequestBuilders.get("/auth/login/kakao?code=codefromkakaologin"))
                 .andDo(restDocs.document(
                         queryParameters(
                                 parameterWithName("code").description("카카오 인가코드")

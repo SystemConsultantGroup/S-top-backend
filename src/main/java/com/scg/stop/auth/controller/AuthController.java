@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -33,7 +34,7 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping(value = "/login/kakao")
+    @GetMapping(value = "/login/kakao")
     public ResponseEntity<AccessTokenResponse> kakaoLogin(
             @RequestParam("code") String accessCode ,
             HttpServletResponse response

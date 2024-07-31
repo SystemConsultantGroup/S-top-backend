@@ -30,8 +30,8 @@ public abstract class AbstractControllerTest {
     @Autowired
     protected MockMvc mockMvc;
 
-//    @MockBean
-//    protected AuthUserArgumentResolver authUserArgumentResolver;
+    @MockBean
+    protected AuthUserArgumentResolver authUserArgumentResolver;
 
     @MockBean
     protected RefreshTokenRepository refreshTokenRepository;
