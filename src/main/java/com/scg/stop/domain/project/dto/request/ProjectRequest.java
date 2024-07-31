@@ -16,46 +16,71 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor(access = PROTECTED)
 public class ProjectRequest {
 
     @NotNull(message = "썸네일 ID를 입력해주세요")
-    private Long thumbnailId;
+    private final Long thumbnailId;
 
     @NotNull(message = "포스터 ID를 입력해주세요")
-    private Long posterId;
+    private final Long posterId;
 
     @NotBlank(message = "프로젝트 이름을 입력해주세요")
-    private String projectName;
+    private final String projectName;
 
     @NotNull(message = "프로젝트 타입을 입력해주세요")
-    private ProjectType projectType;
+    private final ProjectType projectType;
 
     @NotNull(message = "프로젝트 카테고리를 입력해주세요")
-    private ProjectCategory projectCategory;
+    private final ProjectCategory projectCategory;
 
     @NotBlank(message = "팀 이름을 입력해주세요")
-    private String teamName;
+    private final String teamName;
 
     @NotBlank(message = "프로젝트 yotubeId를 입력해주세요")
-    private String youtubeId;
+    private final String youtubeId;
 
     @NotBlank(message = "기술 스택을 입력해주세요")
-    private String techStack; // ,로 구분
+    private final String techStack; // ,로 구분
 
     @NotNull(message = "프로젝트 년도를 입력해주세요")
-    private Integer year;
+    private final Integer year;
 
     @NotNull(message = "수상 여부를 입력해주세요")
-    private AwardStatus awardStatus;
+    private final AwardStatus awardStatus;
 
     @NotNull(message = "멤버를 입력해주세요")
-    private List<MemberRequest> members;
+    private final List<MemberRequest> members;
+
+    public ProjectRequest(
+            Long thumbnailId,
+            Long posterId,
+            String projectName,
+            ProjectType projectType,
+            ProjectCategory projectCategory,
+            String teamName,
+            String youtubeId,
+            String techStack,
+            Integer year,
+            AwardStatus awardStatus,
+            List<MemberRequest> members
+    ) {
+        validateMembers(members); // 요청받은 멤버들이 모두 유효한지 검증
+        validateTechStack(techStack); // 요청받은 기술 스택이 유효한지 검증
+
+        this.thumbnailId = thumbnailId;
+        this.posterId = posterId;
+        this.projectName = projectName;
+        this.projectType = projectType;
+        this.projectCategory = projectCategory;
+        this.teamName = teamName;
+        this.youtubeId = youtubeId;
+        this.techStack = techStack;
+        this.year = year;
+        this.awardStatus = awardStatus;
+        this.members = members;
+    }
 
     public Project toEntity(Long id, File thumbnail, File poster) {
-        validateMembers(); // 요청받은 멤버들이 모두 유효한지 검증
-
         Project project =  new Project(
                 id,
                 projectName,
@@ -84,9 +109,18 @@ public class ProjectRequest {
         return project;
     }
 
-    private void validateMembers() {
+    private void validateMembers(List<MemberRequest> members) {
         if (!members.stream().allMatch(MemberRequest::validate)) {
             throw new BadRequestException(ExceptionCode.INVALID_MEMBER);
+        }
+    }
+
+    private void validateTechStack(String techStack) {
+        // ', '으로 구분되어서 문자열이 구성이 되어있는지 확인하는 정규표현식
+        String TECH_STACK_PATTERN = "^([\\w가-힣]+)(, [\\w가-힣]+)*$";
+
+        if (!techStack.matches(TECH_STACK_PATTERN)) {
+            throw new BadRequestException(ExceptionCode.INVALID_TECHSTACK);
         }
     }
 }
