@@ -71,12 +71,12 @@ public class ProjectService {
                 .filter(member -> member.getRole() == Role.STUDENT)
                 .map(Member::getName)
                 .collect(Collectors.toList());
-        List<String> professerNames = project.getMembers().stream()
+        List<String> professorNames = project.getMembers().stream()
                 .filter(member -> member.getRole() == Role.PROFESSOR)
                 .map(Member::getName)
                 .collect(Collectors.toList());
 
-        return ProjectDetailResponse.of(studentNames, professerNames, project);
+        return ProjectDetailResponse.of(studentNames, professorNames, project);
     }
 
     public ProjectDetailResponse updateProject(Long projectId, ProjectRequest projectRequest) {

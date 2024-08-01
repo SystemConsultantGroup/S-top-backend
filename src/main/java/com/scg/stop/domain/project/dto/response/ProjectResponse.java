@@ -3,23 +3,20 @@ package com.scg.stop.domain.project.dto.response;
 import static lombok.AccessLevel.PRIVATE;
 
 import com.scg.stop.domain.file.domain.File;
-import com.scg.stop.domain.project.domain.Member;
 import com.scg.stop.domain.project.domain.Project;
 import com.scg.stop.domain.project.domain.ProjectCategory;
 import com.scg.stop.domain.project.domain.ProjectType;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
 public class ProjectResponse {
     private Long id;
-    private File thumbnailInfo;
+    private FileResponse thumbnailInfo;
     private String projectName;
     private String teamName;
     private List<String> studentNames;
@@ -33,7 +30,7 @@ public class ProjectResponse {
     public static ProjectResponse of(List<String> studentNames, List<String> professorNames, Project project){
         return new ProjectResponse(
                 project.getId(),
-                project.getThumbnail(),
+                FileResponse.from(project.getThumbnail()),
                 project.getName(),
                 project.getTeam(),
                 studentNames,
