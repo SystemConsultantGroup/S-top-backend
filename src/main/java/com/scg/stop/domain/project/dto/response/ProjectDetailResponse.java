@@ -11,6 +11,7 @@ import com.scg.stop.domain.project.domain.ProjectType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -26,12 +27,12 @@ public class ProjectDetailResponse {
     private String teamName;
     private String youtubeId;
     private List<String> techStack;
-    private int year;
+    private Integer year;
     private AwardStatus awardStatus;
     private List<String> sutudentNames;
     private List<String> professorNames;
-    private int likeCount;
-    private boolean bookMark;
+    private Integer likeCount;
+    private Boolean bookMark;
 
     public static ProjectDetailResponse of(List<String> sutudentNames, List<String> professorNames, Project project){
         return new ProjectDetailResponse(
