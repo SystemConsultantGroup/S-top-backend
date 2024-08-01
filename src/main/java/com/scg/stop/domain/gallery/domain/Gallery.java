@@ -28,34 +28,32 @@ public class Gallery extends BaseTimeEntity {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String content;
-
     @Column(nullable = false)
     private Integer year;
 
     @Column(nullable = false)
     private Integer month;
 
+    @Column(nullable = false)
+    private Integer hitCount = 0;
+
     @OneToMany(fetch = LAZY, mappedBy = "gallery")
     private List<File> files = new ArrayList<>();
 
-    private Gallery(String title, String content, Integer year, Integer month, List<File> files) {
+    private Gallery(String title, Integer year, Integer month, List<File> files) {
         this.title = title;
-        this.content = content;
         this.year = year;
         this.month = month;
         this.files = files;
         files.forEach(file -> file.setGallery(this));
     }
 
-    public static Gallery of(String title, String content, Integer year, Integer month, List<File> files) {
-        return new Gallery(title, content, year, month, files);
+    public static Gallery of(String title, Integer year, Integer month, List<File> files) {
+        return new Gallery(title, year, month, files);
     }
 
-    public void update(String title, String content, Integer year, Integer month, List<File> files) {
+    public void update(String title, Integer year, Integer month, List<File> files) {
         this.title = title;
-        this.content = content;
         this.year = year;
         this.month = month;
         this.files.clear();

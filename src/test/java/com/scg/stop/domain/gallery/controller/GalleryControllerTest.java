@@ -56,13 +56,13 @@ class GalleryControllerTest extends AbstractControllerTest {
                 new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "사진2.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
                 new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "사진3.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now())
         );
-        GalleryRequest request = new GalleryRequest("새내기 배움터", "2024년 새내기 배움터", 2024, 4, fileIds);
+        GalleryRequest request = new GalleryRequest("새내기 배움터", 2024, 4, fileIds);
         GalleryResponse response = new GalleryResponse(
                 1L,
                 "새내기 배움터",
-                "2024년 새내기 배움터",
                 2024,
                 4,
+                0,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 fileResponses
@@ -81,7 +81,6 @@ class GalleryControllerTest extends AbstractControllerTest {
                 .andDo(restDocs.document(
                         requestFields(
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
-                                fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("연도"),
                                 fieldWithPath("month").type(JsonFieldType.NUMBER).description("월"),
                                 fieldWithPath("fileIds").type(JsonFieldType.ARRAY).description("파일 ID 리스트")
@@ -89,9 +88,9 @@ class GalleryControllerTest extends AbstractControllerTest {
                         responseFields(
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("갤러리 ID"),
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
-                                fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("연도"),
                                 fieldWithPath("month").type(JsonFieldType.NUMBER).description("월"),
+                                fieldWithPath("hitCount").type(JsonFieldType.NUMBER).description("조회수"),
                                 fieldWithPath("createdAt").type(JsonFieldType.STRING).description("생성일"),
                                 fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("수정일"),
                                 fieldWithPath("files").type(JsonFieldType.ARRAY).description("파일 목록"),
@@ -118,9 +117,9 @@ class GalleryControllerTest extends AbstractControllerTest {
         GalleryResponse galleryResponse = new GalleryResponse(
                 1L,
                 "새내기 배움터",
-                "2024년 새내기 배움터",
                 2024,
                 4,
+                0,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 fileResponses
@@ -152,9 +151,9 @@ class GalleryControllerTest extends AbstractControllerTest {
                                 fieldWithPath("content").type(JsonFieldType.ARRAY).description("갤러리 목록"),
                                 fieldWithPath("content[].id").type(JsonFieldType.NUMBER).description("갤러리 ID"),
                                 fieldWithPath("content[].title").type(JsonFieldType.STRING).description("갤러리 제목"),
-                                fieldWithPath("content[].content").type(JsonFieldType.STRING).description("갤러리 내용"),
                                 fieldWithPath("content[].year").type(JsonFieldType.NUMBER).description("갤러리 연도"),
                                 fieldWithPath("content[].month").type(JsonFieldType.NUMBER).description("갤러리 월"),
+                                fieldWithPath("content[].hitCount").type(JsonFieldType.NUMBER).description("갤러리 조회수"),
                                 fieldWithPath("content[].createdAt").type(JsonFieldType.STRING).description("갤러리 생성일"),
                                 fieldWithPath("content[].updatedAt").type(JsonFieldType.STRING).description("갤러리 수정일"),
                                 fieldWithPath("content[].files").type(JsonFieldType.ARRAY).description("파일 목록"),
@@ -190,9 +189,9 @@ class GalleryControllerTest extends AbstractControllerTest {
         GalleryResponse galleryResponse = new GalleryResponse(
                 1L,
                 "새내기 배움터",
-                "2024년 새내기 배움터",
                 2024,
                 4,
+                0,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 fileResponses
@@ -214,9 +213,9 @@ class GalleryControllerTest extends AbstractControllerTest {
                         responseFields(
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("갤러리 ID"),
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
-                                fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("연도"),
                                 fieldWithPath("month").type(JsonFieldType.NUMBER).description("월"),
+                                fieldWithPath("hitCount").type(JsonFieldType.NUMBER).description("조회수"),
                                 fieldWithPath("createdAt").type(JsonFieldType.STRING).description("생성일"),
                                 fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("수정일"),
                                 fieldWithPath("files").type(JsonFieldType.ARRAY).description("파일 목록"),
@@ -241,13 +240,13 @@ class GalleryControllerTest extends AbstractControllerTest {
                 new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "사진2.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
                 new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "사진3.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now())
         );
-        GalleryRequest request = new GalleryRequest("수정된 제목", "수정된 내용", 2024, 5, fileIds);
+        GalleryRequest request = new GalleryRequest("수정된 제목", 2024, 5, fileIds);
         GalleryResponse response = new GalleryResponse(
                 1L,
                 "수정된 제목",
-                "수정된 내용",
                 2024,
                 5,
+                0,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 fileResponses
@@ -269,7 +268,6 @@ class GalleryControllerTest extends AbstractControllerTest {
                         ),
                         requestFields(
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
-                                fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("연도"),
                                 fieldWithPath("month").type(JsonFieldType.NUMBER).description("월"),
                                 fieldWithPath("fileIds").type(JsonFieldType.ARRAY).description("파일 ID 리스트")
@@ -277,9 +275,9 @@ class GalleryControllerTest extends AbstractControllerTest {
                         responseFields(
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("갤러리 ID"),
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
-                                fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("연도"),
                                 fieldWithPath("month").type(JsonFieldType.NUMBER).description("월"),
+                                fieldWithPath("hitCount").type(JsonFieldType.NUMBER).description("조회수"),
                                 fieldWithPath("createdAt").type(JsonFieldType.STRING).description("생성일"),
                                 fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("수정일"),
                                 fieldWithPath("files").type(JsonFieldType.ARRAY).description("파일 목록"),

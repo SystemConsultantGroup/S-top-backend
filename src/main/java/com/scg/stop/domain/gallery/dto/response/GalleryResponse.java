@@ -17,9 +17,9 @@ public class GalleryResponse {
 
     private Long id;
     private String title;
-    private String content;
     private int year;
     private int month;
+    private int hitCount;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private List<FileResponse> files;
@@ -28,9 +28,9 @@ public class GalleryResponse {
         return new GalleryResponse(
                 gallery.getId(),
                 gallery.getTitle(),
-                gallery.getContent(),
                 gallery.getYear(),
                 gallery.getMonth(),
+                gallery.getHitCount(),
                 gallery.getCreatedAt(),
                 gallery.getUpdatedAt(),
                 fileResponses

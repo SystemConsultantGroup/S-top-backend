@@ -33,7 +33,7 @@ public class GalleryService {
             throw new BadRequestException(NOT_FOUND_FILE_ID);
         }
 
-        Gallery gallery = Gallery.of(request.getTitle(), request.getContent(), request.getYear(), request.getMonth(), files);
+        Gallery gallery = Gallery.of(request.getTitle(), request.getYear(), request.getMonth(), files);
         Gallery savedGallery = galleryRepository.save(gallery);
 
         List<FileResponse> fileResponses = files.stream()
@@ -71,7 +71,7 @@ public class GalleryService {
             throw new BadRequestException(NOT_FOUND_FILE_ID);
         }
 
-        gallery.update(request.getTitle(), request.getContent(), request.getYear(), request.getMonth(), files);
+        gallery.update(request.getTitle(), request.getYear(), request.getMonth(), files);
         galleryRepository.save(gallery);
 
         List<FileResponse> fileResponses = files.stream()
