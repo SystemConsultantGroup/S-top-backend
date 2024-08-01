@@ -1,23 +1,24 @@
 package com.scg.stop.domain.project.service;
 
 
-
-
 import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.domain.file.repository.FileRepository;
-import com.scg.stop.domain.project.domain.*;
-import com.scg.stop.domain.project.dto.response.ProjectResponse;
+import com.scg.stop.domain.project.domain.Member;
+import com.scg.stop.domain.project.domain.Project;
+import com.scg.stop.domain.project.domain.ProjectCategory;
+import com.scg.stop.domain.project.domain.Role;
 import com.scg.stop.domain.project.dto.request.ProjectRequest;
 import com.scg.stop.domain.project.dto.response.ProjectDetailResponse;
+import com.scg.stop.domain.project.dto.response.ProjectResponse;
 import com.scg.stop.domain.project.repository.ProjectRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
-
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
