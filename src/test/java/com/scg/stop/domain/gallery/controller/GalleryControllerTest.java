@@ -62,7 +62,7 @@ class GalleryControllerTest extends AbstractControllerTest {
                 "새내기 배움터",
                 2024,
                 4,
-                0,
+                1,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 fileResponses
@@ -119,7 +119,7 @@ class GalleryControllerTest extends AbstractControllerTest {
                 "새내기 배움터",
                 2024,
                 4,
-                0,
+                0, // getGalleries 에선 조회수를 증가시키지 않음
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 fileResponses
@@ -191,7 +191,7 @@ class GalleryControllerTest extends AbstractControllerTest {
                 "새내기 배움터",
                 2024,
                 4,
-                0,
+                1,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 fileResponses
@@ -246,7 +246,7 @@ class GalleryControllerTest extends AbstractControllerTest {
                 "수정된 제목",
                 2024,
                 5,
-                0,
+                1,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 fileResponses

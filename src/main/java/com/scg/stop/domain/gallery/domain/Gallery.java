@@ -60,4 +60,8 @@ public class Gallery extends BaseTimeEntity {
         this.files.addAll(files);
         files.forEach(file -> file.setGallery(this));
     }
+
+    public void increaseHitCount() {
+        this.hitCount += 1;
+    }
 }

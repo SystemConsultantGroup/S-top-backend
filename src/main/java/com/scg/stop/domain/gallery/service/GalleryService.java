@@ -52,6 +52,9 @@ public class GalleryService {
     public GalleryResponse getGallery(Long galleryId) {
         Gallery gallery = galleryRepository.findById(galleryId)
                 .orElseThrow(() -> new BadRequestException(NOT_FOUND_GALLERY_ID));
+
+        gallery.increaseHitCount();
+
         return entityToGalleryResponse(gallery);
     }
 
