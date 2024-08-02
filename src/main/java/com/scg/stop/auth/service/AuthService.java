@@ -11,13 +11,16 @@ import com.scg.stop.auth.repository.RefreshTokenRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.global.exception.InvalidJwtException;
+import com.scg.stop.user.domain.Application;
 import com.scg.stop.user.domain.Department;
 import com.scg.stop.user.domain.Student;
 import com.scg.stop.user.domain.User;
 import com.scg.stop.user.domain.UserType;
+import com.scg.stop.user.repository.ApplicationRepository;
 import com.scg.stop.user.repository.DepartmentRepository;
 import com.scg.stop.user.repository.StudentRepository;
 import com.scg.stop.user.repository.UserRepository;
+import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +33,7 @@ public class AuthService {
     private final StudentRepository studentRepository;
     private final DepartmentRepository departmentRepository;
     private final UserRepository userRepository;
+    private final ApplicationRepository applicationRepository;
     private final JwtUtil jwtUtil;
     private final KakaoOAuthProvider kakaoOAuthProvider;
 
@@ -52,24 +56,28 @@ public class AuthService {
     }
 
     public RegisterResponse finishRegister(User user, RegisterRequest registerRequest) {
-        User foundUser = userRepository.findById(user.getId())
-                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_USER_ID));
-        if (foundUser.getUserType().equals(UserType.STUDENT)) {
+        if (user.getUserType().equals(UserType.STUDENT)) {
             Department department = departmentRepository.findByName(
                     registerRequest.getStudentInfo().getDepartment())
-                    .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_DEPARTMENT));//TODO: department가 null인경우 예외처리
+                    .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_DEPARTMENT));
 
             Student student = Student.of(registerRequest.getStudentInfo().getStudentNumber(),
-                    foundUser
+                    user
                     , department);
             studentRepository.save(student);
         }
-        foundUser.register(registerRequest.getName(),
+        else if (Arrays.asList(UserType.INACTIVE_PROFESSOR, UserType.COMPANY, UserType.INACTIVE_COMPANY, UserType.PROFESSOR)
+                .contains(user.getUserType())) {
+            Application application = new Application(registerRequest.getDivision(), registerRequest.getPosition(),
+                    user);
+            applicationRepository.save(application);
+        }
+        user.register(registerRequest.getName(),
                 registerRequest.getEmail(),
                 registerRequest.getPhoneNumber(),
                 registerRequest.getUserType(),
                 registerRequest.getSignUpSource());
-        return RegisterResponse.from(foundUser);
+        return RegisterResponse.from(user);
     }
     private User createUser(String socialLoginId) {
         return userRepository.save(new User(socialLoginId));

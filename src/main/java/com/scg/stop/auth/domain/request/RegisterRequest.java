@@ -15,26 +15,31 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class RegisterRequest {
 
     @NotBlank(message = "이름을 입력해주세요.")
-    private final String name;
+    private String name;
 
     @NotBlank(message = "전화번호를 입력해주세요.")
-    private final String phoneNumber;
+    private String phoneNumber;
 
     @NotNull(message = "회원 유형을 입력해주세요.")
-    private final UserType userType;
+    private UserType userType;
 
     @NotBlank(message = "이메일을 입력해주세요.")
-    private final String email;
+    private String email;
 
-    private final String signUpSource;
+    private String signUpSource;
 
-    private final StudentInfoDto studentInfo;
+    private StudentInfoDto studentInfo;
+
+    private String division;
+
+    private String position;
 
     public RegisterRequest(String name, String phoneNumber, UserType userType, String email, String signUpSource,
-                           StudentInfoDto studentInfo) {
+                           StudentInfoDto studentInfo, String division, String position) {
         validateStudentInfo(userType, studentInfo);
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -42,6 +47,8 @@ public class RegisterRequest {
         this.email = email;
         this.signUpSource = signUpSource;
         this.studentInfo = studentInfo;
+        if (division != null) this.division = division;
+        if (position != null) this.position = position;
     }
 
     private void validateStudentInfo(UserType userType, StudentInfoDto studentInfo) {
