@@ -125,9 +125,11 @@ public class AuthControllerTest extends AbstractControllerTest {
                                 fieldWithPath("phoneNumber").type(STRING).description("전화 번호"),
                                 fieldWithPath("userType").type(STRING).description("회원 유형"),
                                 fieldWithPath("email").type(STRING).description("이메일"),
-                                fieldWithPath("signUpSource").type(STRING).description("가입 경로"),
+                                fieldWithPath("signUpSource").type(STRING).description("가입 경로").optional(),
                                 fieldWithPath("studentInfo.department").type(STRING).description("학과"),
-                                fieldWithPath("studentInfo.studentNumber").type(STRING).description("학번")
+                                fieldWithPath("studentInfo.studentNumber").type(STRING).description("학번"),
+                                fieldWithPath("division").type(STRING).description("소속").optional(),
+                                fieldWithPath("position").type(STRING).description("직책").optional()
                         ),
                         responseFields(
                                 fieldWithPath("name").description("이름"),
