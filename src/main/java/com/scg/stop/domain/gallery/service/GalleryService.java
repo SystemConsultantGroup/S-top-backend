@@ -48,7 +48,6 @@ public class GalleryService {
         return galleries.map(this::entityToGalleryResponse);
     }
 
-    @Transactional(readOnly = true)
     public GalleryResponse getGallery(Long galleryId) {
         Gallery gallery = galleryRepository.findById(galleryId)
                 .orElseThrow(() -> new BadRequestException(NOT_FOUND_GALLERY_ID));
