@@ -63,3 +63,4 @@ jobs:
         if: success() || failure()
         with:
           report_paths: '**/build/test-results/**/*.xml'
+          token: ${{secrets.JUNIT_TOKEN}}
