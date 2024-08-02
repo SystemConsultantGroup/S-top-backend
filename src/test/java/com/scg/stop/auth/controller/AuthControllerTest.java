@@ -62,8 +62,6 @@ public class AuthControllerTest extends AbstractControllerTest {
     @MockBean
     JwtUtil jwtUtil;
 
-//    @MockBean
-//    AuthUserArgumentResolver authUserArgumentResolver;
     @Test
     @DisplayName("카카오 소셜 로그인을 할 수 있다.")
     void kakaoSocialLogin() throws Exception {
@@ -98,8 +96,9 @@ public class AuthControllerTest extends AbstractControllerTest {
         //given
         StudentInfoDto studentInfoDto = new StudentInfoDto("소프트웨어학과", "2021123123");
         RegisterRequest request = new RegisterRequest("stop-user", "010-1234-1234", UserType.STUDENT, "email@gmail.com",
-                "ad", studentInfoDto);
+                "ad", studentInfoDto, null, null);
         User user = new User("1");
+        user.register("stop-user","email@email.com","010-1234-1234",UserType.STUDENT,"signupsource");
         RegisterResponse registerResponse = RegisterResponse.from(user);
         when(authService.finishRegister(any(), any()))
                 .thenReturn(registerResponse);
