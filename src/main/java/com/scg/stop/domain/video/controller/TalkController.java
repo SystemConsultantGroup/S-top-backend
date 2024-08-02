@@ -2,6 +2,7 @@ package com.scg.stop.domain.video.controller;
 
 import com.scg.stop.domain.video.dto.request.TalkRequest;
 import com.scg.stop.domain.video.dto.response.TalkResponse;
+import com.scg.stop.domain.video.dto.response.TalksResponse;
 import com.scg.stop.domain.video.service.TalkService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +27,12 @@ public class TalkController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<TalkResponse>> getAllTalks(
+    public ResponseEntity<Page<TalksResponse>> getAllTalks(
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "year", required = false) Integer year,
             @PageableDefault(page = 0, size = 10) Pageable pageable
     ) {
-        Page<TalkResponse> talks = talkService.getTalks(title, year, pageable);
+        Page<TalksResponse> talks = talkService.getTalks(title, year, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(talks);
     }
 

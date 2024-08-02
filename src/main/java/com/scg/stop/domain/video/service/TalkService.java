@@ -1,8 +1,10 @@
 package com.scg.stop.domain.video.service;
 
+import com.scg.stop.domain.video.domain.Quiz;
 import com.scg.stop.domain.video.domain.Talk;
 import com.scg.stop.domain.video.dto.request.TalkRequest;
 import com.scg.stop.domain.video.dto.response.TalkResponse;
+import com.scg.stop.domain.video.dto.response.TalksResponse;
 import com.scg.stop.domain.video.repository.QuizRepository;
 import com.scg.stop.domain.video.repository.TalkRepository;
 import com.scg.stop.global.exception.BadRequestException;
@@ -21,7 +23,7 @@ public class TalkService {
     private final QuizRepository quizRepository;
 
     @Transactional(readOnly = true)
-    public Page<TalkResponse> getTalks(String title, Integer year, Pageable pageable) {
+    public Page<TalksResponse> getTalks(String title, Integer year, Pageable pageable) {
         return talkRepository.findPages(title, year, pageable);
     }
 
@@ -35,6 +37,14 @@ public class TalkService {
 
     public TalkResponse createTalk(TalkRequest talkRequest) {
         Talk talk = talkRepository.save(Talk.from(talkRequest));
+        if(talkRequest.hasQuiz) {
+            if(talkRequest.getQuiz() == null) throw new BadRequestException(ExceptionCode.NO_QUIZ);
+            else {
+                Quiz quiz = quizRepository.save(Quiz.from(talkRequest.getQuiz()));
+                talk.setQuiz(quiz);
+            }
+
+        }
         return TalkResponse.from(talk);
     }
 
@@ -42,6 +52,7 @@ public class TalkService {
         Talk talk = talkRepository.findById(id).orElseThrow(
                 () -> new BadRequestException(ExceptionCode.TALK_ID_NOT_FOUND)
         );
+        talk.getQuiz().updateQuiz(talkRequest.getQuiz());
         talk.updateTalk(talkRequest);
         return TalkResponse.from(talk);
     }
