@@ -62,4 +62,4 @@ jobs:
         uses: mikepenz/action-junit-report@v4.3.1
         if: success() || failure()
         with:
-          files: '**/test-results/**/*.xml'
+          files: '**/build/test-results/**/*.xml'
