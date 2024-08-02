@@ -35,9 +35,6 @@ public class ExceptionCodeControllerTest extends AbstractControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @MockBean
-    private AuthUserArgumentResolver authUserArgumentResolver;
-
     @DisplayName("작성된 커스텀 예외 코드를 반환한다.")
     @Test
     void getExceptionCodes() throws Exception {
