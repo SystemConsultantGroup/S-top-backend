@@ -59,9 +59,7 @@ jobs:
 #          min-coverage-changed-files: 50
 #          update-comment: true
       - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
-        env:
-          github_token: ${{ secrets.ACTION_TOKEN }}
+        uses: mikepenz/action-junit-report@v4.3.1
+        if: success() || failure()
         with:
           files: '**/test-results/**/*.xml'
