@@ -34,7 +34,7 @@ public class Gallery extends BaseTimeEntity {
     @Column(nullable = false)
     private Integer hitCount = 0;
 
-    @OneToMany(fetch = LAZY, mappedBy = "gallery", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = LAZY, mappedBy = "gallery", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<File> files = new ArrayList<>();
 
     private Gallery(String title, Integer year, Integer month, List<File> files) {
