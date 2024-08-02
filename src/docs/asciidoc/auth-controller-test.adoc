@@ -2,6 +2,7 @@
 :source-highlighter: highlightjs
 
 ---
+
 === 카카오 소셜 로그인 (POST /auth/login/kakao/)
 ====
 operation::auth-controller-test/kakao-social-login[snippets="http-request,query-parameters,http-response,response-fields"]
