@@ -79,7 +79,9 @@ public class Talk extends BaseTimeEntity {
             this.quiz.setTalk(null);
         }
         this.quiz = quiz;
-        quiz.setTalk(this);
+        if(quiz != null) {
+            quiz.setTalk(this);
+        }
     }
 
 }

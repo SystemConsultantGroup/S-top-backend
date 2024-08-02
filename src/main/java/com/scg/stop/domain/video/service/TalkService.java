@@ -52,8 +52,21 @@ public class TalkService {
         Talk talk = talkRepository.findById(id).orElseThrow(
                 () -> new BadRequestException(ExceptionCode.TALK_ID_NOT_FOUND)
         );
-        talk.getQuiz().updateQuiz(talkRequest.getQuiz());
-        talk.updateTalk(talkRequest);
+        if(talk.isHasQuiz() && !talkRequest.isHasQuiz()) { // 기존에는 퀴즈가 있었는데, 수정하면서 없어진 경우.
+            talk.updateTalk(talkRequest);
+            quizRepository.delete(talk.getQuiz());
+            talk.setQuiz(null);
+        }
+        if(talkRequest.hasQuiz) {
+            if(talkRequest.getQuiz() == null) throw new BadRequestException(ExceptionCode.NO_QUIZ);
+            talk.updateTalk(talkRequest);
+            if(talk.getQuiz() == null) {
+                Quiz quiz = quizRepository.save(Quiz.from(talkRequest.getQuiz()));
+                talk.setQuiz(quiz);
+            } else {
+                talk.getQuiz().updateQuiz(talkRequest.getQuiz());
+            }
+        }
         return TalkResponse.from(talk);
     }
 
