@@ -6,11 +6,8 @@ import static lombok.AccessLevel.PROTECTED;
 
 import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.global.domain.BaseTimeEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
@@ -37,7 +34,7 @@ public class Gallery extends BaseTimeEntity {
     @Column(nullable = false)
     private Integer hitCount = 0;
 
-    @OneToMany(fetch = LAZY, mappedBy = "gallery")
+    @OneToMany(fetch = LAZY, mappedBy = "gallery", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<File> files = new ArrayList<>();
 
     private Gallery(String title, Integer year, Integer month, List<File> files) {
