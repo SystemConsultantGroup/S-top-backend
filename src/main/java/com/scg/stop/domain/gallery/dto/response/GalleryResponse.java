@@ -6,6 +6,8 @@ import com.scg.stop.domain.file.dto.response.FileResponse;
 import com.scg.stop.domain.gallery.domain.Gallery;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,5 +37,12 @@ public class GalleryResponse {
                 gallery.getUpdatedAt(),
                 fileResponses
         );
+    }
+
+    public static GalleryResponse from(Gallery gallery) {
+        List<FileResponse> fileResponses = gallery.getFiles().stream()
+                .map(FileResponse::from)
+                .collect(Collectors.toList());
+        return GalleryResponse.of(gallery, fileResponses);
     }
 }

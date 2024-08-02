@@ -36,16 +36,13 @@ public class GalleryService {
         Gallery gallery = Gallery.of(request.getTitle(), request.getYear(), request.getMonth(), files);
         Gallery savedGallery = galleryRepository.save(gallery);
 
-        List<FileResponse> fileResponses = files.stream()
-                .map(FileResponse::from)
-                .collect(Collectors.toList());
-        return GalleryResponse.of(savedGallery, fileResponses);
+        return GalleryResponse.from(savedGallery);
     }
 
     @Transactional(readOnly = true)
     public Page<GalleryResponse> getGalleries(Integer year, Integer month, Pageable pageable) {
         Page<Gallery> galleries = galleryRepository.findGalleries(year, month, pageable);
-        return galleries.map(this::entityToGalleryResponse);
+        return galleries.map(GalleryResponse::from);
     }
 
     public GalleryResponse getGallery(Long galleryId) {
@@ -54,14 +51,7 @@ public class GalleryService {
 
         gallery.increaseHitCount();
 
-        return entityToGalleryResponse(gallery);
-    }
-
-    private GalleryResponse entityToGalleryResponse(Gallery gallery) {
-        List<FileResponse> fileResponses = gallery.getFiles().stream()
-                .map(FileResponse::from)
-                .collect(Collectors.toList());
-        return GalleryResponse.of(gallery, fileResponses);
+        return GalleryResponse.from(gallery);
     }
 
     public GalleryResponse updateGallery(Long galleryId, GalleryRequest request) {
@@ -74,12 +64,9 @@ public class GalleryService {
         }
 
         gallery.update(request.getTitle(), request.getYear(), request.getMonth(), files);
-        galleryRepository.save(gallery);
+        Gallery savedGallery = galleryRepository.save(gallery);
 
-        List<FileResponse> fileResponses = files.stream()
-                .map(FileResponse::from)
-                .collect(Collectors.toList());
-        return GalleryResponse.of(gallery, fileResponses);
+        return GalleryResponse.from(savedGallery);
     }
 
     public void deleteGallery(Long galleryId) {
