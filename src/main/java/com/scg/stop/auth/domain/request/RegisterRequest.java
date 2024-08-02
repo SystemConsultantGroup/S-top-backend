@@ -47,8 +47,8 @@ public class RegisterRequest {
         this.email = email;
         this.signUpSource = signUpSource;
         this.studentInfo = studentInfo;
-        if (division != null) this.division = division;
-        if (position != null) this.position = position;
+        this.division = division;
+        this.position = position;
     }
 
     private void validateStudentInfo(UserType userType, StudentInfoDto studentInfo) {

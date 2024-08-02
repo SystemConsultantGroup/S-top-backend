@@ -56,7 +56,7 @@ public class AuthService {
     }
 
     public RegisterResponse finishRegister(User user, RegisterRequest registerRequest) {
-        if (user.getUserType().equals(UserType.STUDENT)) {
+        if (registerRequest.getUserType().equals(UserType.STUDENT)) {
             Department department = departmentRepository.findByName(
                     registerRequest.getStudentInfo().getDepartment())
                     .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_DEPARTMENT));
@@ -67,7 +67,7 @@ public class AuthService {
             studentRepository.save(student);
         }
         else if (Arrays.asList(UserType.INACTIVE_PROFESSOR, UserType.COMPANY, UserType.INACTIVE_COMPANY, UserType.PROFESSOR)
-                .contains(user.getUserType())) {
+                .contains(registerRequest.getUserType())) {
             Application application = new Application(registerRequest.getDivision(), registerRequest.getPosition(),
                     user);
             applicationRepository.save(application);
@@ -77,6 +77,7 @@ public class AuthService {
                 registerRequest.getPhoneNumber(),
                 registerRequest.getUserType(),
                 registerRequest.getSignUpSource());
+        userRepository.save(user);
         return RegisterResponse.from(user);
     }
     private User createUser(String socialLoginId) {
