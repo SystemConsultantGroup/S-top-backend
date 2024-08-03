@@ -11,7 +11,6 @@ import com.scg.stop.domain.event.repository.EventPeriodRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
