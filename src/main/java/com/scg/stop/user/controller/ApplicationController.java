@@ -1,5 +1,8 @@
 package com.scg.stop.user.controller;
 
+import com.scg.stop.auth.annotation.AuthUser;
+import com.scg.stop.user.domain.AccessType;
+import com.scg.stop.user.domain.User;
 import com.scg.stop.user.dto.response.ApplicationDetailResponse;
 import com.scg.stop.user.dto.response.ApplicationListResponse;
 import com.scg.stop.user.service.ApplicationService;
@@ -24,8 +27,8 @@ public class ApplicationController {
 
     @GetMapping
     public ResponseEntity<Page<ApplicationListResponse>> getApplications(
-            @PageableDefault(page = 0, size = 10) Pageable pageable
-            // TODO @AuthUser(accessType = {AccessType.ADMIN}) user
+            @PageableDefault(page = 0, size = 10) Pageable pageable,
+            @AuthUser(accessType = {AccessType.ADMIN}) User user
     ) {
         Page<ApplicationListResponse> applications = applicationService.getApplications(pageable);
         return ResponseEntity.ok().body(applications);
@@ -33,8 +36,8 @@ public class ApplicationController {
 
     @GetMapping("/{applicationId}")
     public ResponseEntity<ApplicationDetailResponse> getApplication(
-            @PathVariable("applicationId") Long applicationId
-            // TODO @AuthUser(accessType = {AccessType.ADMIN}) user
+            @PathVariable("applicationId") Long applicationId,
+            @AuthUser(accessType = {AccessType.ADMIN}) User user
     ) {
         ApplicationDetailResponse application = applicationService.getApplication(applicationId);
         return ResponseEntity.ok().body(application);
@@ -42,8 +45,8 @@ public class ApplicationController {
 
     @PatchMapping("/{applicationId}")
     public ResponseEntity<ApplicationDetailResponse> updateApplication(
-            @PathVariable("applicationId") Long applicationId
-            // TODO @AuthUser(accessType = {AccessType.ADMIN}) user
+            @PathVariable("applicationId") Long applicationId,
+            @AuthUser(accessType = {AccessType.ADMIN}) User user
     ) {
         ApplicationDetailResponse application = applicationService.updateApplication(applicationId);
         return ResponseEntity.ok().body(application);
@@ -51,8 +54,8 @@ public class ApplicationController {
 
     @DeleteMapping("/{applicationId}")
     public ResponseEntity<Void> rejectApplication(
-            @PathVariable("applicationId") Long applicationId
-            // TODO @AuthUser(accessType = {AccessType.ADMIN}) user
+            @PathVariable("applicationId") Long applicationId,
+            @AuthUser(accessType = {AccessType.ADMIN}) User user
     ) {
         applicationService.rejectApplication(applicationId);
         return ResponseEntity.noContent().build();
