@@ -14,9 +14,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 @AllArgsConstructor
 public class CreateEventPeriodRequest {
 
-    @NotNull(message = "연도를 입력해주세요.")
-    private Integer year;
-
     @NotNull(message = "이벤트 시작 일시를 입력해주세요.")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime start;
