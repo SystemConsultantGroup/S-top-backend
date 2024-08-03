@@ -1,7 +1,14 @@
 package com.scg.stop.user.controller;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
+import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -17,7 +24,7 @@ import com.scg.stop.user.domain.UserType;
 import com.scg.stop.user.dto.response.ApplicationDetailResponse;
 import com.scg.stop.user.dto.response.ApplicationListResponse;
 import com.scg.stop.user.service.ApplicationService;
-import com.scg.stop.user.controller.ApplicationController;
+import jakarta.servlet.http.Cookie;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +37,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpHeaders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -40,6 +47,9 @@ import org.springframework.test.web.servlet.ResultActions;
 @AutoConfigureRestDocs
 class ApplicationControllerTest extends AbstractControllerTest {
 
+    private static final String ACCESS_TOKEN = "admin_access_token";
+    private static final String REFRESH_TOKEN = "refresh_token";
+
     @MockBean
     private ApplicationService applicationService;
 
@@ -48,7 +58,6 @@ class ApplicationControllerTest extends AbstractControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    // TODO Auth 설정 추가
     @Test
     @DisplayName("교수/기업관계자의 인증 신청 정보 리스트를 조회할 수 있다.")
     void getApplications() throws Exception  {
@@ -66,7 +75,9 @@ class ApplicationControllerTest extends AbstractControllerTest {
 
         // when
         ResultActions result = mockMvc.perform(
-                get("/applications").contentType(MediaType.APPLICATION_JSON)
+                get("/applications")
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
         // then
@@ -99,20 +110,19 @@ class ApplicationControllerTest extends AbstractControllerTest {
                                 fieldWithPath("sort.sorted").type(JsonFieldType.BOOLEAN).description("정렬된 상태인지 여부"),
                                 fieldWithPath("empty").type(JsonFieldType.BOOLEAN).description("비어있는 페이지 여부"),
                                 //content
-                                fieldWithPath("content[].id").type(JsonFieldType.NUMBER).description("인증 신청 ID"),
-                                fieldWithPath("content[].name").type(JsonFieldType.STRING).description("인증 신청자 이름"),
+                                fieldWithPath("content[].id").type(JsonFieldType.NUMBER).description("가입 신청 ID"),
+                                fieldWithPath("content[].name").type(JsonFieldType.STRING).description("가입 신청자 이름"),
                                 fieldWithPath("content[].division").type(JsonFieldType.STRING).description("소속").optional(),
                                 fieldWithPath("content[].position").type(JsonFieldType.STRING).description("직책").optional(),
                                 fieldWithPath("content[].userType").type(JsonFieldType.STRING).description("회원 유형 [INACTIVE_PROFESSOR, INACTIVE_COMPANY]"),
-                                fieldWithPath("content[].createdAt").type(JsonFieldType.STRING).description("인증 신청 정보 생성일"),
-                                fieldWithPath("content[].updatedAt").type(JsonFieldType.STRING).description("인증 신청 정보 수정일")
+                                fieldWithPath("content[].createdAt").type(JsonFieldType.STRING).description("가입 신청 정보 생성일"),
+                                fieldWithPath("content[].updatedAt").type(JsonFieldType.STRING).description("가입 신청 정보 수정일")
                         )
                 ));
     }
 
-    // TODO Auth 설정 추가
     @Test
-    @DisplayName("인증 신청 상세 정보를 조회할 수 있다.")
+    @DisplayName("가입 신청 상세 정보를 조회할 수 있다.")
     void getApplication() throws Exception {
 
         // given
@@ -125,31 +135,32 @@ class ApplicationControllerTest extends AbstractControllerTest {
 
         // when
         ResultActions result = mockMvc.perform(get("/applications/{applicationId}", applicationId)
-                .contentType(MediaType.APPLICATION_JSON));
+                .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
 
         // then
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
                         pathParameters(
-                                parameterWithName("applicationId").description("인증 신청 ID")
+                                parameterWithName("applicationId").description("가입 신청 ID")
                         ),
                         responseFields(
-                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("인증 신청 ID"),
-                                fieldWithPath("name").type(JsonFieldType.STRING).description("인증 신청자 이름"),
-                                fieldWithPath("phone").type(JsonFieldType.STRING).description("인증 신청자 전화번호"),
-                                fieldWithPath("email").type(JsonFieldType.STRING).description("인증 신청자 이메일"),
+                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("가입 신청 ID"),
+                                fieldWithPath("name").type(JsonFieldType.STRING).description("가입 신청자 이름"),
+                                fieldWithPath("phone").type(JsonFieldType.STRING).description("가입 신청자 전화번호"),
+                                fieldWithPath("email").type(JsonFieldType.STRING).description("가입 신청자 이메일"),
                                 fieldWithPath("division").type(JsonFieldType.STRING).description("소속").optional(),
                                 fieldWithPath("position").type(JsonFieldType.STRING).description("직책").optional(),
                                 fieldWithPath("userType").type(JsonFieldType.STRING).description("회원 유형 [INACTIVE_PROFESSOR, INACTIVE_COMPANY]"),
-                                fieldWithPath("createdAt").type(JsonFieldType.STRING).description("인증 신청 정보 생성일"),
-                                fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("인증 신청 정보 수정일")
+                                fieldWithPath("createdAt").type(JsonFieldType.STRING).description("가입 신청 정보 생성일"),
+                                fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("가입 신청 정보 수정일")
                         )
                 ));
     }
 
-    // TODO Auth 설정 추가
     @Test
-    @DisplayName("교수/기업 인증")
+    @DisplayName("교수/기업 가입 허가")
     void updateApplication() throws Exception {
 
         // given
@@ -162,25 +173,47 @@ class ApplicationControllerTest extends AbstractControllerTest {
 
         // when
         ResultActions result = mockMvc.perform(patch("/applications/{applicationId}", applicationId)
-                .contentType(MediaType.APPLICATION_JSON));
+                .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
 
         // then
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
                         pathParameters(
-                                parameterWithName("applicationId").description("인증 신청 ID")
+                                parameterWithName("applicationId").description("가입 신청 ID")
                         ),
                         responseFields(
-                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("인증 신청 ID"),
-                                fieldWithPath("name").type(JsonFieldType.STRING).description("인증 신청자 이름"),
-                                fieldWithPath("phone").type(JsonFieldType.STRING).description("인증 신청자 전화번호"),
-                                fieldWithPath("email").type(JsonFieldType.STRING).description("인증 신청자 이메일"),
+                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("가입 신청 ID"),
+                                fieldWithPath("name").type(JsonFieldType.STRING).description("가입 신청자 이름"),
+                                fieldWithPath("phone").type(JsonFieldType.STRING).description("가입 신청자 전화번호"),
+                                fieldWithPath("email").type(JsonFieldType.STRING).description("가입 신청자 이메일"),
                                 fieldWithPath("division").type(JsonFieldType.STRING).description("소속").optional(),
                                 fieldWithPath("position").type(JsonFieldType.STRING).description("직책").optional(),
                                 fieldWithPath("userType").type(JsonFieldType.STRING).description("회원 유형 [PROFESSOR, COMPANY]"),
-                                fieldWithPath("createdAt").type(JsonFieldType.STRING).description("인증 신청 정보 생성일"),
-                                fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("인증 신청 정보 수정일")
+                                fieldWithPath("createdAt").type(JsonFieldType.STRING).description("가입 신청 정보 생성일"),
+                                fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("가입 신청 정보 수정일")
                         )
+                ));
+    }
+
+    @Test
+    @DisplayName("교수/기업 가입 거절")
+    void rejectApplication() throws Exception {
+
+        // given
+        doNothing().when(applicationService).rejectApplication(anyLong());
+
+        // when
+        ResultActions result = mockMvc.perform(delete("/applications/{applicationId}", 1L)
+                .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
+
+        // then
+        result.andExpect(status().isNoContent())
+                .andDo(restDocs.document(
+                        pathParameters(parameterWithName("applicationId").description("가입 신청 ID"))
                 ));
     }
 }
