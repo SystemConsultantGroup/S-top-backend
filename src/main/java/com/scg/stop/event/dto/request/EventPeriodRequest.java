@@ -1,4 +1,4 @@
-package com.scg.stop.domain.event.dto.request;
+package com.scg.stop.event.dto.request;
 
 import static lombok.AccessLevel.PRIVATE;
 

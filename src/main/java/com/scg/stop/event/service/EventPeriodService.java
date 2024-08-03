@@ -1,13 +1,13 @@
-package com.scg.stop.domain.event.service;
+package com.scg.stop.event.service;
 
 import static com.scg.stop.global.exception.ExceptionCode.DUPLICATED_YEAR;
 import static com.scg.stop.global.exception.ExceptionCode.INVALID_EVENT_PERIOD;
 import static com.scg.stop.global.exception.ExceptionCode.NOT_FOUND_EVENT_PERIOD;
 
-import com.scg.stop.domain.event.domain.EventPeriod;
-import com.scg.stop.domain.event.dto.request.EventPeriodRequest;
-import com.scg.stop.domain.event.dto.response.EventPeriodResponse;
-import com.scg.stop.domain.event.repository.EventPeriodRepository;
+import com.scg.stop.event.domain.EventPeriod;
+import com.scg.stop.event.dto.request.EventPeriodRequest;
+import com.scg.stop.event.dto.response.EventPeriodResponse;
+import com.scg.stop.event.repository.EventPeriodRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;

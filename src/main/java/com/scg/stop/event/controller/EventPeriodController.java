@@ -1,11 +1,11 @@
-package com.scg.stop.domain.event.controller;
+package com.scg.stop.event.controller;
 
 import static com.scg.stop.user.domain.AccessType.ADMIN;
 
 import com.scg.stop.auth.annotation.AuthUser;
-import com.scg.stop.domain.event.dto.request.EventPeriodRequest;
-import com.scg.stop.domain.event.dto.response.EventPeriodResponse;
-import com.scg.stop.domain.event.service.EventPeriodService;
+import com.scg.stop.event.dto.request.EventPeriodRequest;
+import com.scg.stop.event.dto.response.EventPeriodResponse;
+import com.scg.stop.event.service.EventPeriodService;
 import com.scg.stop.user.domain.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

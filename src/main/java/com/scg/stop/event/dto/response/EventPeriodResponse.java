@@ -1,6 +1,6 @@
-package com.scg.stop.domain.event.dto.response;
+package com.scg.stop.event.dto.response;
 
-import com.scg.stop.domain.event.domain.EventPeriod;
+import com.scg.stop.event.domain.EventPeriod;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

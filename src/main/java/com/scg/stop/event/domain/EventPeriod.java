@@ -1,4 +1,4 @@
-package com.scg.stop.domain.event.domain;
+package com.scg.stop.event.domain;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;

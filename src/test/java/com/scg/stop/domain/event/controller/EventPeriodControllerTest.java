@@ -18,9 +18,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
-import com.scg.stop.domain.event.dto.request.EventPeriodRequest;
-import com.scg.stop.domain.event.dto.response.EventPeriodResponse;
-import com.scg.stop.domain.event.service.EventPeriodService;
+import com.scg.stop.event.controller.EventPeriodController;
+import com.scg.stop.event.dto.request.EventPeriodRequest;
+import com.scg.stop.event.dto.response.EventPeriodResponse;
+import com.scg.stop.event.service.EventPeriodService;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;

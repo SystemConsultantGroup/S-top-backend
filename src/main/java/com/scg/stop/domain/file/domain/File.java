@@ -4,7 +4,7 @@ import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
-import com.scg.stop.domain.event.domain.EventNotice;
+import com.scg.stop.event.domain.EventNotice;
 import com.scg.stop.domain.gallery.domain.Gallery;
 import com.scg.stop.domain.notice.domain.Notice;
 import com.scg.stop.global.domain.BaseTimeEntity;
