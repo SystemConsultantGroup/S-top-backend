@@ -112,7 +112,7 @@ class EventPeriodControllerTest extends AbstractControllerTest {
                 new EventPeriodResponse(2L, 2025, LocalDateTime.now(), LocalDateTime.now().plusDays(10),
                         LocalDateTime.now(), LocalDateTime.now())
         );
-        when(eventPeriodService.getEventPeriods()).thenReturn(responses);
+        when(eventPeriodService.getEventPeriod()).thenReturn(responses);
 
         // when
         ResultActions result = mockMvc.perform(get("/eventPeriods").contentType(APPLICATION_JSON));

@@ -4,7 +4,6 @@ import com.scg.stop.domain.event.dto.request.CreateEventPeriodRequest;
 import com.scg.stop.domain.event.dto.response.EventPeriodResponse;
 import com.scg.stop.domain.event.service.EventPeriodService;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/eventPeriods")
 public class EventPeriodController {
 
     private final EventPeriodService eventPeriodService;
 
     // TODO : ADMIN 권한 확인
     @PostMapping
+    @RequestMapping("/eventPeriods")
     public ResponseEntity<EventPeriodResponse> createEventPeriod(@RequestBody @Valid CreateEventPeriodRequest createEventPeriodRequest) {
         EventPeriodResponse eventPeriodResponse = eventPeriodService.createEventPeriod(createEventPeriodRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(eventPeriodResponse);
@@ -32,9 +31,10 @@ public class EventPeriodController {
 
     // TODO : ADMIN 권한 확인
     @GetMapping
-    public ResponseEntity<List<EventPeriodResponse>> getEventPeriods() {
-        List<EventPeriodResponse> eventPeriodResponses = eventPeriodService.getEventPeriods();
-        return ResponseEntity.status(HttpStatus.OK).body(eventPeriodResponses);
+    @RequestMapping("/eventPeriod")
+    public ResponseEntity<EventPeriodResponse> getEventPeriod() {
+        EventPeriodResponse eventPeriodResponse = eventPeriodService.getEventPeriod();
+        return ResponseEntity.status(HttpStatus.OK).body(eventPeriodResponse);
     }
 
     @DeleteMapping("/{eventPeriodId}")

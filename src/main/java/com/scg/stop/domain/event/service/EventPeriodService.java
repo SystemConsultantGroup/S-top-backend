@@ -36,12 +36,10 @@ public class EventPeriodService {
     }
 
     @Transactional(readOnly = true)
-    public List<EventPeriodResponse> getEventPeriods() {
-        List<EventPeriod> eventPeriods = eventPeriodRepository.findAll();
-        List<EventPeriodResponse> eventPeriodResponses = eventPeriods.stream()
-                .map(EventPeriodResponse::from)
-                .collect(Collectors.toList());
-        return eventPeriodResponses;
+    public EventPeriodResponse getEventPeriod() {
+        int currentYear = LocalDateTime.now().getYear();
+        EventPeriod eventPeriod = eventPeriodRepository.findByYear(currentYear);
+        return EventPeriodResponse.from(eventPeriod);
     }
 
     public void deleteEventPeriod(Long eventPeriodId) {
