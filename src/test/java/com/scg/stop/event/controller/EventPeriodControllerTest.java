@@ -23,6 +23,7 @@ import com.scg.stop.event.controller.EventPeriodController;
 import com.scg.stop.event.dto.request.EventPeriodRequest;
 import com.scg.stop.event.dto.response.EventPeriodResponse;
 import com.scg.stop.event.service.EventPeriodService;
+import jakarta.servlet.http.Cookie;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +34,7 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
+import org.springframework.http.HttpHeaders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -41,13 +43,15 @@ import org.springframework.test.web.servlet.ResultActions;
 @AutoConfigureRestDocs
 class EventPeriodControllerTest extends AbstractControllerTest {
 
+    private static final String ACCESS_TOKEN = "admin_access_token";
+    private static final String REFRESH_TOKEN = "refresh_token";
+
     @MockBean
     private EventPeriodService eventPeriodService;
 
     @Autowired
     private ObjectMapper objectMapper;
 
-    // TODO Auth 설정 추가
     @Test
     @DisplayName("이벤트 기간을 생성할 수 있다.")
     void createEventPeriod() throws Exception {
@@ -63,6 +67,8 @@ class EventPeriodControllerTest extends AbstractControllerTest {
                 post("/eventPeriods")
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
         //then
@@ -94,7 +100,10 @@ class EventPeriodControllerTest extends AbstractControllerTest {
         when(eventPeriodService.getEventPeriod()).thenReturn(response);
 
         // when
-        ResultActions result = mockMvc.perform(get("/eventPeriod").contentType(APPLICATION_JSON));
+        ResultActions result = mockMvc.perform(get("/eventPeriod")
+                .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
 
         // then
         result.andExpect(status().isOk())
@@ -109,22 +118,6 @@ class EventPeriodControllerTest extends AbstractControllerTest {
                         )
                 ));
     }
-
-//    @Test
-//    @DisplayName("요청한 ID에 해당하는 행사 기간을 삭제할 수 있다.")
-//    void deleteEventPeriods() throws Exception {
-//        // given
-//        doNothing().when(eventPeriodService).deleteEventPeriod(anyLong());
-//
-//        // when
-//        ResultActions result = mockMvc.perform(delete("/eventPeriods/{eventPeriodId}", 1L).contentType(APPLICATION_JSON));
-//
-//        // then
-//        result.andExpect(status().isNoContent())
-//                .andDo(restDocs.document(
-//                        pathParameters(parameterWithName("eventPeriodId").description("삭제할 행사 기간의 ID"))
-//                ));
-//    }
 
     @Test
     @DisplayName("이벤트 기간을 수정할 수 있다.")
@@ -142,6 +135,8 @@ class EventPeriodControllerTest extends AbstractControllerTest {
                 put("/eventPeriod")
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
         // then
