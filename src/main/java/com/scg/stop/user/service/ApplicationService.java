@@ -1,16 +1,16 @@
-package com.scg.stop.domain.user.service;
+package com.scg.stop.user.service;
 
-import static com.scg.stop.domain.user.domain.UserType.*;
+import static com.scg.stop.user.domain.UserType.*;
 import static com.scg.stop.global.exception.ExceptionCode.ALREADY_VERIFIED_USER;
 import static com.scg.stop.global.exception.ExceptionCode.NOT_FOUND_APPLICATION_ID;
 
-import com.scg.stop.domain.user.domain.Application;
-import com.scg.stop.domain.user.domain.User;
-import com.scg.stop.domain.user.domain.UserType;
-import com.scg.stop.domain.user.dto.response.ApplicationDetailResponse;
-import com.scg.stop.domain.user.dto.response.ApplicationListResponse;
-import com.scg.stop.domain.user.repository.ApplicationRepository;
-import com.scg.stop.domain.user.repository.UserRepository;
+import com.scg.stop.user.domain.Application;
+import com.scg.stop.user.domain.User;
+import com.scg.stop.user.domain.UserType;
+import com.scg.stop.user.dto.response.ApplicationDetailResponse;
+import com.scg.stop.user.dto.response.ApplicationListResponse;
+import com.scg.stop.user.repository.ApplicationRepository;
+import com.scg.stop.user.repository.UserRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import java.util.Arrays;
 import java.util.List;

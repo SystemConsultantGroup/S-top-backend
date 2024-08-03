@@ -1,8 +1,8 @@
-package com.scg.stop.domain.user.controller;
+package com.scg.stop.user.controller;
 
-import com.scg.stop.domain.user.dto.response.ApplicationDetailResponse;
-import com.scg.stop.domain.user.dto.response.ApplicationListResponse;
-import com.scg.stop.domain.user.service.ApplicationService;
+import com.scg.stop.user.dto.response.ApplicationDetailResponse;
+import com.scg.stop.user.dto.response.ApplicationListResponse;
+import com.scg.stop.user.service.ApplicationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

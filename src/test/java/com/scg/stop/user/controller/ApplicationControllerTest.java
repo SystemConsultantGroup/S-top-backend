@@ -1,6 +1,5 @@
-package com.scg.stop.domain.user.controller;
+package com.scg.stop.user.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -14,10 +13,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
-import com.scg.stop.domain.user.domain.UserType;
-import com.scg.stop.domain.user.dto.response.ApplicationDetailResponse;
-import com.scg.stop.domain.user.dto.response.ApplicationListResponse;
-import com.scg.stop.domain.user.service.ApplicationService;
+import com.scg.stop.user.domain.UserType;
+import com.scg.stop.user.dto.response.ApplicationDetailResponse;
+import com.scg.stop.user.dto.response.ApplicationListResponse;
+import com.scg.stop.user.service.ApplicationService;
+import com.scg.stop.user.controller.ApplicationController;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +32,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
-import org.springframework.restdocs.request.RequestDocumentation;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 

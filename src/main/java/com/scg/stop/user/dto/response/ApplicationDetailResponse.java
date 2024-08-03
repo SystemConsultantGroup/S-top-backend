@@ -1,9 +1,9 @@
-package com.scg.stop.domain.user.dto.response;
+package com.scg.stop.user.dto.response;
 
 import static lombok.AccessLevel.PRIVATE;
 
-import com.scg.stop.domain.user.domain.Application;
-import com.scg.stop.domain.user.domain.UserType;
+import com.scg.stop.user.domain.Application;
+import com.scg.stop.user.domain.UserType;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
