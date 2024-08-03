@@ -9,7 +9,6 @@ import com.scg.stop.user.domain.User;
 import com.scg.stop.user.dto.response.ApplicationDetailResponse;
 import com.scg.stop.user.dto.response.ApplicationListResponse;
 import com.scg.stop.user.repository.ApplicationRepository;
-import com.scg.stop.user.repository.UserRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,17 +18,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 public class ApplicationService {
 
     private final ApplicationRepository applicationRepository;
-    private final UserRepository userRepository;
 
+    @Transactional(readOnly = true)
     public Page<ApplicationListResponse> getApplications(Pageable pageable) {
         Page<Application> filteredApplications = applicationRepository.findByStatus(ApplicationStatus.INACTIVE, pageable);
         return filteredApplications.map(ApplicationListResponse::from);
     }
 
+    @Transactional(readOnly = true)
     public ApplicationDetailResponse getApplication(Long applicationId) {
         Application application = applicationRepository.findById(applicationId)
                 .orElseThrow(() -> new BadRequestException(NOT_FOUND_APPLICATION_ID));
@@ -39,7 +39,6 @@ public class ApplicationService {
         return ApplicationDetailResponse.from(application);
     }
 
-    @Transactional
     public ApplicationDetailResponse updateApplication(Long applicationId) {
         Application application = applicationRepository.findById(applicationId)
                 .orElseThrow(() -> new BadRequestException(NOT_FOUND_APPLICATION_ID));
@@ -50,5 +49,11 @@ public class ApplicationService {
         User user = application.getUser();
         user.activateUser();
         return ApplicationDetailResponse.from(application);
+    }
+
+    public void rejectApplication(Long applicationId) {
+        Application application = applicationRepository.findById(applicationId)
+                .orElseThrow(() -> new BadRequestException(NOT_FOUND_APPLICATION_ID));
+        application.reject();
     }
 }

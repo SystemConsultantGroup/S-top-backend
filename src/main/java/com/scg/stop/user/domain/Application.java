@@ -48,4 +48,8 @@ public class Application extends BaseTimeEntity {
     public void activate() {
         status = ApplicationStatus.ACTIVE;
     }
+
+    public void reject() {
+        status = ApplicationStatus.REJECTED;
+    }
 }
