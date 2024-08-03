@@ -10,7 +10,7 @@ operation::application-controller-test/get-applications[snippets="http-request,q
 ====
 operation::application-controller-test/get-application[snippets="http-request,path-parameters,http-response,response-fields"]
 ====
-=== 교수/기업 인증 (GET /applications/{applicationId})
+=== 교수/기업 인증 (PATCH /applications/{applicationId})
 ====
 operation::application-controller-test/update-application[snippets="http-request,path-parameters,http-response,response-fields"]
 ====
