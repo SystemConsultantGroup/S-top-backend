@@ -5,7 +5,6 @@ import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
 
-import com.scg.stop.auth.domain.request.RegisterRequest;
 import com.scg.stop.domain.project.domain.Comment;
 import com.scg.stop.domain.project.domain.FavoriteProject;
 import com.scg.stop.domain.project.domain.Inquiry;
@@ -80,12 +79,13 @@ public class User extends BaseTimeEntity {
     @OneToMany(fetch = LAZY, mappedBy = "user")
     private List<Inquiry> inquiries = new ArrayList<>();
 
-    public void updateApplication() {
+    public void activateUser() {
         if (userType == UserType.INACTIVE_COMPANY) {
             userType = UserType.COMPANY;
         } else if (userType == UserType.INACTIVE_PROFESSOR) {
             userType = UserType.PROFESSOR;
         }
+        application.activate();
     }
 
     public User(String socialLoginId) {

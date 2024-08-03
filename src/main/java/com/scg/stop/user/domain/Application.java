@@ -44,4 +44,8 @@ public class Application extends BaseTimeEntity {
         this.position = position;
         this.user = user;
     }
+
+    public void activate() {
+        status = ApplicationStatus.ACTIVE;
+    }
 }

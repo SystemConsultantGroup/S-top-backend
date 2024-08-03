@@ -1,6 +1,7 @@
 package com.scg.stop.user.repository;
 
 import com.scg.stop.user.domain.Application;
+import com.scg.stop.user.domain.ApplicationStatus;
 import com.scg.stop.user.domain.UserType;
 import java.util.List;
 import org.springframework.data.domain.Page;
@@ -11,6 +12,5 @@ import org.springframework.data.repository.query.Param;
 
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
 
-    @Query("SELECT a FROM Application a WHERE a.user.userType IN :userTypes")
-    Page<Application> findByUserTypeIn(@Param("userTypes") List<UserType> userTypes, Pageable pageable);
+    Page<Application> findByStatus(ApplicationStatus status, Pageable pageable);
 }
