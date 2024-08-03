@@ -12,7 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Getter
 @NoArgsConstructor(access = PRIVATE)
 @AllArgsConstructor
-public class CreateEventPeriodRequest {
+public class EventPeriodRequest {
 
     @NotNull(message = "이벤트 시작 일시를 입력해주세요.")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)

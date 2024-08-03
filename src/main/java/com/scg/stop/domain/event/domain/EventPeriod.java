@@ -35,4 +35,9 @@ public class EventPeriod extends BaseTimeEntity {
     public static EventPeriod of(Integer year, LocalDateTime start, LocalDateTime end) {
         return new EventPeriod(null, year, start, end);
     }
+
+    public void update(LocalDateTime start, LocalDateTime end) {
+        this.start = start;
+        this.end = end;
+    }
 }

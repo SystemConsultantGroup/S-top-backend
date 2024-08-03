@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
-import com.scg.stop.domain.event.dto.request.CreateEventPeriodRequest;
+import com.scg.stop.domain.event.dto.request.EventPeriodRequest;
 import com.scg.stop.domain.event.dto.response.EventPeriodResponse;
 import com.scg.stop.domain.event.service.EventPeriodService;
 import java.time.LocalDateTime;
@@ -50,12 +50,12 @@ class EventPeriodControllerTest extends AbstractControllerTest {
     @DisplayName("이벤트 기간을 생성할 수 있다.")
     void createEventPeriod() throws Exception {
         // given
-        CreateEventPeriodRequest request = new CreateEventPeriodRequest(2024, LocalDateTime.now(),
+        EventPeriodRequest request = new EventPeriodRequest(2024, LocalDateTime.now(),
                 LocalDateTime.now().plusDays(10));
         EventPeriodResponse response = new EventPeriodResponse(1L, 2024, LocalDateTime.now(),
                 LocalDateTime.now().plusDays(10), LocalDateTime.now(), LocalDateTime.now());
 
-        when(eventPeriodService.createEventPeriod(any(CreateEventPeriodRequest.class))).thenReturn(response);
+        when(eventPeriodService.createEventPeriod(any(EventPeriodRequest.class))).thenReturn(response);
 
         // when
         ResultActions result = mockMvc.perform(
@@ -87,7 +87,7 @@ class EventPeriodControllerTest extends AbstractControllerTest {
     @DisplayName("이벤트 연도를 입력하지 않으면 예외가 발생한다.")
     void createEventPeriodWithInvalidYear() throws Exception {
         // given
-        CreateEventPeriodRequest request = new CreateEventPeriodRequest(null, LocalDateTime.now(),
+        EventPeriodRequest request = new EventPeriodRequest(null, LocalDateTime.now(),
                 LocalDateTime.now().plusDays(10));
 
         // when
