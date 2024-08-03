@@ -26,6 +26,7 @@ public enum ExceptionCode {
     NOT_AUTHORIZED(4002, "유저 권한이 존재하지 않습니다."),
     NOT_FOUND_DEPARTMENT(4003, "학과가 존재하지 않습니다."),
     INVALID_STUDENTINFO(4004, "학과/학번 정보가 존재하지 않습니다."),
+    INVALID_USERTYPE(4005, "회원 가입 이용이 불가능한 회원 유형입니다."),
     NOT_FOUND_APPLICATION_ID(4010, "ID에 해당하는 인증 신청 정보가 존재하지 않습니다."),
     ALREADY_VERIFIED_USER(4011, "이미 인증 된 회원입니다.");
 
