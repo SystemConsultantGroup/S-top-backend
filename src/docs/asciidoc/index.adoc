@@ -7,3 +7,4 @@
 
 include::notice.adoc[]
 include::eventNotice.adoc[]
+include::auth-controller-test.adoc[]

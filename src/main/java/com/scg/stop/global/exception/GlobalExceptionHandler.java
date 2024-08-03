@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -47,6 +48,33 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         log.warn(ex.getMessage(), ex);
 
         return ResponseEntity.badRequest()
+                .body(new ExceptionResponse(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidJwtException.class)
+    public ResponseEntity<ExceptionResponse> handleInvalidJwtException(InvalidJwtException ex) {
+
+        log.warn(ex.getMessage(), ex);
+
+        return ResponseEntity.badRequest()
+                .body(new ExceptionResponse(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(SocialLoginException.class)
+    public ResponseEntity<ExceptionResponse> handleSocialLoginException(SocialLoginException ex) {
+
+        log.warn(ex.getMessage(), ex);
+
+        return ResponseEntity.badRequest()
+                .body(new ExceptionResponse(ex.getCode(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ExceptionResponse> handleUnauthorizedException(UnauthorizedException ex) {
+
+        log.warn(ex.getMessage(), ex);
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(new ExceptionResponse(ex.getCode(), ex.getMessage()));
     }
 }
