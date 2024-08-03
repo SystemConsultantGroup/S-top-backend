@@ -9,3 +9,4 @@
 include::{snippets}/exception-code-controller-test/get-exception-codes/exception-response-fields.adoc[]
 
 include::eventPeriod.adoc[]
+include::auth-controller-test.adoc[]
