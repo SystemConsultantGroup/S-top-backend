@@ -4,7 +4,6 @@ import com.scg.stop.domain.video.domain.Quiz;
 import com.scg.stop.domain.video.domain.Talk;
 import com.scg.stop.domain.video.dto.request.TalkRequest;
 import com.scg.stop.domain.video.dto.response.TalkResponse;
-import com.scg.stop.domain.video.dto.response.TalksResponse;
 import com.scg.stop.domain.video.repository.QuizRepository;
 import com.scg.stop.domain.video.repository.TalkRepository;
 import com.scg.stop.global.exception.BadRequestException;

@@ -2,7 +2,6 @@ package com.scg.stop.domain.video.controller;
 
 import com.scg.stop.domain.video.dto.request.TalkRequest;
 import com.scg.stop.domain.video.dto.response.TalkResponse;
-import com.scg.stop.domain.video.dto.response.TalksResponse;
 import com.scg.stop.domain.video.service.TalkService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
