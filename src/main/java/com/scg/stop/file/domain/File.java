@@ -1,4 +1,4 @@
-package com.scg.stop.domain.file.domain;
+package com.scg.stop.file.domain;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
