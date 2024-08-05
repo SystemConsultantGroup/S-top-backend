@@ -50,22 +50,34 @@ public class Talk extends BaseTimeEntity {
         this.talkerBelonging = talkerBelonging;
         this.talkerName = talkerName;
     }
-    public static Talk from(TalkRequest request) {
+    public static Talk from(
+            String title,
+            String youtubeId,
+            Integer year,
+            String talkerBelonging,
+            String talkerName
+    ) {
         return new Talk(
-                request.getTitle(),
-                request.getYoutubeId(),
-                request.getYear(),
-                request.getTalkerBelonging(),
-                request.getTalkerName()
+                title,
+                youtubeId,
+                year,
+                talkerBelonging,
+                talkerName
         );
     }
 
-    public void updateTalk(TalkRequest request) {
-        this.title= request.getTitle();
-        this.youtubeId = request.getYoutubeId();
-        this.year = request.getYear();
-        this.talkerBelonging = request.getTalkerBelonging();
-        this.talkerName = request.getTalkerName();
+    public void updateTalk(
+            String title,
+            String youtubeId,
+            Integer year,
+            String talkerBelonging,
+            String talkerName
+    ) {
+        this.title= title;
+        this.youtubeId = youtubeId;
+        this.year = year;
+        this.talkerBelonging = talkerBelonging;
+        this.talkerName = talkerName;
     }
 
     public void setQuiz(Quiz quiz) {

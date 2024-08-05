@@ -59,23 +59,37 @@ public class JobInterview extends BaseTimeEntity {
         this.category = category;
     }
 
-    public static JobInterview from(JobInterviewRequest request) {
+    public static JobInterview from(
+            String title,
+            String youtubeId,
+            Integer year,
+            String talkerBelonging,
+            String talkerName,
+            JobInterviewCategory category
+    ) {
         return new JobInterview(
-                request.getTitle(),
-                request.getYoutubeId(),
-                request.getYear(),
-                request.getTalkerBelonging(),
-                request.getTalkerName(),
-                request.getCategory()
+                title,
+                youtubeId,
+                year,
+                talkerBelonging,
+                talkerName,
+                category
         );
     }
 
-    public void updateJobInterview(JobInterviewRequest request) {
-        this.title = request.getTitle();
-        this.youtubeId = request.getYoutubeId();
-        this.year = request.getYear();
-        this.talkerBelonging = request.getTalkerBelonging();
-        this.talkerName = request.getTalkerName();
-        this.category = request.getCategory();
+    public void updateJobInterview(
+            String title,
+            String youtubeId,
+            Integer year,
+            String talkerBelonging,
+            String talkerName,
+            JobInterviewCategory category
+    ) {
+        this.title = title;
+        this.youtubeId = youtubeId;
+        this.year = year;
+        this.talkerBelonging = talkerBelonging;
+        this.talkerName = talkerName;
+        this.category = category;
     }
 }

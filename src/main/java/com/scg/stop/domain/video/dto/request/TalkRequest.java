@@ -35,5 +35,7 @@ public class TalkRequest {
     @Valid
     public QuizRequest quiz;
 
-    public Talk toEntity() {return Talk.from(this); }
+    public Talk toEntity() {return Talk.from(
+            title, youtubeId, year, talkerBelonging, talkerName
+    ); }
 }

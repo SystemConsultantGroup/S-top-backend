@@ -35,9 +35,15 @@ public class TalkService {
     }
 
     public TalkResponse createTalk(TalkRequest talkRequest) {
-        Talk talk = talkRepository.save(Talk.from(talkRequest));
+        Talk talk = talkRepository.save(Talk.from(
+                talkRequest.getTitle(),
+                talkRequest.getYoutubeId(),
+                talkRequest.getYear(),
+                talkRequest.getTalkerBelonging(),
+                talkRequest.getTalkerName()
+        ));
         if(talkRequest.getQuiz().getQuiz() != null) {
-            Quiz quiz = quizRepository.save(Quiz.from(talkRequest.getQuiz()));
+            Quiz quiz = quizRepository.save(Quiz.from(talkRequest.getQuiz().toQuizInfoMap()));
             talk.setQuiz(quiz);
         }
         return TalkResponse.from(talk);
@@ -56,10 +62,16 @@ public class TalkService {
             talk.getQuiz().updateQuiz(talkRequest.quiz.toQuizInfoMap());
         }
         else if(talkRequest.getQuiz().getQuiz() != null) { // 기존에 없고, 새로 퀴즈가 생길때
-            Quiz quiz = quizRepository.save(Quiz.from(talkRequest.getQuiz()));
+            Quiz quiz = quizRepository.save(Quiz.from(talkRequest.getQuiz().toQuizInfoMap()));
             talk.setQuiz(quiz);
         }
-        talk.updateTalk(talkRequest);
+        talk.updateTalk(
+                talkRequest.getTitle(),
+                talkRequest.getYoutubeId(),
+                talkRequest.getYear(),
+                talkRequest.getTalkerBelonging(),
+                talkRequest.getTalkerName()
+        );
         return TalkResponse.from(talk);
     }
 

@@ -33,6 +33,8 @@ public class JobInterviewRequest {
     private JobInterviewCategory category;
 
     public JobInterview toEntity() {
-        return JobInterview.from(this);
+        return JobInterview.from(
+                title, youtubeId, year, talkerBelonging, talkerName, category
+        );
     }
 }

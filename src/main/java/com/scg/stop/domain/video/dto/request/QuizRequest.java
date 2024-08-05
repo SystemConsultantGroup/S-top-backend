@@ -25,7 +25,9 @@ public class QuizRequest {
     public Map<String,
             @Valid QuizInfoRequest> quiz;
 
-    public Quiz toEntity() { return Quiz.from(this); }
+    public Quiz toEntity() { return Quiz.from(
+            this.toQuizInfoMap()
+    ); }
 
     public Map<String, QuizInfo> toQuizInfoMap() {
         return quiz.entrySet().stream()

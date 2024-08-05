@@ -49,17 +49,13 @@ public class Quiz extends BaseTimeEntity {
         this.quiz = quiz;
     }
 
-    public static Quiz from(QuizRequest request) {
+    public static Quiz from(Map<String, QuizInfo> quiz) {
         return new Quiz(
-                request.toQuizInfoMap()
+                quiz
         );
     }
 
-    public static Quiz from(Map<String, QuizInfo> request) {
-        return new Quiz(request);
-    }
-
-    public void updateQuiz(Map<String, QuizInfo> quizRequest) {
-        this.quiz = quizRequest;
+    public void updateQuiz(Map<String, QuizInfo> quiz) {
+        this.quiz = quiz;
     }
 }
