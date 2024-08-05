@@ -1,12 +1,13 @@
 package com.scg.stop.domain.gallery.service;
 
 import static com.scg.stop.global.exception.ExceptionCode.NOT_FOUND_FILE_ID;
+import static com.scg.stop.global.exception.ExceptionCode.NOT_FOUND_GALLERY_ID;
 
 import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.domain.file.dto.response.FileResponse;
 import com.scg.stop.domain.file.repository.FileRepository;
 import com.scg.stop.domain.gallery.domain.Gallery;
-import com.scg.stop.domain.gallery.dto.request.CreateGalleryRequest;
+import com.scg.stop.domain.gallery.dto.request.GalleryRequest;
 import com.scg.stop.domain.gallery.dto.response.GalleryResponse;
 import com.scg.stop.domain.gallery.repository.GalleryRepository;
 import com.scg.stop.global.exception.BadRequestException;
@@ -20,37 +21,57 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class GalleryService {
 
     private final GalleryRepository galleryRepository;
     private final FileRepository fileRepository;
 
-    @Transactional
-    public GalleryResponse createGallery(CreateGalleryRequest request) {
+    public GalleryResponse createGallery(GalleryRequest request) {
         List<File> files = fileRepository.findByIdIn(request.getFileIds());
         if (files.size() != request.getFileIds().size()) {
             throw new BadRequestException(NOT_FOUND_FILE_ID);
         }
 
-        Gallery gallery = Gallery.of(request.getTitle(), request.getContent(), request.getYear(), request.getMonth(), files);
+        Gallery gallery = Gallery.of(request.getTitle(), request.getYear(), request.getMonth(), files);
         Gallery savedGallery = galleryRepository.save(gallery);
 
-        List<FileResponse> fileResponses = files.stream()
-                .map(FileResponse::from)
-                .collect(Collectors.toList());
-        return GalleryResponse.of(savedGallery, fileResponses);
+        return GalleryResponse.from(savedGallery);
     }
 
     @Transactional(readOnly = true)
     public Page<GalleryResponse> getGalleries(Integer year, Integer month, Pageable pageable) {
         Page<Gallery> galleries = galleryRepository.findGalleries(year, month, pageable);
-        return galleries.map(this::entityToGalleryResponse);
+        return galleries.map(GalleryResponse::from);
     }
 
-    private GalleryResponse entityToGalleryResponse(Gallery gallery) {
-        List<FileResponse> fileResponses = gallery.getFiles().stream()
-                .map(FileResponse::from)
-                .collect(Collectors.toList());
-        return GalleryResponse.of(gallery, fileResponses);
+    public GalleryResponse getGallery(Long galleryId) {
+        Gallery gallery = galleryRepository.findById(galleryId)
+                .orElseThrow(() -> new BadRequestException(NOT_FOUND_GALLERY_ID));
+
+        gallery.increaseHitCount();
+
+        return GalleryResponse.from(gallery);
+    }
+
+    public GalleryResponse updateGallery(Long galleryId, GalleryRequest request) {
+        Gallery gallery = galleryRepository.findById(galleryId)
+                .orElseThrow(() -> new BadRequestException(NOT_FOUND_GALLERY_ID));
+
+        List<File> files = fileRepository.findByIdIn(request.getFileIds());
+        if (files.size() != request.getFileIds().size()) {
+            throw new BadRequestException(NOT_FOUND_FILE_ID);
+        }
+
+        gallery.update(request.getTitle(), request.getYear(), request.getMonth(), files);
+        Gallery savedGallery = galleryRepository.save(gallery);
+
+        return GalleryResponse.from(savedGallery);
+    }
+
+    public void deleteGallery(Long galleryId) {
+        Gallery gallery = galleryRepository.findById(galleryId)
+                .orElseThrow(() -> new BadRequestException(NOT_FOUND_GALLERY_ID));
+        galleryRepository.delete(gallery);
     }
 }

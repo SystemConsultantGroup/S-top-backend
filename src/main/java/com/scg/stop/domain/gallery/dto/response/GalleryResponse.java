@@ -6,6 +6,8 @@ import com.scg.stop.domain.file.dto.response.FileResponse;
 import com.scg.stop.domain.gallery.domain.Gallery;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,9 +19,9 @@ public class GalleryResponse {
 
     private Long id;
     private String title;
-    private String content;
     private int year;
     private int month;
+    private int hitCount;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private List<FileResponse> files;
@@ -28,12 +30,19 @@ public class GalleryResponse {
         return new GalleryResponse(
                 gallery.getId(),
                 gallery.getTitle(),
-                gallery.getContent(),
                 gallery.getYear(),
                 gallery.getMonth(),
+                gallery.getHitCount(),
                 gallery.getCreatedAt(),
                 gallery.getUpdatedAt(),
                 fileResponses
         );
+    }
+
+    public static GalleryResponse from(Gallery gallery) {
+        List<FileResponse> fileResponses = gallery.getFiles().stream()
+                .map(FileResponse::from)
+                .collect(Collectors.toList());
+        return GalleryResponse.of(gallery, fileResponses);
     }
 }
