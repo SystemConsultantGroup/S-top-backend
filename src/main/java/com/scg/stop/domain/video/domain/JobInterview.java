@@ -38,16 +38,24 @@ public class JobInterview extends BaseTimeEntity {
     private Integer year;
 
     @Column(nullable = false)
+    private String talkerBelonging;
+
+    @Column(nullable = false)
+    private String talkerName;
+
+    @Column(nullable = false)
     @Enumerated(value = STRING)
     private JobInterviewCategory category;
 
     @OneToMany(fetch = LAZY, mappedBy = "jobInterview", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<FavoriteVideo> favoriteVideos;
 
-    private JobInterview(String title, String youtubeId, Integer year, JobInterviewCategory category) {
+    private JobInterview(String title, String youtubeId, Integer year, String talkerBelonging, String talkerName, JobInterviewCategory category) {
         this.title = title;
         this.youtubeId = youtubeId;
         this.year = year;
+        this.talkerBelonging = talkerBelonging;
+        this.talkerName = talkerName;
         this.category = category;
     }
 
@@ -56,6 +64,8 @@ public class JobInterview extends BaseTimeEntity {
                 request.getTitle(),
                 request.getYoutubeId(),
                 request.getYear(),
+                request.getTalkerBelonging(),
+                request.getTalkerName(),
                 request.getCategory()
         );
     }
@@ -64,6 +74,8 @@ public class JobInterview extends BaseTimeEntity {
         this.title = request.getTitle();
         this.youtubeId = request.getYoutubeId();
         this.year = request.getYear();
+        this.talkerBelonging = request.getTalkerBelonging();
+        this.talkerName = request.getTalkerName();
         this.category = request.getCategory();
     }
 }

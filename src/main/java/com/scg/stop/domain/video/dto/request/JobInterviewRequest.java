@@ -22,6 +22,12 @@ public class JobInterviewRequest {
     @NotNull(message = "연도를 입력해주세요.")
     private Integer year;
 
+    @NotBlank(message = "대담자의 소속을 입력해주세요.")
+    public String talkerBelonging;
+
+    @NotBlank(message = "대담자의 성명을 입력해주세요.")
+    public String talkerName;
+
     @ValidEnum(enumClass = JobInterviewCategory.class)
     @NotNull(message = "카테고리를 입력해주세요.")
     private JobInterviewCategory category;
