@@ -2,10 +2,11 @@ package com.scg.stop.domain.video.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
-import com.scg.stop.domain.video.domain.QuizInfo;
+import com.scg.stop.domain.video.dto.request.QuizInfoRequest;
+import com.scg.stop.domain.video.dto.request.QuizRequest;
 import com.scg.stop.domain.video.dto.request.TalkRequest;
+import com.scg.stop.domain.video.dto.response.QuizResponse;
 import com.scg.stop.domain.video.dto.response.TalkResponse;
-import com.scg.stop.domain.video.dto.response.TalksResponse;
 import com.scg.stop.domain.video.service.TalkService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,11 +51,15 @@ public class TalkControllerTest extends AbstractControllerTest {
     void createTalk() throws Exception {
 
         //given
-        Map<String, QuizInfo> quizData = new HashMap<>();
-        quizData.put("0", new QuizInfo("질문1", 0, List.of("선지1","선지2")));
-        quizData.put("1", new QuizInfo("질문2", 0, List.of("선지1","선지2")));
-        TalkRequest request= new TalkRequest("제목","유튜브 고유ID", true, 2024, "대담자 소속", "대담자 성명",quizData);
-        TalkResponse response = new TalkResponse(1L, "제목", "유튜브 고유ID", 2024, true, "대담자 소속","대담자 성명" ,quizData,LocalDateTime.now(), LocalDateTime.now());
+        Map<String, QuizInfoRequest> quizData = new HashMap<>();
+        quizData.put("0", new QuizInfoRequest("질문1", 0, List.of("선지1","선지2")));
+        quizData.put("1", new QuizInfoRequest("질문2", 0, List.of("선지1","선지2")));
+        QuizRequest quizRequest = new QuizRequest(quizData);
+        QuizResponse quizResponse = new QuizResponse(
+                quizRequest.toQuizInfoMap()
+        );
+        TalkRequest request= new TalkRequest("제목","유튜브 고유ID", 2024, "대담자 소속", "대담자 성명",quizRequest);
+        TalkResponse response = new TalkResponse(1L, "제목", "유튜브 고유ID", 2024,  "대담자 소속","대담자 성명" ,quizResponse,LocalDateTime.now(), LocalDateTime.now());
 
         when(talkService.createTalk(any())).thenReturn(response);
 
@@ -72,10 +77,9 @@ public class TalkControllerTest extends AbstractControllerTest {
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("대담 영상 제목"),
                                 fieldWithPath("youtubeId").type(JsonFieldType.STRING).description("유튜브 영상의 고유 ID"),
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("대담 영상 연도"),
-                                fieldWithPath("hasQuiz").type(JsonFieldType.BOOLEAN).description("퀴즈 여부(존재시 true)"),
                                 fieldWithPath("talkerBelonging").type(JsonFieldType.STRING).description("대담자의 소속된 직장/단체"),
                                 fieldWithPath("talkerName").type(JsonFieldType.STRING).description("대담자의 성명"),
-                                fieldWithPath("quiz").type(JsonFieldType.OBJECT).description("퀴즈 데이터").optional(),
+                                fieldWithPath("quiz").type(JsonFieldType.OBJECT).description("퀴즈 데이터, 없는경우 null").optional(),
                                 fieldWithPath("quiz.*").type(JsonFieldType.OBJECT).description("퀴즈 1개").optional(),
                                 fieldWithPath("quiz.*.question").type(JsonFieldType.STRING).description("퀴즈 1개의 질문").optional(),
                                 fieldWithPath("quiz.*.answer").type(JsonFieldType.NUMBER).description("퀴즈 1개의 정답선지 인덱스").optional(),
@@ -86,7 +90,6 @@ public class TalkControllerTest extends AbstractControllerTest {
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("대담 영상 제목"),
                                 fieldWithPath("youtubeId").type(JsonFieldType.STRING).description("유튜브 영상의 고유 ID"),
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("대담 영상 연도"),
-                                fieldWithPath("hasQuiz").type(JsonFieldType.BOOLEAN).description("퀴즈 여부(존재시 true)"),
                                 fieldWithPath("talkerBelonging").type(JsonFieldType.STRING).description("대담자의 소속된 직장/단체"),
                                 fieldWithPath("talkerName").type(JsonFieldType.STRING).description("대담자의 성명"),
                                 fieldWithPath("quiz").type(JsonFieldType.OBJECT).description("퀴즈 데이터, 없는경우 null"),
@@ -104,9 +107,15 @@ public class TalkControllerTest extends AbstractControllerTest {
     @DisplayName("대담 영상 리스트를 조회할 수 있다.")
     void getTalkList() throws Exception {
         //given
-        TalksResponse response1 = new TalksResponse(1L, "제목", "유튜브 고유 ID", 2024, true,"대담자 소속", "대담자 성명", LocalDateTime.now(), LocalDateTime.now());
-        TalksResponse response2 = new TalksResponse(2L, "제목", "유튜브 고유 ID", 2024, true,"대담자 소속", "대담자 성명", LocalDateTime.now(), LocalDateTime.now());
-        Page<TalksResponse> page = new PageImpl<>(List.of(response1,response2), PageRequest.of(0,10),2);
+        Map<String, QuizInfoRequest> quizData = new HashMap<>();
+        quizData.put("0", new QuizInfoRequest("질문1", 0, List.of("선지1","선지2")));
+        quizData.put("1", new QuizInfoRequest("질문2", 0, List.of("선지1","선지2")));
+        QuizRequest quizRequest = new QuizRequest(quizData);
+        QuizResponse quizResponse = new QuizResponse(
+                quizRequest.toQuizInfoMap()
+        );
+        TalkResponse response = new TalkResponse(1L, "제목", "유튜브 고유ID", 2024,  "대담자 소속","대담자 성명" ,quizResponse,LocalDateTime.now(), LocalDateTime.now());
+        Page<TalkResponse> page = new PageImpl<>(List.of(response), PageRequest.of(0,10),1);
 
         when(talkService.getTalks(any(), any(), any())).thenReturn(page);
 
@@ -152,9 +161,13 @@ public class TalkControllerTest extends AbstractControllerTest {
                                 fieldWithPath("content[].title").type(JsonFieldType.STRING).description("대담 영상 제목"),
                                 fieldWithPath("content[].youtubeId").type(JsonFieldType.STRING).description("유튜브 영상의 고유 ID"),
                                 fieldWithPath("content[].year").type(JsonFieldType.NUMBER).description("대담 영상 연도"),
-                                fieldWithPath("content[].hasQuiz").type(JsonFieldType.BOOLEAN).description("퀴즈 여부(존재시 true)"),
                                 fieldWithPath("content[].talkerBelonging").type(JsonFieldType.STRING).description("대담자의 소속된 직장/단체"),
                                 fieldWithPath("content[].talkerName").type(JsonFieldType.STRING).description("대담자의 성명"),
+                                fieldWithPath("content[].quiz").type(JsonFieldType.OBJECT).description("퀴즈 데이터, 없는경우 null"),
+                                fieldWithPath("content[].quiz.*").type(JsonFieldType.OBJECT).description("퀴즈 1개").optional(),
+                                fieldWithPath("content[].quiz.*.question").type(JsonFieldType.STRING).description("퀴즈 1개의 질문").optional(),
+                                fieldWithPath("content[].quiz.*.answer").type(JsonFieldType.NUMBER).description("퀴즈 1개의 정답선지 인덱스").optional(),
+                                fieldWithPath("content[].quiz.*.options").type(JsonFieldType.ARRAY).description("퀴즈 1개의 정답선지 리스트").optional(),
                                 fieldWithPath("content[].createdAt").type(JsonFieldType.STRING).description("대담 영상 생성일"),
                                 fieldWithPath("content[].updatedAt").type(JsonFieldType.STRING).description("대담 영상 수정일")
                         )
@@ -166,10 +179,13 @@ public class TalkControllerTest extends AbstractControllerTest {
     void getTalk() throws Exception {
         //given
         Long id = 1L;
-        Map<String, QuizInfo> quizData = new HashMap<>();
-        quizData.put("0", new QuizInfo("질문1", 0, List.of("선지1","선지2")));
-        quizData.put("1", new QuizInfo("질문2", 0, List.of("선지1","선지2")));
-        TalkResponse response = new TalkResponse(id, "제목", "유튜브 고유ID", 2024, true, "대담자 소속","대담자 성명" ,quizData,LocalDateTime.now(), LocalDateTime.now());
+        Map<String, QuizInfoRequest> quizData = new HashMap<>();
+        quizData.put("0", new QuizInfoRequest("질문1", 0, List.of("선지1","선지2")));
+        quizData.put("1", new QuizInfoRequest("질문2", 0, List.of("선지1","선지2")));
+        QuizResponse quizResponse = new QuizResponse(
+                new QuizRequest(quizData).toQuizInfoMap()
+        );
+        TalkResponse response = new TalkResponse(id, "제목", "유튜브 고유ID", 2024, "대담자 소속","대담자 성명" ,quizResponse,LocalDateTime.now(), LocalDateTime.now());
         when(talkService.getTalkById(anyLong())).thenReturn(response);
 
         //when
@@ -189,7 +205,6 @@ public class TalkControllerTest extends AbstractControllerTest {
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("대담 영상 제목"),
                                 fieldWithPath("youtubeId").type(JsonFieldType.STRING).description("유튜브 영상의 고유 ID"),
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("대담 영상 연도"),
-                                fieldWithPath("hasQuiz").type(JsonFieldType.BOOLEAN).description("퀴즈 여부(존재시 true)"),
                                 fieldWithPath("talkerBelonging").type(JsonFieldType.STRING).description("대담자의 소속된 직장/단체"),
                                 fieldWithPath("talkerName").type(JsonFieldType.STRING).description("대담자의 성명"),
                                 fieldWithPath("quiz").type(JsonFieldType.OBJECT).description("퀴즈 데이터, 없는경우 null"),
@@ -209,11 +224,13 @@ public class TalkControllerTest extends AbstractControllerTest {
     void updateTalk() throws Exception {
         //given
         Long id = 1L;
-        Map<String, QuizInfo> quizData = new HashMap<>();
-        quizData.put("0", new QuizInfo("수정한 질문1", 0, List.of("수정한 선지1","수정한 선지2")));
-        quizData.put("1", new QuizInfo("수정한 질문2", 0, List.of("수정한 선지1","수정한 선지2")));
-        TalkRequest request= new TalkRequest("수정한 제목","수정한 유튜브 고유ID", true, 2024, "수정한 대담자 소속", "수정한 대담자 성명",quizData);
-        TalkResponse response = new TalkResponse(id, "수정한 제목", "수정한 유튜브 고유ID", 2024, true, "수정한 대담자 소속","수정한 대담자 성명" ,quizData,LocalDateTime.now(), LocalDateTime.now());
+        Map<String, QuizInfoRequest> quizData = new HashMap<>();
+        quizData.put("0", new QuizInfoRequest("수정한 질문1", 0, List.of("수정한 선지1","수정한 선지2")));
+        quizData.put("1", new QuizInfoRequest("수정한 질문2", 0, List.of("수정한 선지1","수정한 선지2")));
+        QuizRequest quizRequest = new QuizRequest(quizData);
+        QuizResponse quizResponse = new QuizResponse(quizRequest.toQuizInfoMap());
+        TalkRequest request= new TalkRequest("수정한 제목","수정한 유튜브 고유ID", 2024, "수정한 대담자 소속", "수정한 대담자 성명",quizRequest);
+        TalkResponse response = new TalkResponse(id, "수정한 제목", "수정한 유튜브 고유ID", 2024, "수정한 대담자 소속","수정한 대담자 성명" ,quizResponse,LocalDateTime.now(), LocalDateTime.now());
         when(talkService.updateTalk(anyLong(), any(TalkRequest.class))).thenReturn(response);
 
         //when
@@ -233,7 +250,6 @@ public class TalkControllerTest extends AbstractControllerTest {
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("대담 영상 제목"),
                                 fieldWithPath("youtubeId").type(JsonFieldType.STRING).description("유튜브 영상의 고유 ID"),
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("대담 영상 연도"),
-                                fieldWithPath("hasQuiz").type(JsonFieldType.BOOLEAN).description("퀴즈 여부(존재시 true)"),
                                 fieldWithPath("talkerBelonging").type(JsonFieldType.STRING).description("대담자의 소속된 직장/단체"),
                                 fieldWithPath("talkerName").type(JsonFieldType.STRING).description("대담자의 성명"),
                                 fieldWithPath("quiz").type(JsonFieldType.OBJECT).description("퀴즈 데이터").optional(),
@@ -247,7 +263,6 @@ public class TalkControllerTest extends AbstractControllerTest {
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("대담 영상 제목"),
                                 fieldWithPath("youtubeId").type(JsonFieldType.STRING).description("유튜브 영상의 고유 ID"),
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("대담 영상 연도"),
-                                fieldWithPath("hasQuiz").type(JsonFieldType.BOOLEAN).description("퀴즈 여부(존재시 true)"),
                                 fieldWithPath("talkerBelonging").type(JsonFieldType.STRING).description("대담자의 소속된 직장/단체"),
                                 fieldWithPath("talkerName").type(JsonFieldType.STRING).description("대담자의 성명"),
                                 fieldWithPath("quiz").type(JsonFieldType.OBJECT).description("퀴즈 데이터, 없는경우 null"),
