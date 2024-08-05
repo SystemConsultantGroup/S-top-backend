@@ -13,7 +13,6 @@ public class TalksResponse {
     public String title;
     public String youtubeId;
     public Integer year;
-    public boolean hasQuiz;
     public String talkerBelonging;
     public String talkerName;
     public LocalDateTime createdAt;
@@ -25,7 +24,6 @@ public class TalksResponse {
                 talk.getTitle(),
                 talk.getYoutubeId(),
                 talk.getYear(),
-                talk.isHasQuiz(),
                 talk.getTalkerBelonging(),
                 talk.getTalkerName(),
                 talk.getCreatedAt(),

@@ -43,13 +43,15 @@ public class Quiz extends BaseTimeEntity {
     @OneToMany(fetch = LAZY, mappedBy = "quiz")
     private List<UserQuiz> userQuizzes = new ArrayList<>();
 
-    public Quiz(Map<String, QuizInfo> quiz) {
+    public Quiz(
+            Map<String, QuizInfo> quiz
+    ) {
         this.quiz = quiz;
     }
 
     public static Quiz from(QuizRequest request) {
         return new Quiz(
-                request.getQuiz()
+                request.toQuizInfoMap()
         );
     }
 

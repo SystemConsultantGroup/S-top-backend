@@ -31,9 +31,6 @@ public class Talk extends BaseTimeEntity {
     @Column(nullable = false)
     private Integer year;
 
-    @Column(nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean hasQuiz;
-
     @Column(nullable = false)
     private String talkerBelonging;
 
@@ -46,11 +43,10 @@ public class Talk extends BaseTimeEntity {
     @OneToMany(fetch = LAZY, mappedBy = "talk")
     private List<FavoriteVideo> favoriteVideos;
 
-    public Talk(String title, String youtubeId, Integer year, boolean hasQuiz, String talkerBelonging, String talkerName) {
+    public Talk(String title, String youtubeId, Integer year, String talkerBelonging, String talkerName) {
         this.title = title;
         this.youtubeId = youtubeId;
         this.year = year;
-        this.hasQuiz = hasQuiz;
         this.talkerBelonging = talkerBelonging;
         this.talkerName = talkerName;
     }
@@ -59,7 +55,6 @@ public class Talk extends BaseTimeEntity {
                 request.getTitle(),
                 request.getYoutubeId(),
                 request.getYear(),
-                request.isHasQuiz(),
                 request.getTalkerBelonging(),
                 request.getTalkerName()
         );
@@ -69,7 +64,6 @@ public class Talk extends BaseTimeEntity {
         this.title= request.getTitle();
         this.youtubeId = request.getYoutubeId();
         this.year = request.getYear();
-        this.hasQuiz = request.isHasQuiz();
         this.talkerBelonging = request.getTalkerBelonging();
         this.talkerName = request.getTalkerName();
     }

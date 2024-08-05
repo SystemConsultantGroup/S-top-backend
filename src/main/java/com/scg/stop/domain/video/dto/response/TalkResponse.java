@@ -1,5 +1,6 @@
 package com.scg.stop.domain.video.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.scg.stop.domain.video.domain.QuizInfo;
 import com.scg.stop.domain.video.domain.Talk;
 import lombok.AllArgsConstructor;
@@ -15,10 +16,12 @@ public class TalkResponse {
     public String title;
     public String youtubeId;
     public Integer year;
-    public boolean hasQuiz;
     public String talkerBelonging;
     public String talkerName;
-    public Map<String, QuizInfo> quiz;
+
+    @JsonUnwrapped
+    public QuizResponse quiz;
+
     public LocalDateTime createdAt;
     public LocalDateTime updatedAt;
 
@@ -29,10 +32,9 @@ public class TalkResponse {
                 talk.getTitle(),
                 talk.getYoutubeId(),
                 talk.getYear(),
-                talk.isHasQuiz(),
                 talk.getTalkerBelonging(),
                 talk.getTalkerName(),
-                (talk.getQuiz() != null)? talk.getQuiz().getQuiz() : null,
+                (talk.getQuiz() != null)? QuizResponse.from(talk.getQuiz()) : new QuizResponse(),
                 talk.getCreatedAt(),
                 talk.getUpdatedAt()
         );

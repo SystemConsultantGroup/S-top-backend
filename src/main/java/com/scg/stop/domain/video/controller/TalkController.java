@@ -27,12 +27,12 @@ public class TalkController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<TalksResponse>> getAllTalks(
+    public ResponseEntity<Page<TalkResponse>> getAllTalks(
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "year", required = false) Integer year,
             @PageableDefault(page = 0, size = 10) Pageable pageable
     ) {
-        Page<TalksResponse> talks = talkService.getTalks(title, year, pageable);
+        Page<TalkResponse> talks = talkService.getTalks(title, year, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(talks);
     }
 
