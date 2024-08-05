@@ -252,7 +252,7 @@ public class TalkControllerTest extends AbstractControllerTest {
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("대담 영상 연도"),
                                 fieldWithPath("talkerBelonging").type(JsonFieldType.STRING).description("대담자의 소속된 직장/단체"),
                                 fieldWithPath("talkerName").type(JsonFieldType.STRING).description("대담자의 성명"),
-                                fieldWithPath("quiz").type(JsonFieldType.OBJECT).description("퀴즈 데이터").optional(),
+                                fieldWithPath("quiz").type(JsonFieldType.OBJECT).description("퀴즈 데이터, 없는경우 null").optional(),
                                 fieldWithPath("quiz.*").type(JsonFieldType.OBJECT).description("퀴즈 1개").optional(),
                                 fieldWithPath("quiz.*.question").type(JsonFieldType.STRING).description("퀴즈 1개의 질문").optional(),
                                 fieldWithPath("quiz.*.answer").type(JsonFieldType.NUMBER).description("퀴즈 1개의 정답선지 인덱스").optional(),
