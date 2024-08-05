@@ -10,6 +10,8 @@ import com.scg.stop.event.dto.response.EventPeriodResponse;
 import com.scg.stop.event.repository.EventPeriodRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +40,14 @@ public class EventPeriodService {
         int currentYear = LocalDateTime.now().getYear();
         EventPeriod eventPeriod = eventPeriodRepository.findByYear(currentYear);
         return EventPeriodResponse.from(eventPeriod);
+    }
+
+    @Transactional(readOnly = true)
+    public List<EventPeriodResponse> getEventPeriods() {
+        List<EventPeriod> eventPeriods = eventPeriodRepository.findAll();
+        return eventPeriods.stream()
+                .map(EventPeriodResponse::from)
+                .collect(Collectors.toList());
     }
 
     public EventPeriodResponse updateEventPeriod(EventPeriodRequest request) {

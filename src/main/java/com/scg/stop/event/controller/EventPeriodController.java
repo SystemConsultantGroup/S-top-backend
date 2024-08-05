@@ -8,6 +8,7 @@ import com.scg.stop.event.dto.response.EventPeriodResponse;
 import com.scg.stop.event.service.EventPeriodService;
 import com.scg.stop.user.domain.User;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,12 @@ public class EventPeriodController {
     public ResponseEntity<EventPeriodResponse> getEventPeriod(@AuthUser(accessType = ADMIN) User user) {
         EventPeriodResponse eventPeriodResponse = eventPeriodService.getEventPeriod();
         return ResponseEntity.status(HttpStatus.OK).body(eventPeriodResponse);
+    }
+
+    @GetMapping("/eventPeriods")
+    public ResponseEntity<List<EventPeriodResponse>> getEventPeriods(@AuthUser(accessType = ADMIN) User user) {
+        List<EventPeriodResponse> eventPeriodResponses = eventPeriodService.getEventPeriods();
+        return ResponseEntity.status(HttpStatus.OK).body(eventPeriodResponses);
     }
 
     @PutMapping("/eventPeriod")

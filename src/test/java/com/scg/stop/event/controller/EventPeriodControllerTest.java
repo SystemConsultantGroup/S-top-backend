@@ -120,6 +120,38 @@ class EventPeriodControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @DisplayName("전체 이벤트 기간 설정을 조회할 수 있다.")
+    void getEventPeriods() throws Exception {
+        // given
+        List<EventPeriodResponse> responses = Arrays.asList(
+                new EventPeriodResponse(1L, 2024, LocalDateTime.now(), LocalDateTime.now().plusDays(10),
+                        LocalDateTime.now(), LocalDateTime.now()),
+                new EventPeriodResponse(2L, 2025, LocalDateTime.now(), LocalDateTime.now().plusDays(10),
+                        LocalDateTime.now(), LocalDateTime.now())
+        );
+        when(eventPeriodService.getEventPeriods()).thenReturn(responses);
+
+        // when
+        ResultActions result = mockMvc.perform(get("/eventPeriods")
+                .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
+
+        // then
+        result.andExpect(status().isOk())
+                .andDo(restDocs.document(
+                        responseFields(
+                                fieldWithPath("[].id").type(JsonFieldType.NUMBER).description("이벤트 기간 ID"),
+                                fieldWithPath("[].year").type(JsonFieldType.NUMBER).description("이벤트 연도"),
+                                fieldWithPath("[].start").type(JsonFieldType.STRING).description("이벤트 시작 일시"),
+                                fieldWithPath("[].end").type(JsonFieldType.STRING).description("이벤트 종료 일시"),
+                                fieldWithPath("[].createdAt").type(JsonFieldType.STRING).description("생성일"),
+                                fieldWithPath("[].updatedAt").type(JsonFieldType.STRING).description("변경일")
+                        )
+                ));
+    }
+
+    @Test
     @DisplayName("이벤트 기간을 수정할 수 있다.")
     void updateEventPeriod() throws Exception {
         // given
