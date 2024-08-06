@@ -11,10 +11,13 @@ import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -53,8 +56,36 @@ public class NoticeService {
      */
     @Transactional(readOnly = true)
     public Page<NoticeListElementResponse> getNoticeList(String title, Pageable pageable) {
-        return noticeRepository.findNotices(title, pageable);
+
+        List<NoticeListElementResponse> fixedNotices = noticeRepository.findFixedNotices(title);
+        int nonFixedNoticesSize = pageable.getPageSize() - fixedNotices.size();
+        Pageable adjustedPageable = PageRequest.of(pageable.getPageNumber(), nonFixedNoticesSize);
+
+        Page<NoticeListElementResponse> nonFixedNotices = noticeRepository.findNonFixedNotices(title, adjustedPageable);
+
+        List<NoticeListElementResponse> combinedNotices = new ArrayList<>();
+        combinedNotices.addAll(fixedNotices);
+        combinedNotices.addAll(nonFixedNotices.getContent());
+
+        System.out.println("fixedNotices.size() = " + fixedNotices.size());
+        System.out.println("nonFixedNotices.getTotalElements() = " + nonFixedNotices.getTotalElements());
+
+        long totalElements = fixedNotices.size() + nonFixedNotices.getTotalElements();
+        int totalPages = (int) Math.ceil((double) nonFixedNotices.getTotalElements() / adjustedPageable.getPageSize());
+
+        return new PageImpl<>(combinedNotices, pageable, totalElements) {
+            @Override
+            public int getTotalPages() {
+                return totalPages;
+            }
+
+            @Override
+            public long getTotalElements() {
+                return totalElements;
+            }
+        };
     }
+
 
     /**
      * Get a corresponding notice
