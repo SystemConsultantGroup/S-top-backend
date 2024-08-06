@@ -17,7 +17,7 @@ operation::event-notice-controller-test/create-event-notice[snippets="http-reque
 operation::event-notice-controller-test/get-event-notice-list[snippets="query-parameters,http-request,http-response,response-fields"]
 ====
 
-=== 이벤트 공지 사항 조회 (GET /eventNotices/:eventNoticeId)
+=== 이벤트 공지 사항 조회 (GET /eventNotices/{eventNoticeId})
 
 ==== 200 OK
 
@@ -25,7 +25,7 @@ operation::event-notice-controller-test/get-event-notice-list[snippets="query-pa
 operation::event-notice-controller-test/get-event-notice[snippets="path-parameters,http-request,http-response,response-fields"]
 ====
 
-=== 이벤트 공지 사항 수정 (PUT /eventNotices/:eventNoticeId)
+=== 이벤트 공지 사항 수정 (PUT /eventNotices/{eventNoticeId})
 
 ==== 200 OK
 
@@ -33,7 +33,7 @@ operation::event-notice-controller-test/get-event-notice[snippets="path-paramete
 operation::event-notice-controller-test/update-event-notice[snippets="path-parameters,http-request,request-fields,http-response,response-fields"]
 ====
 
-=== 이벤트 공지 사항 삭제 (DELETE /eventNotices/:eventNoticeId)
+=== 이벤트 공지 사항 삭제 (DELETE /eventNotices/{eventNoticeId})
 
 ==== 204 No Content
 

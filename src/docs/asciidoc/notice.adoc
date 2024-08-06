@@ -17,7 +17,7 @@ operation::notice-controller-test/create-notice[snippets="http-request,request-f
 operation::notice-controller-test/get-notice-list[snippets="query-parameters,http-request,http-response,response-fields"]
 ====
 
-=== 공지 사항 조회 (GET /notices/:noticeId)
+=== 공지 사항 조회 (GET /notices/{noticeId})
 
 ==== 200 OK
 
@@ -25,7 +25,7 @@ operation::notice-controller-test/get-notice-list[snippets="query-parameters,htt
 operation::notice-controller-test/get-notice[snippets="path-parameters,http-request,http-response,response-fields"]
 ====
 
-=== 공지 사항 수정 (PUT /notices/:noticeId)
+=== 공지 사항 수정 (PUT /notices/{noticeId})
 
 ==== 200 OK
 
@@ -33,7 +33,7 @@ operation::notice-controller-test/get-notice[snippets="path-parameters,http-requ
 operation::notice-controller-test/update-notice[snippets="path-parameters,http-request,request-fields,http-response,response-fields"]
 ====
 
-=== 공지 사항 삭제 (DELETE /notices/:noticeId)
+=== 공지 사항 삭제 (DELETE /notices/{noticeId})
 
 ==== 204 No Content
 
