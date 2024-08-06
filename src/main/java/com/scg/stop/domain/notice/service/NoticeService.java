@@ -67,9 +67,6 @@ public class NoticeService {
         combinedNotices.addAll(fixedNotices);
         combinedNotices.addAll(nonFixedNotices.getContent());
 
-        System.out.println("fixedNotices.size() = " + fixedNotices.size());
-        System.out.println("nonFixedNotices.getTotalElements() = " + nonFixedNotices.getTotalElements());
-
         long totalElements = fixedNotices.size() + nonFixedNotices.getTotalElements();
         int totalPages = (int) Math.ceil((double) nonFixedNotices.getTotalElements() / adjustedPageable.getPageSize());
 
