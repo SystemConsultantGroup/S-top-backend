@@ -2,6 +2,6 @@ spring:
     profiles:
         default: local
         group:
-            local: common, oauth
-            prod: common, oauth
+            local: common, oauth, minio
+            prod: common, oauth, minio
 
