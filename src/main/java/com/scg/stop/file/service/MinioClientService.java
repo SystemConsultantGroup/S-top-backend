@@ -1,19 +1,22 @@
 package com.scg.stop.file.service;
 
+import static com.scg.stop.global.exception.ExceptionCode.FAILED_TO_UPLOAD_FILE;
+
+import com.scg.stop.global.exception.InternalServerErrorException;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import java.io.InputStream;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MinioClientService {
@@ -38,7 +41,8 @@ public class MinioClientService {
                             .build()
             );
         } catch (Exception e) {
-            throw new RuntimeException("Failed to store file.", e);
+            log.error(e.getMessage(), e);
+            throw new InternalServerErrorException(FAILED_TO_UPLOAD_FILE);
         }
     }
 
