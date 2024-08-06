@@ -46,4 +46,12 @@ public class File extends BaseTimeEntity {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "gallery_id")
     private Gallery gallery;
+
+    static public File of(String uuid, String name, String mimeType) {
+        File file = new File();
+        file.uuid = uuid;
+        file.name = name;
+        file.mimeType = mimeType;
+        return file;
+    }
 }
