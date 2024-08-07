@@ -8,6 +8,7 @@ import com.scg.stop.domain.video.dto.request.TalkRequest;
 import com.scg.stop.domain.video.dto.response.QuizResponse;
 import com.scg.stop.domain.video.dto.response.TalkResponse;
 import com.scg.stop.domain.video.service.TalkService;
+import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -40,6 +42,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @MockBean(JpaMetamodelMappingContext.class)
 @AutoConfigureRestDocs
 public class TalkControllerTest extends AbstractControllerTest {
+
+    private static final String ACCESS_TOKEN = "admin_access_token";
+    private static final String REFRESH_TOKEN = "refresh_token";
+
     @MockBean
     private TalkService talkService;
 
@@ -67,6 +73,8 @@ public class TalkControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 post("/talks")
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
                         .content(objectMapper.writeValueAsString(request))
         );
 
@@ -237,6 +245,8 @@ public class TalkControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 put("/talks/{talkId}", id)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
                         .content(objectMapper.writeValueAsString(request))
         );
 
@@ -285,6 +295,8 @@ public class TalkControllerTest extends AbstractControllerTest {
         //when
         ResultActions result = mockMvc.perform(
                 delete("/talks/{talkId}", 1L)
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
         //then

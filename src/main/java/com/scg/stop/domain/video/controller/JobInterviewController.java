@@ -1,9 +1,12 @@
 package com.scg.stop.domain.video.controller;
 
+import com.scg.stop.auth.annotation.AuthUser;
 import com.scg.stop.domain.video.domain.JobInterviewCategory;
 import com.scg.stop.domain.video.dto.request.JobInterviewRequest;
 import com.scg.stop.domain.video.dto.response.JobInterviewResponse;
 import com.scg.stop.domain.video.service.JobInterviewService;
+import com.scg.stop.user.domain.AccessType;
+import com.scg.stop.user.domain.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,9 +22,12 @@ import org.springframework.web.bind.annotation.*;
 public class JobInterviewController {
     private final JobInterviewService jobInterviewService;
 
-    // only admin
+
     @PostMapping
-    public ResponseEntity<JobInterviewResponse> createJobInterview(@RequestBody @Valid JobInterviewRequest jobInterviewDTO) {
+    public ResponseEntity<JobInterviewResponse> createJobInterview(
+            @RequestBody @Valid JobInterviewRequest jobInterviewDTO,
+            @AuthUser(accessType = {AccessType.ADMIN}) User user
+    ) {
         JobInterviewResponse interview = jobInterviewService.createJobInterview(jobInterviewDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(interview);
     }
@@ -45,13 +51,17 @@ public class JobInterviewController {
     @PutMapping("/{jobInterviewId}")
     public ResponseEntity<JobInterviewResponse> updateJobInterview(
             @PathVariable("jobInterviewId")Long jobInterviewId,
-            @RequestBody @Valid JobInterviewRequest jobInterviewDTO
+            @RequestBody @Valid JobInterviewRequest jobInterviewDTO,
+            @AuthUser(accessType = {AccessType.ADMIN}) User user
     ) {
         return ResponseEntity.status(HttpStatus.OK).body(jobInterviewService.updateJobInterview(jobInterviewId, jobInterviewDTO));
     }
 
     @DeleteMapping("/{jobInterviewId}")
-    public ResponseEntity<Void> deleteJobInterview(@PathVariable("jobInterviewId") Long jobInterviewId) {
+    public ResponseEntity<Void> deleteJobInterview(
+            @PathVariable("jobInterviewId") Long jobInterviewId,
+            @AuthUser(accessType = {AccessType.ADMIN}) User user
+    ) {
         jobInterviewService.deleteJobInterviewById(jobInterviewId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

@@ -1,8 +1,11 @@
 package com.scg.stop.domain.video.controller;
 
+import com.scg.stop.auth.annotation.AuthUser;
 import com.scg.stop.domain.video.dto.request.TalkRequest;
 import com.scg.stop.domain.video.dto.response.TalkResponse;
 import com.scg.stop.domain.video.service.TalkService;
+import com.scg.stop.user.domain.AccessType;
+import com.scg.stop.user.domain.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,7 +23,10 @@ public class TalkController {
     private final TalkService talkService;
 
     @PostMapping
-    public ResponseEntity<TalkResponse> createTalk(@RequestBody @Valid TalkRequest talkRequest) {
+    public ResponseEntity<TalkResponse> createTalk(
+            @RequestBody @Valid TalkRequest talkRequest,
+            @AuthUser(accessType = {AccessType.ADMIN}) User user
+    ) {
         TalkResponse response = talkService.createTalk(talkRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -44,14 +50,18 @@ public class TalkController {
     @PutMapping("/{talkId}")
     public ResponseEntity<TalkResponse> updateTalk(
             @PathVariable("talkId") Long talkId,
-            @RequestBody @Valid TalkRequest talkRequest
+            @RequestBody @Valid TalkRequest talkRequest,
+            @AuthUser(accessType = {AccessType.ADMIN}) User user
     ) {
         TalkResponse response = talkService.updateTalk(talkId, talkRequest);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @DeleteMapping("/{talkId}")
-    public ResponseEntity<Void> deleteTalk(@PathVariable("talkId") Long talkId) {
+    public ResponseEntity<Void> deleteTalk(
+            @PathVariable("talkId") Long talkId,
+            @AuthUser(accessType = {AccessType.ADMIN}) User user
+    ) {
         talkService.deleteTalk(talkId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
