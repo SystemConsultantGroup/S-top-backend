@@ -1,10 +1,13 @@
 package com.scg.stop.event.controller;
 
 
+import com.scg.stop.auth.annotation.AuthUser;
 import com.scg.stop.event.dto.request.EventNoticeRequest;
 import com.scg.stop.event.dto.response.EventNoticeListElementResponse;
 import com.scg.stop.event.dto.response.EventNoticeResponse;
 import com.scg.stop.event.service.EventNoticeService;
+import com.scg.stop.user.domain.AccessType;
+import com.scg.stop.user.domain.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,7 +28,8 @@ public class EventNoticeController {
     // Create a new eventNotice
     @PostMapping
     public ResponseEntity<EventNoticeResponse> createEventNotice(
-            @RequestBody @Valid EventNoticeRequest createEventNoticeDto) {
+            @RequestBody @Valid EventNoticeRequest createEventNoticeDto,
+            @AuthUser(accessType = {AccessType.ADMIN}) User user) {
         return ResponseEntity.status(HttpStatus.CREATED).body(eventNoticeService.createEventNotice(createEventNoticeDto));
     }
 
@@ -50,14 +54,16 @@ public class EventNoticeController {
     @PutMapping("/{eventNoticeId}")
     public ResponseEntity<EventNoticeResponse> updateEventNotice(
             @PathVariable("eventNoticeId") Long eventNoticeId,
-            @RequestBody @Valid EventNoticeRequest updateEventNoticeDto) {
+            @RequestBody @Valid EventNoticeRequest updateEventNoticeDto,
+            @AuthUser(accessType = {AccessType.ADMIN}) User user) {
         return ResponseEntity.status(HttpStatus.OK).body(eventNoticeService.updateEventNotice(eventNoticeId, updateEventNoticeDto));
     }
 
     // Delete a corresponding eventNotice
     @DeleteMapping("/{eventNoticeId}")
     public ResponseEntity<Long> deleteEventNotice(
-            @PathVariable("eventNoticeId") Long eventNoticeId) {
+            @PathVariable("eventNoticeId") Long eventNoticeId,
+            @AuthUser(accessType = {AccessType.ADMIN}) User user) {
         eventNoticeService.deleteEventNotice(eventNoticeId);
         return ResponseEntity.noContent().build();
     }
