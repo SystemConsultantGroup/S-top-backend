@@ -1,13 +1,14 @@
-package com.scg.stop.domain.event.controller;
+package com.scg.stop.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
 import com.scg.stop.domain.file.dto.response.FileResponse;
-import com.scg.stop.event.controller.EventNoticeController;
-import com.scg.stop.event.dto.request.EventNoticeRequest;
-import com.scg.stop.event.dto.response.EventNoticeListElementResponse;
-import com.scg.stop.event.dto.response.EventNoticeResponse;
-import com.scg.stop.event.service.EventNoticeService;
+import com.scg.stop.notice.controller.NoticeController;
+import com.scg.stop.notice.dto.request.NoticeRequest;
+import com.scg.stop.notice.dto.response.NoticeListElementResponse;
+import com.scg.stop.notice.dto.response.NoticeResponse;
+import com.scg.stop.notice.service.NoticeService;
+import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
+import org.springframework.http.HttpHeaders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -28,63 +31,80 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
+import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(EventNoticeController.class)
+@WebMvcTest(NoticeController.class)
 @MockBean(JpaMetamodelMappingContext.class)
 @AutoConfigureRestDocs
-class EventNoticeControllerTest extends AbstractControllerTest {
+class NoticeControllerTest extends AbstractControllerTest {
+
+    private static final String ACCESS_TOKEN = "admin_access_token";
+    private static final String REFRESH_TOKEN = "refresh_token";
 
     @MockBean
-    private EventNoticeService eventNoticeService;
+    private NoticeService noticeService;
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @Test
-    @DisplayName("이벤트 공지 사항을 생성할 수 있다.")
+    @DisplayName("공지 사항을 생성할 수 있다.")
         // TODO: Auth user check
-    void createEventNotice() throws Exception {
+    void createNotice() throws Exception {
 
         // given
-        EventNoticeRequest request = new EventNoticeRequest("이벤트 공지 사항 제목", "이벤트 공지 사항 내용", true, List.of(1L, 2L, 3L));
+        NoticeRequest request = new NoticeRequest("공지 사항 제목", "공지 사항 내용", true, List.of(1L, 2L, 3L));
 
         List<FileResponse> files = Arrays.asList(
                 new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "예시 첨부 파일 1.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
                 new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "예시 첨부 파일 2.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
                 new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "예시 첨부 파일 3.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now())
         );
-        EventNoticeResponse response = new EventNoticeResponse(1L, "이벤트 공지 사항 제목", "이벤트 공지 사항 내용", 0, true, LocalDateTime.now(), LocalDateTime.now(), files);
+        NoticeResponse response = new NoticeResponse(1L, "공지 사항 제목", "공지 사항 내용", 0, true, LocalDateTime.now(), LocalDateTime.now(), files);
 
-        when(eventNoticeService.createEventNotice(any(EventNoticeRequest.class))).thenReturn(response);
+        when(noticeService.createNotice(any(NoticeRequest.class))).thenReturn(response);
 
         // when
         ResultActions result = mockMvc.perform(
-                post("/eventNotices")
+                post("/notices")
                         .contentType(APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
                         .content(objectMapper.writeValueAsString(request))
         );
 
         // then
         result.andExpect(status().isCreated())
                 .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
+                        ),
                         requestFields(
-                                fieldWithPath("title").type(JsonFieldType.STRING).description("이벤트 공지 사항 제목"),
-                                fieldWithPath("content").type(JsonFieldType.STRING).description("이벤트 공지 사항 내용"),
-                                fieldWithPath("fixed").type(JsonFieldType.BOOLEAN).description("이벤트 공지 사항 고정 여부"),
+                                fieldWithPath("title").type(JsonFieldType.STRING).description("공지 사항 제목"),
+                                fieldWithPath("content").type(JsonFieldType.STRING).description("공지 사항 내용"),
+                                fieldWithPath("fixed").type(JsonFieldType.BOOLEAN).description("공지 사항 고정 여부"),
                                 fieldWithPath("fileIds").type(JsonFieldType.ARRAY).description("첨부 파일 ID 목록").optional()
                         ),
                         responseFields(
-                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("이벤트 공지 사항 ID"),
-                                fieldWithPath("title").type(JsonFieldType.STRING).description("이벤트 공지 사항 제목"),
-                                fieldWithPath("content").type(JsonFieldType.STRING).description("이벤트 공지 사항 내용"),
-                                fieldWithPath("hitCount").type(JsonFieldType.NUMBER).description("이벤트 공지 사항 조회수"),
-                                fieldWithPath("fixed").type(JsonFieldType.BOOLEAN).description("이벤트 공지 사항 고정 여부"),
-                                fieldWithPath("createdAt").type(JsonFieldType.STRING).description("이벤트 공지 사항 생성일"),
-                                fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("이벤트 공지 사항 수정일"),
+                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("공지 사항 ID"),
+                                fieldWithPath("title").type(JsonFieldType.STRING).description("공지 사항 제목"),
+                                fieldWithPath("content").type(JsonFieldType.STRING).description("공지 사항 내용"),
+                                fieldWithPath("hitCount").type(JsonFieldType.NUMBER).description("공지 사항 조회수"),
+                                fieldWithPath("fixed").type(JsonFieldType.BOOLEAN).description("공지 사항 고정 여부"),
+                                fieldWithPath("createdAt").type(JsonFieldType.STRING).description("공지 사항 생성일"),
+                                fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("공지 사항 수정일"),
                                 fieldWithPath("files").type(JsonFieldType.ARRAY).description("첨부 파일 목록"),
                                 fieldWithPath("files[].id").type(JsonFieldType.NUMBER).description("파일 ID"),
                                 fieldWithPath("files[].uuid").type(JsonFieldType.STRING).description("파일 고유 식별자"),
@@ -97,20 +117,20 @@ class EventNoticeControllerTest extends AbstractControllerTest {
                 ));
     }
 
-    @DisplayName("이벤트 공지 사항 리스트를 조회할 수 있다.")
+    @DisplayName("공지 사항 리스트를 조회할 수 있다.")
     @Test
-    void getEventNoticeList() throws Exception {
+    void getNoticeList() throws Exception {
 
         // given
-        EventNoticeListElementResponse eventNotice1 = new EventNoticeListElementResponse(1L, "이벤트 공지 사항 1", 10, true, LocalDateTime.now(), LocalDateTime.now());
-        EventNoticeListElementResponse eventNotice2 = new EventNoticeListElementResponse(2L, "이벤트 공지 사항 2", 10, false, LocalDateTime.now(), LocalDateTime.now());
-        Page<EventNoticeListElementResponse> page = new PageImpl<>(List.of(eventNotice1, eventNotice2), PageRequest.of(0, 10), 2);
+        NoticeListElementResponse notice1 = new NoticeListElementResponse(1L, "공지 사항 1", 10, true, LocalDateTime.now(), LocalDateTime.now());
+        NoticeListElementResponse notice2 = new NoticeListElementResponse(2L, "공지 사항 2", 10, false, LocalDateTime.now(), LocalDateTime.now());
+        Page<NoticeListElementResponse> page = new PageImpl<>(List.of(notice1, notice2), PageRequest.of(0, 10), 2);
 
-        when(eventNoticeService.getEventNoticeList(any(), any())).thenReturn(page);
+        when(noticeService.getNoticeList(any(), any(Pageable.class))).thenReturn(page);
 
         // when
         ResultActions result = mockMvc.perform(
-                get("/eventNotices")
+                get("/notices")
                         .contentType(APPLICATION_JSON)
         );
 
@@ -118,17 +138,17 @@ class EventNoticeControllerTest extends AbstractControllerTest {
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
                         queryParameters(
-                                parameterWithName("title").description("찾고자 하는 이벤트 공지 사항 제목").optional(),
+                                parameterWithName("title").description("찾고자 하는 공지 사항 제목").optional(),
                                 parameterWithName("page").description("페이지 번호 [default: 0]").optional(),
                                 parameterWithName("size").description("페이지 크기 [default: 10]").optional()
                         ),
                         responseFields(
-                                fieldWithPath("content[].id").type(JsonFieldType.NUMBER).description("이벤트 공지 사항 ID"),
-                                fieldWithPath("content[].title").type(JsonFieldType.STRING).description("이벤트 공지 사항 제목"),
-                                fieldWithPath("content[].hitCount").type(JsonFieldType.NUMBER).description("이벤트 공지 사항 조회수"),
-                                fieldWithPath("content[].fixed").type(JsonFieldType.BOOLEAN).description("이벤트 공지 사항 고정 여부"),
-                                fieldWithPath("content[].createdAt").type(JsonFieldType.STRING).description("이벤트 공지 사항 생성일"),
-                                fieldWithPath("content[].updatedAt").type(JsonFieldType.STRING).description("이벤트 공지 사항 수정일"),
+                                fieldWithPath("content[].id").type(JsonFieldType.NUMBER).description("공지 사항 ID"),
+                                fieldWithPath("content[].title").type(JsonFieldType.STRING).description("공지 사항 제목"),
+                                fieldWithPath("content[].hitCount").type(JsonFieldType.NUMBER).description("공지 사항 조회수"),
+                                fieldWithPath("content[].fixed").type(JsonFieldType.BOOLEAN).description("공지 사항 고정 여부"),
+                                fieldWithPath("content[].createdAt").type(JsonFieldType.STRING).description("공지 사항 생성일"),
+                                fieldWithPath("content[].updatedAt").type(JsonFieldType.STRING).description("공지 사항 수정일"),
                                 fieldWithPath("pageable").type(JsonFieldType.OBJECT).description("페이지 정보"),
                                 fieldWithPath("pageable.pageNumber").type(JsonFieldType.NUMBER).description("현재 페이지 번호"),
                                 fieldWithPath("pageable.pageSize").type(JsonFieldType.NUMBER).description("페이지 당 요소 수"),
@@ -153,9 +173,9 @@ class EventNoticeControllerTest extends AbstractControllerTest {
                 ));
     }
 
-    @DisplayName("이벤트 공지 사항을 조회할 수 있다.")
+    @DisplayName("공지 사항을 조회할 수 있다.")
     @Test
-    void getEventNotice() throws Exception {
+    void getNotice() throws Exception {
 
         // given
         List<FileResponse> files = Arrays.asList(
@@ -163,13 +183,13 @@ class EventNoticeControllerTest extends AbstractControllerTest {
                 new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "예시 첨부 파일 2.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
                 new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "예시 첨부 파일 3.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now())
         );
-        EventNoticeResponse response = new EventNoticeResponse(1L, "이벤트 공지 사항 제목", "content", 10, true, LocalDateTime.now(), LocalDateTime.now(), files);
+        NoticeResponse response = new NoticeResponse(1L, "공지 사항 제목", "content", 10, true, LocalDateTime.now(), LocalDateTime.now(), files);
 
-        when(eventNoticeService.getEventNotice(any())).thenReturn(response);
+        when(noticeService.getNotice(anyLong())).thenReturn(response);
 
         // when
         ResultActions result = mockMvc.perform(
-                get("/eventNotices/{eventNoticeId}", 1L)
+                get("/notices/{noticeId}", 1L)
                         .contentType(APPLICATION_JSON)
         );
 
@@ -177,16 +197,16 @@ class EventNoticeControllerTest extends AbstractControllerTest {
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
                         pathParameters(
-                                parameterWithName("eventNoticeId").description("조회할 이벤트 공지 사항 ID")
+                                parameterWithName("noticeId").description("조회할 공지 사항 ID")
                         ),
                         responseFields(
-                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("이벤트 공지 사항 ID"),
-                                fieldWithPath("title").type(JsonFieldType.STRING).description("이벤트 공지 사항 제목"),
-                                fieldWithPath("content").type(JsonFieldType.STRING).description("이벤트 공지 사항 내용"),
-                                fieldWithPath("hitCount").type(JsonFieldType.NUMBER).description("이벤트 공지 사항 조회수"),
-                                fieldWithPath("fixed").type(JsonFieldType.BOOLEAN).description("이벤트 공지 사항 고정 여부"),
-                                fieldWithPath("createdAt").type(JsonFieldType.STRING).description("이벤트 공지 사항 생성일"),
-                                fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("이벤트 공지 사항 수정일"),
+                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("공지 사항 ID"),
+                                fieldWithPath("title").type(JsonFieldType.STRING).description("공지 사항 제목"),
+                                fieldWithPath("content").type(JsonFieldType.STRING).description("공지 사항 내용"),
+                                fieldWithPath("hitCount").type(JsonFieldType.NUMBER).description("공지 사항 조회수"),
+                                fieldWithPath("fixed").type(JsonFieldType.BOOLEAN).description("공지 사항 고정 여부"),
+                                fieldWithPath("createdAt").type(JsonFieldType.STRING).description("공지 사항 생성일"),
+                                fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("공지 사항 수정일"),
                                 fieldWithPath("files").type(JsonFieldType.ARRAY).description("첨부 파일 목록"),
                                 fieldWithPath("files[].id").type(JsonFieldType.NUMBER).description("파일 ID"),
                                 fieldWithPath("files[].uuid").type(JsonFieldType.STRING).description("파일 고유 식별자"),
@@ -199,48 +219,58 @@ class EventNoticeControllerTest extends AbstractControllerTest {
                 ));
     }
 
-    @DisplayName("이벤트 공지 사항을 수정할 수 있다.")
+    @DisplayName("공지 사항을 수정할 수 있다.")
     @Test
-    void updateEventNotice() throws Exception {
+    void updateNotice() throws Exception {
 
         // given
-        EventNoticeRequest request = new EventNoticeRequest("수정된 이벤트 공지 사항 제목", "수정된 이벤트 공지 사항 내용", false, List.of(1L, 2L, 3L));
+        NoticeRequest request = new NoticeRequest("수정된 공지 사항 제목", "수정된 공지 사항 내용", false, List.of(1L, 2L, 3L));
         List<FileResponse> files = Arrays.asList(
                 new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "예시 첨부 파일 1.jpg", "image/jpeg", LocalDateTime.of(2024, 1, 1, 12, 0), LocalDateTime.now()),
                 new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "예시 첨부 파일 2.jpg", "image/jpeg", LocalDateTime.of(2024, 1, 1, 12, 0), LocalDateTime.now()),
                 new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "예시 첨부 파일 3.jpg", "image/jpeg", LocalDateTime.of(2024, 1, 1, 12, 0), LocalDateTime.now())
         );
-        EventNoticeResponse response = new EventNoticeResponse(1L, "수정된 이벤트 공지 사항 제목", "수정된 이벤트 공지 사항 내용", 10, false, LocalDateTime.of(2024, 1, 1, 12, 0), LocalDateTime.now(), files);
+        NoticeResponse response = new NoticeResponse(1L, "수정된 공지 사항 제목", "수정된 공지 사항 내용", 10, false, LocalDateTime.of(2024, 1, 1, 12, 0), LocalDateTime.now(), files);
 
-        when(eventNoticeService.updateEventNotice(anyLong(), any(EventNoticeRequest.class))).thenReturn(response);
+        when(noticeService.updateNotice(anyLong(), any(NoticeRequest.class))).thenReturn(response);
 
         // when
         ResultActions result = mockMvc.perform(
-                put("/eventNotices/{eventNoticeId}", 1L)
+                put("/notices/{noticeId}", 1L)
                         .contentType(APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
                         .content(objectMapper.writeValueAsString(request))
         );
 
         // then
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
+                        ),
                         pathParameters(
-                                parameterWithName("eventNoticeId").description("수정할 이벤트 공지 사항 ID")
+                                parameterWithName("noticeId").description("수정할 공지 사항 ID")
                         ),
                         requestFields(
-                                fieldWithPath("title").type(JsonFieldType.STRING).description("이벤트 공지 사항 제목"),
-                                fieldWithPath("content").type(JsonFieldType.STRING).description("이벤트 공지 사항 내용"),
-                                fieldWithPath("fixed").type(JsonFieldType.BOOLEAN).description("이벤트 공지 사항 고정 여부"),
+                                fieldWithPath("title").type(JsonFieldType.STRING).description("공지 사항 제목"),
+                                fieldWithPath("content").type(JsonFieldType.STRING).description("공지 사항 내용"),
+                                fieldWithPath("fixed").type(JsonFieldType.BOOLEAN).description("공지 사항 고정 여부"),
                                 fieldWithPath("fileIds").type(JsonFieldType.ARRAY).description("첨부 파일 ID 목록").optional()
                         ),
                         responseFields(
-                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("이벤트 공지 사항 ID"),
-                                fieldWithPath("title").type(JsonFieldType.STRING).description("이벤트 공지 사항 제목"),
-                                fieldWithPath("content").type(JsonFieldType.STRING).description("이벤트 공지 사항 내용"),
-                                fieldWithPath("hitCount").type(JsonFieldType.NUMBER).description("이벤트 공지 사항 조회수"),
-                                fieldWithPath("fixed").type(JsonFieldType.BOOLEAN).description("이벤트 공지 사항 고정 여부"),
-                                fieldWithPath("createdAt").type(JsonFieldType.STRING).description("이벤트 공지 사항 생성일"),
-                                fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("이벤트 공지 사항 수정일"),
+                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("공지 사항 ID"),
+                                fieldWithPath("title").type(JsonFieldType.STRING).description("공지 사항 제목"),
+                                fieldWithPath("content").type(JsonFieldType.STRING).description("공지 사항 내용"),
+                                fieldWithPath("hitCount").type(JsonFieldType.NUMBER).description("공지 사항 조회수"),
+                                fieldWithPath("fixed").type(JsonFieldType.BOOLEAN).description("공지 사항 고정 여부"),
+                                fieldWithPath("createdAt").type(JsonFieldType.STRING).description("공지 사항 생성일"),
+                                fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("공지 사항 수정일"),
                                 fieldWithPath("files").type(JsonFieldType.ARRAY).description("첨부 파일 목록"),
                                 fieldWithPath("files[].id").type(JsonFieldType.NUMBER).description("파일 ID"),
                                 fieldWithPath("files[].uuid").type(JsonFieldType.STRING).description("파일 고유 식별자"),
@@ -254,24 +284,34 @@ class EventNoticeControllerTest extends AbstractControllerTest {
     }
 
 
-    @DisplayName("이벤트 공지 사항을 삭제할 수 있다.")
+    @DisplayName("공지 사항을 삭제할 수 있다.")
     @Test
-    void deleteEventNotice() throws Exception {
+    void deleteNotice() throws Exception {
 
         // given
-        doNothing().when(eventNoticeService).deleteEventNotice(anyLong());
+        doNothing().when(noticeService).deleteNotice(anyLong());
 
         // when
         ResultActions result = mockMvc.perform(
-                delete("/eventNotices/{eventNoticeId}", 1L)
+                delete("/notices/{noticeId}", 1L)
                         .contentType(APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
         // then
         result.andExpect(status().isNoContent())
                 .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
+                        ),
                         pathParameters(
-                                parameterWithName("eventNoticeId").description("삭제할 이벤트 공지 사항 ID")
+                                parameterWithName("noticeId").description("삭제할 공지 사항 ID")
                         )
                 ));
     }
