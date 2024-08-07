@@ -11,10 +11,13 @@ import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,10 +29,10 @@ public class EventNoticeService {
     private final FileRepository fileRepository;
 
     /**
-     * Create a new event notice
+     * Create a new eventNotice
      *
-     * @param request Event Notice Request DTO
-     * @return Event Notice Response DTO
+     * @param request EventNotice Request DTO
+     * @return EventNotice Response DTO
      */
     // TODO: Admin check
     public EventNoticeResponse createEventNotice(EventNoticeRequest request) {
@@ -38,64 +41,82 @@ public class EventNoticeService {
                 request.getTitle(),
                 request.getContent(),
                 request.isFixed(),
-                attachedFiles);
+                attachedFiles
+        );
         eventNoticeRepository.save(newEventNotice);
-
         return EventNoticeResponse.from(newEventNotice, attachedFiles);
     }
 
     /**
-     * Get a list of event notices
+     * Get a list of eventNotices
      *
-     * @param title    Title of the event notice (optional)
+     * @param title    Title of the eventNotice (optional)
      * @param pageable Pageable
-     * @return List of event notices Element Response DTO
+     * @return List of eventNotices
      */
     @Transactional(readOnly = true)
     public Page<EventNoticeListElementResponse> getEventNoticeList(String title, Pageable pageable) {
-        return eventNoticeRepository.findNotices(title, pageable);
+        List<EventNoticeListElementResponse> fixedEventNotices = eventNoticeRepository.findFixedEventNotices(title);
+        int nonFixedEventNoticesSize = pageable.getPageSize() - fixedEventNotices.size();
+        Pageable adjustedPageable = PageRequest.of(pageable.getPageNumber(), nonFixedEventNoticesSize);
+
+        Page<EventNoticeListElementResponse> nonFixedEventNotices = eventNoticeRepository.findNonFixedEventNotices(title, adjustedPageable);
+
+        List<EventNoticeListElementResponse> combinedEventNotices = new ArrayList<>();
+        combinedEventNotices.addAll(fixedEventNotices);
+        combinedEventNotices.addAll(nonFixedEventNotices.getContent());
+
+        long totalElements = fixedEventNotices.size() + nonFixedEventNotices.getTotalElements();
+        int totalPages = (int) Math.ceil((double) nonFixedEventNotices.getTotalElements() / adjustedPageable.getPageSize());
+
+        return new PageImpl<>(combinedEventNotices, pageable, totalElements) {
+            @Override
+            public int getTotalPages() {
+                return totalPages;
+            }
+
+            @Override
+            public long getTotalElements() {
+                return totalElements;
+            }
+        };
     }
 
     /**
-     * Get a corresponding event notice
+     * Get a corresponding eventNotice
      *
-     * @param eventNoticeId ID of the event notice
-     * @return Event Notice Response DTO
+     * @param eventNoticeId ID of the eventNotice
+     * @return EventNotice Response DTO
      */
     public EventNoticeResponse getEventNotice(Long eventNoticeId) {
         EventNotice eventNotice = eventNoticeRepository.findById(eventNoticeId).orElseThrow(() ->
                 new BadRequestException(ExceptionCode.EVENT_NOTICE_NOT_FOUND));
         eventNotice.increaseHitCount();
-
         return EventNoticeResponse.from(eventNotice, eventNotice.getFiles());
     }
 
     /**
-     * Update a corresponding event notice
+     * Update a corresponding eventNotice
      *
-     * @param eventNoticeId ID of the event notice
-     * @param request       Event Notice Request DTO
-     * @return Event Notice Response DTO
+     * @param eventNoticeId ID of the eventNotice
+     * @param request       EventNotice Request DTO
+     * @return EventNotice Response DTO
      */
     // TODO: Admin check
     public EventNoticeResponse updateEventNotice(Long eventNoticeId, EventNoticeRequest request) {
         EventNotice eventNotice = eventNoticeRepository.findById(eventNoticeId).orElseThrow(() ->
                 new BadRequestException(ExceptionCode.EVENT_NOTICE_NOT_FOUND));
-        eventNotice.updateEventNotice(
-                request.getTitle(),
-                request.getContent(),
-                request.isFixed());
-
         List<File> attachedFiles = getAttachedFiles(request.getFileIds());
-        updateEventNoticeFiles(eventNotice, attachedFiles);
 
+        eventNotice.updateEventNotice(request.getTitle(), request.getContent(), request.isFixed(), attachedFiles);
+        eventNoticeRepository.save(eventNotice);
         return EventNoticeResponse.from(eventNotice, attachedFiles);
     }
 
     /**
-     * Delete a corresponding event notice
+     * Delete a corresponding eventNotice
      *
-     * @param eventNoticeId ID of the event notice
+     * @param eventNoticeId ID of the eventNotice
      */
     // TODO: Admin check
     public void deleteEventNotice(Long eventNoticeId) {
@@ -104,7 +125,12 @@ public class EventNoticeService {
         eventNoticeRepository.delete(eventNotice);
     }
 
-    // helper method for getting attached files
+    /**
+     * Helper method to get attached files
+     *
+     * @param fileIds List of file IDs
+     * @return List of files
+     */
     private List<File> getAttachedFiles(List<Long> fileIds) {
         if (fileIds == null || fileIds.isEmpty()) {
             return List.of();
@@ -114,24 +140,6 @@ public class EventNoticeService {
             throw new BadRequestException(ExceptionCode.FILE_NOT_FOUND);
         }
         return attachedFiles;
-    }
-
-    // helper method for updating attached files
-    private void updateEventNoticeFiles(EventNotice eventNotice, List<File> attachedFiles) {
-        List<File> currentFiles = eventNotice.getFiles();
-        List<File> filesToRemove = currentFiles.stream()
-                .filter(file -> !attachedFiles.contains(file))
-                .toList();
-        filesToRemove.forEach(file -> {
-            currentFiles.remove(file);
-            fileRepository.delete(file);
-        });
-        attachedFiles.forEach(file -> {
-            if (!currentFiles.contains(file)) {
-                file.setEventNotice(eventNotice);
-                currentFiles.add(file);
-            }
-        });
     }
 
 }

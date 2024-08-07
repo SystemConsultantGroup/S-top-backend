@@ -57,10 +57,15 @@ public class EventNotice extends BaseTimeEntity {
         );
     }
 
-    public void updateEventNotice(String title, String content, boolean fixed) {
+    public void updateEventNotice(String title, String content, boolean fixed, List<File> files) {
         this.title = title;
         this.content = content;
         this.fixed = fixed;
+        this.files.clear();
+        if (files != null) {
+            this.files.addAll(files);
+            files.forEach(file -> file.setEventNotice(this));
+        }
     }
 
     public void increaseHitCount() {
