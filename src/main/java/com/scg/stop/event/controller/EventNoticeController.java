@@ -1,10 +1,10 @@
-package com.scg.stop.domain.event.controller;
+package com.scg.stop.event.controller;
 
 
-import com.scg.stop.domain.event.dto.request.EventNoticeRequest;
-import com.scg.stop.domain.event.dto.response.EventNoticeListElementResponse;
-import com.scg.stop.domain.event.dto.response.EventNoticeResponse;
-import com.scg.stop.domain.event.service.EventNoticeService;
+import com.scg.stop.event.dto.request.EventNoticeRequest;
+import com.scg.stop.event.dto.response.EventNoticeListElementResponse;
+import com.scg.stop.event.dto.response.EventNoticeResponse;
+import com.scg.stop.event.service.EventNoticeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

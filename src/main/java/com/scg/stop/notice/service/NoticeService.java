@@ -1,14 +1,14 @@
-package com.scg.stop.domain.notice.service;
+package com.scg.stop.notice.service;
 
 import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.domain.file.repository.FileRepository;
-import com.scg.stop.domain.notice.domain.Notice;
-import com.scg.stop.domain.notice.dto.request.NoticeRequest;
-import com.scg.stop.domain.notice.dto.response.NoticeListElementResponse;
-import com.scg.stop.domain.notice.dto.response.NoticeResponse;
-import com.scg.stop.domain.notice.repository.NoticeRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
+import com.scg.stop.notice.domain.Notice;
+import com.scg.stop.notice.dto.request.NoticeRequest;
+import com.scg.stop.notice.dto.response.NoticeListElementResponse;
+import com.scg.stop.notice.dto.response.NoticeResponse;
+import com.scg.stop.notice.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

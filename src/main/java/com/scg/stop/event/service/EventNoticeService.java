@@ -1,12 +1,12 @@
-package com.scg.stop.domain.event.service;
+package com.scg.stop.event.service;
 
-import com.scg.stop.domain.event.domain.EventNotice;
-import com.scg.stop.domain.event.dto.request.EventNoticeRequest;
-import com.scg.stop.domain.event.dto.response.EventNoticeListElementResponse;
-import com.scg.stop.domain.event.dto.response.EventNoticeResponse;
-import com.scg.stop.domain.event.repository.EventNoticeRepository;
 import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.domain.file.repository.FileRepository;
+import com.scg.stop.event.domain.EventNotice;
+import com.scg.stop.event.dto.request.EventNoticeRequest;
+import com.scg.stop.event.dto.response.EventNoticeListElementResponse;
+import com.scg.stop.event.dto.response.EventNoticeResponse;
+import com.scg.stop.event.repository.EventNoticeRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
@@ -133,5 +133,5 @@ public class EventNoticeService {
             }
         });
     }
-    
+
 }

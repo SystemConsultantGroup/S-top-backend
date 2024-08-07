@@ -1,9 +1,9 @@
-package com.scg.stop.domain.notice.controller;
+package com.scg.stop.notice.controller;
 
-import com.scg.stop.domain.notice.dto.request.NoticeRequest;
-import com.scg.stop.domain.notice.dto.response.NoticeListElementResponse;
-import com.scg.stop.domain.notice.dto.response.NoticeResponse;
-import com.scg.stop.domain.notice.service.NoticeService;
+import com.scg.stop.notice.dto.request.NoticeRequest;
+import com.scg.stop.notice.dto.response.NoticeListElementResponse;
+import com.scg.stop.notice.dto.response.NoticeResponse;
+import com.scg.stop.notice.service.NoticeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

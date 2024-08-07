@@ -1,6 +1,6 @@
-package com.scg.stop.domain.notice.dto.response;
+package com.scg.stop.notice.dto.response;
 
-import com.scg.stop.domain.notice.domain.Notice;
+import com.scg.stop.notice.domain.Notice;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,7 @@ public class NoticeListElementResponse {
     private boolean fixed;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    
+
     // Entity -> DTO
     public static NoticeListElementResponse from(Notice notice) {
         return new NoticeListElementResponse(

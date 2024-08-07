@@ -1,4 +1,5 @@
-package com.scg.stop.domain.notice.domain;
+package com.scg.stop.event.domain;
+
 
 import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.global.domain.BaseTimeEntity;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.CascadeType.REMOVE;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
@@ -17,7 +18,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-public class Notice extends BaseTimeEntity {
+public class EventNotice extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -35,22 +36,19 @@ public class Notice extends BaseTimeEntity {
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private boolean fixed;
 
-    @OneToMany(fetch = LAZY, mappedBy = "notice", cascade = ALL, orphanRemoval = true)
+    @OneToMany(fetch = LAZY, mappedBy = "eventNotice", cascade = REMOVE, orphanRemoval = true)
     private List<File> files = new ArrayList<>();
 
-    // private constructor for creating new notice entity
-    private Notice(String title, String content, Integer hitCount, boolean fixed, List<File> files) {
+    private EventNotice(String title, String content, Integer hitCount, boolean fixed, List<File> files) {
         this.title = title;
         this.content = content;
         this.hitCount = hitCount;
         this.fixed = fixed;
-        files.forEach(file -> file.setNotice(this));
-
+        files.forEach(file -> file.setEventNotice(this));
     }
 
-    // static method for creating new notice entity
-    public static Notice from(String title, String content, boolean fixed, List<File> files) {
-        return new Notice(
+    public static EventNotice from(String title, String content, boolean fixed, List<File> files) {
+        return new EventNotice(
                 title,
                 content,
                 0,
@@ -59,15 +57,10 @@ public class Notice extends BaseTimeEntity {
         );
     }
 
-    public void updateNotice(String title, String content, boolean fixed, List<File> files) {
+    public void updateEventNotice(String title, String content, boolean fixed) {
         this.title = title;
         this.content = content;
         this.fixed = fixed;
-        this.files.clear();
-        if (files != null) {
-            this.files.addAll(files);
-            files.forEach(file -> file.setNotice(this));
-        }
     }
 
     public void increaseHitCount() {

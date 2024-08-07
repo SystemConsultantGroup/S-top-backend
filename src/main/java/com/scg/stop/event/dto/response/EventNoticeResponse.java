@@ -1,20 +1,19 @@
-package com.scg.stop.domain.notice.dto.response;
+package com.scg.stop.event.dto.response;
 
 import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.domain.file.dto.response.FileResponse;
-import com.scg.stop.domain.notice.domain.Notice;
+import com.scg.stop.event.domain.EventNotice;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class NoticeResponse {
+public class EventNoticeResponse {
     private Long id;
     private String title;
     private String content;
@@ -24,21 +23,21 @@ public class NoticeResponse {
     private LocalDateTime updatedAt;
     private List<FileResponse> files;
 
-    // create a new NoticeResponse object
-    public static NoticeResponse from(Notice notice, List<File> files) {
+    // create a new EventNoticeResponse object
+    public static EventNoticeResponse from(EventNotice eventNotice, List<File> files) {
 
         List<FileResponse> fileResponses = files.stream()
                 .map(FileResponse::from)
-                .collect(Collectors.toList());
+                .collect(java.util.stream.Collectors.toList());
 
-        return new NoticeResponse(
-                notice.getId(),
-                notice.getTitle(),
-                notice.getContent(),
-                notice.getHitCount(),
-                notice.isFixed(),
-                notice.getCreatedAt(),
-                notice.getUpdatedAt(),
+        return new EventNoticeResponse(
+                eventNotice.getId(),
+                eventNotice.getTitle(),
+                eventNotice.getContent(),
+                eventNotice.getHitCount(),
+                eventNotice.isFixed(),
+                eventNotice.getCreatedAt(),
+                eventNotice.getUpdatedAt(),
                 fileResponses
         );
     }

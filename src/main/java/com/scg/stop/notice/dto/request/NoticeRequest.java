@@ -1,4 +1,4 @@
-package com.scg.stop.domain.event.dto.request;
+package com.scg.stop.notice.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class EventNoticeRequest {
+public class NoticeRequest {
 
     @NotBlank(message = "제목을 입력해주세요.")
     private String title;

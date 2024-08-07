@@ -1,4 +1,4 @@
-package com.scg.stop.domain.event.domain;
+package com.scg.stop.event.domain;
 
 import com.scg.stop.global.domain.BaseTimeEntity;
 import jakarta.persistence.Column;
@@ -17,7 +17,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 public class EventPeriod extends BaseTimeEntity {
-    
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;

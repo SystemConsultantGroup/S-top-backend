@@ -1,27 +1,13 @@
 package com.scg.stop.domain.event.controller;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.*;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-
-import com.scg.stop.domain.event.dto.request.EventNoticeRequest;
-import com.scg.stop.domain.event.dto.response.EventNoticeListElementResponse;
-import com.scg.stop.domain.event.dto.response.EventNoticeResponse;
-import com.scg.stop.domain.event.service.EventNoticeService;
 import com.scg.stop.domain.file.dto.response.FileResponse;
-
+import com.scg.stop.event.controller.EventNoticeController;
+import com.scg.stop.event.dto.request.EventNoticeRequest;
+import com.scg.stop.event.dto.response.EventNoticeListElementResponse;
+import com.scg.stop.event.dto.response.EventNoticeResponse;
+import com.scg.stop.event.service.EventNoticeService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +20,18 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(EventNoticeController.class)
 @MockBean(JpaMetamodelMappingContext.class)
@@ -52,7 +50,7 @@ class EventNoticeControllerTest extends AbstractControllerTest {
     void createEventNotice() throws Exception {
 
         // given
-        EventNoticeRequest request = new EventNoticeRequest("이벤트 공지 사항 제목", "이벤트 공지 사항 내용", true, List.of(1L,2L, 3L));
+        EventNoticeRequest request = new EventNoticeRequest("이벤트 공지 사항 제목", "이벤트 공지 사항 내용", true, List.of(1L, 2L, 3L));
 
         List<FileResponse> files = Arrays.asList(
                 new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "예시 첨부 파일 1.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
@@ -208,7 +206,7 @@ class EventNoticeControllerTest extends AbstractControllerTest {
         // given
         EventNoticeRequest request = new EventNoticeRequest("수정된 이벤트 공지 사항 제목", "수정된 이벤트 공지 사항 내용", false, List.of(1L, 2L, 3L));
         List<FileResponse> files = Arrays.asList(
-                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "예시 첨부 파일 1.jpg", "image/jpeg",LocalDateTime.of(2024, 1, 1, 12, 0), LocalDateTime.now()),
+                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "예시 첨부 파일 1.jpg", "image/jpeg", LocalDateTime.of(2024, 1, 1, 12, 0), LocalDateTime.now()),
                 new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "예시 첨부 파일 2.jpg", "image/jpeg", LocalDateTime.of(2024, 1, 1, 12, 0), LocalDateTime.now()),
                 new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "예시 첨부 파일 3.jpg", "image/jpeg", LocalDateTime.of(2024, 1, 1, 12, 0), LocalDateTime.now())
         );
