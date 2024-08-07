@@ -1,7 +1,6 @@
 package com.scg.stop.auth.domain.response;
 
 import com.scg.stop.user.domain.User;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +17,7 @@ public class RegisterResponse {
         this.email = email;
         this.phone = phone;
     }
+
     public static RegisterResponse from(User user) {
         return new RegisterResponse(
                 user.getName(),

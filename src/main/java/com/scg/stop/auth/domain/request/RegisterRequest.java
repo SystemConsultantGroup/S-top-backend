@@ -3,14 +3,9 @@ package com.scg.stop.auth.domain.request;
 import com.scg.stop.auth.domain.StudentInfoDto;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
-import com.scg.stop.user.domain.Student;
-import com.scg.stop.user.domain.User;
 import com.scg.stop.user.domain.UserType;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -52,8 +47,8 @@ public class RegisterRequest {
     }
 
     private void validateStudentInfo(UserType userType, StudentInfoDto studentInfo) {
-        if(userType.equals(UserType.STUDENT)){
-            if(studentInfo.getStudentNumber() == null || studentInfo.getDepartment() == null){
+        if (userType.equals(UserType.STUDENT)) {
+            if (studentInfo.getStudentNumber() == null || studentInfo.getDepartment() == null) {
                 throw new BadRequestException(ExceptionCode.INVALID_STUDENTINFO);
             }
         }

@@ -4,18 +4,25 @@
 ---
 
 === 카카오 소셜 로그인 (POST /auth/login/kakao/)
+
 ====
 operation::auth-controller-test/kakao-social-login[snippets="http-request,query-parameters,http-response,response-fields"]
 ====
+
 === 회원가입  (POST /auth/register)
+
 ====
 operation::auth-controller-test/register[snippets="http-request,request-cookies,request-headers,request-fields,http-response,response-fields"]
 ====
+
 === Access Token 재발급 (POST /auth/reissue)
+
 ====
 operation::auth-controller-test/reissue-token[snippets="http-request,http-response"]
 ====
+
 === 로그아웃 (POST /auth/logout)
+
 ====
 operation::auth-controller-test/logout[snippets="http-request,http-response"]
 ====
