@@ -1,13 +1,11 @@
 package com.scg.stop.domain.notice.dto.response;
 
-import com.scg.stop.domain.file.dto.response.FileResponse;
 import com.scg.stop.domain.notice.domain.Notice;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -19,9 +17,8 @@ public class NoticeListElementResponse {
     private boolean fixed;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
+    
     // Entity -> DTO
-    // TODO: handle attached files uuid
     public static NoticeListElementResponse from(Notice notice) {
         return new NoticeListElementResponse(
                 notice.getId(),

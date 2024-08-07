@@ -6,3 +6,4 @@
 :seclinks:
 
 include::notice.adoc[]
+include::eventNotice.adoc[]

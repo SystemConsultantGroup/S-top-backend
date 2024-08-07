@@ -50,4 +50,8 @@ public class File extends BaseTimeEntity {
     public void setNotice(Notice notice) {
         this.notice = notice;
     }
+
+    public void setEventNotice(EventNotice eventNotice) {
+        this.eventNotice = eventNotice;
+    }
 }
