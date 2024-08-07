@@ -1,18 +1,18 @@
 spring:
   datasource:
-    url: jdbc:mysql://mysql.scg.skku.ac.kr:33306/s-top_dev
+    url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
   jpa:
     open-in-view: false
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     properties:
       hibernate:
         default_batch_fetch_size: 15
 #        dialect: org.hibernate.dialect.MySQLDialect
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+#    database-platform: org.hibernate.dialect.MySQL8Dialect
 
 
 server.port: 8000

@@ -1,13 +1,13 @@
 package com.scg.stop.global.exception;
+
 import lombok.Getter;
 
 @Getter
-public class BadRequestException extends RuntimeException {
-
+public class SocialLoginException extends RuntimeException{
     private final int code;
     private final String message;
 
-    public BadRequestException(final ExceptionCode exceptionCode) {
+    public SocialLoginException(ExceptionCode exceptionCode) {
         this.code = exceptionCode.getCode();
         this.message = exceptionCode.getMessage();
     }
