@@ -41,9 +41,9 @@ public class NoticeService {
                 request.getTitle(),
                 request.getContent(),
                 request.isFixed(),
-                attachedFiles);
+                attachedFiles
+        );
         noticeRepository.save(newNotice);
-
         return NoticeResponse.from(newNotice, attachedFiles);
     }
 
@@ -56,7 +56,6 @@ public class NoticeService {
      */
     @Transactional(readOnly = true)
     public Page<NoticeListElementResponse> getNoticeList(String title, Pageable pageable) {
-
         List<NoticeListElementResponse> fixedNotices = noticeRepository.findFixedNotices(title);
         int nonFixedNoticesSize = pageable.getPageSize() - fixedNotices.size();
         Pageable adjustedPageable = PageRequest.of(pageable.getPageNumber(), nonFixedNoticesSize);
@@ -83,7 +82,6 @@ public class NoticeService {
         };
     }
 
-
     /**
      * Get a corresponding notice
      *
@@ -94,7 +92,6 @@ public class NoticeService {
         Notice notice = noticeRepository.findById(noticeId).orElseThrow(() ->
                 new BadRequestException(ExceptionCode.NOTICE_NOT_FOUND));
         notice.increaseHitCount();
-
         return NoticeResponse.from(notice, notice.getFiles());
     }
 
@@ -109,14 +106,10 @@ public class NoticeService {
     public NoticeResponse updateNotice(Long noticeId, NoticeRequest request) {
         Notice notice = noticeRepository.findById(noticeId).orElseThrow(() ->
                 new BadRequestException(ExceptionCode.NOTICE_NOT_FOUND));
-        notice.updateNotice(
-                request.getTitle(),
-                request.getContent(),
-                request.isFixed());
-
         List<File> attachedFiles = getAttachedFiles(request.getFileIds());
-        updateNoticeFiles(notice, attachedFiles);
 
+        notice.updateNotice(request.getTitle(), request.getContent(), request.isFixed(), attachedFiles);
+        noticeRepository.save(notice);
         return NoticeResponse.from(notice, attachedFiles);
     }
 
@@ -132,7 +125,12 @@ public class NoticeService {
         noticeRepository.delete(notice);
     }
 
-    // helper method for getting attached files
+    /**
+     * Helper method to get attached files
+     *
+     * @param fileIds List of file IDs
+     * @return List of files
+     */
     private List<File> getAttachedFiles(List<Long> fileIds) {
         if (fileIds == null || fileIds.isEmpty()) {
             return List.of();
@@ -142,24 +140,6 @@ public class NoticeService {
             throw new BadRequestException(ExceptionCode.FILE_NOT_FOUND);
         }
         return attachedFiles;
-    }
-
-    // helper method for updating attached files
-    private void updateNoticeFiles(Notice notice, List<File> attachedFiles) {
-        List<File> currentFiles = notice.getFiles();
-        List<File> filesToRemove = currentFiles.stream()
-                .filter(file -> !attachedFiles.contains(file))
-                .toList();
-        filesToRemove.forEach(file -> {
-            currentFiles.remove(file);
-            fileRepository.delete(file);
-        });
-        attachedFiles.forEach(file -> {
-            if (!currentFiles.contains(file)) {
-                file.setNotice(notice);
-                currentFiles.add(file);
-            }
-        });
     }
 
 }

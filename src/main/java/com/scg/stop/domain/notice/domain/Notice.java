@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-import static jakarta.persistence.CascadeType.REMOVE;
+import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
@@ -35,7 +35,7 @@ public class Notice extends BaseTimeEntity {
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private boolean fixed;
 
-    @OneToMany(fetch = LAZY, mappedBy = "notice", cascade = REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = LAZY, mappedBy = "notice", cascade = ALL, orphanRemoval = true)
     private List<File> files = new ArrayList<>();
 
     // private constructor for creating new notice entity
@@ -59,10 +59,15 @@ public class Notice extends BaseTimeEntity {
         );
     }
 
-    public void updateNotice(String title, String content, boolean fixed) {
+    public void updateNotice(String title, String content, boolean fixed, List<File> files) {
         this.title = title;
         this.content = content;
         this.fixed = fixed;
+        this.files.clear();
+        if (files != null) {
+            this.files.addAll(files);
+            files.forEach(file -> file.setNotice(this));
+        }
     }
 
     public void increaseHitCount() {
