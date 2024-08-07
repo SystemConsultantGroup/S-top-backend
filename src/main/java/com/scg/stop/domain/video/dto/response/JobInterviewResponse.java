@@ -15,6 +15,8 @@ public class JobInterviewResponse {
     private String title;
     private String youtubeId;
     private Integer year;
+    private String talkerBelonging;
+    private String talkerName;
     private JobInterviewCategory category;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -26,6 +28,8 @@ public class JobInterviewResponse {
                 jobInterview.getTitle(),
                 jobInterview.getYoutubeId(),
                 jobInterview.getYear(),
+                jobInterview.getTalkerBelonging(),
+                jobInterview.getTalkerName(),
                 jobInterview.getCategory(),
                 jobInterview.getCreatedAt(),
                 jobInterview.getUpdatedAt()

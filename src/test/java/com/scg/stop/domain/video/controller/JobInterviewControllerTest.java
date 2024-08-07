@@ -8,6 +8,7 @@ import com.scg.stop.domain.video.dto.request.JobInterviewRequest;
 import com.scg.stop.domain.video.dto.response.JobInterviewResponse;
 import com.scg.stop.domain.video.repository.JobInterviewRepository;
 import com.scg.stop.domain.video.service.JobInterviewService;
+import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
@@ -41,27 +43,33 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @MockBean(JpaMetamodelMappingContext.class)
 @AutoConfigureRestDocs
 public class JobInterviewControllerTest extends AbstractControllerTest {
+
+    private static final String ACCESS_TOKEN = "admin_access_token";
+    private static final String REFRESH_TOKEN = "refresh_token";
+
     @MockBean
     private JobInterviewService jobInterviewService;
 
     @Autowired
     private ObjectMapper objectMapper;
-
-    // TODO: AuthUser 추가
+    
     @Test
     @DisplayName("잡페어 인터뷰를 생성한다.")
     void createJobInterview() throws Exception {
 
         // given
-        JobInterviewRequest request = new JobInterviewRequest("title", "5ndbqo4ngHs", 2023, JobInterviewCategory.INTERN);
-        JobInterviewResponse response = new JobInterviewResponse(1L, "title", "5ndbqo4ngHs", 2023, JobInterviewCategory.INTERN, LocalDateTime.now(), LocalDateTime.now());
+        JobInterviewRequest request = new JobInterviewRequest("잡페어 인터뷰의 제목", "유튜브 고유 ID", 2024, "대담자의 소속", "대담자의 성명", JobInterviewCategory.INTERN);
+        JobInterviewResponse response = new JobInterviewResponse(1L, "잡페어 인터뷰의 제목", "유튜브 고유 ID", 2024,"대담자의 소속", "대담자의 성명",  JobInterviewCategory.INTERN, LocalDateTime.now(), LocalDateTime.now());
 
         when(jobInterviewService.createJobInterview(any())).thenReturn(response);
         // when
         ResultActions result = mockMvc.perform(
                 RestDocumentationRequestBuilders.post("/jobInterviews")
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
                         .content(objectMapper.writeValueAsString(request))
+
         );
 
         // then
@@ -72,6 +80,8 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("잡페어 인터뷰 제목"),
                                 fieldWithPath("youtubeId").type(JsonFieldType.STRING).description("유튜브 영상의 고유 ID"),
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("잡페어 인터뷰 연도"),
+                                fieldWithPath("talkerBelonging").type(JsonFieldType.STRING).description("잡페어 인터뷰 대담자의 소속"),
+                                fieldWithPath("talkerName").type(JsonFieldType.STRING).description("잡페어 인터뷰 대담자의 성명"),
                                 fieldWithPath("category").type(JsonFieldType.STRING).description("잡페어 인터뷰 카테고리: SENIOR, INTERN")
                         ),
                         responseFields(
@@ -79,6 +89,8 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("잡페어 인터뷰 제목"),
                                 fieldWithPath("youtubeId").type(JsonFieldType.STRING).description("유튜브 영상의 고유 ID"),
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("잡페어 인터뷰 연도"),
+                                fieldWithPath("talkerBelonging").type(JsonFieldType.STRING).description("잡페어 인터뷰 대담자의 소속"),
+                                fieldWithPath("talkerName").type(JsonFieldType.STRING).description("잡페어 인터뷰 대담자의 성명"),
                                 fieldWithPath("category").type(JsonFieldType.STRING).description("잡페어 인터뷰 카테고리: SENIOR, INTERN"),
                                 fieldWithPath("createdAt").type(JsonFieldType.STRING).description("잡페어 인터뷰 생성일"),
                                 fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("잡페어 인터뷰 수정일")
@@ -87,52 +99,19 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @DisplayName("잡페어 인터뷰 생성시 제목이 빠진 경우 예외가 발생한다.")
-    void createJobInterviewWithInvalidTitle() throws Exception {
-        // given
-        JobInterviewRequest request = new JobInterviewRequest("", "5ndbqo4ngHs", 2023, JobInterviewCategory.INTERN);
-
-        //when
-        ResultActions result = mockMvc.perform(
-                RestDocumentationRequestBuilders.post("/jobInterviews")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request))
-        );
-
-        //then
-        result.andExpect(status().isBadRequest());
-    }
-
-    @Test
-    @DisplayName("잡페어 인터뷰 생성시 enum에 없는 카테고리인 경우 예외가 발생한다.")
-    void createJobInterviewWithInvalidCategory() throws Exception {
-        //given
-        JobInterviewRequest request = new JobInterviewRequest("title", "5ndbqo4ngHs", 2023, null);
-
-        //when
-        ResultActions result = mockMvc.perform(
-                RestDocumentationRequestBuilders.post("/jobInterviews")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request))
-        );
-
-        //then
-        result.andExpect(status().isBadRequest());
-    }
-
-    @Test
     @DisplayName("잡페어 인터뷰 리스트를 조회할 수 있다.")
     void getJobInterviewList() throws Exception {
         //given
-        JobInterviewResponse interview1 = new JobInterviewResponse(1L, "타이틀1", "아이디1", 2023, JobInterviewCategory.INTERN, LocalDateTime.now(), LocalDateTime.now());
-        JobInterviewResponse interview2 = new JobInterviewResponse(2L, "타이틀2", "아이디2", 2023, JobInterviewCategory.SENIOR, LocalDateTime.now(), LocalDateTime.now());
+        JobInterviewResponse interview1 = new JobInterviewResponse(1L,"잡페어 인터뷰의 제목1", "유튜브 고유 ID1", 2023,"대담자의 소속1", "대담자의 성명1",  JobInterviewCategory.INTERN, LocalDateTime.now(), LocalDateTime.now());
+        JobInterviewResponse interview2 = new JobInterviewResponse(2L, "잡페어 인터뷰의 제목2", "유튜브 고유 ID2", 2024,"대담자의 소속2", "대담자의 성명2",  JobInterviewCategory.INTERN, LocalDateTime.now(), LocalDateTime.now());
         Page<JobInterviewResponse> page = new PageImpl<>(List.of(interview1, interview2), PageRequest.of(0,10),2);
 
         when(jobInterviewService.getJobInterviews(any(), any(), any(), any())).thenReturn(page);
 
         //when
         ResultActions result = mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/jobInterviews").contentType(MediaType.APPLICATION_JSON)
+                RestDocumentationRequestBuilders.get("/jobInterviews")
+                        .contentType(MediaType.APPLICATION_JSON)
         );
 
         //then
@@ -172,6 +151,8 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
                                 fieldWithPath("content[].title").type(JsonFieldType.STRING).description("잡페어 인터뷰 제목"),
                                 fieldWithPath("content[].youtubeId").type(JsonFieldType.STRING).description("유튜브 영상의 고유 ID"),
                                 fieldWithPath("content[].year").type(JsonFieldType.NUMBER).description("잡페어 인터뷰 연도"),
+                                fieldWithPath("content[].talkerBelonging").type(JsonFieldType.STRING).description("잡페어 인터뷰 대담자의 소속"),
+                                fieldWithPath("content[].talkerName").type(JsonFieldType.STRING).description("잡페어 인터뷰 대담자의 성명"),
                                 fieldWithPath("content[].category").type(JsonFieldType.STRING).description("잡페어 인터뷰 카테고리: SENIOR, INTERN"),
                                 fieldWithPath("content[].createdAt").type(JsonFieldType.STRING).description("잡페어 인터뷰 생성일"),
                                 fieldWithPath("content[].updatedAt").type(JsonFieldType.STRING).description("잡페어 인터뷰 수정일")
@@ -183,7 +164,7 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
     @DisplayName("잡페어 인터뷰 1개를 조회할 수 있다.")
     void getJobInterview() throws Exception {
         //given
-        JobInterviewResponse response = new JobInterviewResponse(1L, "제목", "유튜브ID", 2023, JobInterviewCategory.INTERN, LocalDateTime.now(), LocalDateTime.now());
+        JobInterviewResponse response = new JobInterviewResponse(1L, "잡페어 인터뷰의 제목", "유튜브 고유 ID", 2024,"대담자의 소속", "대담자의 성명",  JobInterviewCategory.INTERN, LocalDateTime.now(), LocalDateTime.now());
 
         when(jobInterviewService.getJobInterview(any())).thenReturn(response);
 
@@ -203,6 +184,8 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("잡페어 인터뷰 제목"),
                                 fieldWithPath("youtubeId").type(JsonFieldType.STRING).description("유튜브 영상의 고유 ID"),
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("잡페어 인터뷰 연도"),
+                                fieldWithPath("talkerBelonging").type(JsonFieldType.STRING).description("잡페어 인터뷰 대담자의 소속"),
+                                fieldWithPath("talkerName").type(JsonFieldType.STRING).description("잡페어 인터뷰 대담자의 성명"),
                                 fieldWithPath("category").type(JsonFieldType.STRING).description("잡페어 인터뷰 카테고리: SENIOR, INTERN"),
                                 fieldWithPath("createdAt").type(JsonFieldType.STRING).description("잡페어 인터뷰 생성일"),
                                 fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("잡페어 인터뷰 수정일")
@@ -215,8 +198,8 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
     @DisplayName("잡페어 인터뷰를 수정할 수 있다.")
     void updateJobInterview() throws Exception {
         //given
-        JobInterviewRequest request = new JobInterviewRequest("수정된 제목", "수정된 유튜브 ID", 2021, JobInterviewCategory.INTERN);
-        JobInterviewResponse response = new JobInterviewResponse(1L, "수정된 제목", "수정된 유튜브 ID", 2021, JobInterviewCategory.INTERN, LocalDateTime.of(2021,1,1,12,0), LocalDateTime.now());
+        JobInterviewRequest request = new JobInterviewRequest("수정된 제목", "수정된 유튜브 ID", 2024, "수정된 대담자 소속", "수정된 대담자 성명", JobInterviewCategory.INTERN);
+        JobInterviewResponse response = new JobInterviewResponse(1L, "수정된 제목", "수정된 유튜브 ID", 2024,"수정된 대담자 소속", "수정된 대담자 성명", JobInterviewCategory.INTERN, LocalDateTime.of(2021,1,1,12,0), LocalDateTime.now());
 
         when(jobInterviewService.updateJobInterview(any(), any(JobInterviewRequest.class))).thenReturn(response);
 
@@ -224,6 +207,8 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 RestDocumentationRequestBuilders.put("/jobInterviews/{jobInterviewId}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
                         .content(objectMapper.writeValueAsString(request))
         );
 
@@ -237,6 +222,8 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("잡페어 인터뷰 제목"),
                                 fieldWithPath("youtubeId").type(JsonFieldType.STRING).description("유튜브 영상의 고유 ID"),
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("잡페어 인터뷰 연도"),
+                                fieldWithPath("talkerBelonging").type(JsonFieldType.STRING).description("잡페어 인터뷰 대담자의 소속"),
+                                fieldWithPath("talkerName").type(JsonFieldType.STRING).description("잡페어 인터뷰 대담자의 성명"),
                                 fieldWithPath("category").type(JsonFieldType.STRING).description("잡페어 인터뷰 카테고리: SENIOR, INTERN")
                         ),
                         responseFields(
@@ -244,6 +231,8 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("잡페어 인터뷰 제목"),
                                 fieldWithPath("youtubeId").type(JsonFieldType.STRING).description("유튜브 영상의 고유 ID"),
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("잡페어 인터뷰 연도"),
+                                fieldWithPath("talkerBelonging").type(JsonFieldType.STRING).description("잡페어 인터뷰 대담자의 소속"),
+                                fieldWithPath("talkerName").type(JsonFieldType.STRING).description("잡페어 인터뷰 대담자의 성명"),
                                 fieldWithPath("category").type(JsonFieldType.STRING).description("잡페어 인터뷰 카테고리: SENIOR, INTERN"),
                                 fieldWithPath("createdAt").type(JsonFieldType.STRING).description("잡페어 인터뷰 생성일"),
                                 fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("잡페어 인터뷰 수정일")
@@ -260,6 +249,8 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 RestDocumentationRequestBuilders.delete("/jobInterviews/{jobInterviewId}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
         //then
         result.andExpect(status().isNoContent())

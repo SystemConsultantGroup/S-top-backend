@@ -38,32 +38,58 @@ public class JobInterview extends BaseTimeEntity {
     private Integer year;
 
     @Column(nullable = false)
+    private String talkerBelonging;
+
+    @Column(nullable = false)
+    private String talkerName;
+
+    @Column(nullable = false)
     @Enumerated(value = STRING)
     private JobInterviewCategory category;
 
     @OneToMany(fetch = LAZY, mappedBy = "jobInterview", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<FavoriteVideo> favoriteVideos;
 
-    private JobInterview(String title, String youtubeId, Integer year, JobInterviewCategory category) {
+    private JobInterview(String title, String youtubeId, Integer year, String talkerBelonging, String talkerName, JobInterviewCategory category) {
         this.title = title;
         this.youtubeId = youtubeId;
         this.year = year;
+        this.talkerBelonging = talkerBelonging;
+        this.talkerName = talkerName;
         this.category = category;
     }
 
-    public static JobInterview from(JobInterviewRequest request) {
+    public static JobInterview from(
+            String title,
+            String youtubeId,
+            Integer year,
+            String talkerBelonging,
+            String talkerName,
+            JobInterviewCategory category
+    ) {
         return new JobInterview(
-                request.getTitle(),
-                request.getYoutubeId(),
-                request.getYear(),
-                request.getCategory()
+                title,
+                youtubeId,
+                year,
+                talkerBelonging,
+                talkerName,
+                category
         );
     }
 
-    public void updateJobInterview(JobInterviewRequest request) {
-        this.title = request.getTitle();
-        this.youtubeId = request.getYoutubeId();
-        this.year = request.getYear();
-        this.category = request.getCategory();
+    public void updateJobInterview(
+            String title,
+            String youtubeId,
+            Integer year,
+            String talkerBelonging,
+            String talkerName,
+            JobInterviewCategory category
+    ) {
+        this.title = title;
+        this.youtubeId = youtubeId;
+        this.year = year;
+        this.talkerBelonging = talkerBelonging;
+        this.talkerName = talkerName;
+        this.category = category;
     }
 }

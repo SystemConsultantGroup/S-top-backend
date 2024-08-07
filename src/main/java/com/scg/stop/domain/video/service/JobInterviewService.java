@@ -32,7 +32,16 @@ public class JobInterviewService {
     }
 
     public JobInterviewResponse createJobInterview(JobInterviewRequest req) {
-        JobInterview newJobInterview = jobInterviewRepository.save(JobInterview.from(req));
+        JobInterview newJobInterview = jobInterviewRepository.save(
+                JobInterview.from(
+                        req.getTitle(),
+                        req.getYoutubeId(),
+                        req.getYear(),
+                        req.getTalkerBelonging(),
+                        req.getTalkerName(),
+                        req.getCategory()
+                )
+        );
         return JobInterviewResponse.from(newJobInterview);
     }
 
@@ -45,7 +54,14 @@ public class JobInterviewService {
     public JobInterviewResponse updateJobInterview(Long id, JobInterviewRequest req) {
         JobInterview jobInterview = jobInterviewRepository.findById(id).orElseThrow(() ->
                 new BadRequestException(ExceptionCode.ID_NOT_FOUND));
-        jobInterview.updateJobInterview(req);
+        jobInterview.updateJobInterview(
+                req.getTitle(),
+                req.getYoutubeId(),
+                req.getYear(),
+                req.getTalkerBelonging(),
+                req.getTalkerName(),
+                req.getCategory()
+        );
         return JobInterviewResponse.from(jobInterview);
     }
 }
