@@ -6,4 +6,4 @@
 :seclinks:
 
 include::auth-controller-test.adoc[]
-// include::eventPeriod.adoc[] 컨트롤러별로 주석 지우고 문서 추가
+include::file-controller-test.adoc[]

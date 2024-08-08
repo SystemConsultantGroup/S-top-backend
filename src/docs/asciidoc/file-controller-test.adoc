@@ -1,0 +1,9 @@
+== 파일 API
+:source-highlighter: highlightjs
+
+---
+
+=== 파일 업로드 (POST /files)
+====
+operation::file-controller-test/upload-file[snippets="http-request,request-parts,http-response,response-fields"]
+====

@@ -23,6 +23,4 @@ public class FileController {
         FileResponse response = fileService.uploadFile(file);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-
-
 }
