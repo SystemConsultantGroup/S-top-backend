@@ -24,7 +24,9 @@ public enum ExceptionCode {
     NOT_FOUND_DEPARTMENT(4003, "학과가 존재하지 않습니다."),
     INVALID_STUDENTINFO(4004, "학과/학번 정보가 존재하지 않습니다."),
 
-    FAILED_TO_UPLOAD_FILE(5000, "파일 업로드에 실패했습니다.");
+    FAILED_TO_UPLOAD_FILE(5000, "파일 업로드를 실패했습니다."),
+    FAILED_TO_GET_FILE(5001, "파일 가져오기를 실패했습니다."),
+    FILE_NOT_FOUND(5002, "요청한 ID에 해당하는 파일이 존재하지 않습니다.");
 
     private final int code;
     private final String message;

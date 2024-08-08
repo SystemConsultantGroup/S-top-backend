@@ -1,8 +1,12 @@
 package com.scg.stop.file.service;
 
+import static com.scg.stop.global.exception.ExceptionCode.FILE_NOT_FOUND;
+
 import com.scg.stop.file.domain.File;
 import com.scg.stop.file.dto.response.FileResponse;
 import com.scg.stop.file.repository.FileRepository;
+import com.scg.stop.global.exception.BadRequestException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -26,5 +30,10 @@ public class FileService {
         File fileInfo = File.of(uuid.toString(), file.getOriginalFilename(), file.getContentType());
         fileRepository.save(fileInfo);
         return FileResponse.from(fileInfo);
+    }
+
+    public InputStream getFile(Long fileId) {
+        File file = fileRepository.findById(fileId).orElseThrow(() -> new BadRequestException(FILE_NOT_FOUND));
+        return minioClientService.getFile(file.getUuid());
     }
 }
