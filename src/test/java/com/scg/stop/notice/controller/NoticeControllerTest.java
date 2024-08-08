@@ -1,9 +1,8 @@
-package com.scg.stop.controller;
+package com.scg.stop.notice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
 import com.scg.stop.domain.file.dto.response.FileResponse;
-import com.scg.stop.notice.controller.NoticeController;
 import com.scg.stop.notice.dto.request.NoticeRequest;
 import com.scg.stop.notice.dto.response.NoticeListElementResponse;
 import com.scg.stop.notice.dto.response.NoticeResponse;
@@ -56,7 +55,6 @@ class NoticeControllerTest extends AbstractControllerTest {
 
     @Test
     @DisplayName("공지 사항을 생성할 수 있다.")
-        // TODO: Auth user check
     void createNotice() throws Exception {
 
         // given

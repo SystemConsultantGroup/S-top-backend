@@ -1,9 +1,8 @@
-package com.scg.stop.controller;
+package com.scg.stop.event.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
 import com.scg.stop.domain.file.dto.response.FileResponse;
-import com.scg.stop.event.controller.EventNoticeController;
 import com.scg.stop.event.dto.request.EventNoticeRequest;
 import com.scg.stop.event.dto.response.EventNoticeListElementResponse;
 import com.scg.stop.event.dto.response.EventNoticeResponse;
@@ -54,7 +53,6 @@ class EventNoticeControllerTest extends AbstractControllerTest {
 
     @Test
     @DisplayName("이벤트 공지 사항을 생성할 수 있다.")
-        // TODO: Auth user check
     void createEventNotice() throws Exception {
 
         // given
