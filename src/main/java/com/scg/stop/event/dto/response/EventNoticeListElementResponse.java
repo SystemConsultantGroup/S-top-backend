@@ -2,7 +2,6 @@ package com.scg.stop.event.dto.response;
 
 
 import com.scg.stop.event.domain.EventNotice;
-import com.scg.stop.notice.dto.response.NoticeListElementResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,8 +20,8 @@ public class EventNoticeListElementResponse {
     private LocalDateTime updatedAt;
 
     // Entity -> DTO
-    public static NoticeListElementResponse from(EventNotice eventNotice) {
-        return new NoticeListElementResponse(
+    public static EventNoticeListElementResponse from(EventNotice eventNotice) {
+        return new EventNoticeListElementResponse(
                 eventNotice.getId(),
                 eventNotice.getTitle(),
                 eventNotice.getHitCount(),
