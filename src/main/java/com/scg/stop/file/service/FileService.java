@@ -36,4 +36,8 @@ public class FileService {
         File file = fileRepository.findById(fileId).orElseThrow(() -> new BadRequestException(FILE_NOT_FOUND));
         return minioClientService.getFile(file.getUuid());
     }
+
+    public File getFileMetadata(Long fileId) {
+        return fileRepository.findById(fileId).orElseThrow(() -> new BadRequestException(FILE_NOT_FOUND));
+    }
 }
