@@ -34,7 +34,6 @@ public class EventNoticeService {
      * @param request EventNotice Request DTO
      * @return EventNotice Response DTO
      */
-    // TODO: Admin check
     public EventNoticeResponse createEventNotice(EventNoticeRequest request) {
         List<File> attachedFiles = getAttachedFiles(request.getFileIds());
         EventNotice newEventNotice = EventNotice.from(
@@ -102,7 +101,6 @@ public class EventNoticeService {
      * @param request       EventNotice Request DTO
      * @return EventNotice Response DTO
      */
-    // TODO: Admin check
     public EventNoticeResponse updateEventNotice(Long eventNoticeId, EventNoticeRequest request) {
         EventNotice eventNotice = eventNoticeRepository.findById(eventNoticeId).orElseThrow(() ->
                 new BadRequestException(ExceptionCode.EVENT_NOTICE_NOT_FOUND));
@@ -118,7 +116,6 @@ public class EventNoticeService {
      *
      * @param eventNoticeId ID of the eventNotice
      */
-    // TODO: Admin check
     public void deleteEventNotice(Long eventNoticeId) {
         EventNotice eventNotice = eventNoticeRepository.findById(eventNoticeId).orElseThrow(() ->
                 new BadRequestException(ExceptionCode.EVENT_NOTICE_NOT_FOUND));

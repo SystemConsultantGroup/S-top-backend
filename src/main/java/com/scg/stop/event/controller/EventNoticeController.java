@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/eventNotices")
 @RestController
-// TODO: Admin check
 public class EventNoticeController {
 
     private final EventNoticeService eventNoticeService;

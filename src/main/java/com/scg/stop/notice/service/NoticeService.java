@@ -34,7 +34,6 @@ public class NoticeService {
      * @param request Notice Request DTO
      * @return Notice Response DTO
      */
-    // TODO: Admin check
     public NoticeResponse createNotice(NoticeRequest request) {
         List<File> attachedFiles = getAttachedFiles(request.getFileIds());
         Notice newNotice = Notice.from(
@@ -102,7 +101,6 @@ public class NoticeService {
      * @param request  Notice Request DTO
      * @return Notice Response DTO
      */
-    // TODO: Admin check
     public NoticeResponse updateNotice(Long noticeId, NoticeRequest request) {
         Notice notice = noticeRepository.findById(noticeId).orElseThrow(() ->
                 new BadRequestException(ExceptionCode.NOTICE_NOT_FOUND));
@@ -118,7 +116,6 @@ public class NoticeService {
      *
      * @param noticeId ID of the notice
      */
-    // TODO: Admin check
     public void deleteNotice(Long noticeId) {
         Notice notice = noticeRepository.findById(noticeId).orElseThrow(() ->
                 new BadRequestException(ExceptionCode.NOTICE_NOT_FOUND));
