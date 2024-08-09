@@ -34,8 +34,9 @@ public enum ExceptionCode {
 
     ID_NOT_FOUND(8200,"해당 ID에 해당하는 잡페어 인터뷰가 없습니다."),
     TALK_ID_NOT_FOUND(8400, "해당 ID에 해당하는 대담 영상이 없습니다."),
-    NO_QUIZ(8401, "퀴즈 데이터가 존재하지 않습니다.");
+    NO_QUIZ(8401, "퀴즈 데이터가 존재하지 않습니다."),
 
+    NOT_FOUND_FILE_ID(5001, "요청한 ID에 해당하는 파일이 존재하지 않습니다."),
     NOT_FOUND_GALLERY_ID(9001, "요청한 ID에 해당하는 갤러리가 존재하지 않습니다.");
 
     private final int code;
