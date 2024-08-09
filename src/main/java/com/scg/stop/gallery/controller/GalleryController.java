@@ -1,9 +1,9 @@
-package com.scg.stop.domain.gallery.controller;
+package com.scg.stop.gallery.controller;
 
 import com.scg.stop.auth.annotation.AuthUser;
-import com.scg.stop.domain.gallery.dto.request.GalleryRequest;
-import com.scg.stop.domain.gallery.dto.response.GalleryResponse;
-import com.scg.stop.domain.gallery.service.GalleryService;
+import com.scg.stop.gallery.dto.request.GalleryRequest;
+import com.scg.stop.gallery.dto.response.GalleryResponse;
+import com.scg.stop.gallery.service.GalleryService;
 import com.scg.stop.user.domain.AccessType;
 import com.scg.stop.user.domain.User;
 import jakarta.validation.Valid;

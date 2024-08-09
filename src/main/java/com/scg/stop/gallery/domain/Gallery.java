@@ -1,4 +1,4 @@
-package com.scg.stop.domain.gallery.domain;
+package com.scg.stop.gallery.domain;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;

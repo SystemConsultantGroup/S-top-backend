@@ -1,18 +1,17 @@
-package com.scg.stop.domain.gallery.service;
+package com.scg.stop.gallery.service;
 
 import static com.scg.stop.global.exception.ExceptionCode.NOT_FOUND_FILE_ID;
 import static com.scg.stop.global.exception.ExceptionCode.NOT_FOUND_GALLERY_ID;
 
 import com.scg.stop.domain.file.domain.File;
-import com.scg.stop.domain.file.dto.response.FileResponse;
 import com.scg.stop.domain.file.repository.FileRepository;
-import com.scg.stop.domain.gallery.domain.Gallery;
-import com.scg.stop.domain.gallery.dto.request.GalleryRequest;
-import com.scg.stop.domain.gallery.dto.response.GalleryResponse;
-import com.scg.stop.domain.gallery.repository.GalleryRepository;
+import com.scg.stop.gallery.domain.Gallery;
+import com.scg.stop.gallery.dto.request.GalleryRequest;
+import com.scg.stop.gallery.dto.response.GalleryResponse;
+import com.scg.stop.gallery.repository.GalleryRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import java.util.List;
-import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

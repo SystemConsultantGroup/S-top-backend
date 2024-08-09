@@ -1,4 +1,4 @@
-package com.scg.stop.domain.gallery.controller;
+package com.scg.stop.gallery.controller;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doNothing;
@@ -14,9 +14,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
 import com.scg.stop.domain.file.dto.response.FileResponse;
-import com.scg.stop.domain.gallery.dto.request.GalleryRequest;
-import com.scg.stop.domain.gallery.dto.response.GalleryResponse;
-import com.scg.stop.domain.gallery.service.GalleryService;
+import com.scg.stop.gallery.dto.request.GalleryRequest;
+import com.scg.stop.gallery.dto.response.GalleryResponse;
+import com.scg.stop.gallery.service.GalleryService;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;

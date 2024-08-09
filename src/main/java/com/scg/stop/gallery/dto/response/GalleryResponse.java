@@ -1,9 +1,9 @@
-package com.scg.stop.domain.gallery.dto.response;
+package com.scg.stop.gallery.dto.response;
 
 import static lombok.AccessLevel.PRIVATE;
 
 import com.scg.stop.domain.file.dto.response.FileResponse;
-import com.scg.stop.domain.gallery.domain.Gallery;
+import com.scg.stop.gallery.domain.Gallery;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
