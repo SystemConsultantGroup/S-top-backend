@@ -1,8 +1,10 @@
 package com.scg.stop.user.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
 import com.scg.stop.user.domain.User;
 import com.scg.stop.user.domain.UserType;
+import com.scg.stop.user.dto.request.UserUpdateRequest;
 import com.scg.stop.user.dto.response.UserResponse;
 import com.scg.stop.user.service.UserService;
 import jakarta.servlet.http.Cookie;
@@ -14,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -22,9 +25,9 @@ import java.time.LocalDateTime;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = UserController.class)
@@ -32,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureRestDocs
 class UserControllerTest extends AbstractControllerTest {
 
-    private static final String ACCESS_TOKEN = "admin_access_token";
+    private static final String ACCESS_TOKEN = "user_access_token";
     private static final String REFRESH_TOKEN = "refresh_token";
 
     @MockBean
@@ -40,6 +43,9 @@ class UserControllerTest extends AbstractControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
     @DisplayName("사용자 정보를 조회할 수 있다.")
@@ -71,6 +77,74 @@ class UserControllerTest extends AbstractControllerTest {
         // then
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
+                        responseFields(
+                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("사용자 ID"),
+                                fieldWithPath("name").type(JsonFieldType.STRING).description("사용자 이름"),
+                                fieldWithPath("phone").type(JsonFieldType.STRING).description("사용자 전화번호"),
+                                fieldWithPath("email").type(JsonFieldType.STRING).description("사용자 이메일"),
+                                fieldWithPath("socialLoginId").type(JsonFieldType.STRING).description("사용자 이메일"),
+                                fieldWithPath("userType").type(JsonFieldType.STRING).description("사용자 유형"),
+                                fieldWithPath("division").type(JsonFieldType.STRING).description("소속").optional(),
+                                fieldWithPath("position").type(JsonFieldType.STRING).description("직책").optional(),
+                                fieldWithPath("studentNumber").type(JsonFieldType.STRING).description("학번").optional(),
+                                fieldWithPath("departmentName").type(JsonFieldType.STRING).description("학과 이름").optional(),
+                                fieldWithPath("createdAt").type(JsonFieldType.STRING).description("생성일"),
+                                fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("수정일")
+                        )
+                ));
+    }
+
+    @Test
+    @DisplayName("사용자 정보를 수정할 수 있다.")
+    void updateMe() throws Exception {
+        // given
+        UserUpdateRequest request = new UserUpdateRequest(
+                "이름",
+                "010-1234-5678",
+                "student@g.skku.edu",
+                null,
+                null,
+                "2000123456",
+                "학과"
+        );
+        UserResponse response = new UserResponse(
+                1L,
+                "이름",
+                "010-1234-5678",
+                "student@g.skku.edu",
+                "아이디",
+                UserType.STUDENT,
+                null,
+                null,
+                "2000123456",
+                "학과",
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        );
+
+        when(userService.updateMe(any(User.class), any(UserUpdateRequest.class))).thenReturn(response);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                patch("/users/me")
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request))
+        );
+
+        // then
+        result.andExpect(status().isOk())
+                .andDo(restDocs.document(
+                        requestFields(
+                                fieldWithPath("name").type(JsonFieldType.STRING).description("이름").optional(),
+                                fieldWithPath("phone").type(JsonFieldType.STRING).description("전화번호").optional(),
+                                fieldWithPath("email").type(JsonFieldType.STRING).description("이메일").optional(),
+                                fieldWithPath("division").type(JsonFieldType.STRING).description("소속").optional(),
+                                fieldWithPath("position").type(JsonFieldType.STRING).description("직책").optional(),
+                                fieldWithPath("studentNumber").type(JsonFieldType.STRING).description("학번").optional(),
+                                fieldWithPath("departmentName").type(JsonFieldType.STRING).description("학과").optional()
+                        ),
                         responseFields(
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("사용자 ID"),
                                 fieldWithPath("name").type(JsonFieldType.STRING).description("사용자 이름"),
