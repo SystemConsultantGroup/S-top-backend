@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.aihub.dto.AiHubModelRequest;
 import com.scg.stop.aihub.dto.AiHubModelResponse;
 import com.scg.stop.global.exception.BadRequestException;
-import com.scg.stop.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -25,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.scg.stop.global.exception.ExceptionCode.FAILED_TO_FETCH_NOTION_DATA;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @Service
@@ -41,38 +41,46 @@ public class AiHubService {
     @Value("${spring.notion.databaseId.model}")
     private String modelDatabaseId;
 
-    private final RestTemplate restTemplate = new RestTemplate();
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
+
+    // Constants for Notion property names
+    private static final String TITLE_PROPERTY = "제목";
+    private static final String PROFESSOR_PROPERTY = "담당 교수";
+    private static final String PARTICIPANTS_PROPERTY = "참여 학생";
+    private static final String LEARNING_MODELS_PROPERTY = "학습 모델";
+    private static final String TOPICS_PROPERTY = "주제 분류";
+    private static final String DEVELOPMENT_YEARS_PROPERTY = "개발 년도";
 
     public Page<AiHubModelResponse> getAiHubModels(AiHubModelRequest aiHubModelRequest, Pageable pageable) {
         try {
-            // url
             String url = "https://api.notion.com/v1/databases/" + modelDatabaseId + "/query";
 
-            // headers
-            HttpHeaders headers = new HttpHeaders();
-            headers.setBearerAuth(secretKey);
-            headers.setContentType(APPLICATION_JSON);
-            headers.set("Notion-Version", version);
-
-            // request for filtering
+            HttpHeaders headers = createHeaders();
             Map<String, Object> requestBody = createRequestBody(aiHubModelRequest);
             HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
-            // response
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
             JsonNode root = objectMapper.readTree(response.getBody()).get("results");
-            List<AiHubModelResponse> models = objectMapper.convertValue(root, new TypeReference<>() {
+            List<AiHubModelResponse> models = objectMapper.convertValue(root, new TypeReference<List<AiHubModelResponse>>() {
             });
 
-            // pagination
             int start = Math.min((int) pageable.getOffset(), models.size());
-            int end = Math.min((start + pageable.getPageSize()), models.size());
+            int end = Math.min(start + pageable.getPageSize(), models.size());
             return new PageImpl<>(models.subList(start, end), pageable, models.size());
 
         } catch (Exception e) {
-            throw new BadRequestException(ExceptionCode.FAILED_TO_FETCH_NOTION_DATA);
+            // Fallback for any other exceptions
+            throw new BadRequestException(FAILED_TO_FETCH_NOTION_DATA);
         }
+    }
+
+    private HttpHeaders createHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(secretKey);
+        headers.setContentType(APPLICATION_JSON);
+        headers.set("Notion-Version", version);
+        return headers;
     }
 
     private Map<String, Object> createRequestBody(AiHubModelRequest aiHubModelRequest) {
@@ -80,36 +88,12 @@ public class AiHubService {
         Map<String, Object> filter = new HashMap<>();
         List<Map<String, Object>> andConditions = new ArrayList<>();
 
-        // Add filter conditions for title
-        if (aiHubModelRequest.getTitle() != null && !aiHubModelRequest.getTitle().isEmpty()) {
-            Map<String, Object> titleCondition = new HashMap<>();
-            titleCondition.put("property", "제목");
-            titleCondition.put("title", Map.of("contains", aiHubModelRequest.getTitle()));
-            andConditions.add(titleCondition);
-        }
-
-        // Add filter conditions for professor
-        if (aiHubModelRequest.getProfessor() != null && !aiHubModelRequest.getProfessor().isEmpty()) {
-            Map<String, Object> professorCondition = new HashMap<>();
-            professorCondition.put("property", "담당 교수");
-            professorCondition.put("rich_text", Map.of("contains", aiHubModelRequest.getProfessor()));
-            andConditions.add(professorCondition);
-        }
-
-        // Add filter conditions for participants
-        if (aiHubModelRequest.getParticipants() != null && !aiHubModelRequest.getParticipants().isEmpty()) {
-            for (String participant : aiHubModelRequest.getParticipants()) {
-                Map<String, Object> participantsCondition = new HashMap<>();
-                participantsCondition.put("property", "참여 학생");
-                participantsCondition.put("rich_text", Map.of("contains", participant));
-                andConditions.add(participantsCondition);
-            }
-        }
-
-        // Add filter conditions for learning models, topics, and development years
-        addMultiSelectFilterConditions(aiHubModelRequest.getLearningModels(), "학습 모델", andConditions);
-        addMultiSelectFilterConditions(aiHubModelRequest.getTopics(), "주제 분류", andConditions);
-        addMultiSelectFilterConditions(aiHubModelRequest.getDevelopmentYears(), "개발 년도", andConditions);
+        addStringFilterCondition(aiHubModelRequest.getTitle(), TITLE_PROPERTY, "title", andConditions);
+        addStringFilterCondition(aiHubModelRequest.getProfessor(), PROFESSOR_PROPERTY, "rich_text", andConditions);
+        addMultipleStringFilterConditions(aiHubModelRequest.getParticipants(), PARTICIPANTS_PROPERTY, "rich_text", andConditions);
+        addMultiSelectFilterConditions(aiHubModelRequest.getLearningModels(), LEARNING_MODELS_PROPERTY, andConditions);
+        addMultiSelectFilterConditions(aiHubModelRequest.getTopics(), TOPICS_PROPERTY, andConditions);
+        addMultiSelectFilterConditions(aiHubModelRequest.getDevelopmentYears(), DEVELOPMENT_YEARS_PROPERTY, andConditions);
 
         if (!andConditions.isEmpty()) {
             filter.put("and", andConditions);
@@ -117,6 +101,21 @@ public class AiHubService {
         }
 
         return requestBody;
+    }
+
+    private void addStringFilterCondition(String value, String property, String filterType, List<Map<String, Object>> conditions) {
+        if (value != null && !value.isEmpty()) {
+            Map<String, Object> condition = new HashMap<>();
+            condition.put("property", property);
+            condition.put(filterType, Map.of("contains", value));
+            conditions.add(condition);
+        }
+    }
+
+    private void addMultipleStringFilterConditions(List<String> values, String property, String filterType, List<Map<String, Object>> conditions) {
+        if (values != null && !values.isEmpty()) {
+            values.forEach(value -> addStringFilterCondition(value, property, filterType, conditions));
+        }
     }
 
     private void addMultiSelectFilterConditions(List<String> criteria, String property, List<Map<String, Object>> conditions) {
