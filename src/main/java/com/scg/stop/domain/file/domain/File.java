@@ -4,9 +4,9 @@ import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
-import com.scg.stop.domain.event.domain.EventNotice;
 import com.scg.stop.domain.gallery.domain.Gallery;
-import com.scg.stop.domain.notice.domain.Notice;
+import com.scg.stop.notice.domain.Notice;
+import com.scg.stop.event.domain.EventNotice;
 import com.scg.stop.global.domain.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -46,6 +46,14 @@ public class File extends BaseTimeEntity {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "gallery_id")
     private Gallery gallery;
+
+    public void setNotice(Notice notice) {
+        this.notice = notice;
+    }
+
+    public void setEventNotice(EventNotice eventNotice) {
+        this.eventNotice = eventNotice;
+    }
 
     public void setGallery(Gallery gallery) {
         this.gallery = gallery;
