@@ -2,11 +2,17 @@ package com.scg.stop.domain.project.controller;
 
 
 import com.scg.stop.auth.annotation.AuthUser;
+import com.scg.stop.domain.event.domain.EventPeriod;
+import com.scg.stop.domain.event.repository.EventPeriodRepository;
 import com.scg.stop.domain.project.domain.ProjectCategory;
+import com.scg.stop.domain.project.dto.request.CommentRequest;
 import com.scg.stop.domain.project.dto.request.ProjectRequest;
+import com.scg.stop.domain.project.dto.response.CommentResponse;
 import com.scg.stop.domain.project.dto.response.ProjectDetailResponse;
 import com.scg.stop.domain.project.dto.response.ProjectResponse;
 import com.scg.stop.domain.project.service.ProjectService;
+import com.scg.stop.global.exception.BadRequestException;
+import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.user.domain.AccessType;
 import com.scg.stop.user.domain.User;
 import jakarta.validation.Valid;
@@ -18,13 +24,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/projects")
 public class ProjectController {
 
     private final ProjectService projectService;
-  
+
     @GetMapping
     public ResponseEntity<Page<ProjectResponse>> getProjects(
             @RequestParam(value = "title", required = false) String title,
@@ -87,7 +95,7 @@ public class ProjectController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/{projectId}/favorite")
+    @PostMapping("/{projectId}/like")
     public ResponseEntity<Void> createProjectLike(
             @PathVariable("projectId") Long projectId,
             @AuthUser(accessType = {AccessType.ALL}) User user
@@ -96,12 +104,32 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @DeleteMapping("/{projectId}/favorite")
+    @DeleteMapping("/{projectId}/like")
     public ResponseEntity<Void> deleteProjectLike(
             @PathVariable("projectId") Long projectId,
             @AuthUser(accessType = {AccessType.ALL}) User user
     ){
         projectService.deleteProjectLike(projectId, user.getId());
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{projectId}/comment")
+    public ResponseEntity<CommentResponse> createProjectComment(
+            @PathVariable("projectId") Long projectId,
+            @RequestBody @Valid CommentRequest commentRequest,
+            @AuthUser(accessType = {AccessType.ALL}) User user
+    ){
+        CommentResponse commentResponse = projectService.createProjectComment(projectId, user.getId(), commentRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(commentResponse);
+    }
+
+    @DeleteMapping("/{projectId}/comment/{commentId}")
+    public ResponseEntity<Void> deleteProjectComment(
+            @PathVariable("projectId") Long projectId,
+            @PathVariable("commentId") Long commentId,
+            @AuthUser(accessType = {AccessType.ALL}) User user
+    ){
+        projectService.deleteProjectComment(projectId, commentId, user.getId());
         return ResponseEntity.noContent().build();
     }
 }

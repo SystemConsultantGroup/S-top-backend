@@ -1,12 +1,17 @@
 package com.scg.stop.domain.project.service;
 
 
+import com.scg.stop.domain.event.domain.EventPeriod;
+import com.scg.stop.domain.event.repository.EventPeriodRepository;
 import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.domain.file.repository.FileRepository;
 import com.scg.stop.domain.project.domain.*;
+import com.scg.stop.domain.project.dto.request.CommentRequest;
 import com.scg.stop.domain.project.dto.request.ProjectRequest;
+import com.scg.stop.domain.project.dto.response.CommentResponse;
 import com.scg.stop.domain.project.dto.response.ProjectDetailResponse;
 import com.scg.stop.domain.project.dto.response.ProjectResponse;
+import com.scg.stop.domain.project.repository.CommentRepository;
 import com.scg.stop.domain.project.repository.FavoriteProjectRepository;
 import com.scg.stop.domain.project.repository.LikeRepository;
 import com.scg.stop.domain.project.repository.ProjectRepository;
@@ -20,6 +25,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +38,8 @@ public class ProjectService {
     private final FavoriteProjectRepository favoriteProjectRepository;
     private final LikeRepository likeRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
+    private final EventPeriodRepository eventPeriodRepository;
 
     @Transactional(readOnly = true)
     public Page<ProjectResponse> getProjects(String title, Integer year, ProjectCategory category, Pageable pageable){
@@ -129,6 +137,12 @@ public class ProjectService {
     }
 
     public void createProjectLike(Long projectId, Long userId){
+        EventPeriod eventPeriod = eventPeriodRepository.findById(1L)
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_EVENT_PERIOD));
+        if (eventPeriod.getStart().isAfter(LocalDateTime.now()) || eventPeriod.getEnd().isBefore(LocalDateTime.now())){
+            throw new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD);
+        }
+
         boolean exists = likeRepository.findByProjectIdAndUserId(projectId, userId).isPresent();
         if (exists) { // Todo: error를 던지진 말고 그냥 요청을 취소하는 방식은 어떨까..
             throw new BadRequestException(ExceptionCode.ALREADY_LIKE_PROJECT);
@@ -144,9 +158,38 @@ public class ProjectService {
     }
 
     public void deleteProjectLike(Long projectId, Long userId){
+        EventPeriod eventPeriod = eventPeriodRepository.findById(1L)
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_EVENT_PERIOD));
+        if (eventPeriod.getStart().isAfter(LocalDateTime.now()) || eventPeriod.getEnd().isBefore(LocalDateTime.now())){
+            throw new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD);
+        }
+
         Likes like = likeRepository.findByProjectIdAndUserId(projectId, userId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_FAVORITE_PROJECT));
 
         likeRepository.delete(like);
+    }
+
+    public CommentResponse createProjectComment(Long projectId, Long userId, CommentRequest commentRequest){
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_USER_ID));
+
+        Comment comment = commentRequest.toEntity(project, user);
+        commentRepository.save(comment);
+
+        return CommentResponse.of(comment);
+    }
+
+    public void deleteProjectComment(Long projectId, Long commentId, Long userId){
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_COMMENT));
+
+        if (!comment.getUser().getId().equals(userId)) {
+            throw new BadRequestException(ExceptionCode.NOT_MATCH_USER);
+        }
+
+        commentRepository.delete(comment);
     }
 }
