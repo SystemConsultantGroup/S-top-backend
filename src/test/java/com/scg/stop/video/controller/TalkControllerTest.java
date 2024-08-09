@@ -1,4 +1,4 @@
-package com.scg.stop.domain.video.controller;
+package com.scg.stop.video.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
