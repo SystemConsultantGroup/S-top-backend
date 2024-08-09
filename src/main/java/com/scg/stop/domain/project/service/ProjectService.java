@@ -3,16 +3,16 @@ package com.scg.stop.domain.project.service;
 
 import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.domain.file.repository.FileRepository;
-import com.scg.stop.domain.project.domain.Member;
-import com.scg.stop.domain.project.domain.Project;
-import com.scg.stop.domain.project.domain.ProjectCategory;
-import com.scg.stop.domain.project.domain.Role;
+import com.scg.stop.domain.project.domain.*;
 import com.scg.stop.domain.project.dto.request.ProjectRequest;
 import com.scg.stop.domain.project.dto.response.ProjectDetailResponse;
 import com.scg.stop.domain.project.dto.response.ProjectResponse;
+import com.scg.stop.domain.project.repository.FavoriteProjectRepository;
 import com.scg.stop.domain.project.repository.ProjectRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
+import com.scg.stop.user.domain.User;
+import com.scg.stop.user.repository.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,6 +28,8 @@ import java.util.stream.Collectors;
 public class ProjectService {
     private final ProjectRepository projectRepository;
     private final FileRepository fileRepository;
+    private final FavoriteProjectRepository favoriteProjectRepository;
+    private final UserRepository userRepository;
 
     @Transactional(readOnly = true)
     public Page<ProjectResponse> getProjects(String title, Integer year, ProjectCategory category, Pageable pageable){
@@ -99,5 +101,28 @@ public class ProjectService {
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
 
         projectRepository.delete(project);
+    }
+
+
+    public void createProjectFavorite(Long projectId, Long userId){
+        boolean exists = favoriteProjectRepository.findByProjectIdAndUserId(projectId, userId).isPresent();
+        if (exists) { // Todo: error를 던지진 말고 그냥 요청을 취소하는 방식은 어떨까..
+            throw new BadRequestException(ExceptionCode.ALREADY_FAVORITE_PROJECT);
+        }
+
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_USER_ID));
+
+        FavoriteProject newFavoriteProject = new FavoriteProject(null, project, user);
+        favoriteProjectRepository.save(newFavoriteProject);
+    }
+
+    public void deleteProjectFavorite(Long projectId, Long userId){
+        FavoriteProject favoriteProject = favoriteProjectRepository.findByProjectIdAndUserId(projectId, userId)
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_FAVORITE_PROJECT));
+
+        favoriteProjectRepository.delete(favoriteProject);
     }
 }

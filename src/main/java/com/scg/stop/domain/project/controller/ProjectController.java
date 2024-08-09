@@ -1,11 +1,14 @@
 package com.scg.stop.domain.project.controller;
 
 
+import com.scg.stop.auth.annotation.AuthUser;
 import com.scg.stop.domain.project.domain.ProjectCategory;
 import com.scg.stop.domain.project.dto.request.ProjectRequest;
 import com.scg.stop.domain.project.dto.response.ProjectDetailResponse;
 import com.scg.stop.domain.project.dto.response.ProjectResponse;
 import com.scg.stop.domain.project.service.ProjectService;
+import com.scg.stop.user.domain.AccessType;
+import com.scg.stop.user.domain.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -63,6 +66,42 @@ public class ProjectController {
             @PathVariable("projectId") Long projectId
     ) {
         projectService.deleteProject(projectId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{projectId}/favorite")
+    public ResponseEntity<Void> createProjectFavorite(
+            @PathVariable("projectId") Long projectId,
+            @AuthUser(accessType = {AccessType.ALL}) User user
+    ){
+        projectService.createProjectFavorite(projectId, user.getId());
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @DeleteMapping("/{projectId}/favorite")
+    public ResponseEntity<Void> deleteProjectFavorite(
+            @PathVariable("projectId") Long projectId,
+            @AuthUser(accessType = {AccessType.ALL}) User user
+    ){
+        projectService.deleteProjectFavorite(projectId, user.getId());
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{projectId}/favorite")
+    public ResponseEntity<Void> createProjectLike(
+            @PathVariable("projectId") Long projectId,
+            @AuthUser(accessType = {AccessType.ALL}) User user
+    ){
+        projectService.createProjectLike(projectId, user.getId());
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @DeleteMapping("/{projectId}/favorite")
+    public ResponseEntity<Void> deleteProjectLike(
+            @PathVariable("projectId") Long projectId,
+            @AuthUser(accessType = {AccessType.ALL}) User user
+    ){
+        projectService.deleteProjectLike(projectId, user.getId());
         return ResponseEntity.noContent().build();
     }
 }
