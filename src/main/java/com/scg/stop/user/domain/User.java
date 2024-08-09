@@ -92,4 +92,17 @@ public class User extends BaseTimeEntity {
         this.userType = userType;
         this.signupSource = signupSource;
     }
+
+    public void updateName(String newName) {
+        this.name = newName;
+    }
+
+    public void updatePhone(String newPhone) {
+        this.phone = newPhone;
+    }
+
+    public void updateEmail(String newEmail) {
+        this.email = newEmail;
+    }
+
 }

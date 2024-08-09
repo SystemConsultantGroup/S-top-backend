@@ -37,4 +37,12 @@ public class Application extends BaseTimeEntity {
         this.position = position;
         this.user = user;
     }
+
+    public void updateDivision(String newDivision) {
+        this.division = newDivision;
+    }
+
+    public void updatePosition(String newPosition) {
+        this.position = newPosition;
+    }
 }
