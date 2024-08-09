@@ -1,8 +1,11 @@
 package com.scg.stop.domain.gallery.controller;
 
+import com.scg.stop.auth.annotation.AuthUser;
 import com.scg.stop.domain.gallery.dto.request.GalleryRequest;
 import com.scg.stop.domain.gallery.dto.response.GalleryResponse;
 import com.scg.stop.domain.gallery.service.GalleryService;
+import com.scg.stop.user.domain.AccessType;
+import com.scg.stop.user.domain.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,9 +22,11 @@ public class GalleryController {
 
     private final GalleryService galleryService;
 
-    // TODO Auth 설정 추가
     @PostMapping
-    public ResponseEntity<GalleryResponse> createGallery(@RequestBody @Valid GalleryRequest galleryRequest) {
+    public ResponseEntity<GalleryResponse> createGallery(
+            @RequestBody @Valid GalleryRequest galleryRequest,
+            @AuthUser(accessType = {AccessType.ADMIN}) User user
+    ) {
         GalleryResponse galleryResponse = galleryService.createGallery(galleryRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(galleryResponse);
     }
@@ -41,18 +46,21 @@ public class GalleryController {
         return ResponseEntity.ok(galleryResponse);
     }
 
-    // TODO Auth 설정 추가
     @PutMapping("/{galleryId}")
     public ResponseEntity<GalleryResponse> updateGallery(
             @PathVariable("galleryId") Long galleryId,
-            @RequestBody @Valid GalleryRequest galleryRequest) {
+            @RequestBody @Valid GalleryRequest galleryRequest,
+            @AuthUser(accessType = {AccessType.ADMIN}) User user
+    ) {
         GalleryResponse galleryResponse = galleryService.updateGallery(galleryId, galleryRequest);
         return ResponseEntity.ok(galleryResponse);
     }
 
-    // TODO Auth 설정 추가
     @DeleteMapping("/{galleryId}")
-    public ResponseEntity<Void> deleteGallery(@PathVariable("galleryId") Long galleryId) {
+    public ResponseEntity<Void> deleteGallery(
+            @PathVariable("galleryId") Long galleryId,
+            @AuthUser(accessType = {AccessType.ADMIN}) User user
+    ) {
         galleryService.deleteGallery(galleryId);
         return ResponseEntity.noContent().build();
     }
