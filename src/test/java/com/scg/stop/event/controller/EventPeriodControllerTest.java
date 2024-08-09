@@ -89,7 +89,6 @@ class EventPeriodControllerTest extends AbstractControllerTest {
                 ));
     }
 
-    // TODO Auth 설정 추가
     @Test
     @DisplayName("올해의 이벤트 기간 설정을 조회할 수 있다.")
     void getEventPeriod() throws Exception {
