@@ -21,6 +21,8 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
+import org.springframework.http.HttpHeaders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -38,13 +41,15 @@ import org.springframework.test.web.servlet.ResultActions;
 @AutoConfigureRestDocs
 class GalleryControllerTest extends AbstractControllerTest {
 
+    private static final String ACCESS_TOKEN = "admin_access_token";
+    private static final String REFRESH_TOKEN = "refresh_token";
+
     @MockBean
     private GalleryService galleryService;
 
     @Autowired
     private ObjectMapper objectMapper;
 
-    // TODO Auth 설정 추가
     @Test
     @DisplayName("갤러리 게시글을 생성할 수 있다.")
     void createGallery() throws Exception {
@@ -72,6 +77,8 @@ class GalleryControllerTest extends AbstractControllerTest {
         // when
         ResultActions result = mockMvc.perform(
                 post("/galleries")
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
         );
@@ -256,6 +263,8 @@ class GalleryControllerTest extends AbstractControllerTest {
         // when
         ResultActions result = mockMvc.perform(
                 put("/galleries/{galleryId}", 1L)
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
         );
@@ -302,7 +311,8 @@ class GalleryControllerTest extends AbstractControllerTest {
         // when
         ResultActions result = mockMvc.perform(
                 delete("/galleries/{galleryId}", galleryId)
-                        .contentType(APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
         // then
