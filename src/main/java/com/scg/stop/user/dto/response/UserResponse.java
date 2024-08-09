@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = PRIVATE)
-@AllArgsConstructor(access = PRIVATE)
+@AllArgsConstructor
 @Builder
 public class UserResponse {
     private Long id;
