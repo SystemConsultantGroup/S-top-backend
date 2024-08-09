@@ -26,6 +26,10 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doNothing;
+import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
+import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 
 import java.time.LocalDateTime;
@@ -81,6 +85,14 @@ public class TalkControllerTest extends AbstractControllerTest {
         //then
         result.andExpect(status().isCreated())
                 .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
+                        ),
                         requestFields(
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("대담 영상 제목"),
                                 fieldWithPath("youtubeId").type(JsonFieldType.STRING).description("유튜브 영상의 고유 ID"),
@@ -253,6 +265,14 @@ public class TalkControllerTest extends AbstractControllerTest {
         //then
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
+                        ),
                         pathParameters(
                                 parameterWithName("talkId").description("수정할 대담 영상의 ID")
                         ),
@@ -302,6 +322,14 @@ public class TalkControllerTest extends AbstractControllerTest {
         //then
         result.andExpect(status().isNoContent())
                 .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
+                        ),
                         pathParameters(
                                 parameterWithName("talkId").description("삭제할 대담 영상의 ID")
                         )
