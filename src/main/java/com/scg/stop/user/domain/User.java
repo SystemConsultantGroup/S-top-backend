@@ -14,13 +14,8 @@ import com.scg.stop.domain.proposal.domain.Proposal;
 import com.scg.stop.domain.video.domain.FavoriteVideo;
 import com.scg.stop.domain.video.domain.UserQuiz;
 import com.scg.stop.global.domain.BaseTimeEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
@@ -53,25 +48,25 @@ public class User extends BaseTimeEntity {
 
     private String signupSource;
 
-    @OneToOne(fetch = LAZY, mappedBy = "user")
+    @OneToOne(fetch = LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Application application;
 
-    @OneToOne(fetch = LAZY, mappedBy = "user")
+    @OneToOne(fetch = LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Student studentInfo;
 
     @OneToMany(fetch = LAZY, mappedBy = "user")
     private List<Proposal> proposals = new ArrayList<>();
 
-    @OneToMany(fetch = LAZY, mappedBy = "user")
+    @OneToMany(fetch = LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserQuiz> userQuizzes = new ArrayList<>();
 
-    @OneToMany(fetch = LAZY, mappedBy = "user")
+    @OneToMany(fetch = LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FavoriteVideo> favoriteVideos = new ArrayList<>();
 
     @OneToMany(fetch = LAZY, mappedBy = "user")
     private List<Likes> likes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(fetch = LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FavoriteProject> favoriteProjects = new ArrayList<>();
 
     @OneToMany(fetch = LAZY, mappedBy = "user")
@@ -91,6 +86,14 @@ public class User extends BaseTimeEntity {
         this.phone = phone;
         this.userType = userType;
         this.signupSource = signupSource;
+    }
+
+    @PreRemove
+    private void preRemove() {
+        proposals.forEach(proposal -> proposal.setUser(null));
+        likes.forEach(like -> like.setUser(null));
+        comments.forEach(comment -> comment.setUser(null));
+        inquiries.forEach(inquiry -> inquiry.setUser(null));
     }
 
     public void updateName(String newName) {

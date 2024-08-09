@@ -72,4 +72,8 @@ public class UserService {
                 user.getStudentInfo() != null ? user.getStudentInfo().getDepartment().getName() : null
         );
     }
+
+    public void deleteMe(User user) {
+        userRepository.delete(user);
+    }
 }

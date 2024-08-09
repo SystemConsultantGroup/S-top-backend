@@ -31,4 +31,10 @@ public class UserController {
         UserResponse updatedUserResponse = userService.updateMe(user, request);
         return ResponseEntity.ok(updatedUserResponse);
     }
+
+    @DeleteMapping("/me")
+    public ResponseEntity<Void> deleteMe(@AuthUser(accessType = {AccessType.ALL}) User user) {
+        userService.deleteMe(user);
+        return ResponseEntity.noContent().build();
+    }
 }
