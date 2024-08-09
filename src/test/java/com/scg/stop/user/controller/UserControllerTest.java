@@ -24,10 +24,10 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.time.LocalDateTime;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = UserController.class)
@@ -160,6 +160,24 @@ class UserControllerTest extends AbstractControllerTest {
                                 fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("수정일")
                         )
                 ));
+    }
+
+    @Test
+    @DisplayName("사용자 계정을 삭제할 수 있다.")
+    void deleteMe() throws Exception {
+        // given
+        doNothing().when(userService).deleteMe(any(User.class));
+
+        // when
+        ResultActions result = mockMvc.perform(
+                delete("/users/me")
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
+
+        // then
+        result.andExpect(status().isNoContent())
+                .andDo(restDocs.document());
     }
 
 }
