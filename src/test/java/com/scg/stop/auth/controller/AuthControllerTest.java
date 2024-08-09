@@ -1,8 +1,26 @@
 package com.scg.stop.auth.controller;
 
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
+import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.payload.JsonFieldType.OBJECT;
+import static org.springframework.restdocs.payload.JsonFieldType.STRING;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.auth.JwtUtil;
+import com.scg.stop.auth.config.AuthUserArgumentResolver;
 import com.scg.stop.auth.domain.StudentInfoDto;
 import com.scg.stop.auth.domain.UserToken;
 import com.scg.stop.auth.domain.request.RegisterRequest;
@@ -10,6 +28,7 @@ import com.scg.stop.auth.domain.response.AccessTokenResponse;
 import com.scg.stop.auth.domain.response.RegisterResponse;
 import com.scg.stop.auth.service.AuthService;
 import com.scg.stop.configuration.AbstractControllerTest;
+import com.scg.stop.user.domain.Department;
 import com.scg.stop.user.domain.User;
 import com.scg.stop.user.domain.UserType;
 import jakarta.servlet.http.Cookie;
@@ -23,22 +42,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MvcResult;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
-import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
-import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
-import static org.springframework.restdocs.payload.JsonFieldType.STRING;
-import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @WebMvcTest(AuthController.class)
 @AutoConfigureRestDocs
 public class AuthControllerTest extends AbstractControllerTest {
@@ -85,7 +90,6 @@ public class AuthControllerTest extends AbstractControllerTest {
 
         assertThat(accessTokenResponse.getAccessToken()).isEqualTo(ACCESS_TOKEN);
     }
-
     @Test
     @DisplayName("회원가입을 통해 추가 정보를 입력할 수 있다.")
     void register() throws Exception {
@@ -94,7 +98,7 @@ public class AuthControllerTest extends AbstractControllerTest {
         RegisterRequest request = new RegisterRequest("stop-user", "010-1234-1234", UserType.STUDENT, "email@gmail.com",
                 "ad", studentInfoDto, null, null);
         User user = new User("1");
-        user.register("stop-user", "email@email.com", "010-1234-1234", UserType.STUDENT, "signupsource");
+        user.register("stop-user","email@email.com","010-1234-1234",UserType.STUDENT,"signupsource");
         RegisterResponse registerResponse = RegisterResponse.from(user);
         when(authService.finishRegister(any(), any()))
                 .thenReturn(registerResponse);
