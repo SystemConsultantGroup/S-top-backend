@@ -46,7 +46,6 @@ public class AiHubService {
 
     public Page<AiHubModelResponse> getAiHubModels(AiHubModelRequest aiHubModelRequest, Pageable pageable) {
         try {
-
             // url
             String url = "https://api.notion.com/v1/databases/" + modelDatabaseId + "/query";
 
@@ -77,26 +76,50 @@ public class AiHubService {
     }
 
     private Map<String, Object> createRequestBody(AiHubModelRequest aiHubModelRequest) {
-
         Map<String, Object> requestBody = new HashMap<>();
-        List<Map<String, Object>> conditions = new ArrayList<>();
+        Map<String, Object> filter = new HashMap<>();
+        List<Map<String, Object>> andConditions = new ArrayList<>();
 
-        // add filter conditions
-        addFilterConditions(aiHubModelRequest.getTask(), "Task", conditions);
-        addFilterConditions(aiHubModelRequest.getDataType(), "DataType", conditions);
-        addFilterConditions(aiHubModelRequest.getFramework(), "Framework", conditions);
+        // Add filter conditions for title
+        if (aiHubModelRequest.getTitle() != null && !aiHubModelRequest.getTitle().isEmpty()) {
+            Map<String, Object> titleCondition = new HashMap<>();
+            titleCondition.put("property", "제목");
+            titleCondition.put("title", Map.of("contains", aiHubModelRequest.getTitle()));
+            andConditions.add(titleCondition);
+        }
 
-        // AND operation for multiple conditions
-        if (!conditions.isEmpty()) {
-            Map<String, Object> filter = new HashMap<>();
-            filter.put("and", conditions);
+        // Add filter conditions for professor
+        if (aiHubModelRequest.getProfessor() != null && !aiHubModelRequest.getProfessor().isEmpty()) {
+            Map<String, Object> professorCondition = new HashMap<>();
+            professorCondition.put("property", "담당 교수");
+            professorCondition.put("rich_text", Map.of("contains", aiHubModelRequest.getProfessor()));
+            andConditions.add(professorCondition);
+        }
+
+        // Add filter conditions for participants
+        if (aiHubModelRequest.getParticipants() != null && !aiHubModelRequest.getParticipants().isEmpty()) {
+            for (String participant : aiHubModelRequest.getParticipants()) {
+                Map<String, Object> participantsCondition = new HashMap<>();
+                participantsCondition.put("property", "참여 학생");
+                participantsCondition.put("rich_text", Map.of("contains", participant));
+                andConditions.add(participantsCondition);
+            }
+        }
+
+        // Add filter conditions for learning models, topics, and development years
+        addMultiSelectFilterConditions(aiHubModelRequest.getLearningModels(), "학습 모델", andConditions);
+        addMultiSelectFilterConditions(aiHubModelRequest.getTopics(), "주제 분류", andConditions);
+        addMultiSelectFilterConditions(aiHubModelRequest.getDevelopmentYears(), "개발 년도", andConditions);
+
+        if (!andConditions.isEmpty()) {
+            filter.put("and", andConditions);
             requestBody.put("filter", filter);
         }
 
         return requestBody;
     }
 
-    private void addFilterConditions(List<String> criteria, String property, List<Map<String, Object>> conditions) {
+    private void addMultiSelectFilterConditions(List<String> criteria, String property, List<Map<String, Object>> conditions) {
         if (criteria != null && !criteria.isEmpty()) {
             criteria.forEach(criterion -> {
                 Map<String, Object> filterCondition = new HashMap<>();
