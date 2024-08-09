@@ -15,7 +15,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserResponse getUserProfile(User user) {
+    public UserResponse getMe(User user) {
         UserType userType = user.getUserType();
         if (userType == UserType.PROFESSOR || userType == UserType.COMPANY) {
             return UserResponse.of(
