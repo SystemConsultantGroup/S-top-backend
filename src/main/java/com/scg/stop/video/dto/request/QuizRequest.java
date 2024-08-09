@@ -1,11 +1,8 @@
-package com.scg.stop.domain.video.dto.request;
+package com.scg.stop.video.dto.request;
 
-import com.scg.stop.domain.video.domain.Quiz;
-import com.scg.stop.domain.video.domain.QuizInfo;
+import com.scg.stop.video.domain.Quiz;
+import com.scg.stop.video.domain.QuizInfo;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

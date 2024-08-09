@@ -1,7 +1,7 @@
-package com.scg.stop.domain.video.repository;
+package com.scg.stop.video.repository;
 
-import com.scg.stop.domain.video.domain.Talk;
-import com.scg.stop.domain.video.dto.response.TalkResponse;
+import com.scg.stop.video.domain.Talk;
+import com.scg.stop.video.dto.response.TalkResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

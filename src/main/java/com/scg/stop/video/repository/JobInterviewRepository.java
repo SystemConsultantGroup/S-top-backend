@@ -1,16 +1,13 @@
-package com.scg.stop.domain.video.repository;
+package com.scg.stop.video.repository;
 
-import com.scg.stop.domain.video.domain.JobInterviewCategory;
-import com.scg.stop.domain.video.domain.JobInterview;
-import com.scg.stop.domain.video.dto.request.JobInterviewRequest;
-import com.scg.stop.domain.video.dto.response.JobInterviewResponse;
+import com.scg.stop.video.domain.JobInterviewCategory;
+import com.scg.stop.video.domain.JobInterview;
+import com.scg.stop.video.dto.response.JobInterviewResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
 
 public interface JobInterviewRepository extends JpaRepository<JobInterview, Long> {
 

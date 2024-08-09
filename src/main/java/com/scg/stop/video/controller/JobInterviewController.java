@@ -1,10 +1,10 @@
-package com.scg.stop.domain.video.controller;
+package com.scg.stop.video.controller;
 
 import com.scg.stop.auth.annotation.AuthUser;
-import com.scg.stop.domain.video.domain.JobInterviewCategory;
-import com.scg.stop.domain.video.dto.request.JobInterviewRequest;
-import com.scg.stop.domain.video.dto.response.JobInterviewResponse;
-import com.scg.stop.domain.video.service.JobInterviewService;
+import com.scg.stop.video.domain.JobInterviewCategory;
+import com.scg.stop.video.dto.request.JobInterviewRequest;
+import com.scg.stop.video.dto.response.JobInterviewResponse;
+import com.scg.stop.video.service.JobInterviewService;
 import com.scg.stop.user.domain.AccessType;
 import com.scg.stop.user.domain.User;
 import jakarta.validation.Valid;

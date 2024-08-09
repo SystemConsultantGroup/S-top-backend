@@ -1,11 +1,11 @@
-package com.scg.stop.domain.video.service;
+package com.scg.stop.video.service;
 
-import com.scg.stop.domain.video.domain.Quiz;
-import com.scg.stop.domain.video.domain.Talk;
-import com.scg.stop.domain.video.dto.request.TalkRequest;
-import com.scg.stop.domain.video.dto.response.TalkResponse;
-import com.scg.stop.domain.video.repository.QuizRepository;
-import com.scg.stop.domain.video.repository.TalkRepository;
+import com.scg.stop.video.domain.Quiz;
+import com.scg.stop.video.domain.Talk;
+import com.scg.stop.video.dto.request.TalkRequest;
+import com.scg.stop.video.dto.response.TalkResponse;
+import com.scg.stop.video.repository.QuizRepository;
+import com.scg.stop.video.repository.TalkRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;

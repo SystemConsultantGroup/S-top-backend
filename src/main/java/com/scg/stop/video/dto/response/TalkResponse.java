@@ -1,13 +1,11 @@
-package com.scg.stop.domain.video.dto.response;
+package com.scg.stop.video.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import com.scg.stop.domain.video.domain.QuizInfo;
-import com.scg.stop.domain.video.domain.Talk;
+import com.scg.stop.video.domain.Talk;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 
 @Getter
 @AllArgsConstructor

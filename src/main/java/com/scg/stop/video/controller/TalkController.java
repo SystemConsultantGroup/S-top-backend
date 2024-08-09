@@ -1,9 +1,9 @@
-package com.scg.stop.domain.video.controller;
+package com.scg.stop.video.controller;
 
 import com.scg.stop.auth.annotation.AuthUser;
-import com.scg.stop.domain.video.dto.request.TalkRequest;
-import com.scg.stop.domain.video.dto.response.TalkResponse;
-import com.scg.stop.domain.video.service.TalkService;
+import com.scg.stop.video.dto.request.TalkRequest;
+import com.scg.stop.video.dto.response.TalkResponse;
+import com.scg.stop.video.service.TalkService;
 import com.scg.stop.user.domain.AccessType;
 import com.scg.stop.user.domain.User;
 import jakarta.validation.Valid;

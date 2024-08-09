@@ -1,8 +1,7 @@
-package com.scg.stop.domain.video.dto.response;
+package com.scg.stop.video.dto.response;
 
-import com.scg.stop.domain.video.domain.JobInterview;
-import com.scg.stop.domain.video.domain.JobInterviewCategory;
-import lombok.AccessLevel;
+import com.scg.stop.video.domain.JobInterview;
+import com.scg.stop.video.domain.JobInterviewCategory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

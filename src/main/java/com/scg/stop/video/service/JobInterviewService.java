@@ -1,10 +1,10 @@
-package com.scg.stop.domain.video.service;
+package com.scg.stop.video.service;
 
-import com.scg.stop.domain.video.domain.JobInterviewCategory;
-import com.scg.stop.domain.video.domain.JobInterview;
-import com.scg.stop.domain.video.dto.request.JobInterviewRequest;
-import com.scg.stop.domain.video.dto.response.JobInterviewResponse;
-import com.scg.stop.domain.video.repository.JobInterviewRepository;
+import com.scg.stop.video.domain.JobInterviewCategory;
+import com.scg.stop.video.domain.JobInterview;
+import com.scg.stop.video.dto.request.JobInterviewRequest;
+import com.scg.stop.video.dto.response.JobInterviewResponse;
+import com.scg.stop.video.repository.JobInterviewRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;

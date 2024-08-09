@@ -1,7 +1,7 @@
-package com.scg.stop.domain.video.dto.request;
+package com.scg.stop.video.dto.request;
 
-import com.scg.stop.domain.video.domain.JobInterview;
-import com.scg.stop.domain.video.domain.JobInterviewCategory;
+import com.scg.stop.video.domain.JobInterview;
+import com.scg.stop.video.domain.JobInterviewCategory;
 import com.scg.stop.global.validation.ValidEnum;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

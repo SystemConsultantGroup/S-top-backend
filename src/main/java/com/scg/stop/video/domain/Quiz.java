@@ -1,10 +1,9 @@
-package com.scg.stop.domain.video.domain;
+package com.scg.stop.video.domain;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
-import com.scg.stop.domain.video.dto.request.QuizRequest;
 import com.scg.stop.global.domain.BaseTimeEntity;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.Column;

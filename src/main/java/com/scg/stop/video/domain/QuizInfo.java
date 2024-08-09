@@ -1,4 +1,4 @@
-package com.scg.stop.domain.video.domain;
+package com.scg.stop.video.domain;
 
 import java.util.List;
 import lombok.AllArgsConstructor;

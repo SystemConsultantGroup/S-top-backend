@@ -1,4 +1,4 @@
-package com.scg.stop.domain.video.domain;
+package com.scg.stop.video.domain;
 
 public enum JobInterviewCategory {
 

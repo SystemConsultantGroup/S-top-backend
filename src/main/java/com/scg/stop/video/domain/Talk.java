@@ -1,28 +1,20 @@
-package com.scg.stop.domain.video.domain;
+package com.scg.stop.video.domain;
 
-import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
-import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
-import com.scg.stop.domain.video.dto.request.JobInterviewRequest;
 import com.scg.stop.global.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 
 import java.util.List;
-
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
-@AllArgsConstructor(access = PRIVATE)
 @NoArgsConstructor(access = PROTECTED)
-public class JobInterview extends BaseTimeEntity {
+public class Talk extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -43,53 +35,57 @@ public class JobInterview extends BaseTimeEntity {
     @Column(nullable = false)
     private String talkerName;
 
-    @Column(nullable = false)
-    @Enumerated(value = STRING)
-    private JobInterviewCategory category;
+    @OneToOne(fetch = LAZY, mappedBy = "talk", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private Quiz quiz;
 
-    @OneToMany(fetch = LAZY, mappedBy = "jobInterview", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = LAZY, mappedBy = "talk")
     private List<FavoriteVideo> favoriteVideos;
 
-    private JobInterview(String title, String youtubeId, Integer year, String talkerBelonging, String talkerName, JobInterviewCategory category) {
+    public Talk(String title, String youtubeId, Integer year, String talkerBelonging, String talkerName) {
         this.title = title;
         this.youtubeId = youtubeId;
         this.year = year;
         this.talkerBelonging = talkerBelonging;
         this.talkerName = talkerName;
-        this.category = category;
     }
-
-    public static JobInterview from(
+    public static Talk from(
             String title,
             String youtubeId,
             Integer year,
             String talkerBelonging,
-            String talkerName,
-            JobInterviewCategory category
+            String talkerName
     ) {
-        return new JobInterview(
+        return new Talk(
                 title,
                 youtubeId,
                 year,
                 talkerBelonging,
-                talkerName,
-                category
+                talkerName
         );
     }
 
-    public void updateJobInterview(
+    public void updateTalk(
             String title,
             String youtubeId,
             Integer year,
             String talkerBelonging,
-            String talkerName,
-            JobInterviewCategory category
+            String talkerName
     ) {
-        this.title = title;
+        this.title= title;
         this.youtubeId = youtubeId;
         this.year = year;
         this.talkerBelonging = talkerBelonging;
         this.talkerName = talkerName;
-        this.category = category;
     }
+
+    public void setQuiz(Quiz quiz) {
+        if(this.quiz != null) {
+            this.quiz.setTalk(null);
+        }
+        this.quiz = quiz;
+        if(quiz != null) {
+            quiz.setTalk(this);
+        }
+    }
+
 }

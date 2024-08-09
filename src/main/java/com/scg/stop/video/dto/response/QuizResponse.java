@@ -1,7 +1,7 @@
-package com.scg.stop.domain.video.dto.response;
+package com.scg.stop.video.dto.response;
 
-import com.scg.stop.domain.video.domain.Quiz;
-import com.scg.stop.domain.video.domain.QuizInfo;
+import com.scg.stop.video.domain.Quiz;
+import com.scg.stop.video.domain.QuizInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

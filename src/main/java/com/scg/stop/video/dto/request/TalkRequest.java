@@ -1,9 +1,7 @@
-package com.scg.stop.domain.video.dto.request;
+package com.scg.stop.video.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import com.scg.stop.domain.video.domain.Quiz;
-import com.scg.stop.domain.video.domain.QuizInfo;
-import com.scg.stop.domain.video.domain.Talk;
+import com.scg.stop.video.domain.Talk;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
