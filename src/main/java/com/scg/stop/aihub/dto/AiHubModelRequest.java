@@ -11,11 +11,11 @@ import java.util.List;
 @NoArgsConstructor
 public class AiHubModelRequest {
 
-    private String title; // 제목
-    private String professor; // 담당 교수
-    private List<String> participants; // 참여 학생 (List of student names)
-    private List<String> learningModels;  // 학습 모델
-    private List<String> topics;  // 주제 분류
-    private List<Integer> developmentYears;  // 개발 년도
+    private String title; // 제목 : text
+    private List<String> learningModels;  // 학습 모델 : multiselect
+    private List<String> topics;  // 주제 분류 : multiselect
+    private List<Integer> developmentYears;  // 개발 년도 : multiselect
+    private String professor; // 담당 교수 : text
+    private List<String> participants; // 참여 학생 : text (comma separated)
 }
 

@@ -23,6 +23,7 @@ public class AiHubController {
 
     private final AiHubService aiHubService;
 
+    // Get the paginated list of models
     @PostMapping("/models")
     public ResponseEntity<Page<AiHubModelResponse>> getAiHubModels(
             @RequestBody AiHubModelRequest request,
@@ -31,6 +32,7 @@ public class AiHubController {
         return ResponseEntity.status(HttpStatus.OK).body(models);
     }
 
+    // Get the paginated list of datasets
     @PostMapping("/datasets")
     public ResponseEntity<Page<AiHubDatasetResponse>> getAiHubDatasets(
             @RequestBody AiHubDatasetRequest request,

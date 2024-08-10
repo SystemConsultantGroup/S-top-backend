@@ -28,7 +28,7 @@ import java.util.Map;
 @Transactional
 public class AiHubService {
 
-    // Notion integration details
+    // Notion API values
     @Value("${spring.notion.secretKey}")
     private String secretKey;
 
@@ -44,24 +44,49 @@ public class AiHubService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
-    // Constants for Notion property names
+    // Constants for Notion DB property names
     private static final String TITLE_PROPERTY = "제목";
-    private static final String PROFESSOR_PROPERTY = "담당 교수";
-    private static final String PARTICIPANTS_PROPERTY = "참여 학생";
     private static final String LEARNING_MODELS_PROPERTY = "학습 모델";
+    private static final String DATA_TYPES_PROPERTY = "데이터 유형";
     private static final String TOPICS_PROPERTY = "주제 분류";
     private static final String DEVELOPMENT_YEARS_PROPERTY = "개발 년도";
-    private static final String DATA_TYPES_PROPERTY = "데이터 유형";
-    private static final String CONSTRUCTION_YEARS_PROPERTY = "구축 년도"; // equivalent to "개발 년도" for datasets
+    private static final String CONSTRUCTION_YEARS_PROPERTY = "구축 년도";
+    private static final String PROFESSOR_PROPERTY = "담당 교수";
+    private static final String PARTICIPANTS_PROPERTY = "참여 학생";
 
+    /**
+     * Fetches AI Hub models from Notion database
+     *
+     * @param aiHubModelRequest Request object containing search criteria
+     * @param pageable          Pageable object containing page number and size
+     * @return Page of AI Hub models
+     */
     public Page<AiHubModelResponse> getAiHubModels(AiHubModelRequest aiHubModelRequest, Pageable pageable) {
         return fetchNotionData(modelDatabaseId, aiHubModelRequest, pageable, AiHubModelResponse.class);
     }
 
+    /**
+     * Fetches AI Hub datasets from Notion database
+     *
+     * @param aiHubDatasetRequest Request object containing search criteria
+     * @param pageable            Pageable object containing page number and size
+     * @return Page of AI Hub datasets
+     */
     public Page<AiHubDatasetResponse> getAiHubDatasets(AiHubDatasetRequest aiHubDatasetRequest, Pageable pageable) {
         return fetchNotionData(datasetDatabaseId, aiHubDatasetRequest, pageable, AiHubDatasetResponse.class);
     }
 
+
+    /**
+     * Fetches data from Notion database
+     *
+     * @param databaseId    Notion database ID
+     * @param requestObject Request object containing search criteria
+     * @param pageable      Pageable object containing page number and size
+     * @param responseType  Class type of response object
+     * @param <T>           Type of response object
+     * @return Page of response objects
+     */
     private <T> Page<T> fetchNotionData(String databaseId, Object requestObject, Pageable pageable, Class<T> responseType) {
         try {
             String url = "https://api.notion.com/v1/databases/" + databaseId + "/query";
@@ -83,6 +108,7 @@ public class AiHubService {
         }
     }
 
+    // Helper methods for creating request header
     private HttpHeaders createHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(secretKey);
@@ -91,31 +117,36 @@ public class AiHubService {
         return headers;
     }
 
+    // Helper method for creating request body
     private Map<String, Object> createRequestBody(Object requestObject) {
         Map<String, Object> requestBody = new HashMap<>();
         Map<String, Object> filter = new HashMap<>();
         List<Map<String, Object>> andConditions = new ArrayList<>();
 
+        // Case for AiHubModelRequest
         if (requestObject instanceof AiHubModelRequest) {
             AiHubModelRequest aiHubModelRequest = (AiHubModelRequest) requestObject;
 
-            // Convert Integer year to String
+            // Convert Integer year to String for query
             List<String> developmentYears = new ArrayList<>();
             if (aiHubModelRequest.getDevelopmentYears() != null) {
                 aiHubModelRequest.getDevelopmentYears().forEach(year -> developmentYears.add(year.toString()));
             }
 
             addStringFilterCondition(aiHubModelRequest.getTitle(), TITLE_PROPERTY, "title", andConditions);
-            addStringFilterCondition(aiHubModelRequest.getProfessor(), PROFESSOR_PROPERTY, "rich_text", andConditions);
-            addMultipleStringFilterConditions(aiHubModelRequest.getParticipants(), PARTICIPANTS_PROPERTY, "rich_text", andConditions);
             addMultiSelectFilterConditions(aiHubModelRequest.getLearningModels(), LEARNING_MODELS_PROPERTY, andConditions);
             addMultiSelectFilterConditions(aiHubModelRequest.getTopics(), TOPICS_PROPERTY, andConditions);
             addMultiSelectFilterConditions(developmentYears, DEVELOPMENT_YEARS_PROPERTY, andConditions);
+            addStringFilterCondition(aiHubModelRequest.getProfessor(), PROFESSOR_PROPERTY, "rich_text", andConditions);
+            addMultipleStringFilterConditions(aiHubModelRequest.getParticipants(), PARTICIPANTS_PROPERTY, "rich_text", andConditions);
 
-        } else if (requestObject instanceof AiHubDatasetRequest) {
+        }
+
+        // Case for AiHubDatasetRequest
+        else if (requestObject instanceof AiHubDatasetRequest) {
             AiHubDatasetRequest aiHubDatasetRequest = (AiHubDatasetRequest) requestObject;
 
-            // Convert Integer year to String
+            // Convert Integer year to String for query
             List<String> constructionYears = new ArrayList<>();
             if (aiHubDatasetRequest.getDevelopmentYears() != null) {
                 aiHubDatasetRequest.getDevelopmentYears().forEach(year -> constructionYears.add(year.toString()));
@@ -129,6 +160,7 @@ public class AiHubService {
             addMultipleStringFilterConditions(aiHubDatasetRequest.getParticipants(), PARTICIPANTS_PROPERTY, "rich_text", andConditions);
         }
 
+        // AND conditions to filter
         if (!andConditions.isEmpty()) {
             filter.put("and", andConditions);
             requestBody.put("filter", filter);
@@ -137,6 +169,7 @@ public class AiHubService {
         return requestBody;
     }
 
+    // Helper method for adding String filter condition
     private void addStringFilterCondition(String value, String property, String filterType, List<Map<String, Object>> conditions) {
         if (value != null && !value.isEmpty()) {
             Map<String, Object> condition = new HashMap<>();
@@ -146,12 +179,14 @@ public class AiHubService {
         }
     }
 
+    // Helper method for adding multiple String (comma-separated in db) filter conditions
     private void addMultipleStringFilterConditions(List<String> values, String property, String filterType, List<Map<String, Object>> conditions) {
         if (values != null && !values.isEmpty()) {
             values.forEach(value -> addStringFilterCondition(value, property, filterType, conditions));
         }
     }
 
+    // Helper method for adding MultiSelect filter conditions
     private void addMultiSelectFilterConditions(List<String> criteria, String property, List<Map<String, Object>> conditions) {
         if (criteria != null && !criteria.isEmpty()) {
             criteria.forEach(criterion -> {
