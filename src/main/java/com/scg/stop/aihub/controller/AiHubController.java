@@ -1,5 +1,7 @@
 package com.scg.stop.aihub.controller;
 
+import com.scg.stop.aihub.dto.AiHubDatasetRequest;
+import com.scg.stop.aihub.dto.AiHubDatasetResponse;
 import com.scg.stop.aihub.dto.AiHubModelRequest;
 import com.scg.stop.aihub.dto.AiHubModelResponse;
 import com.scg.stop.aihub.service.AiHubService;
@@ -27,5 +29,13 @@ public class AiHubController {
             @PageableDefault(page = 0, size = 10) Pageable pageable) {
         Page<AiHubModelResponse> models = aiHubService.getAiHubModels(request, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(models);
+    }
+
+    @PostMapping("/datasets")
+    public ResponseEntity<Page<AiHubDatasetResponse>> getAiHubDatasets(
+            @RequestBody AiHubDatasetRequest request,
+            @PageableDefault(page = 0, size = 10) Pageable pageable) {
+        Page<AiHubDatasetResponse> datasets = aiHubService.getAiHubDatasets(request, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(datasets);
     }
 }
