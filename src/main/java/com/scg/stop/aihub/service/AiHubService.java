@@ -2,10 +2,10 @@ package com.scg.stop.aihub.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.scg.stop.aihub.dto.AiHubDatasetRequest;
-import com.scg.stop.aihub.dto.AiHubDatasetResponse;
-import com.scg.stop.aihub.dto.AiHubModelRequest;
-import com.scg.stop.aihub.dto.AiHubModelResponse;
+import com.scg.stop.aihub.dto.request.AiHubDatasetRequest;
+import com.scg.stop.aihub.dto.request.AiHubModelRequest;
+import com.scg.stop.aihub.dto.response.AiHubDatasetResponse;
+import com.scg.stop.aihub.dto.response.AiHubModelResponse;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;

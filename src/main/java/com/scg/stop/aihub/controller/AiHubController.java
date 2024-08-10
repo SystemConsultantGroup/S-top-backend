@@ -1,9 +1,9 @@
 package com.scg.stop.aihub.controller;
 
-import com.scg.stop.aihub.dto.AiHubDatasetRequest;
-import com.scg.stop.aihub.dto.AiHubDatasetResponse;
-import com.scg.stop.aihub.dto.AiHubModelRequest;
-import com.scg.stop.aihub.dto.AiHubModelResponse;
+import com.scg.stop.aihub.dto.request.AiHubDatasetRequest;
+import com.scg.stop.aihub.dto.request.AiHubModelRequest;
+import com.scg.stop.aihub.dto.response.AiHubDatasetResponse;
+import com.scg.stop.aihub.dto.response.AiHubModelResponse;
 import com.scg.stop.aihub.service.AiHubService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
