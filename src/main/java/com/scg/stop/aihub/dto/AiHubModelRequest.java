@@ -16,6 +16,6 @@ public class AiHubModelRequest {
     private List<String> participants; // 참여 학생 (List of student names)
     private List<String> learningModels;  // 학습 모델
     private List<String> topics;  // 주제 분류
-    private List<String> developmentYears;  // 개발 년도
+    private List<Integer> developmentYears;  // 개발 년도
 }
 

@@ -70,7 +70,6 @@ public class AiHubService {
             return new PageImpl<>(models.subList(start, end), pageable, models.size());
 
         } catch (Exception e) {
-            // Fallback for any other exceptions
             throw new BadRequestException(FAILED_TO_FETCH_NOTION_DATA);
         }
     }
@@ -88,12 +87,19 @@ public class AiHubService {
         Map<String, Object> filter = new HashMap<>();
         List<Map<String, Object>> andConditions = new ArrayList<>();
 
+        // convert Integer year to String
+        List<String> developmentYears = new ArrayList<>();
+        if (aiHubModelRequest.getDevelopmentYears() != null) {
+            aiHubModelRequest.getDevelopmentYears().forEach(year -> developmentYears.add(year.toString()));
+        }
+
         addStringFilterCondition(aiHubModelRequest.getTitle(), TITLE_PROPERTY, "title", andConditions);
         addStringFilterCondition(aiHubModelRequest.getProfessor(), PROFESSOR_PROPERTY, "rich_text", andConditions);
         addMultipleStringFilterConditions(aiHubModelRequest.getParticipants(), PARTICIPANTS_PROPERTY, "rich_text", andConditions);
         addMultiSelectFilterConditions(aiHubModelRequest.getLearningModels(), LEARNING_MODELS_PROPERTY, andConditions);
         addMultiSelectFilterConditions(aiHubModelRequest.getTopics(), TOPICS_PROPERTY, andConditions);
-        addMultiSelectFilterConditions(aiHubModelRequest.getDevelopmentYears(), DEVELOPMENT_YEARS_PROPERTY, andConditions);
+        addMultiSelectFilterConditions(developmentYears, DEVELOPMENT_YEARS_PROPERTY, andConditions);
+
 
         if (!andConditions.isEmpty()) {
             filter.put("and", andConditions);
