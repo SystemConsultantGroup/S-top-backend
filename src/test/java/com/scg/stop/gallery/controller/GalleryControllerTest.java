@@ -4,6 +4,10 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
+import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -86,6 +90,12 @@ class GalleryControllerTest extends AbstractControllerTest {
         // then
         result.andExpect(status().isCreated())
                 .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token").description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization").description("access token")
+                        ),
                         requestFields(
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("연도"),
@@ -272,6 +282,12 @@ class GalleryControllerTest extends AbstractControllerTest {
         // then
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token").description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization").description("access token")
+                        ),
                         pathParameters(
                                 parameterWithName("galleryId").description("수정할 갤러리 ID")
                         ),
@@ -318,6 +334,12 @@ class GalleryControllerTest extends AbstractControllerTest {
         // then
         result.andExpect(status().isNoContent())
                 .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token").description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization").description("access token")
+                        ),
                         pathParameters(
                                 parameterWithName("galleryId").description("삭제할 갤러리 ID")
                         )
