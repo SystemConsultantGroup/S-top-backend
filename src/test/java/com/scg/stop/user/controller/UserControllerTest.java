@@ -26,6 +26,10 @@ import java.time.LocalDateTime;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
+import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -77,6 +81,14 @@ class UserControllerTest extends AbstractControllerTest {
         // then
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
+                        ),
                         responseFields(
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("사용자 ID"),
                                 fieldWithPath("name").type(JsonFieldType.STRING).description("사용자 이름"),
@@ -136,6 +148,14 @@ class UserControllerTest extends AbstractControllerTest {
         // then
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
+                        ),
                         requestFields(
                                 fieldWithPath("name").type(JsonFieldType.STRING).description("이름").optional(),
                                 fieldWithPath("phone").type(JsonFieldType.STRING).description("전화번호").optional(),
@@ -177,7 +197,16 @@ class UserControllerTest extends AbstractControllerTest {
 
         // then
         result.andExpect(status().isNoContent())
-                .andDo(restDocs.document());
+                .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
+                        )
+                ));
     }
 
 }
