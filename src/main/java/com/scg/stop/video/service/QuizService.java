@@ -64,6 +64,7 @@ public class QuizService {
         UserQuiz userQuiz = userQuizRepository.findByUserAndQuiz(user, quiz);
         if(userQuiz == null) {
             userQuiz = userQuizRepository.save(UserQuiz.from(user, quiz, isSuccess));
+            user.addUserQuiz(userQuiz);
         } else {
             if(!userQuiz.isSuccess())
                 userQuiz.updateSuccess(isSuccess);

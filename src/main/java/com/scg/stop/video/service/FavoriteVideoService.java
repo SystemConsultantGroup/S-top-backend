@@ -28,9 +28,11 @@ public class FavoriteVideoService {
         if (favoriteVideo != null) {
             throw new BadRequestException(ExceptionCode.ALREADY_FAVORITE);
         }
-        FavoriteVideo newFavoriteVideo =  FavoriteVideo.of(jobInterview, user);
+        FavoriteVideo newFavoriteVideo = favoriteVideoRepository.save(FavoriteVideo.of(jobInterview, user));
         jobInterview.addFavoriteVideo(newFavoriteVideo);
-        favoriteVideoRepository.save(newFavoriteVideo);
+        user.addFavoriteVideo(newFavoriteVideo);
+
+
     }
 
     public void deleteJobInterviewFavorite(Long id, User user) {
@@ -41,6 +43,7 @@ public class FavoriteVideoService {
             throw new BadRequestException(ExceptionCode.NOT_FAVORITE);
         }
         jobInterview.removeFavoriteVideo(favoriteVideo);
+        user.removeFavoriteVideo(favoriteVideo);
         favoriteVideoRepository.delete(favoriteVideo);
     }
 
@@ -53,9 +56,10 @@ public class FavoriteVideoService {
         if(favoriteVideo != null) {
             throw new BadRequestException(ExceptionCode.ALREADY_FAVORITE);
         }
-        FavoriteVideo newFavoriteVideo = FavoriteVideo.of(talk, user);
+        FavoriteVideo newFavoriteVideo = favoriteVideoRepository.save(FavoriteVideo.of(talk, user));
         talk.addFavoriteVideo(newFavoriteVideo);
-        favoriteVideoRepository.save(newFavoriteVideo);
+        user.addFavoriteVideo(newFavoriteVideo);
+
     }
 
     public void deleteTalkFavorite(Long id, User user) {
@@ -66,6 +70,7 @@ public class FavoriteVideoService {
             throw new BadRequestException(ExceptionCode.NOT_FAVORITE);
         }
         talk.removeFavoriteVideo(favoriteVideo);
+        user.removeFavoriteVideo(favoriteVideo);
         favoriteVideoRepository.delete(favoriteVideo);
     }
 }

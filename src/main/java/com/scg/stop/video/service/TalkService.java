@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class TalkService {
     private final TalkRepository talkRepository;
     private final QuizRepository quizRepository;
-    private final FavoriteVideoRepository favoriteVideoRepository;
 
     @Transactional(readOnly = true)
     public Page<TalkResponse> getTalks(String title, Integer year, Pageable pageable) {
