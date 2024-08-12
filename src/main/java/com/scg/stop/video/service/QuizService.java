@@ -74,6 +74,9 @@ public class QuizService {
     }
 
     public Page<UserQuizResultResponse> getQuizResults(Integer year, Pageable pageable) {
+        if(year == null) {
+            year = LocalDateTime.now().getYear();
+        }
         return userQuizRepository.findUserQuizResults(year, pageable);
     }
 
