@@ -32,6 +32,6 @@ public class FavoriteVideo extends BaseTimeEntity {
     private JobInterview jobInterview;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "user_ide")
+    @JoinColumn(name = "user_id")
     private User user;
 }
