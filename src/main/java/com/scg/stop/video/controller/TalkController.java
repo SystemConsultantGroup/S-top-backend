@@ -71,13 +71,13 @@ public class TalkController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @GetMapping("/talks/{talkId}/quiz")
+    @GetMapping("/{talkId}/quiz")
     public ResponseEntity<QuizResponse> getQuiz(@PathVariable("talkId") Long talkId) {
         QuizResponse quizResponse = quizService.getQuiz(talkId);
         return ResponseEntity.status(HttpStatus.OK).body(quizResponse);
     }
 
-    @PostMapping("/talks/{talkId}/quiz")
+    @PostMapping("/{talkId}/quiz")
     public ResponseEntity<QuizSubmitResponse> submitQuiz(
             @PathVariable("talkId") Long talkId,
             @AuthUser(accessType = {AccessType.ALL}) User user,
