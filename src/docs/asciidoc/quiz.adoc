@@ -1,0 +1,8 @@
+== 퀴즈 결과 API
+:source-highlighter: highlightjs
+
+---
+=== 퀴즈 결과 조회 (GET /quizzes/result)
+====
+operation::quiz-controller-test/get-quiz-results[snippets="http-request,query-parameters,http-response,response-fields"]
+====
