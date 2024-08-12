@@ -42,3 +42,15 @@ operation::talk-controller-test/get-quiz[snippets=http-request,path-parameters,h
 ====
 operation::talk-controller-test/submit-quiz[snippets="http-request,path-parameters,request-fields,http-response,response-fields"]
 ====
+
+---
+=== 대담 영상의 관심 등록 (POST /talks/{talkId}/favorite)
+====
+operation::talk-controller-test/create-talk-favorite[snippets="http-request,path-parameters,http-response"]
+====
+
+---
+=== 대담 영상의 관심 삭제 (DELETE /talks/{talkId}/favorite)
+====
+operation::talk-controller-test/delete-talk-favorite[snippets="http-request,path-parameters,http-response"]
+====

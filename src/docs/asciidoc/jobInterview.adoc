@@ -30,3 +30,15 @@ operation::job-interview-controller-test/update-job-interview[snippets="http-req
 ====
 operation::job-interview-controller-test/delete-job-interview[snippets="http-request,path-parameters,http-response"]
 ====
+
+---
+=== 잡페어 인터뷰 관심 등록 (POST /jobInterviews/{jobInterviews}/favorite)
+====
+operation::job-interview-controller-test/create-job-interview-favorite[snippets="http-request,path-parameters,http-response"]
+====
+
+---
+=== 잡페어 인터뷰 관심 삭제 (DELETE /jobInterviews/{jobInterviews}/favorite)
+====
+operation::job-interview-controller-test/delete-job-interview-favorite[snippets="http-request,path-parameters,http-response"]
+====
