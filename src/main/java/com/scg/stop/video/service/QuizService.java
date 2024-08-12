@@ -4,6 +4,7 @@ import com.scg.stop.domain.event.domain.EventPeriod;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.user.domain.User;
+import com.scg.stop.user.repository.UserRepository;
 import com.scg.stop.video.domain.Quiz;
 import com.scg.stop.video.domain.QuizInfo;
 import com.scg.stop.video.domain.UserQuiz;
@@ -31,6 +32,7 @@ public class QuizService {
     private final QuizRepository quizRepository;
     private final UserQuizRepository userQuizRepository;
     private final EventPeriodRepository eventPeriodRepository;
+    private final UserRepository userRepository;
 
     @Transactional(readOnly = true)
     public QuizResponse getQuiz(Long talkId) {
@@ -40,9 +42,12 @@ public class QuizService {
         return QuizResponse.from(quiz);
     }
 
-    public QuizSubmitResponse submitQuiz(Long talkId, QuizSubmitRequest submitRequest, User user) {
+    public QuizSubmitResponse submitQuiz(Long talkId, QuizSubmitRequest submitRequest, Long userId) {
         Quiz quiz = quizRepository.findByTalkId(talkId).orElseThrow(
                 () -> new BadRequestException(ExceptionCode.NO_QUIZ)
+        );
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new BadRequestException(ExceptionCode.NOT_FOUND_USER_ID)
         );
         int currentYear = LocalDateTime.now().getYear();
         EventPeriod currentPeriod = eventPeriodRepository.findByYear(currentYear).orElseThrow(
