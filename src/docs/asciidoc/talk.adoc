@@ -30,3 +30,15 @@ operation::talk-controller-test/update-talk[snippets="http-request,path-paramete
 ====
 operation::talk-controller-test/delete-talk[snippets="http-request,path-parameters,http-response"]
 ====
+
+---
+=== 대담 영상의 퀴즈 조회 (GET /talks/{talkId}/quiz)
+====
+operation::talk-controller-test/get-quiz[snippets=http-request,path-parameters,http-response,response-fields"]
+====
+
+---
+=== 대담 영상의 퀴즈 결과 제출 (POST /talks/{talkId}/quiz)
+====
+operation::talk-controller-test/submit-quiz[snippets="http-request,path-parameters,request-fields,http-response,response-fields"]
+====
