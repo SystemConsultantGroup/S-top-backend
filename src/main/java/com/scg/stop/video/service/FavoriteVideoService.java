@@ -46,7 +46,7 @@ public class FavoriteVideoService {
 
 
 
-    public void createFavoriteVideo(Long id, User user) {
+    public void createTalkFavorite(Long id, User user) {
         Talk talk = talkRepository.findById(id).orElseThrow(() ->
                 new BadRequestException(ExceptionCode.TALK_ID_NOT_FOUND));
         FavoriteVideo favoriteVideo = favoriteVideoRepository.findByTalkAndUser(talk, user);
@@ -58,7 +58,7 @@ public class FavoriteVideoService {
         favoriteVideoRepository.save(newFavoriteVideo);
     }
 
-    public void deleteFavoriteVideo(Long id, User user) {
+    public void deleteTalkFavorite(Long id, User user) {
         Talk talk = talkRepository.findById(id).orElseThrow(() ->
                 new BadRequestException(ExceptionCode.TALK_ID_NOT_FOUND));
         FavoriteVideo favoriteVideo = favoriteVideoRepository.findByTalkAndUser(talk, user);

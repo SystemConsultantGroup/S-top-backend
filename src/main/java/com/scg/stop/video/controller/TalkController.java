@@ -6,6 +6,7 @@ import com.scg.stop.video.dto.request.TalkRequest;
 import com.scg.stop.video.dto.response.QuizResponse;
 import com.scg.stop.video.dto.response.QuizSubmitResponse;
 import com.scg.stop.video.dto.response.TalkResponse;
+import com.scg.stop.video.service.FavoriteVideoService;
 import com.scg.stop.video.service.QuizService;
 import com.scg.stop.video.service.TalkService;
 import com.scg.stop.user.domain.AccessType;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 public class TalkController {
     private final TalkService talkService;
     private final QuizService quizService;
+    private final FavoriteVideoService favoriteVideoService;
 
     @PostMapping
     public ResponseEntity<TalkResponse> createTalk(
@@ -85,5 +87,23 @@ public class TalkController {
     ) {
         QuizSubmitResponse response = quizService.submitQuiz(talkId, request, user);
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PostMapping("/{talkId}/favorite")
+    public ResponseEntity<Void> createTalkFavorite(
+            @PathVariable("talkId") Long talkId,
+            @AuthUser(accessType = {AccessType.ALL}) User user
+    ) {
+        favoriteVideoService.createTalkFavorite(talkId, user);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @DeleteMapping("/{talkId}/favorite")
+    public ResponseEntity<Void> deleteTalkFavorite(
+            @PathVariable("talkId") Long talkId,
+            @AuthUser(accessType = {AccessType.ALL}) User user
+    ) {
+        favoriteVideoService.deleteTalkFavorite(talkId, user);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
