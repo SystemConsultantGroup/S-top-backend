@@ -54,7 +54,7 @@ public class JobInfoService {
      * @param pageable       Pageable object containing page number and size
      * @return Page of job info
      */
-    public Page<JobInfoResponse> getJobInfo(JobInfoRequest jobInfoRequest, Pageable pageable) {
+    public Page<JobInfoResponse> getJobInfos(JobInfoRequest jobInfoRequest, Pageable pageable) {
         return fetchNotionData(jobInfoDatabaseId, jobInfoRequest, pageable, JobInfoResponse.class);
     }
 

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/jobInfo")
+@RequestMapping("/jobInfos")
 @RequiredArgsConstructor
 public class JobInfoController {
 
@@ -26,7 +26,7 @@ public class JobInfoController {
     public ResponseEntity<Page<JobInfoResponse>> getJobInfos(
             @RequestBody JobInfoRequest request,
             @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        Page<JobInfoResponse> jobInfos = jobInfoService.getJobInfo(request, pageable);
+        Page<JobInfoResponse> jobInfos = jobInfoService.getJobInfos(request, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(jobInfos);
     }
 
