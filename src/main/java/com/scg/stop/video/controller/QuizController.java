@@ -1,5 +1,8 @@
 package com.scg.stop.video.controller;
 
+import com.scg.stop.auth.annotation.AuthUser;
+import com.scg.stop.user.domain.AccessType;
+import com.scg.stop.user.domain.User;
 import com.scg.stop.video.dto.response.UserQuizResultResponse;
 import com.scg.stop.video.service.QuizService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,7 @@ public class QuizController {
     @GetMapping("/result")
     public ResponseEntity<Page<UserQuizResultResponse>> getQuizResults(
             @RequestParam(value = "year", required = false) Integer year,
+            @AuthUser(accessType = {AccessType.ADMIN}) User user,
             @PageableDefault(page = 0, size = 10) Pageable pageable
     ) {
         Page<UserQuizResultResponse> responses = quizService.getQuizResults(year, pageable);
