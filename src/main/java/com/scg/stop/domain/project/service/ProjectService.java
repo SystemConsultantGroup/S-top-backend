@@ -114,67 +114,61 @@ public class ProjectService {
     }
 
 
-    public void createProjectFavorite(Long projectId, Long userId){
-        boolean exists = favoriteProjectRepository.findByProjectIdAndUserId(projectId, userId).isPresent();
+    public void createProjectFavorite(Long projectId, User user){
+        boolean exists = favoriteProjectRepository.findByProjectIdAndUserId(projectId, user.getId()).isPresent();
         if (exists) { // Todo: error를 던지진 말고 그냥 요청을 취소하는 방식은 어떨까..
             throw new BadRequestException(ExceptionCode.ALREADY_FAVORITE_PROJECT);
         }
 
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_USER_ID));
 
         FavoriteProject newFavoriteProject = new FavoriteProject(null, project, user);
         favoriteProjectRepository.save(newFavoriteProject);
     }
 
-    public void deleteProjectFavorite(Long projectId, Long userId){
-        FavoriteProject favoriteProject = favoriteProjectRepository.findByProjectIdAndUserId(projectId, userId)
+    public void deleteProjectFavorite(Long projectId, User user){
+        FavoriteProject favoriteProject = favoriteProjectRepository.findByProjectIdAndUserId(projectId, user.getId())
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_FAVORITE_PROJECT));
 
         favoriteProjectRepository.delete(favoriteProject);
     }
 
-    public void createProjectLike(Long projectId, Long userId){
+    public void createProjectLike(Long projectId, User user){
         EventPeriod eventPeriod = eventPeriodRepository.findById(1L)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_EVENT_PERIOD));
         if (eventPeriod.getStart().isAfter(LocalDateTime.now()) || eventPeriod.getEnd().isBefore(LocalDateTime.now())){
             throw new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD);
         }
 
-        boolean exists = likeRepository.findByProjectIdAndUserId(projectId, userId).isPresent();
+        boolean exists = likeRepository.findByProjectIdAndUserId(projectId, user.getId()).isPresent();
         if (exists) { // Todo: error를 던지진 말고 그냥 요청을 취소하는 방식은 어떨까..
             throw new BadRequestException(ExceptionCode.ALREADY_LIKE_PROJECT);
         }
 
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_USER_ID));
 
         Likes newLike = new Likes(null, project, user);
         likeRepository.save(newLike);
     }
 
-    public void deleteProjectLike(Long projectId, Long userId){
+    public void deleteProjectLike(Long projectId, User user){
         EventPeriod eventPeriod = eventPeriodRepository.findById(1L)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_EVENT_PERIOD));
         if (eventPeriod.getStart().isAfter(LocalDateTime.now()) || eventPeriod.getEnd().isBefore(LocalDateTime.now())){
             throw new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD);
         }
 
-        Likes like = likeRepository.findByProjectIdAndUserId(projectId, userId)
+        Likes like = likeRepository.findByProjectIdAndUserId(projectId, user.getId())
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_FAVORITE_PROJECT));
 
         likeRepository.delete(like);
     }
 
-    public CommentResponse createProjectComment(Long projectId, Long userId, CommentRequest commentRequest){
+    public CommentResponse createProjectComment(Long projectId, User user, CommentRequest commentRequest){
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_USER_ID));
 
         Comment comment = commentRequest.toEntity(project, user);
         commentRepository.save(comment);
@@ -182,11 +176,11 @@ public class ProjectService {
         return CommentResponse.of(comment);
     }
 
-    public void deleteProjectComment(Long projectId, Long commentId, Long userId){
+    public void deleteProjectComment(Long projectId, Long commentId, User user){
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_COMMENT));
 
-        if (!comment.getUser().getId().equals(userId)) {
+        if (!comment.getUser().getId().equals(user.getId())) {
             throw new BadRequestException(ExceptionCode.NOT_MATCH_USER);
         }
 

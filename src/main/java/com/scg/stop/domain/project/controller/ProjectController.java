@@ -82,7 +82,7 @@ public class ProjectController {
             @PathVariable("projectId") Long projectId,
             @AuthUser(accessType = {AccessType.ALL}) User user
     ){
-        projectService.createProjectFavorite(projectId, user.getId());
+        projectService.createProjectFavorite(projectId, user);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -91,7 +91,7 @@ public class ProjectController {
             @PathVariable("projectId") Long projectId,
             @AuthUser(accessType = {AccessType.ALL}) User user
     ){
-        projectService.deleteProjectFavorite(projectId, user.getId());
+        projectService.deleteProjectFavorite(projectId, user);
         return ResponseEntity.noContent().build();
     }
 
@@ -100,7 +100,7 @@ public class ProjectController {
             @PathVariable("projectId") Long projectId,
             @AuthUser(accessType = {AccessType.ALL}) User user
     ){
-        projectService.createProjectLike(projectId, user.getId());
+        projectService.createProjectLike(projectId, user);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -109,7 +109,7 @@ public class ProjectController {
             @PathVariable("projectId") Long projectId,
             @AuthUser(accessType = {AccessType.ALL}) User user
     ){
-        projectService.deleteProjectLike(projectId, user.getId());
+        projectService.deleteProjectLike(projectId, user);
         return ResponseEntity.noContent().build();
     }
 
@@ -119,7 +119,7 @@ public class ProjectController {
             @RequestBody @Valid CommentRequest commentRequest,
             @AuthUser(accessType = {AccessType.ALL}) User user
     ){
-        CommentResponse commentResponse = projectService.createProjectComment(projectId, user.getId(), commentRequest);
+        CommentResponse commentResponse = projectService.createProjectComment(projectId, user, commentRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(commentResponse);
     }
 
@@ -129,7 +129,7 @@ public class ProjectController {
             @PathVariable("commentId") Long commentId,
             @AuthUser(accessType = {AccessType.ALL}) User user
     ){
-        projectService.deleteProjectComment(projectId, commentId, user.getId());
+        projectService.deleteProjectComment(projectId, commentId, user);
         return ResponseEntity.noContent().build();
     }
 }
