@@ -1,9 +1,12 @@
 package com.scg.stop.video.service;
 
+import com.scg.stop.user.domain.User;
+import com.scg.stop.video.domain.FavoriteVideo;
 import com.scg.stop.video.domain.Quiz;
 import com.scg.stop.video.domain.Talk;
 import com.scg.stop.video.dto.request.TalkRequest;
 import com.scg.stop.video.dto.response.TalkResponse;
+import com.scg.stop.video.repository.FavoriteVideoRepository;
 import com.scg.stop.video.repository.QuizRepository;
 import com.scg.stop.video.repository.TalkRepository;
 import com.scg.stop.global.exception.BadRequestException;
@@ -20,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class TalkService {
     private final TalkRepository talkRepository;
     private final QuizRepository quizRepository;
+    private final FavoriteVideoRepository favoriteVideoRepository;
 
     @Transactional(readOnly = true)
     public Page<TalkResponse> getTalks(String title, Integer year, Pageable pageable) {
@@ -80,6 +84,29 @@ public class TalkService {
                 () -> new BadRequestException(ExceptionCode.TALK_ID_NOT_FOUND)
         );
         talkRepository.delete(talk);
+    }
+
+    public void createFavoriteVideo(Long id, User user) {
+        Talk talk = talkRepository.findById(id).orElseThrow(() ->
+                new BadRequestException(ExceptionCode.TALK_ID_NOT_FOUND));
+        FavoriteVideo favoriteVideo = favoriteVideoRepository.findByTalkAndUser(talk, user);
+        if(favoriteVideo != null) {
+            throw new BadRequestException(ExceptionCode.ALREADY_FAVORITE);
+        }
+        FavoriteVideo newFavoriteVideo = FavoriteVideo.of(talk, user);
+        talk.addFavoriteVideo(newFavoriteVideo);
+        favoriteVideoRepository.save(newFavoriteVideo);
+    }
+
+    public void deleteFavoriteVideo(Long id, User user) {
+        Talk talk = talkRepository.findById(id).orElseThrow(() ->
+                new BadRequestException(ExceptionCode.TALK_ID_NOT_FOUND));
+        FavoriteVideo favoriteVideo = favoriteVideoRepository.findByTalkAndUser(talk, user);
+        if(favoriteVideo == null) {
+            throw new BadRequestException(ExceptionCode.NOT_FAVORITE);
+        }
+        talk.removeFavoriteVideo(favoriteVideo);
+        favoriteVideoRepository.delete(favoriteVideo);
     }
 
 }
