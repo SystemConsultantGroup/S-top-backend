@@ -1,5 +1,6 @@
 package com.scg.stop.video.service;
 
+import com.scg.stop.domain.event.domain.EventPeriod;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.user.domain.User;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Service
@@ -40,6 +42,14 @@ public class QuizService {
                 () -> new BadRequestException(ExceptionCode.NO_QUIZ)
         );
         //TODO: check period
+        int currentYear = LocalDateTime.now().getYear();
+        EventPeriod currentPeriod = eventPeriodRepository.findByYear(currentYear).orElseThrow(
+                ()->new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD)
+        );
+        LocalDateTime currentTime = LocalDateTime.now();
+        if(!(currentTime.isAfter(currentPeriod.getStart()) && currentTime.isBefore(currentPeriod.getEnd()))) {
+            throw new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD);
+        }
         boolean isSuccess = true;
         for(Map.Entry<String, QuizInfo> entry : quiz.getQuiz().entrySet()) {
             int correctAnswer = entry.getValue().getAnswer();
