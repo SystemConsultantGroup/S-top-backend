@@ -10,10 +10,13 @@ import com.scg.stop.video.domain.UserQuiz;
 import com.scg.stop.video.dto.request.QuizSubmitRequest;
 import com.scg.stop.video.dto.response.QuizResponse;
 import com.scg.stop.video.dto.response.QuizSubmitResponse;
+import com.scg.stop.video.dto.response.UserQuizResultResponse;
 import com.scg.stop.video.repository.EventPeriodRepository;
 import com.scg.stop.video.repository.QuizRepository;
 import com.scg.stop.video.repository.UserQuizRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +44,6 @@ public class QuizService {
         Quiz quiz = quizRepository.findByTalkId(talkId).orElseThrow(
                 () -> new BadRequestException(ExceptionCode.NO_QUIZ)
         );
-        //TODO: check period
         int currentYear = LocalDateTime.now().getYear();
         EventPeriod currentPeriod = eventPeriodRepository.findByYear(currentYear).orElseThrow(
                 ()->new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD)
@@ -70,4 +72,11 @@ public class QuizService {
         return new QuizSubmitResponse(userQuiz.isSuccess(), userQuiz.getTryCount());
 
     }
+
+    public Page<UserQuizResultResponse> getQuizResults(Integer year, Pageable pageable) {
+        return userQuizRepository.findUserQuizResults(year, pageable);
+    }
+
+
+
 }
