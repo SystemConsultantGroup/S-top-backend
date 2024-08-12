@@ -3,6 +3,10 @@ package com.scg.stop.domain.project.controller;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
+import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -17,11 +21,15 @@ import com.scg.stop.domain.project.domain.AwardStatus;
 import com.scg.stop.domain.project.domain.ProjectCategory;
 import com.scg.stop.domain.project.domain.ProjectType;
 import com.scg.stop.domain.project.domain.Role;
+import com.scg.stop.domain.project.dto.request.CommentRequest;
 import com.scg.stop.domain.project.dto.request.MemberRequest;
 import com.scg.stop.domain.project.dto.request.ProjectRequest;
+import com.scg.stop.domain.project.dto.response.CommentResponse;
 import com.scg.stop.domain.project.dto.response.ProjectDetailResponse;
 import com.scg.stop.domain.project.dto.response.ProjectResponse;
 import com.scg.stop.domain.project.service.ProjectService;
+import com.scg.stop.user.domain.User;
+import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +40,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
+import org.springframework.http.HttpHeaders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @WebMvcTest(ProjectController.class)
 @MockBean(JpaMetamodelMappingContext.class)
 @AutoConfigureRestDocs
 public class ProjectControllerTest extends AbstractControllerTest {
+
+    private static final String ACCESS_TOKEN = "admin_access_token";
+    private static final String REFRESH_TOKEN = "refresh_token";
 
     @MockBean
     private ProjectService projectService;
@@ -142,7 +155,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
                                 fieldWithPath("projectType").description("프로젝트 타입"),
                                 fieldWithPath("projectCategory").description("프로젝트 카테고리"),
                                 fieldWithPath("teamName").description("팀 이름"),
-                                fieldWithPath("youtubeId").description("프로젝트 yotubeId"),
+                                fieldWithPath("youtubeId").description("프로젝트 youtubeId"),
                                 fieldWithPath("techStack").description("기술 스택"),
                                 fieldWithPath("year").description("프로젝트 년도"),
                                 fieldWithPath("awardStatus").description("수상 여부"),
@@ -162,7 +175,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
                                 fieldWithPath("techStack").description("기술 스택"),
                                 fieldWithPath("year").description("프로젝트 년도"),
                                 fieldWithPath("awardStatus").description("수상 여부"),
-                                fieldWithPath("sutudentNames").description("학생 이름"),
+                                fieldWithPath("studentNames").description("학생 이름"),
                                 fieldWithPath("professorNames").description("교수 이름"),
                                 fieldWithPath("likeCount").description("좋아요 수"),
                                 fieldWithPath("bookMark").description("북마크 여부")
@@ -202,7 +215,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
                                 fieldWithPath("techStack").description("기술 스택"),
                                 fieldWithPath("year").description("프로젝트 년도"),
                                 fieldWithPath("awardStatus").description("수상 여부"),
-                                fieldWithPath("sutudentNames").description("학생 이름"),
+                                fieldWithPath("studentNames").description("학생 이름"),
                                 fieldWithPath("professorNames").description("교수 이름"),
                                 fieldWithPath("likeCount").description("좋아요 수"),
                                 fieldWithPath("bookMark").description("북마크 여부")
@@ -243,7 +256,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
                                 fieldWithPath("projectType").description("프로젝트 타입"),
                                 fieldWithPath("projectCategory").description("프로젝트 카테고리"),
                                 fieldWithPath("teamName").description("팀 이름"),
-                                fieldWithPath("youtubeId").description("프로젝트 yotubeId"),
+                                fieldWithPath("youtubeId").description("프로젝트 youtubeId"),
                                 fieldWithPath("techStack").description("기술 스택"),
                                 fieldWithPath("year").description("프로젝트 년도"),
                                 fieldWithPath("awardStatus").description("수상 여부"),
@@ -263,7 +276,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
                                 fieldWithPath("techStack").description("기술 스택"),
                                 fieldWithPath("year").description("프로젝트 년도"),
                                 fieldWithPath("awardStatus").description("수상 여부"),
-                                fieldWithPath("sutudentNames").description("학생 이름"),
+                                fieldWithPath("studentNames").description("학생 이름"),
                                 fieldWithPath("professorNames").description("교수 이름"),
                                 fieldWithPath("likeCount").description("좋아요 수"),
                                 fieldWithPath("bookMark").description("북마크 여부")
@@ -288,6 +301,220 @@ public class ProjectControllerTest extends AbstractControllerTest {
                 .andDo(restDocs.document(
                         pathParameters(
                                 parameterWithName("projectId").description("프로젝트 ID")
+                        )
+                ));
+    }
+
+    @Test
+    @DisplayName("관심 프로젝트를 추가한다.")
+    void createProjectFavorite() throws Exception {
+        // given
+        doNothing().when(projectService).createProjectFavorite(anyLong(), any(User.class));
+
+        // when
+        ResultActions result = mockMvc.perform(
+                post("/projects/{projectId}/favorite", 1L)
+                        .contentType(APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
+
+        // then
+        result.andExpect(status().isCreated())
+                .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
+                        ),
+                        pathParameters(
+                                parameterWithName("projectId").description("프로젝트 ID")
+                        )
+                ));
+    }
+
+    @Test
+    @DisplayName("관심 프로젝트를 삭제한다.")
+    void deleteProjectFavorite() throws Exception {
+        // given
+        doNothing().when(projectService).deleteProjectFavorite(anyLong(), any(User.class));
+
+        // when
+        ResultActions result = mockMvc.perform(
+                delete("/projects/{projectId}/favorite", 1L)
+                        .contentType(APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
+
+        // then
+        result.andExpect(status().isNoContent())
+                .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
+                        ),
+                        pathParameters(
+                                parameterWithName("projectId").description("프로젝트 ID")
+                        )
+                ));
+    }
+
+    @Test
+    @DisplayName("프로젝트 좋아요를 누른다.")
+    void createProjectLike() throws Exception {
+        // given
+        doNothing().when(projectService).createProjectLike(anyLong(), any(User.class));
+
+        // when
+        ResultActions result = mockMvc.perform(
+                post("/projects/{projectId}/like", 1L)
+                        .contentType(APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
+
+        // then
+        result.andExpect(status().isCreated())
+                .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
+                        ),
+                        pathParameters(
+                                parameterWithName("projectId").description("프로젝트 ID")
+                        )
+                ));
+    }
+
+    @Test
+    @DisplayName("프로젝트 좋아요를 취소한다.")
+    void deleteProjectLike() throws Exception {
+        // given
+        doNothing().when(projectService).deleteProjectLike(anyLong(), any(User.class));
+
+        // when
+        ResultActions result = mockMvc.perform(
+                delete("/projects/{projectId}/like", 1L)
+                        .contentType(APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
+
+        // then
+        result.andExpect(status().isNoContent())
+                .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
+                        ),
+                        pathParameters(
+                                parameterWithName("projectId").description("프로젝트 ID")
+                        )
+                ));
+    }
+
+    @Test
+    @DisplayName("프로젝트 댓글을 생성한다.")
+    void createProjectComment() throws Exception {
+        // given
+        CommentRequest commentRequest = new CommentRequest("테스트 댓글 내용", true);
+
+        CommentResponse commentResponse = new CommentResponse(1L,1L, "테스트 유저 이름", true,"테스트 댓글 내용" , LocalDateTime.now(), LocalDateTime.now());
+
+        when(projectService.createProjectComment(anyLong(), any(User.class), any(CommentRequest.class))).thenReturn(commentResponse);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                post("/projects/{projectId}/comment", 1L)
+                        .contentType(APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+                        .content(objectMapper.writeValueAsString(commentRequest))
+        );
+
+        verify(projectService).createProjectComment(
+                anyLong(), // 첫 번째 인자 (프로젝트 ID)
+                any(User.class), // 두 번째 인자 (유저 ID)
+                any(CommentRequest.class) // 세 번째 인자 (댓글 요청 객체)
+        );
+
+        // then
+        result.andExpect(status().isCreated())
+                .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
+                        ),
+                        pathParameters(
+                                parameterWithName("projectId").description("프로젝트 ID")
+                        ),
+                        requestFields(
+                                fieldWithPath("content").description("댓글 내용"),
+                                fieldWithPath("isAnonymous").description("익명 여부")
+                        ),
+                        responseFields(
+                                fieldWithPath("id").description("댓글 ID"),
+                                fieldWithPath("projectId").description("프로젝트 ID"),
+                                fieldWithPath("userName").description("유저 이름"),
+                                fieldWithPath("isAnonymous").description("익명 여부"),
+                                fieldWithPath("content").description("댓글 내용"),
+                                fieldWithPath("createdAt").description("생성 시간"),
+                                fieldWithPath("updatedAt").description("수정 시간")
+                        )
+
+                ));
+
+
+    }
+
+    @Test
+    @DisplayName("프로젝트 댓글을 삭제한다.")
+    void deleteProjectComment() throws Exception {
+        // given
+        doNothing().when(projectService).deleteProjectComment(anyLong(), anyLong(), any(User.class));
+
+        // when
+        ResultActions result = mockMvc.perform(
+                delete("/projects/{projectId}/comment/{commentId}", 1L, 1L)
+                        .contentType(APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
+
+        // then
+        result.andExpect(status().isNoContent())
+                .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
+                        ),
+                        pathParameters(
+                                parameterWithName("projectId").description("프로젝트 ID"),
+                                parameterWithName("commentId").description("댓글 ID")
                         )
                 ));
     }

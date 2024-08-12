@@ -2,31 +2,78 @@
 :source-highlighter: highlightjs
 
 ---
-=== 공지 사항 생성 (POST /notices)
+=== 프로젝트 조회 (GET /projects)
+==== 200 OK
+====
+operation::project-controller-test/get-projects[snippets="path-parameters,http-request,http-response,response-fields"]
+====
+
+---
+=== 프로젝트 생성 (POST /projects)
 ==== 201 Created
 ====
 operation::project-controller-test/create-project[snippets="http-request,request-fields,http-response,response-fields"]
 ====
 
-
 ---
-=== 공지 사항 조회 (GET /notices/{noticeId})
+=== 프로젝트 조회 (GET /projects/{projectId})
 ==== 200 OK
 ====
 operation::project-controller-test/get-project[snippets="path-parameters,http-request,http-response,response-fields"]
 ====
 
-
 ---
-=== 공지 사항 수정 (PUT /notices/{noticeId})
+=== 프로젝트 수정 (PUT /projects/{projectId})
 ==== 200 OK
 ====
 operation::project-controller-test/update-project[snippets="path-parameters,http-request,request-fields,http-response,response-fields"]
 ====
 
 ---
-=== 공지 사항 삭제 (DELETE /notices/{noticeId})
+=== 프로젝트 삭제 (DELETE /projects/{projectId})
 ==== 204 No Content
 ====
 operation::project-controller-test/delete-project[snippets="path-parameters,http-request,http-response"]
+====
+
+---
+=== 관심 프로젝트 등록 (POST /projects/{projectId}/favorite)
+==== 201 Created
+====
+operation::project-controller-test/create-project-favorite[snippets="path-parameters,http-request,http-response"]
+====
+
+---
+=== 관심 프로젝트 삭제 (DELETE /projects/{projectId}/favorite)
+==== 204 No Content
+====
+operation::project-controller-test/delete-project-favorite[snippets="path-parameters,http-request,http-response"]
+====
+
+---
+=== 프로젝트 좋아요 등록 (POST /projects/{projectId}/like)
+==== 201 Created
+====
+operation::project-controller-test/create-project-like[snippets="path-parameters,http-request,http-response"]
+====
+
+---
+=== 프로젝트 좋아요 삭제 (DELETE /projects/{projectId}/like)
+==== 204 No Content
+====
+operation::project-controller-test/delete-project-like[snippets="path-parameters,http-request,http-response"]
+====
+
+---
+=== 프로젝트 댓글 등록 (POST /projects/{projectId}/comment)
+==== 201 Created
+====
+operation::project-controller-test/create-project-comment[snippets="path-parameters,http-request,http-response"]
+====
+
+---
+=== 프로젝트 댓글 삭제 (DELETE /projects/{projectId}/comment)
+==== 204 No Content
+====
+operation::project-controller-test/delete-project-comment[snippets="path-parameters,http-request,http-response"]
 ====
