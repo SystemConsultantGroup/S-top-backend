@@ -17,24 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/talks/{talkId}/quiz")
+@RequestMapping("quizzes")
 public class QuizController {
 
-    public final QuizService quizService;
+    private final QuizService quizService;
 
-    @GetMapping
-    public ResponseEntity<QuizResponse> getQuiz(@PathVariable("talkId") Long talkId) {
-        QuizResponse quizResponse = quizService.getQuiz(talkId);
-        return ResponseEntity.status(HttpStatus.OK).body(quizResponse);
-    }
-
-    @PostMapping
-    public ResponseEntity<QuizSubmitResponse> submitQuiz(
-            @PathVariable("talkId") Long talkId,
-            @AuthUser(accessType = {AccessType.ALL}) User user,
-            @RequestBody @Valid QuizSubmitRequest request
-    ) {
-        QuizSubmitResponse response = quizService.submitQuiz(talkId, request, user);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
 }

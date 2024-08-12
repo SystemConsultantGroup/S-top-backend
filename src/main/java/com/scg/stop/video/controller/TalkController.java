@@ -1,8 +1,12 @@
 package com.scg.stop.video.controller;
 
 import com.scg.stop.auth.annotation.AuthUser;
+import com.scg.stop.video.dto.request.QuizSubmitRequest;
 import com.scg.stop.video.dto.request.TalkRequest;
+import com.scg.stop.video.dto.response.QuizResponse;
+import com.scg.stop.video.dto.response.QuizSubmitResponse;
 import com.scg.stop.video.dto.response.TalkResponse;
+import com.scg.stop.video.service.QuizService;
 import com.scg.stop.video.service.TalkService;
 import com.scg.stop.user.domain.AccessType;
 import com.scg.stop.user.domain.User;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/talks")
 public class TalkController {
     private final TalkService talkService;
+    private final QuizService quizService;
 
     @PostMapping
     public ResponseEntity<TalkResponse> createTalk(
@@ -64,5 +69,21 @@ public class TalkController {
     ) {
         talkService.deleteTalk(talkId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/talks/{talkId}/quiz")
+    public ResponseEntity<QuizResponse> getQuiz(@PathVariable("talkId") Long talkId) {
+        QuizResponse quizResponse = quizService.getQuiz(talkId);
+        return ResponseEntity.status(HttpStatus.OK).body(quizResponse);
+    }
+
+    @PostMapping("/talks/{talkId}/quiz")
+    public ResponseEntity<QuizSubmitResponse> submitQuiz(
+            @PathVariable("talkId") Long talkId,
+            @AuthUser(accessType = {AccessType.ALL}) User user,
+            @RequestBody @Valid QuizSubmitRequest request
+    ) {
+        QuizSubmitResponse response = quizService.submitQuiz(talkId, request, user);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
