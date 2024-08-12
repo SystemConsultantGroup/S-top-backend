@@ -10,6 +10,7 @@ import com.scg.stop.video.dto.request.TalkRequest;
 import com.scg.stop.video.dto.response.QuizResponse;
 import com.scg.stop.video.dto.response.QuizSubmitResponse;
 import com.scg.stop.video.dto.response.TalkResponse;
+import com.scg.stop.video.service.FavoriteVideoService;
 import com.scg.stop.video.service.QuizService;
 import com.scg.stop.video.service.TalkService;
 import jakarta.servlet.http.Cookie;
@@ -60,6 +61,9 @@ public class TalkControllerTest extends AbstractControllerTest {
 
     @MockBean
     private QuizService quizService;
+
+    @MockBean
+    private FavoriteVideoService favoriteVideoService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -426,6 +430,69 @@ public class TalkControllerTest extends AbstractControllerTest {
                         )
                 ));
     }
+
+    @Test
+    @DisplayName("대담 영상을 관심 목록에 추가할 수 있다.")
+    void createTalkFavorite() throws Exception {
+        //given
+        Long id = 1L;
+        doNothing().when(favoriteVideoService).createTalkFavorite(anyLong(), any());
+        //when
+        ResultActions result = mockMvc.perform(
+                post("/talks/{talkId}/favorite", id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, USER_ACCESS_TOKEN)
+                .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
+        //then
+        result.andExpect(status().isCreated())
+                .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
+                        ),
+                        pathParameters(
+                                parameterWithName("talkId").description("관심 목록에 추가할 대담 영상의 ID")
+                        )
+                ));
+
+    }
+
+    @Test
+    @DisplayName("대담 영상을 관심 목록서 삭제할 수 있다.")
+    void deleteTalkFavorite() throws Exception {
+        //given
+        Long id = 1L;
+        doNothing().when(favoriteVideoService).deleteTalkFavorite(anyLong(), any());
+        //when
+        ResultActions result = mockMvc.perform(
+                delete("/talks/{talkId}/favorite", id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, USER_ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
+        //then
+        result.andExpect(status().isNoContent())
+                .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
+                        ),
+                        pathParameters(
+                                parameterWithName("talkId").description("관심 목록에서 삭제할 대담 영상의 ID")
+                        )
+                ));
+
+    }
+
 
 
 
