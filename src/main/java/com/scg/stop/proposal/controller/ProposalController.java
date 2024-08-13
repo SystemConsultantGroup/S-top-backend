@@ -35,7 +35,7 @@ public class ProposalController {
     public ResponseEntity<Page<ProposalResponse>> getProposals(@AuthUser(accessType = {AccessType.COMPANY, AccessType.ADMIN}) User user,
                                                                @RequestParam(value = "title", required = false) String title,
                                                                @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        Page<ProposalResponse> proposalResponse = proposalService.getProposal(title, pageable);
+        Page<ProposalResponse> proposalResponse = proposalService.getProposalList(title, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(proposalResponse);
     }
 
@@ -49,13 +49,14 @@ public class ProposalController {
     @PostMapping()
     public ResponseEntity<ProposalDetailResponse> createProposal(@AuthUser(accessType = {AccessType.COMPANY}) User user,
                                                                  @RequestBody ProposalCreateRequest proposalCreateRequest) {
-        ProposalDetailResponse proposalDetailResponse = proposalService.createProposal(proposalCreateRequest);
+        ProposalDetailResponse proposalDetailResponse = proposalService.createProposal(user, proposalCreateRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(proposalDetailResponse);
     }
 
     @DeleteMapping("/{proposalId}")
     public ResponseEntity<Void> deleteProposal(@AuthUser(accessType = {AccessType.ADMIN, AccessType.COMPANY}) User user,
                                            @PathVariable("proposalId") Long proposalId) {
+        proposalService.deleteProposal(proposalId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
