@@ -61,7 +61,6 @@ public class ProjectControllerTest extends AbstractControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    // ToDo: getProjects() 코드가 base 브랜치에 있어서, 추후에 새로운 브랜치 만들어서 작성하기 지금 시작..!!!!!!!! 오밤...
     @DisplayName("간단한 프로젝트 리스트를 조회한다. | 페이지네이션")
     @Test
     void getProjects() throws Exception {
