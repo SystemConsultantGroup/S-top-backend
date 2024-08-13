@@ -1,4 +1,4 @@
-package com.scg.stop.domain.proposal.domain;
+package com.scg.stop.proposal.domain;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -54,5 +54,5 @@ public class Proposal extends BaseTimeEntity {
     private User user;
 
     @OneToOne(fetch = LAZY, mappedBy = "proposal")
-    private ProposalResponse proposalResponse;
+    private ProposalReply proposalResponse;
 }

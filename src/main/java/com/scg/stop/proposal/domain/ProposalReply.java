@@ -1,4 +1,4 @@
-package com.scg.stop.domain.proposal.domain;
+package com.scg.stop.proposal.domain;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-public class ProposalResponse extends BaseTimeEntity {
+public class ProposalReply extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
