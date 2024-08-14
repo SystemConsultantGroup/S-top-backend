@@ -1,0 +1,32 @@
+== 잡페어 인터뷰 API
+:source-highlighter: highlightjs
+
+---
+=== 잡페어 인터뷰 생성 (POST /jobInterviews)
+====
+operation::job-interview-controller-test/create-job-interview[snippets="http-request,request-fields,http-response,response-fields"]
+====
+
+---
+=== 잡페어 인터뷰 리스트 조회 (GET /jobInterviews)
+====
+operation::job-interview-controller-test/get-job-interview-list[snippets="http-request,query-parameters,http-response,response-fields"]
+====
+
+---
+=== 잡페어 인터뷰 단건 조회 (GET /jobInterviews/{jobInterviewId})
+====
+operation::job-interview-controller-test/get-job-interview[snippets="http-request,path-parameters,http-response,response-fields"]
+====
+
+---
+=== 잡페어 인터뷰 수정 (PUT /jobInterviews/{jobInterviewId})
+====
+operation::job-interview-controller-test/update-job-interview[snippets="http-request,path-parameters,request-fields,http-response,response-fields"]
+====
+
+---
+=== 잡페어 인터뷰 삭제 (DELETE /jobInterviews/{jobInterviewId})
+====
+operation::job-interview-controller-test/delete-job-interview[snippets="http-request,path-parameters,http-response"]
+====
