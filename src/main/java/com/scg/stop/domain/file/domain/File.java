@@ -4,7 +4,7 @@ import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
-import com.scg.stop.domain.gallery.domain.Gallery;
+import com.scg.stop.gallery.domain.Gallery;
 import com.scg.stop.notice.domain.Notice;
 import com.scg.stop.event.domain.EventNotice;
 import com.scg.stop.global.domain.BaseTimeEntity;
@@ -53,5 +53,9 @@ public class File extends BaseTimeEntity {
 
     public void setEventNotice(EventNotice eventNotice) {
         this.eventNotice = eventNotice;
+    }
+
+    public void setGallery(Gallery gallery) {
+        this.gallery = gallery;
     }
 }
