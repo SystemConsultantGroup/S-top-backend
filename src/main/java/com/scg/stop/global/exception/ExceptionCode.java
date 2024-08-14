@@ -34,7 +34,11 @@ public enum ExceptionCode {
 
     ID_NOT_FOUND(8200,"해당 ID에 해당하는 잡페어 인터뷰가 없습니다."),
     TALK_ID_NOT_FOUND(8400, "해당 ID에 해당하는 대담 영상이 없습니다."),
-    NO_QUIZ(8401, "퀴즈 데이터가 존재하지 않습니다.");
+    NO_QUIZ(8401, "퀴즈 데이터가 존재하지 않습니다."),
+
+    NOT_FOUND_PROPOSAL(9000, "제안 id에 해당하는 제안서가 없습니다." ),
+    NOT_FOUND_PROPOSALREPLY(9001, "제안 답변 ID에 해당하는 답변이 없습니다."),
+    INVALID_PROJECT_TYPE(9002, "쉼표와 띄어쓰기로 프로젝트 타입을 구분해주세요.");
 
 
     private final int code;

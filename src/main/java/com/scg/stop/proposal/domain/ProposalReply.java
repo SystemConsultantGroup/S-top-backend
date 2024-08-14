@@ -23,10 +23,26 @@ public class ProposalReply extends BaseTimeEntity {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private String title;
+
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @OneToOne(fetch = LAZY)
     @JoinColumn(name = "proposal_id")
     private Proposal proposal;
+    private ProposalReply(String title, String content, Proposal proposal) {
+        this.title = title;
+        this.content = content;
+        this.proposal = proposal;
+    }
+    public static ProposalReply createProposalReply(String title, String content, Proposal proposal) {
+        return new ProposalReply(title, content, proposal);
+    }
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }

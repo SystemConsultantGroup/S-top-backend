@@ -1,13 +1,15 @@
 package com.scg.stop.proposal.controller;
 
 import com.scg.stop.auth.annotation.AuthUser;
-import com.scg.stop.proposal.domain.request.ProposalCreateRequest;
+import com.scg.stop.proposal.domain.request.ProposalRequest;
+import com.scg.stop.proposal.domain.request.ProposalReplyRequest;
 import com.scg.stop.proposal.domain.response.ProposalDetailResponse;
-import com.scg.stop.proposal.domain.response.ProposalReplyReponse;
+import com.scg.stop.proposal.domain.response.ProposalReplyResponse;
 import com.scg.stop.proposal.domain.response.ProposalResponse;
 import com.scg.stop.proposal.service.ProposalService;
 import com.scg.stop.user.domain.AccessType;
 import com.scg.stop.user.domain.User;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -48,9 +50,18 @@ public class ProposalController {
 
     @PostMapping()
     public ResponseEntity<ProposalDetailResponse> createProposal(@AuthUser(accessType = {AccessType.COMPANY}) User user,
-                                                                 @RequestBody ProposalCreateRequest proposalCreateRequest) {
+                                                                 @RequestBody @Valid ProposalRequest proposalCreateRequest) {
         ProposalDetailResponse proposalDetailResponse = proposalService.createProposal(user, proposalCreateRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(proposalDetailResponse);
+    }
+
+    @PutMapping("/{proposalId}")
+    public ResponseEntity<ProposalDetailResponse> updateProposal(@AuthUser(accessType = {AccessType.COMPANY, AccessType.ADMIN}) User user,
+                                                                 @PathVariable("proposalId") Long proposalId,
+                                                                 @RequestBody @Valid ProposalRequest proposalUpdateRequest) {
+        ProposalDetailResponse proposalDetailResponse = proposalService.updateProposal(proposalId,
+                proposalUpdateRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(proposalDetailResponse);
     }
 
     @DeleteMapping("/{proposalId}")
@@ -61,23 +72,26 @@ public class ProposalController {
     }
 
     @PostMapping("/{proposalId}/reply")
-    public ResponseEntity<ProposalReplyReponse> createProposalReply(@AuthUser(accessType = {AccessType.ADMIN}) User user,
-                                                                    @PathVariable("proposalId") Long proposalId) {
-        ProposalReplyReponse proposalReplyReponse = proposalService.createProposalReply(proposalId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(proposalReplyReponse);
+    public ResponseEntity<ProposalReplyResponse> createProposalReply(@AuthUser(accessType = {AccessType.ADMIN}) User user,
+                                                                     @PathVariable("proposalId") Long proposalId,
+                                                                     @RequestBody @Valid ProposalReplyRequest proposalReplyCreateRequest) {
+        ProposalReplyResponse proposalReplyResponse = proposalService.createProposalReply(proposalId, proposalReplyCreateRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(proposalReplyResponse);
     }
 
-    @PutMapping("/{proposalId}/reply")
-    public ResponseEntity<ProposalReplyReponse> updateProposalReply(@AuthUser(accessType = {AccessType.ADMIN}) User user,
-                                           @PathVariable("proposalId") Long proposalId) {
+    @PutMapping("/{proposalId}/reply/{proposalReplyId}")
+    public ResponseEntity<ProposalReplyResponse> updateProposalReply(@AuthUser(accessType = {AccessType.ADMIN}) User user,
+                                                                     @PathVariable("proposalId") Long proposalId,
+                                                                     @PathVariable("proposalReplyId") Long proposalReplyId,
+                                                                     @RequestBody @Valid ProposalReplyRequest proposalReplyUpdateRequest) {
 
-        ProposalReplyReponse proposalReplyReponse = proposalService.updateProposalReply(proposalId);
-        return ResponseEntity.status(HttpStatus.OK).body(proposalReplyReponse);
+        ProposalReplyResponse proposalReplyResponse = proposalService.updateProposalReply(proposalReplyId, proposalReplyUpdateRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(proposalReplyResponse);
     }
-    @DeleteMapping("/{proposalId}/reply")
+    @DeleteMapping("/{proposalId}/reply/{proposalReplyId}")
     public ResponseEntity<Void> deleteProposalReply(@AuthUser(accessType = {AccessType.ADMIN}) User user,
-                                           @PathVariable("proposalId") Long proposalId) {
-        proposalService.deleteProposalReply(proposalId);
+                                           @PathVariable("proposalId") Long proposalId, @PathVariable("proposalReplyId") Long proposalReplyId) {
+        proposalService.deleteProposalReply(proposalReplyId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

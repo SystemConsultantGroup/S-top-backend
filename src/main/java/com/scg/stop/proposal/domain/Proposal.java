@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,7 +30,7 @@ public class Proposal extends BaseTimeEntity {
     private String title;
 
     @Column(nullable = false)
-    private String field;
+    private String projectTypes;
 
     @Column(nullable = false)
     private String email;
@@ -54,5 +55,35 @@ public class Proposal extends BaseTimeEntity {
     private User user;
 
     @OneToOne(fetch = LAZY, mappedBy = "proposal")
-    private ProposalReply proposalResponse;
+    private ProposalReply proposalReply;
+
+    private Proposal(User user, String title, String projectTypes, String email, String website, String content,
+                            String description, Boolean isVisible, Boolean isAnonymous) {
+        this.title = title;
+        this.projectTypes= projectTypes;
+        this.email = email;
+        this.website = website;
+        this.content = content;
+        this.description = description;
+        this.isAnonymous = isAnonymous;
+        this.isVisible = isVisible;
+        this.user = user;
+    }
+
+    public static Proposal createProposal(User user, String title, String projectTypes, String email, String website,
+                                           String content, String description, Boolean isVisible, Boolean isAnonymous) {
+        return new Proposal(user, title, projectTypes, email, website, content, description, isVisible, isAnonymous);
+    }
+
+    public void update(String title, String projectTypes, String email, String website, String content,
+                       String description, Boolean isVisible, Boolean isAnonymous) {
+        this.title = title;
+        this.projectTypes= projectTypes;
+        this.email = email;
+        this.website = website;
+        this.content = content;
+        this.description = description;
+        this.isAnonymous = isAnonymous;
+        this.isVisible = isVisible;
+    }
 }

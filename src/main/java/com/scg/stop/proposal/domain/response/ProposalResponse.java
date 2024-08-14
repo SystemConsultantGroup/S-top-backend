@@ -12,12 +12,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ProposalResponse {
 
+    private Long id;
     private String title;
     private String name;
     private LocalDateTime createdDate;
 
-    public static  ProposalResponse of(String title, String name, LocalDateTime date) {
+    public static  ProposalResponse of(Long id, String title, String name, LocalDateTime date) {
         return new ProposalResponse(
+                id,
                 title,
                 name,
                 date
