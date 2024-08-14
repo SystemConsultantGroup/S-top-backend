@@ -22,7 +22,9 @@ public enum ExceptionCode {
     REGISTER_NOT_FINISHED(4001, "회원가입이 필요합니다."),
     NOT_AUTHORIZED(4002, "유저 권한이 존재하지 않습니다."),
     NOT_FOUND_DEPARTMENT(4003, "학과가 존재하지 않습니다."),
-    INVALID_STUDENTINFO(4004, "학과/학번 정보가 존재하지 않습니다.");
+    INVALID_STUDENTINFO(4004, "학과/학번 정보가 존재하지 않습니다."),
+
+    UNABLE_TO_EDIT_USER_TYPE(4100, "회원 유형은 수정할 수 없습니다.");
 
     private final int code;
     private final String message;

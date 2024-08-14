@@ -1,5 +1,7 @@
 package com.scg.stop.user.service;
 
+import com.scg.stop.global.exception.BadRequestException;
+import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.user.domain.User;
 import com.scg.stop.user.domain.UserType;
 import com.scg.stop.user.dto.request.UserUpdateRequest;
@@ -48,6 +50,10 @@ public class UserService {
     }
 
     public UserResponse updateMe(User user, UserUpdateRequest request) {
+        if (request.getUserType() != user.getUserType()) {
+            throw new BadRequestException(ExceptionCode.UNABLE_TO_EDIT_USER_TYPE);
+        }
+
         if (request.getName() != null) user.updateName(request.getName());
         if (request.getPhone() != null) user.updatePhone(request.getPhone());
         if (request.getEmail() != null) user.updateEmail(request.getEmail());
