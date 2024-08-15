@@ -88,6 +88,14 @@ public class User extends BaseTimeEntity {
         this.signupSource = signupSource;
     }
 
+    public void updateStudentInfo(Student studentInfo) {
+        this.studentInfo = studentInfo;
+    }
+
+    public void updateApplication(Application application) {
+        this.application = application;
+    }
+
     @PreRemove
     private void preRemove() {
         proposals.forEach(proposal -> proposal.setUser(null));
