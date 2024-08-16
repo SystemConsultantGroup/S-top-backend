@@ -26,12 +26,16 @@ public class UserService {
 
     public UserResponse getMe(User user) {
         if (user.getUserType().equals(UserType.STUDENT)) {
+            Student studentInfo = user.getStudentInfo();
+            Department department = departmentRepository.findById(studentInfo.getDepartment().getId())
+                    .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_DEPARTMENT));
+
             return UserResponse.of(
                     user,
                     null,
                     null,
-                    user.getStudentInfo().getStudentNumber(),
-                    user.getStudentInfo().getDepartment().getName()
+                    studentInfo.getStudentNumber(),
+                    department.getName()
             );
         }
         else if (Arrays.asList(UserType.INACTIVE_PROFESSOR, UserType.COMPANY, UserType.INACTIVE_COMPANY, UserType.PROFESSOR).contains(user.getUserType())) {
