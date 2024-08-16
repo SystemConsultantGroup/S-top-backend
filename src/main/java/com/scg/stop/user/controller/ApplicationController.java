@@ -44,11 +44,11 @@ public class ApplicationController {
     }
 
     @PatchMapping("/{applicationId}")
-    public ResponseEntity<ApplicationDetailResponse> updateApplication(
+    public ResponseEntity<ApplicationDetailResponse> approveApplication(
             @PathVariable("applicationId") Long applicationId,
             @AuthUser(accessType = {AccessType.ADMIN}) User user
     ) {
-        ApplicationDetailResponse application = applicationService.updateApplication(applicationId);
+        ApplicationDetailResponse application = applicationService.approveApplication(applicationId);
         return ResponseEntity.ok().body(application);
     }
 

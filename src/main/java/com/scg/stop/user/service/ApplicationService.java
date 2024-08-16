@@ -39,7 +39,7 @@ public class ApplicationService {
         return ApplicationDetailResponse.from(application);
     }
 
-    public ApplicationDetailResponse updateApplication(Long applicationId) {
+    public ApplicationDetailResponse approveApplication(Long applicationId) {
         Application application = applicationRepository.findById(applicationId)
                 .orElseThrow(() -> new BadRequestException(NOT_FOUND_APPLICATION_ID));
         if(application.getStatus() == ApplicationStatus.ACTIVE) {
