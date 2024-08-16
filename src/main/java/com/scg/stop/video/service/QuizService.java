@@ -7,6 +7,7 @@ import com.scg.stop.user.domain.User;
 import com.scg.stop.user.repository.UserRepository;
 import com.scg.stop.video.domain.Quiz;
 import com.scg.stop.video.domain.QuizInfo;
+import com.scg.stop.video.domain.Talk;
 import com.scg.stop.video.domain.UserQuiz;
 import com.scg.stop.video.dto.request.QuizSubmitRequest;
 import com.scg.stop.video.dto.response.QuizResponse;
@@ -14,6 +15,7 @@ import com.scg.stop.video.dto.response.QuizSubmitResponse;
 import com.scg.stop.video.dto.response.UserQuizResultResponse;
 import com.scg.stop.video.repository.EventPeriodRepository;
 import com.scg.stop.video.repository.QuizRepository;
+import com.scg.stop.video.repository.TalkRepository;
 import com.scg.stop.video.repository.UserQuizRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,7 +30,7 @@ import java.util.Map;
 @Transactional
 @RequiredArgsConstructor
 public class QuizService {
-
+    private final TalkRepository talkRepository;
     private final QuizRepository quizRepository;
     private final UserQuizRepository userQuizRepository;
     private final EventPeriodRepository eventPeriodRepository;
@@ -36,16 +38,19 @@ public class QuizService {
 
     @Transactional(readOnly = true)
     public QuizResponse getQuiz(Long talkId) {
-        Quiz quiz = quizRepository.findByTalkId(talkId).orElseThrow(
-                () -> new BadRequestException(ExceptionCode.NO_QUIZ)
+        Talk talk = talkRepository.findById(talkId).orElseThrow(
+                () -> new BadRequestException(ExceptionCode.TALK_ID_NOT_FOUND)
         );
-        return QuizResponse.from(quiz);
+        if(talk.getQuiz() == null) throw new BadRequestException(ExceptionCode.NO_QUIZ);
+        return QuizResponse.from(talk.getQuiz());
     }
 
     public QuizSubmitResponse submitQuiz(Long talkId, QuizSubmitRequest submitRequest, Long userId) {
-        Quiz quiz = quizRepository.findByTalkId(talkId).orElseThrow(
-                () -> new BadRequestException(ExceptionCode.NO_QUIZ)
+        Talk talk = talkRepository.findById(talkId).orElseThrow(
+                () -> new BadRequestException(ExceptionCode.TALK_ID_NOT_FOUND)
         );
+        if(talk.getQuiz() == null) throw new BadRequestException(ExceptionCode.NO_QUIZ);
+        Quiz quiz = talk.getQuiz();
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new BadRequestException(ExceptionCode.NOT_FOUND_USER_ID)
         );

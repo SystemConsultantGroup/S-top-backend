@@ -3,14 +3,14 @@ spring:
     activate:
       on-profile: local
   datasource:
-    url: jdbc:mysql://127.0.0.1:3307/stop
+    url: jdbc:mysql://127.0.0.1:3306/s-top
     username: root
-    password: 1234
+    password: 9999
   jpa:
     open-in-view: false
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         default_batch_fetch_size: 15
