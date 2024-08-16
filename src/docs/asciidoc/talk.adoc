@@ -29,7 +29,7 @@ operation::talk-controller-test/delete-talk[snippets="http-request,path-paramete
 
 === 대담 영상의 퀴즈 조회 (GET /talks/{talkId}/quiz)
 ====
-operation::talk-controller-test/get-quiz[snippets=http-request,path-parameters,http-response,response-fields"]
+operation::talk-controller-test/get-quiz[snippets="http-request,path-parameters,http-response,response-fields"]
 ====
 
 === 대담 영상의 퀴즈 결과 제출 (POST /talks/{talkId}/quiz)
