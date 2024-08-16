@@ -4,9 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
 import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -169,7 +167,7 @@ class ApplicationControllerTest extends AbstractControllerTest {
                 applicationId, "김영한", "010-1111-2222", "email@gmail.com", "배민", "CEO", UserType.COMPANY, LocalDateTime.now(), LocalDateTime.now()
         );
 
-        when(applicationService.updateApplication(applicationId)).thenReturn(response);
+        when(applicationService.approveApplication(applicationId)).thenReturn(response);
 
         // when
         ResultActions result = mockMvc.perform(patch("/applications/{applicationId}", applicationId)
