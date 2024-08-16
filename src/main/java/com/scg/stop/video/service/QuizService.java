@@ -1,6 +1,7 @@
 package com.scg.stop.video.service;
 
-import com.scg.stop.domain.event.domain.EventPeriod;
+import com.scg.stop.event.domain.EventPeriod;
+import com.scg.stop.event.repository.EventPeriodRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.user.domain.User;
@@ -13,7 +14,6 @@ import com.scg.stop.video.dto.request.QuizSubmitRequest;
 import com.scg.stop.video.dto.response.QuizResponse;
 import com.scg.stop.video.dto.response.QuizSubmitResponse;
 import com.scg.stop.video.dto.response.UserQuizResultResponse;
-import com.scg.stop.video.repository.EventPeriodRepository;
 import com.scg.stop.video.repository.QuizRepository;
 import com.scg.stop.video.repository.TalkRepository;
 import com.scg.stop.video.repository.UserQuizRepository;
@@ -55,9 +55,10 @@ public class QuizService {
                 () -> new BadRequestException(ExceptionCode.NOT_FOUND_USER_ID)
         );
         int currentYear = LocalDateTime.now().getYear();
-        EventPeriod currentPeriod = eventPeriodRepository.findByYear(currentYear).orElseThrow(
-                ()->new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD)
-        );
+        EventPeriod currentPeriod = eventPeriodRepository.findByYear(currentYear);
+        if(currentPeriod == null) {
+            throw new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD);
+        }
         LocalDateTime currentTime = LocalDateTime.now();
         if(!(currentTime.isAfter(currentPeriod.getStart()) && currentTime.isBefore(currentPeriod.getEnd()))) {
             throw new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD);
