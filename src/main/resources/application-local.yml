@@ -15,5 +15,8 @@ spring:
       hibernate:
         default_batch_fetch_size: 15
 
+logging.level:
+  org.hibernate.SQL: debug
+  org.hibernate.orm.jdbc.bind: trace
 
 server.port: 8000
