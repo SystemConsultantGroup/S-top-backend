@@ -98,6 +98,17 @@ public class QuizService {
         return userQuizRepository.findUserQuizResults(year, pageable);
     }
 
-
+    @Transactional(readOnly = true)
+    public QuizSubmitResponse getUserQuiz(Long talkId, User user) {
+        Talk talk = talkRepository.findById(talkId).orElseThrow(
+                () -> new BadRequestException(ExceptionCode.TALK_ID_NOT_FOUND)
+        );
+        if(talk.getQuiz() == null) throw new BadRequestException(ExceptionCode.NO_QUIZ);
+        UserQuiz userQuiz = userQuizRepository.findByUserAndQuiz(user, talk.getQuiz());
+        if(userQuiz == null) {
+            throw new BadRequestException(ExceptionCode.NOT_FOUND_USER_QUIZ);
+        }
+        return new QuizSubmitResponse(userQuiz.isSuccess(), userQuiz.getTryCount());
+    }
 
 }

@@ -89,6 +89,15 @@ public class TalkController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @GetMapping("/{talkId}/quiz/submit")
+    public ResponseEntity<QuizSubmitResponse> getUserQuiz(
+            @PathVariable("talkId") Long talkId,
+            @AuthUser(accessType = {AccessType.ALL}) User user
+    ) {
+        QuizSubmitResponse response = quizService.getUserQuiz(talkId, user);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
     @PostMapping("/{talkId}/favorite")
     public ResponseEntity<Void> createTalkFavorite(
             @PathVariable("talkId") Long talkId,
