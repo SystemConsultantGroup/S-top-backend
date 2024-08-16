@@ -50,15 +50,20 @@ public class QuizService {
                 () -> new BadRequestException(ExceptionCode.TALK_ID_NOT_FOUND)
         );
         if(talk.getQuiz() == null) throw new BadRequestException(ExceptionCode.NO_QUIZ);
+        int currentYear = LocalDateTime.now().getYear();
+        if(talk.getYear() != currentYear) {
+            throw new BadRequestException(ExceptionCode.MISMATCH_CURRENT_YEAR);
+        }
         Quiz quiz = talk.getQuiz();
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new BadRequestException(ExceptionCode.NOT_FOUND_USER_ID)
         );
-        int currentYear = LocalDateTime.now().getYear();
+
         EventPeriod currentPeriod = eventPeriodRepository.findByYear(currentYear);
         if(currentPeriod == null) {
             throw new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD);
         }
+
         LocalDateTime currentTime = LocalDateTime.now();
         if(!(currentTime.isAfter(currentPeriod.getStart()) && currentTime.isBefore(currentPeriod.getEnd()))) {
             throw new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD);
@@ -85,6 +90,7 @@ public class QuizService {
 
     }
 
+    @Transactional(readOnly = true)
     public Page<UserQuizResultResponse> getQuizResults(Integer year, Pageable pageable) {
         if(year == null) {
             year = LocalDateTime.now().getYear();
