@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -32,6 +33,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private static final int ONE_WEEK_SECONDS = 604800;
 
+    @Value("${spring.redirectUri}")
+    private String REDIRECT_URI;
+
     private final AuthService authService;
 
     @GetMapping(value = "/login/kakao")
@@ -51,6 +55,7 @@ public class AuthController {
                 .build();
 
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+        response.addHeader("Location", REDIRECT_URI);
         return ResponseEntity.ok(new AccessTokenResponse(userTokens.getAccessToken()));
     }
 
