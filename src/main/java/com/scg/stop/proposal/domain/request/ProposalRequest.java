@@ -3,6 +3,7 @@ package com.scg.stop.proposal.domain.request;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 
@@ -27,10 +28,10 @@ public class ProposalRequest {
     @NotBlank(message = "과제 내용을 입력해주세요.")
     private final String content;
 
-    @NotBlank(message = "과제의 공개여부를 입력해주세요.")
+    @NotNull(message = "과제의 공개여부를 입력해주세요.")
     private Boolean isVisible;
 
-    @NotBlank(message = "과제의 익명여부를 입력해주세요.")
+    @NotNull(message = "과제의 익명여부를 입력해주세요.")
     private Boolean isAnonymous;
 //    private String fileUuid;
 

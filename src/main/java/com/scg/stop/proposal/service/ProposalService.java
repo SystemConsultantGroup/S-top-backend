@@ -2,7 +2,7 @@ package com.scg.stop.proposal.service;
 
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
-import com.scg.stop.global.infrastructure.MailSenderEvent;
+import com.scg.stop.global.infrastructure.EmailService;
 import com.scg.stop.proposal.domain.Proposal;
 import com.scg.stop.proposal.domain.ProposalReply;
 import com.scg.stop.proposal.domain.request.ProposalRequest;
@@ -14,10 +14,8 @@ import com.scg.stop.proposal.repository.ProposalReplyRepository;
 import com.scg.stop.proposal.repository.ProposalRepository;
 import com.scg.stop.user.domain.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,16 +26,12 @@ public class ProposalService {
 
     private final ProposalRepository proposalRepository;
     private final ProposalReplyRepository proposalReplyRepository;
-    private final ApplicationEventPublisher applicationEventPublisher;
-    private final JavaMailSender javaMailSender;
-
+    private final EmailService emailService;
     @Transactional(readOnly = true)
     public Page<ProposalResponse> getProposalList(String title, Pageable pageable) {
         Page<Proposal> proposals = proposalRepository.findProposals(title, pageable);
         return proposals
-                .map(proposal -> {
-                    return ProposalResponse.of(proposal.getId(), proposal.getTitle(), proposal.getUser().getName(), proposal.getCreatedAt());
-                });
+                .map(proposal -> ProposalResponse.of(proposal.getId(), proposal.getTitle(), proposal.getUser().getName(), proposal.getCreatedAt()));
     }
 
     @Transactional(readOnly = true)
@@ -67,7 +61,8 @@ public class ProposalService {
                 proposalCreateRequest.getIsVisible(),
                 proposalCreateRequest.getIsAnonymous());
         proposalRepository.save(proposal);
-        applicationEventPublisher.publishEvent(new MailSenderEvent(proposal.getEmail()));
+        //TODO: 이메일 형식 정하기  & 과제 제안메일은 어드민 이메일로만 보내면 되는지?
+        emailService.sendEmail(proposal.getEmail(), proposal.getTitle(), proposal.getContent());
         return ProposalDetailResponse.of(proposal.getId(), proposal.getUser().getName(), proposal.getEmail(), proposal.getWebsite(),
                 proposal.getTitle(), proposal.getDescription(), proposal.getProjectTypes(), proposal.getContent());
     }
@@ -85,7 +80,7 @@ public class ProposalService {
                 proposalUpdateRequest.getIsVisible(),
                 proposalUpdateRequest.getIsAnonymous()
         );
-        applicationEventPublisher.publishEvent(new MailSenderEvent(proposal.getEmail()));
+//        emailService.sendEmail();
         return ProposalDetailResponse.of(proposal.getId(), proposal.getUser().getName(), proposal.getEmail(), proposal.getWebsite(),
                 proposal.getTitle(), proposal.getDescription(), proposal.getProjectTypes(), proposal.getContent());
     }

@@ -1,5 +1,7 @@
 package com.scg.stop.global.config;
 
+import com.scg.stop.global.infrastructure.EmailService;
+import com.scg.stop.global.infrastructure.TransactionalEmailService;
 import java.util.Properties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,14 +40,14 @@ public class MailConfig {
     @Value("${spring.mail.properties.mail.smtp.debug}")
     private boolean debug;
 
-    @Value("${spring.mail.properties.mail.smtp.connectiontimeout}")
+    @Value("${spring.mail.properties.mail.smtp.timeout}")
     private int connectionTimeout;
 
-    @Value("${spring.mail.properties.mail.starttls.enable}")
+    @Value("${spring.mail.properties.mail.smtp.starttls.enable}")
     private boolean startTlsEnable;
 
     @Bean
-    public JavaMailSender javaMailService() {
+    public JavaMailSender javaMailSender() {
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
         javaMailSender.setHost(host);
         javaMailSender.setUsername(username);
@@ -63,4 +65,6 @@ public class MailConfig {
 
         return javaMailSender;
     }
+
+
 }
