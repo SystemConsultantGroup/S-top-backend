@@ -2,15 +2,22 @@
 :source-highlighter: highlightjs
 
 ---
-=== 인증 신청 리스트 조회 (GET /applications)
+=== 가입 신청 리스트 조회 (GET /applications)
 ====
 operation::application-controller-test/get-applications[snippets="http-request,query-parameters,http-response,response-fields"]
 ====
-=== 인증 신청자 상세 정보 조회 (GET /applications/{applicationId})
+
+=== 가입 신청자 상세 정보 조회 (GET /applications/{applicationId})
 ====
 operation::application-controller-test/get-application[snippets="http-request,path-parameters,http-response,response-fields"]
 ====
-=== 교수/기업 인증 (GET /applications/{applicationId})
+
+=== 교수/기업 가입 허가 (PATCH /applications/{applicationId})
 ====
 operation::application-controller-test/update-application[snippets="http-request,path-parameters,http-response,response-fields"]
+====
+
+=== 교수/기업 가입 거절 (DELETE /applications/{applicationId})
+====
+operation::application-controller-test/reject-application[snippets="http-request,path-parameters,http-response"]
 ====
