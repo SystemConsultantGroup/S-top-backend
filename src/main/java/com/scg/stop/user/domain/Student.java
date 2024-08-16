@@ -54,4 +54,8 @@ public class Student extends BaseTimeEntity {
     public void updateStudentNumber(String newStudentNumber) {
         this.studentNumber = newStudentNumber;
     }
+
+    public void updateDepartment(Department newDepartment) {
+        this.department = newDepartment;
+    }
 }

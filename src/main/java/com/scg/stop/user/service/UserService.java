@@ -8,13 +8,17 @@ import com.scg.stop.user.domain.User;
 import com.scg.stop.user.domain.UserType;
 import com.scg.stop.user.dto.request.UserUpdateRequest;
 import com.scg.stop.user.dto.response.UserResponse;
+import com.scg.stop.user.repository.ApplicationRepository;
 import com.scg.stop.user.repository.DepartmentRepository;
+import com.scg.stop.user.repository.StudentRepository;
 import com.scg.stop.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+
+import static io.micrometer.common.util.StringUtils.isNotBlank;
 
 @Service
 @RequiredArgsConstructor
@@ -59,22 +63,23 @@ public class UserService {
     }
 
     public UserResponse updateMe(User user, UserUpdateRequest request) {
-        if (request.getUserType() != user.getUserType()) {
-            throw new BadRequestException(ExceptionCode.UNABLE_TO_EDIT_USER_TYPE);
-        }
-
-        if (request.getName() != null) user.updateName(request.getName());
-        if (request.getPhone() != null) user.updatePhone(request.getPhone());
-        if (request.getEmail() != null) user.updateEmail(request.getEmail());
+        if (isNotBlank(request.getName())) user.updateName(request.getName());
+        if (isNotBlank(request.getPhone())) user.updatePhone(request.getPhone());
+        if (isNotBlank(request.getEmail())) user.updateEmail(request.getEmail());
 
         if (user.getUserType().equals(UserType.STUDENT)) {
-            if (request.getStudentNumber() != null) user.getStudentInfo().updateStudentNumber(request.getStudentNumber());
-            if (request.getDepartmentName() != null) user.getStudentInfo().getDepartment().updateName(request.getDepartmentName());
-        }
+            request.validateStudentInfo();
 
-        if (Arrays.asList(UserType.INACTIVE_PROFESSOR, UserType.COMPANY, UserType.INACTIVE_COMPANY, UserType.PROFESSOR).contains(user.getUserType())) {
-            if (request.getDivision() != null) user.getApplication().updateDivision(request.getDivision());
-            if (request.getPosition() != null) user.getApplication().updatePosition(request.getPosition());
+            Department department = departmentRepository.findByName(
+                            request.getDepartmentName())
+                    .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_DEPARTMENT));
+
+            user.getStudentInfo().updateStudentNumber(request.getStudentNumber());
+            user.getStudentInfo().updateDepartment(department);
+        }
+        else if (Arrays.asList(UserType.INACTIVE_PROFESSOR, UserType.COMPANY, UserType.INACTIVE_COMPANY, UserType.PROFESSOR).contains(user.getUserType())) {
+            if (isNotBlank(request.getDivision())) user.getApplication().updateDivision(request.getDivision());
+            if (isNotBlank(request.getPosition())) user.getApplication().updatePosition(request.getPosition());
         }
 
         userRepository.save(user);
