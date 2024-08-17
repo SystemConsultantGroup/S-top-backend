@@ -6,6 +6,7 @@ import com.scg.stop.user.domain.User;
 import com.scg.stop.user.dto.request.UserUpdateRequest;
 import com.scg.stop.user.dto.response.UserResponse;
 import com.scg.stop.user.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +24,10 @@ public class UserController {
         return ResponseEntity.ok(userResponse);
     }
 
-    @PatchMapping("/me")
+    @PutMapping("/me")
     public ResponseEntity<UserResponse> updateMe(
             @AuthUser(accessType = {AccessType.ALL}) User user,
-            @RequestBody UserUpdateRequest request
+            @RequestBody @Valid UserUpdateRequest request
     ) {
         UserResponse updatedUserResponse = userService.updateMe(user, request);
         return ResponseEntity.ok(updatedUserResponse);

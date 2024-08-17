@@ -8,7 +8,7 @@
 operation::user-controller-test/get-me[snippets="http-request,request-cookies,request-headers,http-response,response-fields"]
 ====
 
-=== 로그인 유저 기본 정보 수정 (PATCH /users/me)
+=== 로그인 유저 기본 정보 수정 (PUT /users/me)
 ====
 operation::user-controller-test/update-me[snippets="http-request,request-cookies,request-headers,request-fields,http-response,response-fields"]
 ====
