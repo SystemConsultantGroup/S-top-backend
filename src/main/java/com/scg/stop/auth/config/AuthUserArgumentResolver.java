@@ -72,9 +72,7 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
             }
 
 
-            if (accessTypeList.contains(AccessType.ALL)) {
-                return extractedUser;
-            } else if (accessTypeList.contains(AccessType.OPTIONAL)) {
+            if (accessTypeList.contains(AccessType.ALL) || accessTypeList.contains(AccessType.OPTIONAL)) {
                 return extractedUser;
             }
             else if (extractedUserType.equals(UserType.ADMIN)) {
