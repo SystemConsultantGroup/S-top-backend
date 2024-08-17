@@ -32,7 +32,8 @@ public class JobInterviewService {
 
     @Transactional(readOnly = true)
     public Page<JobInterviewResponse> getJobInterviews(Integer year, JobInterviewCategory category, String title, Pageable pageable) {
-        return jobInterviewRepository.findJobInterviews(year, category, title, pageable);
+        Page<JobInterview> jobInterviews = jobInterviewRepository.findJobInterviews(year, category, title, pageable);
+        return jobInterviews.map(JobInterviewResponse::from);
     }
 
     public JobInterviewResponse createJobInterview(JobInterviewRequest req) {
