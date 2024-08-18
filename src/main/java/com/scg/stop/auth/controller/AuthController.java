@@ -54,9 +54,18 @@ public class AuthController {
                 .path("/")
                 .build();
 
+        ResponseCookie AccessTokenCookie = ResponseCookie.from("access-token", userTokens.getAccessToken())
+                .maxAge(ONE_WEEK_SECONDS)
+//                .secure(true)
+                .httpOnly(true)
+                .sameSite("None")
+                .domain(".stop.scg.skku.ac.kr")  // TODO: domain 수정
+                .path("/")
+                .build();
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
         response.addHeader("Location", REDIRECT_URI);
-        return ResponseEntity.ok(new AccessTokenResponse(userTokens.getAccessToken()));
+        response.addHeader(HttpHeaders.SET_COOKIE, AccessTokenCookie.toString());
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/register")
