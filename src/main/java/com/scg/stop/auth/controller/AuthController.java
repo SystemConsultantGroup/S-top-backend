@@ -50,7 +50,7 @@ public class AuthController {
 //                .secure(true)
                 .httpOnly(true)
                 .sameSite("None")
-                .domain(".stop.scg.skku.ac.kr")  // TODO: domain 수정
+                .domain(".localhost")  // TODO: domain 수정
                 .path("/")
                 .build();
 
@@ -59,7 +59,7 @@ public class AuthController {
 //                .secure(true)
                 .httpOnly(true)
                 .sameSite("None")
-                .domain(".stop.scg.skku.ac.kr")  // TODO: domain 수정
+                .domain(".localhost")  // TODO: domain 수정
                 .path("/")
                 .build();
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
