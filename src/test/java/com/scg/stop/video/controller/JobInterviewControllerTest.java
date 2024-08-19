@@ -130,11 +130,21 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/jobInterviews")
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, USER_ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
         //then
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰").optional()
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token").optional()
+                        ),
                         queryParameters(
                                 parameterWithName("year").description("찾고자 하는 잡페어 인터뷰 연도").optional(),
                                 parameterWithName("category").description("찾고자 하는 잡페어 인터뷰 카테고리: SENIOR, INTERN").optional(),
@@ -189,12 +199,23 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
 
         //when
         ResultActions result = mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/jobInterviews/{jobInterviewId}", 1L).contentType(MediaType.APPLICATION_JSON)
+                RestDocumentationRequestBuilders.get("/jobInterviews/{jobInterviewId}", 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, USER_ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
         //then
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰").optional()
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token").optional()
+                        ),
                         pathParameters(
                            parameterWithName("jobInterviewId").description("조회할 잡페어 인터뷰의 ID")
                         ),
