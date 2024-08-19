@@ -16,7 +16,7 @@ public class JobInterviewUserResponse {
     private Integer year;
     private String talkerBelonging;
     private String talkerName;
-    private boolean isFavorite;
+    private boolean favorite;
     private JobInterviewCategory category;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

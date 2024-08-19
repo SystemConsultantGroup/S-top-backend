@@ -32,8 +32,8 @@ public class JobInterviewService {
         JobInterview jobInterview = jobInterviewRepository.findById(id).orElseThrow(() ->
                 new BadRequestException(ExceptionCode.ID_NOT_FOUND));
 
-        if(user == null) return JobInterviewUserResponse.from(jobInterview, favoriteVideoRepository.existsByJobInterviewAndUser(jobInterview, user));
-        return JobInterviewUserResponse.from(jobInterview);
+        if(user == null) return JobInterviewUserResponse.from(jobInterview);
+        return JobInterviewUserResponse.from(jobInterview, favoriteVideoRepository.existsByJobInterviewAndUser(jobInterview, user));
     }
 
     @Transactional(readOnly = true)

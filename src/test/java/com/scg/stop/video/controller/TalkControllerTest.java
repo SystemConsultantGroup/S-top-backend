@@ -10,6 +10,7 @@ import com.scg.stop.video.dto.request.TalkRequest;
 import com.scg.stop.video.dto.response.QuizResponse;
 import com.scg.stop.video.dto.response.QuizSubmitResponse;
 import com.scg.stop.video.dto.response.TalkResponse;
+import com.scg.stop.video.dto.response.TalkUserResponse;
 import com.scg.stop.video.service.FavoriteVideoService;
 import com.scg.stop.video.service.QuizService;
 import com.scg.stop.video.service.TalkService;
@@ -146,20 +147,30 @@ public class TalkControllerTest extends AbstractControllerTest {
         QuizResponse quizResponse = new QuizResponse(
                 quizRequest.toQuizInfoMap()
         );
-        TalkResponse response = new TalkResponse(1L, "제목", "유튜브 고유ID", 2024,  "대담자 소속","대담자 성명" ,quizResponse,LocalDateTime.now(), LocalDateTime.now());
-        Page<TalkResponse> page = new PageImpl<>(List.of(response), PageRequest.of(0,10),1);
+        TalkUserResponse response = new TalkUserResponse(1L, "제목", "유튜브 고유ID", 2024,  "대담자 소속","대담자 성명" ,true,quizResponse,LocalDateTime.now(), LocalDateTime.now());
+        Page<TalkUserResponse> page = new PageImpl<>(List.of(response), PageRequest.of(0,10),1);
 
-        when(talkService.getTalks(any(), any(), any())).thenReturn(page);
+        when(talkService.getTalks(any(), any(), any(), any())).thenReturn(page);
 
         //when
         ResultActions result = mockMvc.perform(
                 get("/talks")
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, USER_ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
         //then
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰").optional()
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token").optional()
+                        ),
                         queryParameters(
                                 parameterWithName("year").description("찾고자 하는 대담 영상의 연도").optional(),
                                 parameterWithName("title").description("찾고자 하는 대담 영상의 제목 일부").optional(),
@@ -195,6 +206,7 @@ public class TalkControllerTest extends AbstractControllerTest {
                                 fieldWithPath("content[].year").type(JsonFieldType.NUMBER).description("대담 영상 연도"),
                                 fieldWithPath("content[].talkerBelonging").type(JsonFieldType.STRING).description("대담자의 소속된 직장/단체"),
                                 fieldWithPath("content[].talkerName").type(JsonFieldType.STRING).description("대담자의 성명"),
+                                fieldWithPath("content[].favorite").type(JsonFieldType.BOOLEAN).description("관심한 대담영상의 여부"),
                                 fieldWithPath("content[].quiz").type(JsonFieldType.OBJECT).description("퀴즈 데이터, 없는경우 null"),
                                 fieldWithPath("content[].quiz.*").type(JsonFieldType.OBJECT).description("퀴즈 1개").optional(),
                                 fieldWithPath("content[].quiz.*.question").type(JsonFieldType.STRING).description("퀴즈 1개의 질문").optional(),
@@ -217,18 +229,28 @@ public class TalkControllerTest extends AbstractControllerTest {
         QuizResponse quizResponse = new QuizResponse(
                 new QuizRequest(quizData).toQuizInfoMap()
         );
-        TalkResponse response = new TalkResponse(id, "제목", "유튜브 고유ID", 2024, "대담자 소속","대담자 성명" ,quizResponse,LocalDateTime.now(), LocalDateTime.now());
-        when(talkService.getTalkById(anyLong())).thenReturn(response);
+        TalkUserResponse response = new TalkUserResponse(id, "제목", "유튜브 고유ID", 2024, "대담자 소속","대담자 성명" ,true,quizResponse,LocalDateTime.now(), LocalDateTime.now());
+        when(talkService.getTalkById(anyLong(), any())).thenReturn(response);
 
         //when
         ResultActions result = mockMvc.perform(
                 get("/talks/{talkId}", id)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, USER_ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
         //then
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰").optional()
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token").optional()
+                        ),
                         pathParameters(
                                 parameterWithName("talkId").description("조회할 대담 영상의 ID")
                         ),
@@ -239,6 +261,7 @@ public class TalkControllerTest extends AbstractControllerTest {
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("대담 영상 연도"),
                                 fieldWithPath("talkerBelonging").type(JsonFieldType.STRING).description("대담자의 소속된 직장/단체"),
                                 fieldWithPath("talkerName").type(JsonFieldType.STRING).description("대담자의 성명"),
+                                fieldWithPath("favorite").type(JsonFieldType.BOOLEAN).description("관심한 대담영상의 여부"),
                                 fieldWithPath("quiz").type(JsonFieldType.OBJECT).description("퀴즈 데이터, 없는경우 null"),
                                 fieldWithPath("quiz.*").type(JsonFieldType.OBJECT).description("퀴즈 1개").optional(),
                                 fieldWithPath("quiz.*.question").type(JsonFieldType.STRING).description("퀴즈 1개의 질문").optional(),

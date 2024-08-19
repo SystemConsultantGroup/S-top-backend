@@ -6,6 +6,7 @@ import com.scg.stop.video.domain.Quiz;
 import com.scg.stop.video.domain.Talk;
 import com.scg.stop.video.dto.request.TalkRequest;
 import com.scg.stop.video.dto.response.TalkResponse;
+import com.scg.stop.video.dto.response.TalkUserResponse;
 import com.scg.stop.video.repository.FavoriteVideoRepository;
 import com.scg.stop.video.repository.QuizRepository;
 import com.scg.stop.video.repository.TalkRepository;
@@ -13,9 +14,12 @@ import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,18 +27,25 @@ import org.springframework.transaction.annotation.Transactional;
 public class TalkService {
     private final TalkRepository talkRepository;
     private final QuizRepository quizRepository;
+    private final FavoriteVideoRepository favoriteVideoRepository;
 
     @Transactional(readOnly = true)
-    public Page<TalkResponse> getTalks(String title, Integer year, Pageable pageable) {
-        return talkRepository.findPages(title, year, pageable);
+    public Page<TalkUserResponse> getTalks(User user, String title, Integer year, Pageable pageable) {
+        Page<Talk> talks = talkRepository.findPages(title, year, pageable);
+        if(user == null) return talks.map(TalkUserResponse::from);
+        List<TalkUserResponse> content = talks.stream().map(talk ->
+                TalkUserResponse.from(talk, favoriteVideoRepository.existsByTalkAndUser(talk, user))
+        ).toList();
+        return new PageImpl<>(content, pageable, talks.getTotalElements());
     }
 
     @Transactional(readOnly = true)
-    public TalkResponse getTalkById(Long id) {
+    public TalkUserResponse getTalkById(Long id, User user) {
         Talk talk = talkRepository.findById(id).orElseThrow(
                 () -> new BadRequestException(ExceptionCode.TALK_ID_NOT_FOUND)
         );
-        return TalkResponse.from(talk);
+        if(user == null) return TalkUserResponse.from(talk);
+        return TalkUserResponse.from(talk, favoriteVideoRepository.existsByTalkAndUser(talk, user));
     }
 
     public TalkResponse createTalk(TalkRequest talkRequest) {
