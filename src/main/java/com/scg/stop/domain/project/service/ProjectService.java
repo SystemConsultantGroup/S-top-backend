@@ -161,7 +161,7 @@ public class ProjectService {
         }
 
         Likes like = likeRepository.findByProjectIdAndUserId(projectId, user.getId())
-                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_FAVORITE_PROJECT));
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_LIKE_PROJECT));
 
         likeRepository.delete(like);
     }
