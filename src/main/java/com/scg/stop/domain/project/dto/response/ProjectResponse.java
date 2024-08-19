@@ -10,7 +10,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
@@ -28,6 +30,10 @@ public class ProjectResponse {
     private Boolean bookMark;
 
     public static ProjectResponse of(List<String> studentNames, List<String> professorNames, Project project){
+        List<String> techStackList = Arrays.stream(project.getTechStack().split(","))
+                .map(String::trim)
+                .collect(Collectors.toList());
+
         return new ProjectResponse(
                 project.getId(),
                 FileResponse.from(project.getThumbnail()),
@@ -37,7 +43,7 @@ public class ProjectResponse {
                 professorNames,
                 project.getType(),
                 project.getCategory(),
-                List.of(project.getTechStack().split(", ")),
+                techStackList,
                 project.getLikes().size(),
                 !project.getFavorites().isEmpty()
         );
