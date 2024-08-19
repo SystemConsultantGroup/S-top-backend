@@ -25,14 +25,20 @@ public class ProjectResponse {
     private List<String> professorNames;
     private ProjectType projectType;
     private ProjectCategory projectCategory;
-    private List<String> techStack;
+    private List<String> techStacks;
     private Integer likeCount;
     private Boolean bookMark;
+    private List<CommentResponse> comments;
 
     public static ProjectResponse of(List<String> studentNames, List<String> professorNames, Project project){
         List<String> techStackList = Arrays.stream(project.getTechStack().split(","))
                 .map(String::trim)
                 .collect(Collectors.toList());
+
+        List<CommentResponse> commentResponseList = project.getComments().stream()
+                .map(CommentResponse::of)
+                .collect(Collectors.toList());
+
 
         return new ProjectResponse(
                 project.getId(),
@@ -45,7 +51,8 @@ public class ProjectResponse {
                 project.getCategory(),
                 techStackList,
                 project.getLikes().size(),
-                !project.getFavorites().isEmpty()
+                !project.getFavorites().isEmpty(),
+                commentResponseList
         );
     }
 }
