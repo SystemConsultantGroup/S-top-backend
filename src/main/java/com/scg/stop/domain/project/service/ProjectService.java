@@ -135,7 +135,8 @@ public class ProjectService {
     }
 
     public void createProjectLike(Long projectId, User user){
-        EventPeriod eventPeriod = eventPeriodRepository.findById(1L)
+        int year = LocalDateTime.now().getYear();
+        EventPeriod eventPeriod = eventPeriodRepository.findByYear(year)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_EVENT_PERIOD));
         if (eventPeriod.getStart().isAfter(LocalDateTime.now()) || eventPeriod.getEnd().isBefore(LocalDateTime.now())){
             throw new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD);
@@ -154,7 +155,8 @@ public class ProjectService {
     }
 
     public void deleteProjectLike(Long projectId, User user){
-        EventPeriod eventPeriod = eventPeriodRepository.findById(1L)
+        int year = LocalDateTime.now().getYear();
+        EventPeriod eventPeriod = eventPeriodRepository.findByYear(year)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_EVENT_PERIOD));
         if (eventPeriod.getStart().isAfter(LocalDateTime.now()) || eventPeriod.getEnd().isBefore(LocalDateTime.now())){
             throw new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD);
