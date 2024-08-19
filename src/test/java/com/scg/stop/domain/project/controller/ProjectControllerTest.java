@@ -25,6 +25,7 @@ import com.scg.stop.domain.project.dto.request.CommentRequest;
 import com.scg.stop.domain.project.dto.request.MemberRequest;
 import com.scg.stop.domain.project.dto.request.ProjectRequest;
 import com.scg.stop.domain.project.dto.response.CommentResponse;
+import com.scg.stop.domain.project.dto.response.FileResponse;
 import com.scg.stop.domain.project.dto.response.ProjectDetailResponse;
 import com.scg.stop.domain.project.dto.response.ProjectResponse;
 import com.scg.stop.domain.project.service.ProjectService;
@@ -52,7 +53,8 @@ import java.util.List;
 @AutoConfigureRestDocs
 public class ProjectControllerTest extends AbstractControllerTest {
 
-    private static final String ACCESS_TOKEN = "admin_access_token";
+    private static final String ALL_ACCESS_TOKEN = "all_access_token";
+    private static final String ADMIN_ACCESS_TOKEN = "admin_access_token";
     private static final String REFRESH_TOKEN = "refresh_token";
 
     @MockBean
@@ -65,16 +67,54 @@ public class ProjectControllerTest extends AbstractControllerTest {
     @Test
     void getProjects() throws Exception {
         // given
-        ProjectResponse projectResponse1 = new ProjectResponse(1L, null, "프로젝트 이름 1", "팀 이름 2", List.of("테스트 학생 이름 1", "테스트 학생 이름 2"), List.of("테스트 교수 이름 1"), ProjectType.STARTUP, ProjectCategory.BIG_DATA_ANALYSIS, List.of("자바", "스프링"), 100, false);
-        ProjectResponse projectResponse2 = new ProjectResponse(2L,null, "프로젝트 이름 1", "팀 이름 2", List.of("테스트 학생 이름 1", "테스트 학생 이름 2"), List.of("테스트 교수 이름 1"), ProjectType.STARTUP, ProjectCategory.BIG_DATA_ANALYSIS, List.of("자바", "스프링"), 100, false);
+        ProjectResponse projectResponse1 = new ProjectResponse(
+                1L,
+                new FileResponse(
+                        1L,
+                        "썸네일 uuid 1",
+                        "썸네일 파일 이름 1",
+                        "썸네일 mime 타입 1"
+                ),
+                "프로젝트 이름 1",
+                "팀 이름 1",
+                List.of("학생 이름 1", "학생 이름 2"),
+                List.of("교수 이름 1"),
+                ProjectType.STARTUP,
+                ProjectCategory.BIG_DATA_ANALYSIS,
+                List.of("파이썬", "SQL"),
+                100,
+                false,
+                false
+        );
+        ProjectResponse projectResponse2 = new ProjectResponse(
+                2L,
+                new FileResponse(
+                        2L,
+                        "썸네일 uuid 2",
+                        "썸네일 파일 이름 2",
+                        "썸네일 mime 타입 2"
+                ),
+                "프로젝트 이름 2",
+                "팀 이름 2",
+                List.of("학생 이름 3", "학생 이름 4"),
+                List.of("교수 이름 2"),
+                ProjectType.LAB,
+                ProjectCategory.AI_MACHINE_LEARNING,
+                List.of("파이썬", "OpenCV"),
+                100,
+                false,
+                true
+        );
         Page<ProjectResponse> pageResponse = new PageImpl<>(List.of(projectResponse1, projectResponse2), PageRequest.of(0, 10), 2);
 
-        when(projectService.getProjects(any(), any(), any(), any())).thenReturn(pageResponse);
+        when(projectService.getProjects(any(), any(), any(), any(), any())).thenReturn(pageResponse);
 
         // when
         ResultActions result = mockMvc.perform(
                 get("/projects")
                         .contentType(APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, ALL_ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
         // then
@@ -86,18 +126,23 @@ public class ProjectControllerTest extends AbstractControllerTest {
                                 parameterWithName("category").description("프로젝트 카테고리").optional()
                         ),
                         responseFields(
-                                fieldWithPath("content[].id").description("프로젝트 ID"),
-                                fieldWithPath("content[].thumbnailInfo").description("썸네일 정보"),
-                                fieldWithPath("content[].projectName").description("프로젝트 이름"),
-                                fieldWithPath("content[].teamName").description("팀 이름"),
-                                fieldWithPath("content[].studentNames[]").description("학생 이름"),
-                                fieldWithPath("content[].professorNames[]").description("교수 이름"),
-                                fieldWithPath("content[].projectType").description("프로젝트 타입"),
-                                fieldWithPath("content[].projectCategory").description("프로젝트 카테고리"),
-                                fieldWithPath("content[].techStack").description("기술 스택"),
-                                fieldWithPath("content[].likeCount").description("좋아요 수"),
-                                fieldWithPath("content[].bookMark").description("북마크 여부"),
-                                fieldWithPath("pageable").description("페이지 정보"),
+                                fieldWithPath("content[].id").type(JsonFieldType.NUMBER).description("프로젝트 ID"),
+                                fieldWithPath("content[].thumbnailInfo").type(JsonFieldType.class).description("썸네일 정보"),
+                                fieldWithPath("content[].thumbnailInfo.id").type(JsonFieldType.NUMBER).description("썸네일 ID"),
+                                fieldWithPath("content[].thumbnailInfo.uuid").type(JsonFieldType.STRING).description("썸네일 UUID"),
+                                fieldWithPath("content[].thumbnailInfo.name").type(JsonFieldType.STRING).description("썸네일 파일 이름"),
+                                fieldWithPath("content[].thumbnailInfo.mimeType").type(JsonFieldType.STRING).description("썸네일 MIME 타입"),
+                                fieldWithPath("content[].projectName").type(JsonFieldType.STRING).description("프로젝트 이름"),
+                                fieldWithPath("content[].teamName").type(JsonFieldType.STRING).description("팀 이름"),
+                                fieldWithPath("content[].studentNames[]").type(JsonFieldType.ARRAY).description("학생 이름"),
+                                fieldWithPath("content[].professorNames[]").type(JsonFieldType.ARRAY).description("교수 이름"),
+                                fieldWithPath("content[].projectType").type(JsonFieldType.STRING).description("프로젝트 타입: RESEARCH_AND_BUSINESS_FOUNDATION, LAB, STARTUP, CLUB"),
+                                fieldWithPath("content[].projectCategory").type(JsonFieldType.STRING).description("프로젝트 카테고리: COMPUTER_VISION, SYSTEM_NETWORK, WEB_APPLICATION, SECURITY_SOFTWARE_ENGINEERING, NATURAL_LANGUAGE_PROCESSING, BIG_DATA_ANALYSIS, AI_MACHINE_LEARNING, INTERACTION_AUGMENTED_REALITY"),
+                                fieldWithPath("content[].techStacks").type(JsonFieldType.ARRAY).description("기술 스택"),
+                                fieldWithPath("content[].likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
+                                fieldWithPath("content[].like").type(JsonFieldType.BOOLEAN).description("좋아요 여부"),
+                                fieldWithPath("content[].bookMark").type(JsonFieldType.BOOLEAN).description("북마크 여부"),
+                                fieldWithPath("pageable").type(JsonFieldType.class).description("페이지 정보"),
                                 fieldWithPath("pageable.pageNumber").type(JsonFieldType.NUMBER).description("현재 페이지 번호"),
                                 fieldWithPath("pageable.pageSize").type(JsonFieldType.NUMBER).description("페이지 당 요소 수"),
                                 fieldWithPath("pageable.sort.empty").type(JsonFieldType.BOOLEAN).description("정렬 정보가 비어있는지 여부"),
@@ -126,14 +171,46 @@ public class ProjectControllerTest extends AbstractControllerTest {
     void createProject() throws Exception {
         // given
         List<MemberRequest> memberRequest = List.of(
-                new MemberRequest("테스트 학생 이름 1", Role.STUDENT),
-                new MemberRequest("테스트 학생 이름 2", Role.STUDENT),
-                new MemberRequest("테스트 교수 이름 1", Role.PROFESSOR)
+                new MemberRequest("학생 이름 1", Role.STUDENT),
+                new MemberRequest("학생 이름 2", Role.STUDENT),
+                new MemberRequest("교수 이름 1", Role.PROFESSOR)
         );
 
-        ProjectRequest projectRequest = new ProjectRequest(1L, 2L, "테스트 프로젝트 이름", ProjectType.STARTUP, ProjectCategory.BIG_DATA_ANALYSIS, "테스트 팀 이름", "테스트 유튜브 ID", "테스트, 기술, 스택", 2021, AwardStatus.NONE, memberRequest);
+        ProjectRequest projectRequest = new ProjectRequest(1L, 2L, "프로젝트 이름", ProjectType.STARTUP, ProjectCategory.BIG_DATA_ANALYSIS, "팀 이름", "유튜브 ID", "파이썬, SQL", 2021, AwardStatus.NONE, memberRequest);
 
-        ProjectDetailResponse response = new ProjectDetailResponse(1L, null, null, "테스트 프로젝트 이름", ProjectType.STARTUP, ProjectCategory.BIG_DATA_ANALYSIS, "테스트 팀 이름", "테스트 유튜브 ID", List.of("테스트", "기술", "스택"), 2021, AwardStatus.NONE, List.of("테스트 학생 이름 1", "테스트 학생 이름 2"), List.of("테스트 교수 이름 1"), 0, false);
+        ProjectDetailResponse response = new ProjectDetailResponse(
+                1L,
+                new FileResponse(
+                        2L,
+                        "썸네일 uuid",
+                        "썸네일 파일 이름",
+                        "썸네일 mime 타입"
+                ),
+                new FileResponse(
+                        2L,
+                        "포스터 uuid",
+                        "포트서 파일 이름",
+                        "포스터 mime 타입"
+                ),
+                "프로젝트 이름",
+                ProjectType.STARTUP,
+                ProjectCategory.BIG_DATA_ANALYSIS,
+                "팀 이름",
+                "유튜브 ID",
+                List.of("파이썬", "SQL"),
+                2024,
+                AwardStatus.FIRST,
+                List.of("학생 이름 1", "학생 이름 2"),
+                List.of("교수 이름 1"),
+                0,
+                false,
+                false,
+                List.of(
+                        new CommentResponse(1L, 1L, "유저 이름", true, "댓글 내용", LocalDateTime.now(), LocalDateTime.now()),
+                        new CommentResponse(2L, 1L, "유저 이름", false, "댓글 내용", LocalDateTime.now(), LocalDateTime.now()),
+                        new CommentResponse(3L, 1L, "유저 이름", false, "댓글 내용", LocalDateTime.now(), LocalDateTime.now())
+                )
+        );
 
         when(projectService.createProject(any(ProjectRequest.class))).thenReturn(response);
 
@@ -141,6 +218,8 @@ public class ProjectControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 post("/projects")
                         .contentType(APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, ADMIN_ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
                         .content(objectMapper.writeValueAsString(projectRequest))
         );
 
@@ -149,35 +228,52 @@ public class ProjectControllerTest extends AbstractControllerTest {
                 .andDo(restDocs.document(
                         requestFields(
                                 fieldWithPath("thumbnailId").type(JsonFieldType.NUMBER).description("썸네일 ID"),
-                                fieldWithPath("posterId").description("포스터 ID"),
-                                fieldWithPath("projectName").description("프로젝트 이름"),
-                                fieldWithPath("projectType").description("프로젝트 타입"),
-                                fieldWithPath("projectCategory").description("프로젝트 카테고리"),
-                                fieldWithPath("teamName").description("팀 이름"),
-                                fieldWithPath("youtubeId").description("프로젝트 youtubeId"),
-                                fieldWithPath("techStack").description("기술 스택"),
-                                fieldWithPath("year").description("프로젝트 년도"),
-                                fieldWithPath("awardStatus").description("수상 여부"),
-                                fieldWithPath("members").description("멤버"),
-                                fieldWithPath("members[].name").description("멤버 이름"),
-                                fieldWithPath("members[].role").description("멤버 역할")
+                                fieldWithPath("posterId").type(JsonFieldType.NUMBER).description("포스터 ID"),
+                                fieldWithPath("projectName").type(JsonFieldType.STRING).description("프로젝트 이름"),
+                                fieldWithPath("projectType").type(JsonFieldType.STRING).description("프로젝트 타입: RESEARCH_AND_BUSINESS_FOUNDATION, LAB, STARTUP, CLUB"),
+                                fieldWithPath("projectCategory").type(JsonFieldType.STRING).description("프로젝트 카테고리: COMPUTER_VISION, SYSTEM_NETWORK, WEB_APPLICATION, SECURITY_SOFTWARE_ENGINEERING, NATURAL_LANGUAGE_PROCESSING, BIG_DATA_ANALYSIS, AI_MACHINE_LEARNING, INTERACTION_AUGMENTED_REALITY\n"),
+                                fieldWithPath("teamName").type(JsonFieldType.STRING).description("팀 이름"),
+                                fieldWithPath("youtubeId").type(JsonFieldType.STRING).description("프로젝트 youtubeId"),
+                                fieldWithPath("techStack").type(JsonFieldType.STRING).description("기술 스택"),
+                                fieldWithPath("year").type(JsonFieldType.NUMBER).description("프로젝트 년도"),
+                                fieldWithPath("awardStatus").type(JsonFieldType.STRING).description("수상 여부: NONE, FIRST, SECOND, THIRD, FOURTH, FIFTH"),
+                                fieldWithPath("members").type(JsonFieldType.class).description("멤버"),
+                                fieldWithPath("members[].name").type(JsonFieldType.STRING).description("멤버 이름"),
+                                fieldWithPath("members[].role").type(JsonFieldType.STRING).description("멤버 역할: STUDENT, PROFESSOR")
                         ),
                         responseFields(
-                                fieldWithPath("id").description("프로젝트 ID"),
-                                fieldWithPath("thumbnailInfo").description("썸네일 정보"),
-                                fieldWithPath("posterInfo").description("포스터 정보"),
-                                fieldWithPath("projectName").description("프로젝트 이름"),
-                                fieldWithPath("projectType").description("프로젝트 타입"),
-                                fieldWithPath("projectCategory").description("프로젝트 카테고리"),
-                                fieldWithPath("teamName").description("팀 이름"),
-                                fieldWithPath("youtubeId").description("프로젝트 yotubeId"),
-                                fieldWithPath("techStack").description("기술 스택"),
-                                fieldWithPath("year").description("프로젝트 년도"),
-                                fieldWithPath("awardStatus").description("수상 여부"),
-                                fieldWithPath("studentNames").description("학생 이름"),
-                                fieldWithPath("professorNames").description("교수 이름"),
-                                fieldWithPath("likeCount").description("좋아요 수"),
-                                fieldWithPath("bookMark").description("북마크 여부")
+                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("프로젝트 ID"),
+                                fieldWithPath("thumbnailInfo").type(JsonFieldType.class).description("썸네일 정보"),
+                                fieldWithPath("thumbnailInfo.id").type(JsonFieldType.NUMBER).description("썸네일 ID"),
+                                fieldWithPath("thumbnailInfo.uuid").type(JsonFieldType.STRING).description("썸네일 UUID"),
+                                fieldWithPath("thumbnailInfo.name").type(JsonFieldType.STRING).description("썸네일 파일 이름"),
+                                fieldWithPath("thumbnailInfo.mimeType").type(JsonFieldType.STRING).description("썸네일 MIME 타입"),
+                                fieldWithPath("posterInfo").type(JsonFieldType.class).description("포스터 정보"),
+                                fieldWithPath("posterInfo.id").type(JsonFieldType.NUMBER).description("포스터 ID"),
+                                fieldWithPath("posterInfo.uuid").type(JsonFieldType.STRING).description("포스터 UUID"),
+                                fieldWithPath("posterInfo.name").type(JsonFieldType.STRING).description("포스터 파일 이름"),
+                                fieldWithPath("posterInfo.mimeType").type(JsonFieldType.STRING).description("포스터 MIME 타입"),
+                                fieldWithPath("projectName").type(JsonFieldType.STRING).description("프로젝트 이름"),
+                                fieldWithPath("projectType").type(JsonFieldType.STRING).description("프로젝트 타입: RESEARCH_AND_BUSINESS_FOUNDATION, LAB, STARTUP, CLUB"),
+                                fieldWithPath("projectCategory").type(JsonFieldType.STRING).description("프로젝트 카테고리: COMPUTER_VISION, SYSTEM_NETWORK, WEB_APPLICATION, SECURITY_SOFTWARE_ENGINEERING, NATURAL_LANGUAGE_PROCESSING, BIG_DATA_ANALYSIS, AI_MACHINE_LEARNING, INTERACTION_AUGMENTED_REALITY"),
+                                fieldWithPath("teamName").type(JsonFieldType.STRING).description("팀 이름"),
+                                fieldWithPath("youtubeId").type(JsonFieldType.STRING).description("프로젝트 youtubeId"),
+                                fieldWithPath("techStack").type(JsonFieldType.ARRAY).description("기술 스택"),
+                                fieldWithPath("year").type(JsonFieldType.NUMBER).description("프로젝트 년도"),
+                                fieldWithPath("awardStatus").type(JsonFieldType.STRING).description("수상 여부: NONE, FIRST, SECOND, THIRD, FOURTH, FIFTH "),
+                                fieldWithPath("studentNames").type(JsonFieldType.ARRAY).description("학생 이름"),
+                                fieldWithPath("professorNames").type(JsonFieldType.ARRAY).description("교수 이름"),
+                                fieldWithPath("likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
+                                fieldWithPath("like").type(JsonFieldType.BOOLEAN).description("좋아요 여부"),
+                                fieldWithPath("bookMark").type(JsonFieldType.BOOLEAN).description("북마크 여부"),
+                                fieldWithPath("comments").type(JsonFieldType.class).description("댓글"),
+                                fieldWithPath("comments[].id").type(JsonFieldType.NUMBER).description("댓글 ID"),
+                                fieldWithPath("comments[].projectId").type(JsonFieldType.NUMBER).description("유저 ID"),
+                                fieldWithPath("comments[].userName").type(JsonFieldType.STRING).description("유저 이름"),
+                                fieldWithPath("comments[].isAnonymous").type(JsonFieldType.BOOLEAN).description("익명 여부"),
+                                fieldWithPath("comments[].content").type(JsonFieldType.STRING).description("댓글 내용"),
+                                fieldWithPath("comments[].createdAt").type(JsonFieldType.STRING).description("생성 시간"),
+                                fieldWithPath("comments[].updatedAt").type(JsonFieldType.STRING).description("수정 시간")
                         )
                 ));
     }
@@ -186,14 +282,48 @@ public class ProjectControllerTest extends AbstractControllerTest {
     @DisplayName("상세 프로젝트 정보를 조회한다.")
     void getProject() throws Exception {
         // given
-        ProjectDetailResponse response = new ProjectDetailResponse(1L, null, null, "테스트 프로젝트 이름", ProjectType.STARTUP, ProjectCategory.BIG_DATA_ANALYSIS, "테스트 팀 이름", "테스트 유튜브 ID", List.of("테스트", "기술", "스택"), 2021, AwardStatus.NONE, List.of("테스트 학생 이름 1", "테스트 학생 이름 2"), List.of("테스트 교수 이름 1"), 0, false);
+        ProjectDetailResponse response = new ProjectDetailResponse(
+                1L,
+                new FileResponse(
+                        2L,
+                        "썸네일 uuid",
+                        "썸네일 파일 이름",
+                        "썸네일 mime 타입"
+                ),
+                new FileResponse(
+                        2L,
+                        "포스터 uuid",
+                        "포트서 파일 이름",
+                        "포스터 mime 타입"
+                ),
+                "프로젝트 이름",
+                ProjectType.STARTUP,
+                ProjectCategory.BIG_DATA_ANALYSIS,
+                "팀 이름",
+                "유튜브 ID",
+                List.of("파이썬", "SQL"),
+                2024,
+                AwardStatus.FIRST,
+                List.of("학생 이름 1", "학생 이름 2"),
+                List.of("교수 이름 1"),
+                0,
+                false,
+                false,
+                List.of(
+                        new CommentResponse(1L, 1L, "유저 이름", true, "댓글 내용", LocalDateTime.now(), LocalDateTime.now()),
+                        new CommentResponse(2L, 1L, "유저 이름", false, "댓글 내용", LocalDateTime.now(), LocalDateTime.now()),
+                        new CommentResponse(3L, 1L, "유저 이름", false, "댓글 내용", LocalDateTime.now(), LocalDateTime.now())
+                )
+        );
 
-        when(projectService.getProject(anyLong())).thenReturn(response);
+        when(projectService.getProject(anyLong(), any(User.class))).thenReturn(response);
 
         // when
         ResultActions result = mockMvc.perform(
                 get("/projects/{projectId}", 1L)
                         .contentType(APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, ALL_ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
         // then
@@ -203,21 +333,38 @@ public class ProjectControllerTest extends AbstractControllerTest {
                                 parameterWithName("projectId").description("프로젝트 ID")
                         ),
                         responseFields(
-                                fieldWithPath("id").description("프로젝트 ID"),
-                                fieldWithPath("thumbnailInfo").description("썸네일 정보"),
-                                fieldWithPath("posterInfo").description("포스터 정보"),
-                                fieldWithPath("projectName").description("프로젝트 이름"),
-                                fieldWithPath("projectType").description("프로젝트 타입"),
-                                fieldWithPath("projectCategory").description("프로젝트 카테고리"),
-                                fieldWithPath("teamName").description("팀 이름"),
-                                fieldWithPath("youtubeId").description("프로젝트 yotubeId"),
-                                fieldWithPath("techStack").description("기술 스택"),
-                                fieldWithPath("year").description("프로젝트 년도"),
-                                fieldWithPath("awardStatus").description("수상 여부"),
-                                fieldWithPath("studentNames").description("학생 이름"),
-                                fieldWithPath("professorNames").description("교수 이름"),
-                                fieldWithPath("likeCount").description("좋아요 수"),
-                                fieldWithPath("bookMark").description("북마크 여부")
+                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("프로젝트 ID"),
+                                fieldWithPath("thumbnailInfo").type(JsonFieldType.class).description("썸네일 정보"),
+                                fieldWithPath("thumbnailInfo.id").type(JsonFieldType.NUMBER).description("썸네일 ID"),
+                                fieldWithPath("thumbnailInfo.uuid").type(JsonFieldType.STRING).description("썸네일 UUID"),
+                                fieldWithPath("thumbnailInfo.name").type(JsonFieldType.STRING).description("썸네일 파일 이름"),
+                                fieldWithPath("thumbnailInfo.mimeType").type(JsonFieldType.STRING).description("썸네일 MIME 타입"),
+                                fieldWithPath("posterInfo").type(JsonFieldType.class).description("포스터 정보"),
+                                fieldWithPath("posterInfo.id").type(JsonFieldType.NUMBER).description("포스터 ID"),
+                                fieldWithPath("posterInfo.uuid").type(JsonFieldType.STRING).description("포스터 UUID"),
+                                fieldWithPath("posterInfo.name").type(JsonFieldType.STRING).description("포스터 파일 이름"),
+                                fieldWithPath("posterInfo.mimeType").type(JsonFieldType.STRING).description("포스터 MIME 타입"),
+                                fieldWithPath("projectName").type(JsonFieldType.STRING).description("프로젝트 이름"),
+                                fieldWithPath("projectType").type(JsonFieldType.STRING).description("프로젝트 타입: RESEARCH_AND_BUSINESS_FOUNDATION, LAB, STARTUP, CLUB"),
+                                fieldWithPath("projectCategory").type(JsonFieldType.STRING).description("프로젝트 카테고리: COMPUTER_VISION, SYSTEM_NETWORK, WEB_APPLICATION, SECURITY_SOFTWARE_ENGINEERING, NATURAL_LANGUAGE_PROCESSING, BIG_DATA_ANALYSIS, AI_MACHINE_LEARNING, INTERACTION_AUGMENTED_REALITY"),
+                                fieldWithPath("teamName").type(JsonFieldType.STRING).description("팀 이름"),
+                                fieldWithPath("youtubeId").type(JsonFieldType.STRING).description("프로젝트 youtubeId"),
+                                fieldWithPath("techStack").type(JsonFieldType.ARRAY).description("기술 스택"),
+                                fieldWithPath("year").type(JsonFieldType.NUMBER).description("프로젝트 년도"),
+                                fieldWithPath("awardStatus").type(JsonFieldType.STRING).description("수상 여부: NONE, FIRST, SECOND, THIRD, FOURTH, FIFTH "),
+                                fieldWithPath("studentNames").type(JsonFieldType.ARRAY).description("학생 이름"),
+                                fieldWithPath("professorNames").type(JsonFieldType.ARRAY).description("교수 이름"),
+                                fieldWithPath("likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
+                                fieldWithPath("like").type(JsonFieldType.BOOLEAN).description("좋아요 여부"),
+                                fieldWithPath("bookMark").type(JsonFieldType.BOOLEAN).description("북마크 여부"),
+                                fieldWithPath("comments").type(JsonFieldType.class).description("댓글"),
+                                fieldWithPath("comments[].id").type(JsonFieldType.NUMBER).description("댓글 ID"),
+                                fieldWithPath("comments[].projectId").type(JsonFieldType.NUMBER).description("유저 ID"),
+                                fieldWithPath("comments[].userName").type(JsonFieldType.STRING).description("유저 이름"),
+                                fieldWithPath("comments[].isAnonymous").type(JsonFieldType.BOOLEAN).description("익명 여부"),
+                                fieldWithPath("comments[].content").type(JsonFieldType.STRING).description("댓글 내용"),
+                                fieldWithPath("comments[].createdAt").type(JsonFieldType.STRING).description("생성 시간"),
+                                fieldWithPath("comments[].updatedAt").type(JsonFieldType.STRING).description("수정 시간")
                         )
                 ));
     }
@@ -227,14 +374,58 @@ public class ProjectControllerTest extends AbstractControllerTest {
     void updateProject() throws Exception {
         // given
         List<MemberRequest> memberRequest = List.of(
-                new MemberRequest("테스트 학생 이름 1", Role.STUDENT),
-                new MemberRequest("테스트 학생 이름 2", Role.STUDENT),
-                new MemberRequest("테스트 교수 이름 1", Role.PROFESSOR)
+                new MemberRequest("학생 이름 3", Role.STUDENT),
+                new MemberRequest("학생 이름 4", Role.STUDENT),
+                new MemberRequest("교수 이름 2", Role.PROFESSOR)
         );
 
-        ProjectRequest projectRequest = new ProjectRequest(1L, 2L, "테스트 프로젝트 이름", ProjectType.STARTUP, ProjectCategory.BIG_DATA_ANALYSIS, "테스트 팀 이름", "테스트 유튜브 ID", "테스트, 기술, 스택", 2021, AwardStatus.NONE, memberRequest);
+        ProjectRequest projectRequest = new ProjectRequest(
+                3L,
+                4L,
+                "프로젝트 이름",
+                ProjectType.LAB,
+                ProjectCategory.COMPUTER_VISION,
+                "팀 이름",
+                "유튜브 ID",
+                "파이썬, OpenCV, diffusers",
+                2024,
+                AwardStatus.FIRST,
+                memberRequest
+        );
 
-        ProjectDetailResponse response = new ProjectDetailResponse(1L, null, null, "테스트 프로젝트 이름", ProjectType.STARTUP, ProjectCategory.BIG_DATA_ANALYSIS, "테스트 팀 이름", "테스트 유튜브 ID", List.of("테스트", "기술", "스택"), 2021, AwardStatus.NONE, List.of("테스트 학생 이름 1", "테스트 학생 이름 2"), List.of("테스트 교수 이름 1"), 0, false);
+        ProjectDetailResponse response = new ProjectDetailResponse(
+                1L,
+                new FileResponse(
+                        3L,
+                        "썸네일 uuid",
+                        "썸네일 파일 이름",
+                        "썸네일 mime 타입"
+                ),
+                new FileResponse(
+                        4L,
+                        "포스터 uuid",
+                        "포트서 파일 이름",
+                        "포스터 mime 타입"
+                ),
+                "프로젝트 이름",
+                ProjectType.LAB,
+                ProjectCategory.COMPUTER_VISION,
+                "팀 이름",
+                "유튜브 ID",
+                List.of("파이썬", "OpenCV", "diffusers"),
+                2024,
+                AwardStatus.FIRST,
+                List.of("학생 이름 3", "학생 이름 4"),
+                List.of("교수 이름 2"),
+                100,
+                false,
+                false,
+                List.of(
+                        new CommentResponse(1L, 1L, "유저 이름", true, "댓글 내용", LocalDateTime.now(), LocalDateTime.now()),
+                        new CommentResponse(2L, 1L, "유저 이름", false, "댓글 내용", LocalDateTime.now(), LocalDateTime.now()),
+                        new CommentResponse(3L, 1L, "유저 이름", false, "댓글 내용", LocalDateTime.now(), LocalDateTime.now())
+                )
+        );
 
         when(projectService.updateProject(anyLong(), any(ProjectRequest.class))).thenReturn(response);
 
@@ -242,43 +433,65 @@ public class ProjectControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 put("/projects/{projectId}", 1L)
                         .contentType(APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, ADMIN_ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
                         .content(objectMapper.writeValueAsString(projectRequest))
         );
 
         // then
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
+                        pathParameters(
+                                parameterWithName("projectId").description("프로젝트 ID")
+                        ),
                         requestFields(
-                                fieldWithPath("thumbnailId").description("썸네일 ID"),
-                                fieldWithPath("posterId").description("포스터 ID"),
-                                fieldWithPath("projectName").description("프로젝트 이름"),
-                                fieldWithPath("projectType").description("프로젝트 타입"),
-                                fieldWithPath("projectCategory").description("프로젝트 카테고리"),
-                                fieldWithPath("teamName").description("팀 이름"),
-                                fieldWithPath("youtubeId").description("프로젝트 youtubeId"),
-                                fieldWithPath("techStack").description("기술 스택"),
-                                fieldWithPath("year").description("프로젝트 년도"),
-                                fieldWithPath("awardStatus").description("수상 여부"),
-                                fieldWithPath("members").description("멤버"),
-                                fieldWithPath("members[].name").description("멤버 이름"),
-                                fieldWithPath("members[].role").description("멤버 역할")
+                                fieldWithPath("thumbnailId").type(JsonFieldType.NUMBER).description("썸네일 ID"),
+                                fieldWithPath("posterId").type(JsonFieldType.NUMBER).description("포스터 ID"),
+                                fieldWithPath("projectName").type(JsonFieldType.STRING).description("프로젝트 이름"),
+                                fieldWithPath("projectType").type(JsonFieldType.STRING).description("프로젝트 타입: RESEARCH_AND_BUSINESS_FOUNDATION, LAB, STARTUP, CLUB"),
+                                fieldWithPath("projectCategory").type(JsonFieldType.STRING).description("프로젝트 카테고리: COMPUTER_VISION, SYSTEM_NETWORK, WEB_APPLICATION, SECURITY_SOFTWARE_ENGINEERING, NATURAL_LANGUAGE_PROCESSING, BIG_DATA_ANALYSIS, AI_MACHINE_LEARNING, INTERACTION_AUGMENTED_REALITY\n"),
+                                fieldWithPath("teamName").type(JsonFieldType.STRING).description("팀 이름"),
+                                fieldWithPath("youtubeId").type(JsonFieldType.STRING).description("프로젝트 youtubeId"),
+                                fieldWithPath("techStack").type(JsonFieldType.STRING).description("기술 스택"),
+                                fieldWithPath("year").type(JsonFieldType.NUMBER).description("프로젝트 년도"),
+                                fieldWithPath("awardStatus").type(JsonFieldType.STRING).description("수상 여부: NONE, FIRST, SECOND, THIRD, FOURTH, FIFTH"),
+                                fieldWithPath("members").type(JsonFieldType.class).description("멤버"),
+                                fieldWithPath("members[].name").type(JsonFieldType.STRING).description("멤버 이름"),
+                                fieldWithPath("members[].role").type(JsonFieldType.STRING).description("멤버 역할: STUDENT, PROFESSOR")
                         ),
                         responseFields(
-                                fieldWithPath("id").description("프로젝트 ID"),
-                                fieldWithPath("thumbnailInfo").description("썸네일 정보"),
-                                fieldWithPath("posterInfo").description("포스터 정보"),
-                                fieldWithPath("projectName").description("프로젝트 이름"),
-                                fieldWithPath("projectType").description("프로젝트 타입"),
-                                fieldWithPath("projectCategory").description("프로젝트 카테고리"),
-                                fieldWithPath("teamName").description("팀 이름"),
-                                fieldWithPath("youtubeId").description("프로젝트 yotubeId"),
-                                fieldWithPath("techStack").description("기술 스택"),
-                                fieldWithPath("year").description("프로젝트 년도"),
-                                fieldWithPath("awardStatus").description("수상 여부"),
-                                fieldWithPath("studentNames").description("학생 이름"),
-                                fieldWithPath("professorNames").description("교수 이름"),
-                                fieldWithPath("likeCount").description("좋아요 수"),
-                                fieldWithPath("bookMark").description("북마크 여부")
+                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("프로젝트 ID"),
+                                fieldWithPath("thumbnailInfo").type(JsonFieldType.class).description("썸네일 정보"),
+                                fieldWithPath("thumbnailInfo.id").type(JsonFieldType.NUMBER).description("썸네일 ID"),
+                                fieldWithPath("thumbnailInfo.uuid").type(JsonFieldType.STRING).description("썸네일 UUID"),
+                                fieldWithPath("thumbnailInfo.name").type(JsonFieldType.STRING).description("썸네일 파일 이름"),
+                                fieldWithPath("thumbnailInfo.mimeType").type(JsonFieldType.STRING).description("썸네일 MIME 타입"),
+                                fieldWithPath("posterInfo").type(JsonFieldType.class).description("포스터 정보"),
+                                fieldWithPath("posterInfo.id").type(JsonFieldType.NUMBER).description("포스터 ID"),
+                                fieldWithPath("posterInfo.uuid").type(JsonFieldType.STRING).description("포스터 UUID"),
+                                fieldWithPath("posterInfo.name").type(JsonFieldType.STRING).description("포스터 파일 이름"),
+                                fieldWithPath("posterInfo.mimeType").type(JsonFieldType.STRING).description("포스터 MIME 타입"),
+                                fieldWithPath("projectName").type(JsonFieldType.STRING).description("프로젝트 이름"),
+                                fieldWithPath("projectType").type(JsonFieldType.STRING).description("프로젝트 타입: RESEARCH_AND_BUSINESS_FOUNDATION, LAB, STARTUP, CLUB"),
+                                fieldWithPath("projectCategory").type(JsonFieldType.STRING).description("프로젝트 카테고리: COMPUTER_VISION, SYSTEM_NETWORK, WEB_APPLICATION, SECURITY_SOFTWARE_ENGINEERING, NATURAL_LANGUAGE_PROCESSING, BIG_DATA_ANALYSIS, AI_MACHINE_LEARNING, INTERACTION_AUGMENTED_REALITY"),
+                                fieldWithPath("teamName").type(JsonFieldType.STRING).description("팀 이름"),
+                                fieldWithPath("youtubeId").type(JsonFieldType.STRING).description("프로젝트 youtubeId"),
+                                fieldWithPath("techStack").type(JsonFieldType.ARRAY).description("기술 스택"),
+                                fieldWithPath("year").type(JsonFieldType.NUMBER).description("프로젝트 년도"),
+                                fieldWithPath("awardStatus").type(JsonFieldType.STRING).description("수상 여부: NONE, FIRST, SECOND, THIRD, FOURTH, FIFTH "),
+                                fieldWithPath("studentNames").type(JsonFieldType.ARRAY).description("학생 이름"),
+                                fieldWithPath("professorNames").type(JsonFieldType.ARRAY).description("교수 이름"),
+                                fieldWithPath("likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
+                                fieldWithPath("like").type(JsonFieldType.BOOLEAN).description("좋아요 여부"),
+                                fieldWithPath("bookMark").type(JsonFieldType.BOOLEAN).description("북마크 여부"),
+                                fieldWithPath("comments").type(JsonFieldType.class).description("댓글"),
+                                fieldWithPath("comments[].id").type(JsonFieldType.NUMBER).description("댓글 ID"),
+                                fieldWithPath("comments[].projectId").type(JsonFieldType.NUMBER).description("유저 ID"),
+                                fieldWithPath("comments[].userName").type(JsonFieldType.STRING).description("유저 이름"),
+                                fieldWithPath("comments[].isAnonymous").type(JsonFieldType.BOOLEAN).description("익명 여부"),
+                                fieldWithPath("comments[].content").type(JsonFieldType.STRING).description("댓글 내용"),
+                                fieldWithPath("comments[].createdAt").type(JsonFieldType.STRING).description("생성 시간"),
+                                fieldWithPath("comments[].updatedAt").type(JsonFieldType.STRING).description("수정 시간")
                         )
                 ));
     }
@@ -293,6 +506,8 @@ public class ProjectControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 delete("/projects/{projectId}", 1L)
                         .contentType(APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, ADMIN_ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
         // then
@@ -314,7 +529,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 post("/projects/{projectId}/favorite", 1L)
                         .contentType(APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, ALL_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
@@ -345,7 +560,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 delete("/projects/{projectId}/favorite", 1L)
                         .contentType(APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, ALL_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
@@ -376,7 +591,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 post("/projects/{projectId}/like", 1L)
                         .contentType(APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, ALL_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
@@ -407,7 +622,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 delete("/projects/{projectId}/like", 1L)
                         .contentType(APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, ALL_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
@@ -432,9 +647,9 @@ public class ProjectControllerTest extends AbstractControllerTest {
     @DisplayName("프로젝트 댓글을 생성한다.")
     void createProjectComment() throws Exception {
         // given
-        CommentRequest commentRequest = new CommentRequest("테스트 댓글 내용", true);
+        CommentRequest commentRequest = new CommentRequest("댓글 내용", true);
 
-        CommentResponse commentResponse = new CommentResponse(1L,1L, "테스트 유저 이름", true,"테스트 댓글 내용" , LocalDateTime.now(), LocalDateTime.now());
+        CommentResponse commentResponse = new CommentResponse(1L,1L, "유저 이름", true,"댓글 내용" , LocalDateTime.now(), LocalDateTime.now());
 
         when(projectService.createProjectComment(anyLong(), any(User.class), any(CommentRequest.class))).thenReturn(commentResponse);
 
@@ -442,7 +657,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 post("/projects/{projectId}/comment", 1L)
                         .contentType(APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, ALL_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
                         .content(objectMapper.writeValueAsString(commentRequest))
         );
@@ -468,17 +683,17 @@ public class ProjectControllerTest extends AbstractControllerTest {
                                 parameterWithName("projectId").description("프로젝트 ID")
                         ),
                         requestFields(
-                                fieldWithPath("content").description("댓글 내용"),
-                                fieldWithPath("isAnonymous").description("익명 여부")
+                                fieldWithPath("content").type(JsonFieldType.STRING).description("댓글 내용"),
+                                fieldWithPath("isAnonymous").type(JsonFieldType.BOOLEAN).description("익명 여부")
                         ),
                         responseFields(
-                                fieldWithPath("id").description("댓글 ID"),
-                                fieldWithPath("projectId").description("프로젝트 ID"),
-                                fieldWithPath("userName").description("유저 이름"),
-                                fieldWithPath("isAnonymous").description("익명 여부"),
-                                fieldWithPath("content").description("댓글 내용"),
-                                fieldWithPath("createdAt").description("생성 시간"),
-                                fieldWithPath("updatedAt").description("수정 시간")
+                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("댓글 ID"),
+                                fieldWithPath("projectId").type(JsonFieldType.NUMBER).description("프로젝트 ID"),
+                                fieldWithPath("userName").type(JsonFieldType.STRING).description("유저 이름"),
+                                fieldWithPath("isAnonymous").type(JsonFieldType.BOOLEAN).description("익명 여부"),
+                                fieldWithPath("content").type(JsonFieldType.STRING).description("댓글 내용"),
+                                fieldWithPath("createdAt").type(JsonFieldType.STRING).description("생성 시간"),
+                                fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("수정 시간")
                         )
 
                 ));
@@ -496,7 +711,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 delete("/projects/{projectId}/comment/{commentId}", 1L, 1L)
                         .contentType(APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, ALL_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
