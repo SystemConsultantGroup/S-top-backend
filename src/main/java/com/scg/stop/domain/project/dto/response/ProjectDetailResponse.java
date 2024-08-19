@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
@@ -34,9 +35,15 @@ public class ProjectDetailResponse {
     private List<String> studentNames;
     private List<String> professorNames;
     private Integer likeCount;
+    private Boolean like;
     private Boolean bookMark;
+    private List<CommentResponse> comments;
 
-    public static ProjectDetailResponse of(List<String> studentNames, List<String> professorNames, Project project){
+    public static ProjectDetailResponse of(List<String> studentNames, List<String> professorNames, Boolean like, Boolean bookMark, Project project){
+        List<CommentResponse> commentResponseList = project.getComments().stream()
+                .map(CommentResponse::of)
+                .collect(Collectors.toList());
+
         return new ProjectDetailResponse(
                 project.getId(),
                 FileResponse.from(project.getThumbnail()),
@@ -52,7 +59,9 @@ public class ProjectDetailResponse {
                 studentNames,
                 professorNames,
                 project.getLikes().size(),
-                !project.getFavorites().isEmpty() // ToDo: 인증 설정 추가할 때, 인증된 사용자의 즐겨찾기 여부 확인 로직으로 변경
+                like,
+                bookMark,
+                commentResponseList
         );
     }
 }

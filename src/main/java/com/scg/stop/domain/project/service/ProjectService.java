@@ -42,7 +42,7 @@ public class ProjectService {
     private final EventPeriodRepository eventPeriodRepository;
 
     @Transactional(readOnly = true)
-    public Page<ProjectResponse> getProjects(String title, Integer year, ProjectCategory category, Pageable pageable){
+    public Page<ProjectResponse> getProjects(String title, Integer year, ProjectCategory category, Pageable pageable, User user){
 
         Page<Project> projects = projectRepository.findProjects(title, year, category, pageable);
 
@@ -55,7 +55,9 @@ public class ProjectService {
                     .filter(member -> member.getRole() == Role.PROFESSOR)
                     .map(Member::getName)
                     .collect(Collectors.toList());
-            return ProjectResponse.of(studentNames, professorNames, project);
+            Boolean like = likeRepository.findByProjectIdAndUserId(project.getId(), user.getId()).isPresent();
+            Boolean bookMark = favoriteProjectRepository.findByProjectIdAndUserId(project.getId(), user.getId()).isPresent();
+            return ProjectResponse.of(studentNames, professorNames, like, bookMark, project);
         });
 
         return projectResponses;
@@ -71,11 +73,11 @@ public class ProjectService {
 
         projectRepository.save(project);
 
-        return getProject(project.getId());
+        return getProject(project.getId(), null);
     }
 
     @Transactional(readOnly = true)
-    public ProjectDetailResponse getProject(Long projectId) {
+    public ProjectDetailResponse getProject(Long projectId, User user) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
 
@@ -87,8 +89,10 @@ public class ProjectService {
                 .filter(member -> member.getRole() == Role.PROFESSOR)
                 .map(Member::getName)
                 .collect(Collectors.toList());
+        Boolean like = likeRepository.findByProjectIdAndUserId(project.getId(), user.getId()).isPresent();
+        Boolean bookMark = favoriteProjectRepository.findByProjectIdAndUserId(project.getId(), user.getId()).isPresent();
 
-        return ProjectDetailResponse.of(studentNames, professorNames, project);
+        return ProjectDetailResponse.of(studentNames, professorNames, like, bookMark, project);
     }
 
     public ProjectDetailResponse updateProject(Long projectId, ProjectRequest projectRequest) {
@@ -103,7 +107,7 @@ public class ProjectService {
         Project newProject = projectRequest.toEntity(projectId, thumbnail, poster);
         project.update(newProject);
 
-        return getProject(projectId);
+        return getProject(projectId, null);
     }
 
     public void deleteProject(Long projectId) {

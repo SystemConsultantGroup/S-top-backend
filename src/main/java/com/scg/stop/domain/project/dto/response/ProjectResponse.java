@@ -6,6 +6,7 @@ import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.domain.project.domain.Project;
 import com.scg.stop.domain.project.domain.ProjectCategory;
 import com.scg.stop.domain.project.domain.ProjectType;
+import com.scg.stop.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,18 +28,13 @@ public class ProjectResponse {
     private ProjectCategory projectCategory;
     private List<String> techStacks;
     private Integer likeCount;
+    private Boolean like;
     private Boolean bookMark;
-    private List<CommentResponse> comments;
 
-    public static ProjectResponse of(List<String> studentNames, List<String> professorNames, Project project){
+    public static ProjectResponse of(List<String> studentNames, List<String> professorNames, Boolean like, Boolean bookMark, Project project){
         List<String> techStackList = Arrays.stream(project.getTechStack().split(","))
                 .map(String::trim)
                 .collect(Collectors.toList());
-
-        List<CommentResponse> commentResponseList = project.getComments().stream()
-                .map(CommentResponse::of)
-                .collect(Collectors.toList());
-
 
         return new ProjectResponse(
                 project.getId(),
@@ -51,8 +47,8 @@ public class ProjectResponse {
                 project.getCategory(),
                 techStackList,
                 project.getLikes().size(),
-                !project.getFavorites().isEmpty(),
-                commentResponseList
+                like,
+                bookMark
         );
     }
 }

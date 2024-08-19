@@ -38,9 +38,10 @@ public class ProjectController {
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "year", required = false) Integer year,
             @RequestParam(value = "category", required = false) ProjectCategory category,
-            @PageableDefault(page = 0, size = 10) Pageable pageable
+            @PageableDefault(page = 0, size = 10) Pageable pageable,
+            @AuthUser(accessType = {AccessType.ALL}) User user
     ){
-        Page<ProjectResponse> pageProjectResponse = projectService.getProjects(title, year, category, pageable);
+        Page<ProjectResponse> pageProjectResponse = projectService.getProjects(title, year, category, pageable, user);
         return ResponseEntity.status(HttpStatus.OK).body(pageProjectResponse);
     }
   
@@ -54,9 +55,10 @@ public class ProjectController {
 
     @GetMapping("/{projectId}")
     public ResponseEntity<ProjectDetailResponse> getProject(
-            @PathVariable("projectId") Long projectId
+            @PathVariable("projectId") Long projectId,
+            @AuthUser(accessType = {AccessType.ALL}) User user
     ) {
-        ProjectDetailResponse projectDetailResponse = projectService.getProject(projectId);
+        ProjectDetailResponse projectDetailResponse = projectService.getProject(projectId, user);
         return ResponseEntity.status(HttpStatus.OK).body(projectDetailResponse);
     }
 
