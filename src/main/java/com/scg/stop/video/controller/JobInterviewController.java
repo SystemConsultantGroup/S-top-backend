@@ -4,6 +4,7 @@ import com.scg.stop.auth.annotation.AuthUser;
 import com.scg.stop.video.domain.JobInterviewCategory;
 import com.scg.stop.video.dto.request.JobInterviewRequest;
 import com.scg.stop.video.dto.response.JobInterviewResponse;
+import com.scg.stop.video.dto.response.JobInterviewUserResponse;
 import com.scg.stop.video.service.FavoriteVideoService;
 import com.scg.stop.video.service.JobInterviewService;
 import com.scg.stop.user.domain.AccessType;
@@ -36,19 +37,22 @@ public class JobInterviewController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<JobInterviewResponse>> getJobInterviews(
+    public ResponseEntity<Page<JobInterviewUserResponse>> getJobInterviews(
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "year", required = false) Integer year,
             @RequestParam(value = "category", required = false) JobInterviewCategory category,
+            @AuthUser(accessType = {AccessType.OPTIONAL}) User user,
             @PageableDefault(page = 0, size = 10) Pageable pageable
     ) {
-        Page<JobInterviewResponse> interviews = jobInterviewService.getJobInterviews(year, category, title, pageable);
-        return ResponseEntity.status(HttpStatus.OK).body(interviews);
+        return ResponseEntity.status(HttpStatus.OK).body(jobInterviewService.getJobInterviews(user, year, category, title, pageable));
     }
 
     @GetMapping("/{jobInterviewId}")
-    public ResponseEntity<JobInterviewResponse> getJobInterview(@PathVariable("jobInterviewId") Long jobInterviewId) {
-        return ResponseEntity.status(HttpStatus.OK).body(jobInterviewService.getJobInterview(jobInterviewId));
+    public ResponseEntity<JobInterviewUserResponse> getJobInterview(
+            @PathVariable("jobInterviewId") Long jobInterviewId,
+            @AuthUser(accessType = {AccessType.OPTIONAL}) User user
+    ) {
+        return ResponseEntity.status(HttpStatus.OK).body(jobInterviewService.getJobInterview(jobInterviewId, user));
     }
 
     @PutMapping("/{jobInterviewId}")

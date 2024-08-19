@@ -6,6 +6,7 @@ import com.scg.stop.video.controller.JobInterviewController;
 import com.scg.stop.video.domain.JobInterviewCategory;
 import com.scg.stop.video.dto.request.JobInterviewRequest;
 import com.scg.stop.video.dto.response.JobInterviewResponse;
+import com.scg.stop.video.dto.response.JobInterviewUserResponse;
 import com.scg.stop.video.service.FavoriteVideoService;
 import com.scg.stop.video.service.JobInterviewService;
 import jakarta.servlet.http.Cookie;
@@ -119,11 +120,11 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
     @DisplayName("잡페어 인터뷰 리스트를 조회할 수 있다.")
     void getJobInterviewList() throws Exception {
         //given
-        JobInterviewResponse interview1 = new JobInterviewResponse(1L,"잡페어 인터뷰의 제목1", "유튜브 고유 ID1", 2023,"대담자의 소속1", "대담자의 성명1",  JobInterviewCategory.INTERN, LocalDateTime.now(), LocalDateTime.now());
-        JobInterviewResponse interview2 = new JobInterviewResponse(2L, "잡페어 인터뷰의 제목2", "유튜브 고유 ID2", 2024,"대담자의 소속2", "대담자의 성명2",  JobInterviewCategory.INTERN, LocalDateTime.now(), LocalDateTime.now());
-        Page<JobInterviewResponse> page = new PageImpl<>(List.of(interview1, interview2), PageRequest.of(0,10),2);
+        JobInterviewUserResponse interview1 = new JobInterviewUserResponse(1L,"잡페어 인터뷰의 제목1", "유튜브 고유 ID1", 2023,"대담자의 소속1", "대담자의 성명1", false,  JobInterviewCategory.INTERN, LocalDateTime.now(), LocalDateTime.now());
+        JobInterviewUserResponse interview2 = new JobInterviewUserResponse(2L, "잡페어 인터뷰의 제목2", "유튜브 고유 ID2", 2024,"대담자의 소속2", "대담자의 성명2", true,  JobInterviewCategory.INTERN, LocalDateTime.now(), LocalDateTime.now());
+        Page<JobInterviewUserResponse> page = new PageImpl<>(List.of(interview1, interview2), PageRequest.of(0,10),2);
 
-        when(jobInterviewService.getJobInterviews(any(), any(), any(), any())).thenReturn(page);
+        when(jobInterviewService.getJobInterviews(any(), any(), any(), any(), any())).thenReturn(page);
 
         //when
         ResultActions result = mockMvc.perform(
@@ -170,6 +171,7 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
                                 fieldWithPath("content[].year").type(JsonFieldType.NUMBER).description("잡페어 인터뷰 연도"),
                                 fieldWithPath("content[].talkerBelonging").type(JsonFieldType.STRING).description("잡페어 인터뷰 대담자의 소속"),
                                 fieldWithPath("content[].talkerName").type(JsonFieldType.STRING).description("잡페어 인터뷰 대담자의 성명"),
+                                fieldWithPath("content[].favorite").type(JsonFieldType.BOOLEAN).description("관심에 추가한 잡페어 인터뷰 여부"),
                                 fieldWithPath("content[].category").type(JsonFieldType.STRING).description("잡페어 인터뷰 카테고리: SENIOR, INTERN"),
                                 fieldWithPath("content[].createdAt").type(JsonFieldType.STRING).description("잡페어 인터뷰 생성일"),
                                 fieldWithPath("content[].updatedAt").type(JsonFieldType.STRING).description("잡페어 인터뷰 수정일")
@@ -181,9 +183,9 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
     @DisplayName("잡페어 인터뷰 1개를 조회할 수 있다.")
     void getJobInterview() throws Exception {
         //given
-        JobInterviewResponse response = new JobInterviewResponse(1L, "잡페어 인터뷰의 제목", "유튜브 고유 ID", 2024,"대담자의 소속", "대담자의 성명",  JobInterviewCategory.INTERN, LocalDateTime.now(), LocalDateTime.now());
+        JobInterviewUserResponse response = new JobInterviewUserResponse(1L, "잡페어 인터뷰의 제목", "유튜브 고유 ID", 2024,"대담자의 소속", "대담자의 성명", false, JobInterviewCategory.INTERN, LocalDateTime.now(), LocalDateTime.now());
 
-        when(jobInterviewService.getJobInterview(any())).thenReturn(response);
+        when(jobInterviewService.getJobInterview(any(), any())).thenReturn(response);
 
         //when
         ResultActions result = mockMvc.perform(
@@ -203,6 +205,7 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("잡페어 인터뷰 연도"),
                                 fieldWithPath("talkerBelonging").type(JsonFieldType.STRING).description("잡페어 인터뷰 대담자의 소속"),
                                 fieldWithPath("talkerName").type(JsonFieldType.STRING).description("잡페어 인터뷰 대담자의 성명"),
+                                fieldWithPath("favorite").type(JsonFieldType.BOOLEAN).description("관심에 추가한 잡페어 인터뷰 여부"),
                                 fieldWithPath("category").type(JsonFieldType.STRING).description("잡페어 인터뷰 카테고리: SENIOR, INTERN"),
                                 fieldWithPath("createdAt").type(JsonFieldType.STRING).description("잡페어 인터뷰 생성일"),
                                 fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("잡페어 인터뷰 수정일")
