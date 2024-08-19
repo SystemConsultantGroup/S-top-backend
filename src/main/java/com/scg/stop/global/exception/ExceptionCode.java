@@ -32,7 +32,7 @@ public enum ExceptionCode {
     INVALID_TECHSTACK(77004, "기술 스택 정보가 올바르지 않습니다."),
     ALREADY_FAVORITE_PROJECT(77005, "관심 표시한 프로젝트가 이미 존재합니다"),
     NOT_FOUND_FAVORITE_PROJECT(77007, "관심 표시한 프로젝트를 찾을 수 없습니다."),
-    ALREADY_LIKE_PROJECT(77008, "좋아요 표시한 프로젝트가 이미 존재합니다"),
+    ALREADY_LIKE_PROJECT(77008, "이미 좋아요 한 프로젝트입니다."),
     NOT_FOUND_LIKE_PROJECT(77009, "좋아요 표시한 프로젝트가 존재하지 않습니다"),
     NOT_FOUND_COMMENT(77010, "댓글을 찾을 수 없습니다"),
     NOT_MATCH_USER(77011, "유저 정보가 일치하지 않습니다"),
