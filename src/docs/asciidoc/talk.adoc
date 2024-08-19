@@ -46,3 +46,8 @@ operation::talk-controller-test/create-talk-favorite[snippets="http-request,path
 ====
 operation::talk-controller-test/delete-talk-favorite[snippets="http-request,path-parameters,http-response"]
 ====
+
+=== 대담 영상의 퀴즈 제출 결과 조회 (GET /talks/{talkId/quiz/submit)
+====
+operation::talk-controller-test/get-user-quiz[snippets="http-request,path-parameters,http-response,response-fields"]
+====

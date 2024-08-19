@@ -516,6 +516,41 @@ public class TalkControllerTest extends AbstractControllerTest {
 
     }
 
+    @Test
+    @DisplayName("유저 자신의 퀴즈 제출 기록을 확인할 수 있다.")
+    void getUserQuiz() throws Exception {
+        Long id = 1L;
+        QuizSubmitResponse response = new QuizSubmitResponse(false, 2);
+        when(quizService.getUserQuiz(anyLong(), any())).thenReturn(response);
+
+        ResultActions result = mockMvc.perform(
+                get("/talks/{talkId}/quiz/submit", id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, USER_ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
+
+        result.andExpect(status().isOk())
+                .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
+                        ),
+                        pathParameters(
+                                parameterWithName("talkId").description("퀴즈가 연결된 대담 영상의 ID")
+                        ),
+                        responseFields(
+                                fieldWithPath("tryCount").type(JsonFieldType.NUMBER).description("시도한 횟수"),
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("퀴즈 성공 여부")
+                        )
+                ));
+
+    }
+
 
 
 
