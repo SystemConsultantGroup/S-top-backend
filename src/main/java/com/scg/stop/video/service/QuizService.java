@@ -82,6 +82,9 @@ public class QuizService {
             userQuiz = userQuizRepository.save(UserQuiz.from(user, quiz, isSuccess));
             user.addUserQuiz(userQuiz);
         } else {
+            if(userQuiz.getTryCount() >= 3) {
+                throw new BadRequestException(ExceptionCode.TOO_MANY_TRY_QUIZ);
+            }
             if(!userQuiz.isSuccess())
                 userQuiz.updateSuccess(isSuccess);
             else throw new BadRequestException(ExceptionCode.ALREADY_QUIZ_SUCCESS);

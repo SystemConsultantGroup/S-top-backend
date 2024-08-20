@@ -43,7 +43,8 @@ public enum ExceptionCode {
     ALREADY_FAVORITE(8801, "이미 관심 리스트에 추가되었습니다."),
     NOT_FAVORITE(8802, "이미 관심 리스트에 추가되어 있지 않습니다."),
     NOT_EVENT_PERIOD(8804, "퀴즈 이벤트 참여 기간이 아닙니다."),
-    MISMATCH_CURRENT_YEAR(8805, "대담 영상과 현재 이벤트 참여 연도가 일치하지 않습니다.");
+    MISMATCH_CURRENT_YEAR(8805, "대담 영상과 현재 이벤트 참여 연도가 일치하지 않습니다."),
+    TOO_MANY_TRY_QUIZ(8901, "퀴즈 최대 시도 횟수를 초과하였습니다.");
 
 
 
