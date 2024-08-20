@@ -106,7 +106,7 @@ public class QuizService {
         if(talk.getQuiz() == null) throw new BadRequestException(ExceptionCode.NO_QUIZ);
         UserQuiz userQuiz = userQuizRepository.findByUserAndQuiz(user, talk.getQuiz());
         if(userQuiz == null) {
-            throw new BadRequestException(ExceptionCode.NOT_FOUND_USER_QUIZ);
+            return new QuizSubmitResponse(false, 0);
         }
         return new QuizSubmitResponse(userQuiz.isSuccess(), userQuiz.getTryCount());
     }
