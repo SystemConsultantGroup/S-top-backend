@@ -55,6 +55,7 @@ public class TalkControllerTest extends AbstractControllerTest {
 
     private static final String ACCESS_TOKEN = "admin_access_token";
     private static final String USER_ACCESS_TOKEN = "access_token";
+    private static final String OPTIONAL_ACCESS_TOKEN = "optional_access_token";
     private static final String REFRESH_TOKEN = "refresh_token";
 
     @MockBean
@@ -156,7 +157,7 @@ public class TalkControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 get("/talks")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, USER_ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, OPTIONAL_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
@@ -236,7 +237,7 @@ public class TalkControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 get("/talks/{talkId}", id)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, USER_ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, OPTIONAL_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
