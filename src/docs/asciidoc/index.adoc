@@ -5,4 +5,15 @@
 :toclevels: 3
 :seclinks:
 
+=== 커스텀 예외 코드
+include::{snippets}/exception-code-controller-test/get-exception-codes/exception-response-fields.adoc[]
+
+include::auth-controller-test.adoc[]
+include::jobInterview.adoc[]
+include::talk.adoc[]
+include::notice.adoc[]
+include::eventNotice.adoc[]
+include::eventPeriod.adoc[]
+include::gallery.adoc[]
 include::project.adoc[]
+include::application.adoc[]
