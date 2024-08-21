@@ -6,11 +6,7 @@ import static lombok.AccessLevel.PROTECTED;
 
 import com.scg.stop.user.domain.User;
 import com.scg.stop.global.domain.BaseTimeEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +15,12 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
+@Table(
+        name = "favorite_projects",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"project_id", "user_id"})
+        }
+)
 public class FavoriteProject extends BaseTimeEntity {
 
     @Id

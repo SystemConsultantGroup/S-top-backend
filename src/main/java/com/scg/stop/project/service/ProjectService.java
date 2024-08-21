@@ -19,6 +19,7 @@ import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.user.domain.User;
 import com.scg.stop.user.repository.UserRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -119,61 +120,68 @@ public class ProjectService {
 
 
     public void createProjectFavorite(Long projectId, User user){
-        boolean exists = favoriteProjectRepository.findByProjectIdAndUserId(projectId, user.getId()).isPresent();
-        if (exists) { // Todo: error를 던지진 말고 그냥 요청을 취소하는 방식은 어떨까..
-            throw new BadRequestException(ExceptionCode.ALREADY_FAVORITE_PROJECT);
-        }
-
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
 
-        FavoriteProject newFavoriteProject = new FavoriteProject(null, project, user);
-        favoriteProjectRepository.save(newFavoriteProject);
+        try {
+            FavoriteProject newFavoriteProject = new FavoriteProject(null, project, user);
+            favoriteProjectRepository.save(newFavoriteProject);
+            project.addFavoriteProject(newFavoriteProject);
+            user.addFavoriteProject(newFavoriteProject);
+        } catch (DataIntegrityViolationException e){
+            throw new BadRequestException(ExceptionCode.ALREADY_FAVORITE_PROJECT);
+        }
     }
 
     public void deleteProjectFavorite(Long projectId, User user){
         FavoriteProject favoriteProject = favoriteProjectRepository.findByProjectIdAndUserId(projectId, user.getId())
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_FAVORITE_PROJECT));
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
 
         favoriteProjectRepository.delete(favoriteProject);
+        project.removeFavoriteProject(favoriteProject);
+        user.removeFavoriteProject(favoriteProject);
     }
 
     public void createProjectLike(Long projectId, User user){
-        int year = LocalDateTime.now().getYear();
-        EventPeriod eventPeriod = eventPeriodRepository.findByYear(year);
-        if(eventPeriod == null){
-            throw new BadRequestException(ExceptionCode.NOT_FOUND_EVENT_PERIOD);
-        }
+        EventPeriod eventPeriod = eventPeriodRepository.findByYear(LocalDateTime.now().getYear())
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_EVENT_PERIOD));
+
         if (eventPeriod.getStart().isAfter(LocalDateTime.now()) || eventPeriod.getEnd().isBefore(LocalDateTime.now())){
             throw new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD);
-        }
-
-        boolean exists = likeRepository.findByProjectIdAndUserId(projectId, user.getId()).isPresent();
-        if (exists) { // Todo: error를 던지진 말고 그냥 요청을 취소하는 방식은 어떨까..
-            throw new BadRequestException(ExceptionCode.ALREADY_LIKE_PROJECT);
         }
 
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
 
-        Likes newLike = new Likes(null, project, user);
-        likeRepository.save(newLike);
+        try {
+            Likes newLike = new Likes(null, project, user);
+            likeRepository.save(newLike);
+            project.addLikes(newLike);
+            user.addLikes(newLike);
+        } catch (DataIntegrityViolationException e){
+            throw new BadRequestException(ExceptionCode.ALREADY_LIKE_PROJECT);
+        }
+
     }
 
     public void deleteProjectLike(Long projectId, User user){
-        int year = LocalDateTime.now().getYear();
-        EventPeriod eventPeriod = eventPeriodRepository.findByYear(year);
-        if(eventPeriod == null){
-            throw new BadRequestException(ExceptionCode.NOT_FOUND_EVENT_PERIOD);
-        }
+        EventPeriod eventPeriod = eventPeriodRepository.findByYear(LocalDateTime.now().getYear())
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_EVENT_PERIOD));
+
         if (eventPeriod.getStart().isAfter(LocalDateTime.now()) || eventPeriod.getEnd().isBefore(LocalDateTime.now())){
             throw new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD);
         }
 
         Likes like = likeRepository.findByProjectIdAndUserId(projectId, user.getId())
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_LIKE_PROJECT));
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
 
         likeRepository.delete(like);
+        project.removeLikes(like);
+        user.removeLikes(like);
     }
 
     public CommentResponse createProjectComment(Long projectId, User user, CommentRequest commentRequest){
