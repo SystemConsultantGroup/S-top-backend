@@ -131,4 +131,14 @@ public class ProjectController {
         projectService.deleteProjectComment(projectId, commentId, user);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/award")
+    public ResponseEntity<Page<ProjectResponse>> getAwardProjects(
+            @RequestParam(value = "title", required = true) Integer year,
+            @PageableDefault(page = 0, size = 10) Pageable pageable,
+            @AuthUser(accessType = {AccessType.ALL}) User user
+    ){
+        Page<ProjectResponse> pageProjectResponse = projectService.getAwardProjects(year, pageable, user);
+        return ResponseEntity.status(HttpStatus.OK).body(pageProjectResponse);
+    }
 }

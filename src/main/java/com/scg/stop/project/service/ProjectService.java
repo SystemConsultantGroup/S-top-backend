@@ -196,4 +196,24 @@ public class ProjectService {
 
         commentRepository.delete(comment);
     }
+
+    public Page<ProjectResponse> getAwardProjects(Integer year, Pageable page, User user){
+        Page<Project> projects = projectRepository.findAwardProjects(year, page);
+
+        Page<ProjectResponse> projectResponses = projects.map(project -> {
+            List<String> studentNames = project.getMembers().stream()
+                    .filter(member -> member.getRole() == Role.STUDENT)
+                    .map(Member::getName)
+                    .collect(Collectors.toList());
+            List<String> professorNames = project.getMembers().stream()
+                    .filter(member -> member.getRole() == Role.PROFESSOR)
+                    .map(Member::getName)
+                    .collect(Collectors.toList());
+            Boolean like = likeRepository.findByProjectIdAndUserId(project.getId(), user.getId()).isPresent();
+            Boolean bookMark = favoriteProjectRepository.findByProjectIdAndUserId(project.getId(), user.getId()).isPresent();
+            return ProjectResponse.of(studentNames, professorNames, like, bookMark, project);
+        });
+
+        return projectResponses;
+    }
 }
