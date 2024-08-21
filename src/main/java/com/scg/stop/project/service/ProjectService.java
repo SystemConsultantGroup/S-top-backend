@@ -5,7 +5,7 @@ import com.scg.stop.domain.event.domain.EventPeriod;
 import com.scg.stop.domain.event.repository.EventPeriodRepository;
 import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.domain.file.repository.FileRepository;
-import com.scg.stop.domain.project.domain.*;
+import com.scg.stop.project.domain.*;
 import com.scg.stop.project.domain.*;
 import com.scg.stop.project.dto.request.CommentRequest;
 import com.scg.stop.project.dto.request.ProjectRequest;
