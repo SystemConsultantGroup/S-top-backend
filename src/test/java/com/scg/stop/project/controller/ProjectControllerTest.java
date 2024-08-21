@@ -1,4 +1,4 @@
-package com.scg.stop.domain.project.controller;
+package com.scg.stop.project.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
