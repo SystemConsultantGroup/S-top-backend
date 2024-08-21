@@ -10,4 +10,4 @@ spring:
     init:
       mode: always
 server.port: 8000
-spring.redirectURI: "localhost:3000"
+spring.redirectURI: "localhost:3000/login/kakao"
