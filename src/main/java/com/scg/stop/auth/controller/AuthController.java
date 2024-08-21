@@ -10,6 +10,7 @@ import com.scg.stop.user.domain.AccessType;
 import com.scg.stop.user.domain.User;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,10 +40,10 @@ public class AuthController {
     private final AuthService authService;
 
     @GetMapping(value = "/login/kakao")
-    public ResponseEntity<AccessTokenResponse> kakaoLogin(
+    public ResponseEntity<AccessTokenResponse> kakaoLogin (
             @RequestParam("code") String accessCode ,
             HttpServletResponse response
-    ) {
+    ) throws IOException {
         UserToken userTokens = authService.login(accessCode);
 
         ResponseCookie cookie = ResponseCookie.from("refresh-token", userTokens.getRefreshToken())
@@ -63,9 +64,10 @@ public class AuthController {
                 .path("/")
                 .build();
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-        response.addHeader("Location", REDIRECT_URI);
+//        response.addHeader("Location", REDIRECT_URI);
         response.addHeader(HttpHeaders.SET_COOKIE, AccessTokenCookie.toString());
-        return ResponseEntity.ok().build();
+        response.sendRedirect(REDIRECT_URI);
+        return ResponseEntity.status(HttpStatus.FOUND).build();
     }
 
     @PostMapping("/register")
