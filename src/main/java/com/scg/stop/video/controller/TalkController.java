@@ -90,7 +90,7 @@ public class TalkController {
             @AuthUser(accessType = {AccessType.ALL}) User user,
             @RequestBody @Valid QuizSubmitRequest request
     ) {
-        QuizSubmitResponse response = quizService.submitQuiz(talkId, request, user.getId());
+        QuizSubmitResponse response = quizService.submitQuiz(talkId, request, user);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -108,7 +108,7 @@ public class TalkController {
             @PathVariable("talkId") Long talkId,
             @AuthUser(accessType = {AccessType.ALL}) User user
     ) {
-        favoriteVideoService.createTalkFavorite(talkId, user.getId());
+        favoriteVideoService.createTalkFavorite(talkId, user);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -117,7 +117,7 @@ public class TalkController {
             @PathVariable("talkId") Long talkId,
             @AuthUser(accessType = {AccessType.ALL}) User user
     ) {
-        favoriteVideoService.deleteTalkFavorite(talkId, user.getId());
+        favoriteVideoService.deleteTalkFavorite(talkId, user);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

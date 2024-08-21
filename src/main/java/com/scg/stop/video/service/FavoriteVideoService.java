@@ -23,68 +23,56 @@ public class FavoriteVideoService {
     private final TalkRepository talkRepository;
     private final UserRepository userRepository;
 
-    public void createJobInterviewFavorite(Long id, Long userId) {
+    public void createJobInterviewFavorite(Long id, User user) {
         JobInterview jobInterview = jobInterviewRepository.findById(id).orElseThrow(() ->
                 new BadRequestException(ExceptionCode.ID_NOT_FOUND));
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new BadRequestException(ExceptionCode.NOT_FOUND_USER_ID)
-        );
         FavoriteVideo favoriteVideo = favoriteVideoRepository.findByJobInterviewAndUser(jobInterview, user);
         if (favoriteVideo != null) {
             throw new BadRequestException(ExceptionCode.ALREADY_FAVORITE);
         }
         FavoriteVideo newFavoriteVideo = favoriteVideoRepository.save(FavoriteVideo.of(jobInterview, user));
         jobInterview.addFavoriteVideo(newFavoriteVideo);
-        user.addFavoriteVideo(newFavoriteVideo);
+        userRepository.save(user);
 
 
     }
 
-    public void deleteJobInterviewFavorite(Long id, Long userId) {
+    public void deleteJobInterviewFavorite(Long id, User user) {
         JobInterview jobInterview = jobInterviewRepository.findById(id).orElseThrow(() ->
                 new BadRequestException(ExceptionCode.ID_NOT_FOUND));
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new BadRequestException(ExceptionCode.NOT_FOUND_USER_ID)
-        );
         FavoriteVideo favoriteVideo = favoriteVideoRepository.findByJobInterviewAndUser(jobInterview, user);
         if(favoriteVideo == null) {
             throw new BadRequestException(ExceptionCode.NOT_FAVORITE);
         }
         jobInterview.removeFavoriteVideo(favoriteVideo);
-        user.removeFavoriteVideo(favoriteVideo);
         favoriteVideoRepository.delete(favoriteVideo);
+        userRepository.save(user);
     }
 
 
 
-    public void createTalkFavorite(Long id, Long userId) {
+    public void createTalkFavorite(Long id, User user) {
         Talk talk = talkRepository.findById(id).orElseThrow(() ->
                 new BadRequestException(ExceptionCode.TALK_ID_NOT_FOUND));
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new BadRequestException(ExceptionCode.NOT_FOUND_USER_ID)
-        );
         FavoriteVideo favoriteVideo = favoriteVideoRepository.findByTalkAndUser(talk, user);
         if(favoriteVideo != null) {
             throw new BadRequestException(ExceptionCode.ALREADY_FAVORITE);
         }
         FavoriteVideo newFavoriteVideo = favoriteVideoRepository.save(FavoriteVideo.of(talk, user));
         talk.addFavoriteVideo(newFavoriteVideo);
-        user.addFavoriteVideo(newFavoriteVideo);
+        userRepository.save(user);
 
     }
 
-    public void deleteTalkFavorite(Long id, Long userId) {
+    public void deleteTalkFavorite(Long id, User user) {
         Talk talk = talkRepository.findById(id).orElseThrow(() ->
                 new BadRequestException(ExceptionCode.TALK_ID_NOT_FOUND));
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new BadRequestException(ExceptionCode.NOT_FOUND_USER_ID)
-        );
         FavoriteVideo favoriteVideo = favoriteVideoRepository.findByTalkAndUser(talk, user);
         if(favoriteVideo == null) {
             throw new BadRequestException(ExceptionCode.NOT_FAVORITE);
         }
         talk.removeFavoriteVideo(favoriteVideo);
-        user.removeFavoriteVideo(favoriteVideo);
         favoriteVideoRepository.delete(favoriteVideo);
+        userRepository.save(user);
     }
 }

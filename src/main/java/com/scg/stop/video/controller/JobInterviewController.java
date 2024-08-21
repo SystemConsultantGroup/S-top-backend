@@ -78,7 +78,7 @@ public class JobInterviewController {
             @PathVariable("jobInterviewId") Long jobInterviewId,
             @AuthUser(accessType = {AccessType.ALL}) User user
     ) {
-        favoriteVideoService.createJobInterviewFavorite(jobInterviewId, user.getId());
+        favoriteVideoService.createJobInterviewFavorite(jobInterviewId, user);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -87,7 +87,7 @@ public class JobInterviewController {
             @PathVariable("jobInterviewId") Long jobInterviewId,
             @AuthUser(accessType = {AccessType.ALL}) User user
     ) {
-        favoriteVideoService.deleteJobInterviewFavorite(jobInterviewId, user.getId());
+        favoriteVideoService.deleteJobInterviewFavorite(jobInterviewId, user);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
