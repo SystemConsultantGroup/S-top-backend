@@ -1,11 +1,10 @@
 package com.scg.stop.project.service;
 
 
-import com.scg.stop.domain.event.domain.EventPeriod;
-import com.scg.stop.domain.event.repository.EventPeriodRepository;
+import com.scg.stop.event.domain.EventPeriod;
+import com.scg.stop.event.repository.EventPeriodRepository;
 import com.scg.stop.domain.file.domain.File;
 import com.scg.stop.domain.file.repository.FileRepository;
-import com.scg.stop.project.domain.*;
 import com.scg.stop.project.domain.*;
 import com.scg.stop.project.dto.request.CommentRequest;
 import com.scg.stop.project.dto.request.ProjectRequest;
@@ -141,8 +140,10 @@ public class ProjectService {
 
     public void createProjectLike(Long projectId, User user){
         int year = LocalDateTime.now().getYear();
-        EventPeriod eventPeriod = eventPeriodRepository.findByYear(year)
-                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_EVENT_PERIOD));
+        EventPeriod eventPeriod = eventPeriodRepository.findByYear(year);
+        if(eventPeriod == null){
+            throw new BadRequestException(ExceptionCode.NOT_FOUND_EVENT_PERIOD);
+        }
         if (eventPeriod.getStart().isAfter(LocalDateTime.now()) || eventPeriod.getEnd().isBefore(LocalDateTime.now())){
             throw new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD);
         }
@@ -161,8 +162,10 @@ public class ProjectService {
 
     public void deleteProjectLike(Long projectId, User user){
         int year = LocalDateTime.now().getYear();
-        EventPeriod eventPeriod = eventPeriodRepository.findByYear(year)
-                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_EVENT_PERIOD));
+        EventPeriod eventPeriod = eventPeriodRepository.findByYear(year);
+        if(eventPeriod == null){
+            throw new BadRequestException(ExceptionCode.NOT_FOUND_EVENT_PERIOD);
+        }
         if (eventPeriod.getStart().isAfter(LocalDateTime.now()) || eventPeriod.getEnd().isBefore(LocalDateTime.now())){
             throw new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD);
         }
