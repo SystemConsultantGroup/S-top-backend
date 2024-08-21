@@ -1,5 +1,6 @@
 package com.scg.stop.project.dto.response;
 
+import com.scg.stop.project.domain.AwardStatus;
 import com.scg.stop.project.domain.Project;
 import com.scg.stop.project.domain.ProjectCategory;
 import com.scg.stop.project.domain.ProjectType;
@@ -21,6 +22,7 @@ public class ProjectResponse {
     private List<String> professorNames;
     private ProjectType projectType;
     private ProjectCategory projectCategory;
+    private AwardStatus awardStatus;
     private List<String> techStacks;
     private Integer likeCount;
     private Boolean like;
@@ -40,6 +42,7 @@ public class ProjectResponse {
                 professorNames,
                 project.getType(),
                 project.getCategory(),
+                project.getAwardStatus(),
                 techStackList,
                 project.getLikes().size(),
                 like,

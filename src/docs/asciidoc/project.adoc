@@ -77,3 +77,10 @@ operation::project-controller-test/create-project-comment[snippets="http-request
 ====
 operation::project-controller-test/delete-project-comment[snippets="http-request,http-response,path-parameters"]
 ====
+
+---
+=== 수상 프로젝트 조회 (GET /projects/award?year={year})
+==== 200 No Content
+====
+operation::project-controller-test/get-award-projects[snippets="http-request,http-response,query-parameters,response-fields"]
+====

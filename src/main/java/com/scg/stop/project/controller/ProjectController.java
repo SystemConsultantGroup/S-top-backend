@@ -134,7 +134,7 @@ public class ProjectController {
 
     @GetMapping("/award")
     public ResponseEntity<Page<ProjectResponse>> getAwardProjects(
-            @RequestParam(value = "title", required = true) Integer year,
+            @RequestParam(value = "year", required = true) Integer year,
             @PageableDefault(page = 0, size = 10) Pageable pageable,
             @AuthUser(accessType = {AccessType.ALL}) User user
     ){
