@@ -48,7 +48,7 @@ public class AuthController {
 
         ResponseCookie cookie = ResponseCookie.from("refresh-token", userTokens.getRefreshToken())
                 .maxAge(ONE_WEEK_SECONDS)
-//                .secure(true)
+                .secure(true)
                 .httpOnly(true)
                 .sameSite("None")
 //                .domain(".localhost")  // TODO: domain 수정
@@ -57,14 +57,13 @@ public class AuthController {
 
         ResponseCookie AccessTokenCookie = ResponseCookie.from("access-token", userTokens.getAccessToken())
                 .maxAge(ONE_WEEK_SECONDS)
-//                .secure(true)
+                .secure(true)
                 .httpOnly(true)
                 .sameSite("None")
 //                .domain(".localhost")  // TODO: domain 수정
                 .path("/")
                 .build();
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-//        response.addHeader("Location", REDIRECT_URI);
         response.addHeader(HttpHeaders.SET_COOKIE, AccessTokenCookie.toString());
         response.sendRedirect(REDIRECT_URI);
         return ResponseEntity.status(HttpStatus.FOUND).build();
