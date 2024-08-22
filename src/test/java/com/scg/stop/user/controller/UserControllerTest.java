@@ -158,12 +158,12 @@ class UserControllerTest extends AbstractControllerTest {
                         ),
                         requestFields(
                                 fieldWithPath("name").type(JsonFieldType.STRING).description("이름"),
-                                fieldWithPath("phone").type(JsonFieldType.STRING).description("전화번호"),
+                                fieldWithPath("phoneNumber").type(JsonFieldType.STRING).description("전화번호"),
                                 fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
                                 fieldWithPath("division").type(JsonFieldType.STRING).description("소속").optional(),
                                 fieldWithPath("position").type(JsonFieldType.STRING).description("직책").optional(),
                                 fieldWithPath("studentNumber").type(JsonFieldType.STRING).description("학번").optional(),
-                                fieldWithPath("departmentName").type(JsonFieldType.STRING).description("학과").optional()
+                                fieldWithPath("department").type(JsonFieldType.STRING).description("학과").optional()
                         ),
                         responseFields(
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("사용자 ID"),

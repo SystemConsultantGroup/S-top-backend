@@ -8,9 +8,7 @@ import com.scg.stop.user.domain.User;
 import com.scg.stop.user.domain.UserType;
 import com.scg.stop.user.dto.request.UserUpdateRequest;
 import com.scg.stop.user.dto.response.UserResponse;
-import com.scg.stop.user.repository.ApplicationRepository;
 import com.scg.stop.user.repository.DepartmentRepository;
-import com.scg.stop.user.repository.StudentRepository;
 import com.scg.stop.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -64,14 +62,14 @@ public class UserService {
 
     public UserResponse updateMe(User user, UserUpdateRequest request) {
         if (isNotBlank(request.getName())) user.updateName(request.getName());
-        if (isNotBlank(request.getPhone())) user.updatePhone(request.getPhone());
+        if (isNotBlank(request.getPhoneNumber())) user.updatePhone(request.getPhoneNumber());
         if (isNotBlank(request.getEmail())) user.updateEmail(request.getEmail());
 
         if (user.getUserType().equals(UserType.STUDENT)) {
             request.validateStudentInfo();
 
             Department department = departmentRepository.findByName(
-                            request.getDepartmentName())
+                            request.getDepartment())
                     .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_DEPARTMENT));
 
             user.getStudentInfo().updateStudentNumber(request.getStudentNumber());
