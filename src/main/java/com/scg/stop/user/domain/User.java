@@ -63,7 +63,7 @@ public class User extends BaseTimeEntity {
     @OneToMany(fetch = LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FavoriteVideo> favoriteVideos = new ArrayList<>();
 
-    @OneToMany(fetch = LAZY, mappedBy = "user")
+    @OneToMany(fetch = LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Likes> likes = new ArrayList<>();
 
     @OneToMany(fetch = LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -99,7 +99,6 @@ public class User extends BaseTimeEntity {
     @PreRemove
     private void preRemove() {
         proposals.forEach(proposal -> proposal.setUser(null));
-        likes.forEach(like -> like.setUser(null));
         comments.forEach(comment -> comment.setUser(null));
         inquiries.forEach(inquiry -> inquiry.setUser(null));
     }
