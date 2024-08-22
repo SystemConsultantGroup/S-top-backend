@@ -22,7 +22,6 @@ public class UserResponse {
     private String name;
     private String phone;
     private String email;
-    private String socialLoginId;
     private UserType userType;
     private String division; // UserType.PROFESSOR, UserType.COMPANY
     private String position; // UserType.PROFESSOR, UserType.COMPANY
@@ -37,7 +36,6 @@ public class UserResponse {
                 user.getName(),
                 user.getPhone(),
                 user.getEmail(),
-                user.getSocialLoginId(),
                 user.getUserType(),
                 division,
                 position,
