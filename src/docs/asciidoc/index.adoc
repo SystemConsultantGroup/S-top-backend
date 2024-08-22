@@ -7,3 +7,4 @@
 
 include::auth-controller-test.adoc[]
 include::user-controller-test.adoc[]
+include::department.adoc[]
