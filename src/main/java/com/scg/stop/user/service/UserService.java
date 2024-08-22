@@ -16,7 +16,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 
+import static io.micrometer.common.util.StringUtils.isBlank;
 import static io.micrometer.common.util.StringUtils.isNotBlank;
+import static java.util.Objects.isNull;
 
 @Service
 @RequiredArgsConstructor
@@ -61,9 +63,9 @@ public class UserService {
     }
 
     public UserResponse updateMe(User user, UserUpdateRequest request) {
-        if (isNotBlank(request.getName())) user.updateName(request.getName());
-        if (isNotBlank(request.getPhoneNumber())) user.updatePhone(request.getPhoneNumber());
-        if (isNotBlank(request.getEmail())) user.updateEmail(request.getEmail());
+        user.updateName(request.getName());
+        user.updatePhone(request.getPhoneNumber());
+        user.updateEmail(request.getEmail());
 
         if (user.getUserType().equals(UserType.STUDENT)) {
             request.validateStudentInfo();
@@ -76,8 +78,12 @@ public class UserService {
             user.getStudentInfo().updateDepartment(department);
         }
         else if (Arrays.asList(UserType.INACTIVE_PROFESSOR, UserType.COMPANY, UserType.INACTIVE_COMPANY, UserType.PROFESSOR).contains(user.getUserType())) {
-            if (isNotBlank(request.getDivision())) user.getApplication().updateDivision(request.getDivision());
-            if (isNotBlank(request.getPosition())) user.getApplication().updatePosition(request.getPosition());
+            if (isNull(request.getDivision()) || isNull(request.getPosition())) {
+                throw new BadRequestException(ExceptionCode.DIVISION_OR_POSITION_REQUIRED);
+            }
+
+            user.getApplication().updateDivision(request.getDivision());
+            user.getApplication().updatePosition(request.getPosition());
         }
 
         userRepository.save(user);
