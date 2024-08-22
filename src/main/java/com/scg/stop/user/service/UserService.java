@@ -1,5 +1,10 @@
 package com.scg.stop.user.service;
 
+import com.scg.stop.domain.project.domain.Inquiry;
+import com.scg.stop.domain.project.domain.InquiryResponse;
+import com.scg.stop.domain.project.repository.InquiryRepository;
+import com.scg.stop.domain.proposal.domain.Proposal;
+import com.scg.stop.domain.proposal.repository.ProposalRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.user.domain.Department;
@@ -7,6 +12,8 @@ import com.scg.stop.user.domain.Student;
 import com.scg.stop.user.domain.User;
 import com.scg.stop.user.domain.UserType;
 import com.scg.stop.user.dto.request.UserUpdateRequest;
+import com.scg.stop.user.dto.response.UserInquiryResponse;
+import com.scg.stop.user.dto.response.UserProposalResponse;
 import com.scg.stop.user.dto.response.UserResponse;
 import com.scg.stop.user.repository.ApplicationRepository;
 import com.scg.stop.user.repository.DepartmentRepository;
@@ -17,6 +24,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static io.micrometer.common.util.StringUtils.isNotBlank;
 
@@ -27,6 +36,8 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final DepartmentRepository departmentRepository;
+    private final InquiryRepository inquiryRepository;
+    private final ProposalRepository proposalRepository;
 
     public UserResponse getMe(User user) {
         if (user.getUserType().equals(UserType.STUDENT)) {
@@ -41,8 +52,7 @@ public class UserService {
                     studentInfo.getStudentNumber(),
                     department.getName()
             );
-        }
-        else if (Arrays.asList(UserType.INACTIVE_PROFESSOR, UserType.COMPANY, UserType.INACTIVE_COMPANY, UserType.PROFESSOR).contains(user.getUserType())) {
+        } else if (Arrays.asList(UserType.INACTIVE_PROFESSOR, UserType.COMPANY, UserType.INACTIVE_COMPANY, UserType.PROFESSOR).contains(user.getUserType())) {
             return UserResponse.of(
                     user,
                     user.getApplication().getDivision(),
@@ -50,8 +60,7 @@ public class UserService {
                     null,
                     null
             );
-        }
-        else {
+        } else {
             return UserResponse.of(
                     user,
                     null,
@@ -76,8 +85,7 @@ public class UserService {
 
             user.getStudentInfo().updateStudentNumber(request.getStudentNumber());
             user.getStudentInfo().updateDepartment(department);
-        }
-        else if (Arrays.asList(UserType.INACTIVE_PROFESSOR, UserType.COMPANY, UserType.INACTIVE_COMPANY, UserType.PROFESSOR).contains(user.getUserType())) {
+        } else if (Arrays.asList(UserType.INACTIVE_PROFESSOR, UserType.COMPANY, UserType.INACTIVE_COMPANY, UserType.PROFESSOR).contains(user.getUserType())) {
             if (isNotBlank(request.getDivision())) user.getApplication().updateDivision(request.getDivision());
             if (isNotBlank(request.getPosition())) user.getApplication().updatePosition(request.getPosition());
         }
@@ -96,4 +104,19 @@ public class UserService {
     public void deleteMe(User user) {
         userRepository.delete(user);
     }
+
+    public List<UserInquiryResponse> getUserInquiries(User user) {
+        List<Inquiry> inquiries = inquiryRepository.findByUser(user);
+        return inquiries.stream()
+                .map(UserInquiryResponse::from)
+                .collect(Collectors.toList());
+    }
+
+    public List<UserProposalResponse> getUserProposals(User user) {
+        List<Proposal> proposals = proposalRepository.findByUser(user);
+        return proposals.stream()
+                .map(UserProposalResponse::from)
+                .collect(Collectors.toList());
+    }
+
 }
