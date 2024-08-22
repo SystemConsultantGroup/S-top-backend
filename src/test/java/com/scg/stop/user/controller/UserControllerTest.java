@@ -2,9 +2,12 @@ package com.scg.stop.user.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
+import com.scg.stop.domain.project.domain.InquiryResponse;
 import com.scg.stop.user.domain.User;
 import com.scg.stop.user.domain.UserType;
 import com.scg.stop.user.dto.request.UserUpdateRequest;
+import com.scg.stop.user.dto.response.UserInquiryResponse;
+import com.scg.stop.user.dto.response.UserProposalResponse;
 import com.scg.stop.user.dto.response.UserResponse;
 import com.scg.stop.user.service.UserService;
 import jakarta.servlet.http.Cookie;
@@ -22,6 +25,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
@@ -207,6 +212,77 @@ class UserControllerTest extends AbstractControllerTest {
                                         .description("access token")
                         )
                 ));
+    }
+
+    @Test
+    @DisplayName("로그인 유저의 프로젝트 문의 리스트를 조회할 수 있다.")
+    void getUserInquiries() throws Exception {
+        // given
+        List<UserInquiryResponse> inquiryResponses = Arrays.asList(
+                new UserInquiryResponse(1L, "Title 1", 1L, LocalDateTime.now()),
+                new UserInquiryResponse(2L, "Title 2", 2L, LocalDateTime.now())
+        );
+        when(userService.getUserInquiries(any(User.class))).thenReturn(inquiryResponses);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                get("/users/inquiries")
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
+
+        // then
+        result.andExpect(status().isOk())
+                .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token").description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization").description("Access Token")
+                        ),
+                        responseFields(
+                                fieldWithPath("[].id").description("문의 ID"),
+                                fieldWithPath("[].title").description("문의 제목"),
+                                fieldWithPath("[].projectId").description("프로젝트 ID"),
+                                fieldWithPath("[].createdDate").description("문의 생성일")
+                        )
+                ));
+
+    }
+
+    @Test
+    @DisplayName("로그인 유저의 과제 제안 리스트를 조회할 수 있다.")
+    void getUserProposals() throws Exception {
+        // given
+        List<UserProposalResponse> proposalResponses = Arrays.asList(
+                new UserProposalResponse(1L, "Title 1", LocalDateTime.now()),
+                new UserProposalResponse(2L, "Title 2", LocalDateTime.now())
+        );
+        when(userService.getUserProposals(any(User.class))).thenReturn(proposalResponses);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                get("/users/proposals")
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
+
+        // then
+        result.andExpect(status().isOk())
+                .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token").description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization").description("Access Token")
+                        ),
+                        responseFields(
+                                fieldWithPath("[].id").description("과제 제안 ID"),
+                                fieldWithPath("[].title").description("프로젝트명"),
+                                fieldWithPath("[].createdDate").description("과제 제안 생성일")
+                        )
+        ));
+
     }
 
 }

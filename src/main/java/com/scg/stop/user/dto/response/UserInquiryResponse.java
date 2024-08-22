@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import static lombok.AccessLevel.PRIVATE;
 
 @Getter
-@AllArgsConstructor(access = PRIVATE)
+@AllArgsConstructor
 public class UserInquiryResponse {
 
     private Long id;
