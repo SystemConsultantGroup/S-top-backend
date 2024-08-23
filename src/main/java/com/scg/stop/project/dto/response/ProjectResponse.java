@@ -1,9 +1,7 @@
 package com.scg.stop.project.dto.response;
 
-import com.scg.stop.project.domain.AwardStatus;
-import com.scg.stop.project.domain.Project;
-import com.scg.stop.project.domain.ProjectCategory;
-import com.scg.stop.project.domain.ProjectType;
+import com.scg.stop.project.domain.*;
+import com.scg.stop.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -28,10 +26,23 @@ public class ProjectResponse {
     private Boolean like;
     private Boolean bookMark;
 
-    public static ProjectResponse of(List<String> studentNames, List<String> professorNames, Boolean like, Boolean bookMark, Project project){
+    public static ProjectResponse of(User user, Project project){
+        List<String> studentNames = project.getMembers().stream()
+                .filter(member -> member.getRole() == Role.STUDENT)
+                .map(Member::getName)
+                .collect(Collectors.toList());
+
+        List<String> professorNames = project.getMembers().stream()
+                .filter(member -> member.getRole() == Role.PROFESSOR)
+                .map(Member::getName)
+                .collect(Collectors.toList());
+
         List<String> techStackList = Arrays.stream(project.getTechStack().split(","))
                 .map(String::trim)
                 .collect(Collectors.toList());
+
+        Boolean like = project.getLikes().stream().anyMatch(likes -> likes.getUser().getId().equals(user.getId()));
+        Boolean bookMark = project.getFavorites().stream().anyMatch(favoriteProject -> favoriteProject.getUser().getId().equals(user.getId()));
 
         return new ProjectResponse(
                 project.getId(),

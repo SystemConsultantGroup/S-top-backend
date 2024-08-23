@@ -38,7 +38,6 @@ public class ProjectService {
     private final FileRepository fileRepository;
     private final FavoriteProjectRepository favoriteProjectRepository;
     private final LikeRepository likeRepository;
-    private final UserRepository userRepository;
     private final CommentRepository commentRepository;
     private final EventPeriodRepository eventPeriodRepository;
 
@@ -47,19 +46,7 @@ public class ProjectService {
 
         Page<Project> projects = projectRepository.findProjects(title, year, category, pageable);
 
-        Page<ProjectResponse> projectResponses = projects.map(project -> {
-            List<String> studentNames = project.getMembers().stream()
-                    .filter(member -> member.getRole() == Role.STUDENT)
-                    .map(Member::getName)
-                    .collect(Collectors.toList());
-            List<String> professorNames = project.getMembers().stream()
-                    .filter(member -> member.getRole() == Role.PROFESSOR)
-                    .map(Member::getName)
-                    .collect(Collectors.toList());
-            Boolean like = likeRepository.findByProjectIdAndUserId(project.getId(), user.getId()).isPresent();
-            Boolean bookMark = favoriteProjectRepository.findByProjectIdAndUserId(project.getId(), user.getId()).isPresent();
-            return ProjectResponse.of(studentNames, professorNames, like, bookMark, project);
-        });
+        Page<ProjectResponse> projectResponses = projects.map(project -> ProjectResponse.of(user, project));
 
         return projectResponses;
     }
@@ -71,7 +58,6 @@ public class ProjectService {
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT_POSTER));
 
         Project project = projectRequest.toEntity(null, thumbnail, poster);
-
         projectRepository.save(project);
 
         return getProject(project.getId(), null);
@@ -82,18 +68,7 @@ public class ProjectService {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
 
-        List<String> studentNames = project.getMembers().stream()
-                .filter(member -> member.getRole() == Role.STUDENT)
-                .map(Member::getName)
-                .collect(Collectors.toList());
-        List<String> professorNames = project.getMembers().stream()
-                .filter(member -> member.getRole() == Role.PROFESSOR)
-                .map(Member::getName)
-                .collect(Collectors.toList());
-        Boolean like = likeRepository.findByProjectIdAndUserId(project.getId(), user.getId()).isPresent();
-        Boolean bookMark = favoriteProjectRepository.findByProjectIdAndUserId(project.getId(), user.getId()).isPresent();
-
-        return ProjectDetailResponse.of(studentNames, professorNames, like, bookMark, project);
+        return ProjectDetailResponse.of(user, project);
     }
 
     public ProjectDetailResponse updateProject(Long projectId, ProjectRequest projectRequest) {
@@ -208,19 +183,7 @@ public class ProjectService {
     public Page<ProjectResponse> getAwardProjects(Integer year, Pageable page, User user){
         Page<Project> projects = projectRepository.findAwardProjects(year, page);
 
-        Page<ProjectResponse> projectResponses = projects.map(project -> {
-            List<String> studentNames = project.getMembers().stream()
-                    .filter(member -> member.getRole() == Role.STUDENT)
-                    .map(Member::getName)
-                    .collect(Collectors.toList());
-            List<String> professorNames = project.getMembers().stream()
-                    .filter(member -> member.getRole() == Role.PROFESSOR)
-                    .map(Member::getName)
-                    .collect(Collectors.toList());
-            Boolean like = likeRepository.findByProjectIdAndUserId(project.getId(), user.getId()).isPresent();
-            Boolean bookMark = favoriteProjectRepository.findByProjectIdAndUserId(project.getId(), user.getId()).isPresent();
-            return ProjectResponse.of(studentNames, professorNames, like, bookMark, project);
-        });
+        Page<ProjectResponse> projectResponses = projects.map(project -> ProjectResponse.of(user, project));
 
         return projectResponses;
     }
