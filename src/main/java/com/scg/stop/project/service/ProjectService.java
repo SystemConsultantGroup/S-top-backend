@@ -44,7 +44,6 @@ public class ProjectService {
     @Transactional(readOnly = true)
     public Page<ProjectResponse> getProjects(String title, Integer year, ProjectCategory category, Pageable pageable, User user){
         Page<Project> projects = projectRepository.findProjects(title, year, category, pageable);
-
         Page<ProjectResponse> projectResponses = projects.map(project -> ProjectResponse.of(user, project));
         return projectResponses;
     }
@@ -65,7 +64,6 @@ public class ProjectService {
     public ProjectDetailResponse getProject(Long projectId, User user) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
-
         return ProjectDetailResponse.of(user, project);
     }
 
@@ -101,7 +99,7 @@ public class ProjectService {
             favoriteProjectRepository.save(newFavoriteProject);
             project.addFavoriteProject(newFavoriteProject);
             user.addFavoriteProject(newFavoriteProject);
-        } catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e){ // DB 사이드에서 동시성 처리
             throw new BadRequestException(ExceptionCode.ALREADY_FAVORITE_PROJECT);
         }
     }
@@ -120,7 +118,6 @@ public class ProjectService {
     public void createProjectLike(Long projectId, User user){
         EventPeriod eventPeriod = eventPeriodRepository.findByYear(LocalDateTime.now().getYear())
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_EVENT_PERIOD));
-
         if (eventPeriod.getStart().isAfter(LocalDateTime.now()) || eventPeriod.getEnd().isBefore(LocalDateTime.now())){
             throw new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD);
         }
@@ -133,16 +130,14 @@ public class ProjectService {
             likeRepository.save(newLike);
             project.addLikes(newLike);
             user.addLikes(newLike);
-        } catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e){ // DB 사이드에서 동시성 처리
             throw new BadRequestException(ExceptionCode.ALREADY_LIKE_PROJECT);
         }
-
     }
 
     public void deleteProjectLike(Long projectId, User user){
         EventPeriod eventPeriod = eventPeriodRepository.findByYear(LocalDateTime.now().getYear())
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_EVENT_PERIOD));
-
         if (eventPeriod.getStart().isAfter(LocalDateTime.now()) || eventPeriod.getEnd().isBefore(LocalDateTime.now())){
             throw new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD);
         }
@@ -170,7 +165,6 @@ public class ProjectService {
     public void deleteProjectComment(Long projectId, Long commentId, User user){
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_COMMENT));
-
         if (!comment.getUser().getId().equals(user.getId())) {
             throw new BadRequestException(ExceptionCode.NOT_MATCH_USER);
         }
@@ -180,9 +174,7 @@ public class ProjectService {
 
     public Page<ProjectResponse> getAwardProjects(Integer year, Pageable page, User user){
         Page<Project> projects = projectRepository.findAwardProjects(year, page);
-
         Page<ProjectResponse> projectResponses = projects.map(project -> ProjectResponse.of(user, project));
-
         return projectResponses;
     }
 }
