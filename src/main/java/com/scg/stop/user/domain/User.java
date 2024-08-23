@@ -74,6 +74,15 @@ public class User extends BaseTimeEntity {
     @OneToMany(fetch = LAZY, mappedBy = "user")
     private List<Inquiry> inquiries = new ArrayList<>();
 
+    public void activateUser() {
+        if (userType == UserType.INACTIVE_COMPANY) {
+            userType = UserType.COMPANY;
+        } else if (userType == UserType.INACTIVE_PROFESSOR) {
+            userType = UserType.PROFESSOR;
+        }
+        application.activate();
+    }
+
     public User(String socialLoginId) {
         this.userType = UserType.TEMP;
         this.socialLoginId = socialLoginId;
@@ -86,21 +95,6 @@ public class User extends BaseTimeEntity {
         this.userType = userType;
         this.signupSource = signupSource;
     }
-
-    public void addFavoriteVideo(FavoriteVideo favoriteVideo) {
-        this.favoriteVideos.add(favoriteVideo);
-    }
-
-    public void removeFavoriteVideo(FavoriteVideo favoriteVideo) {
-        this.favoriteVideos.remove(favoriteVideo);
-    }
-
-    public void addUserQuiz(UserQuiz userQuiz) {
-        this.userQuizzes.add(userQuiz);
-    }
-
-
-
 
 
 }
