@@ -1,0 +1,32 @@
+== 공지 사항 API
+:source-highlighter: highlightjs
+
+=== 공지 사항 생성 (POST /notices)
+
+====
+operation::notice-controller-test/create-notice[snippets="http-request,request-fields,http-response,response-fields"]
+====
+
+=== 공지 사항 리스트 조회 (GET /notices)
+
+====
+operation::notice-controller-test/get-notice-list[snippets="query-parameters,http-request,http-response,response-fields"]
+====
+
+=== 공지 사항 조회 (GET /notices/{noticeId})
+
+====
+operation::notice-controller-test/get-notice[snippets="path-parameters,http-request,http-response,response-fields"]
+====
+
+=== 공지 사항 수정 (PUT /notices/{noticeId})
+
+====
+operation::notice-controller-test/update-notice[snippets="path-parameters,http-request,request-fields,http-response,response-fields"]
+====
+
+=== 공지 사항 삭제 (DELETE /notices/{noticeId})
+
+====
+operation::notice-controller-test/delete-notice[snippets="path-parameters,http-request,http-response"]
+====
