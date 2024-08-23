@@ -51,7 +51,10 @@ public enum ExceptionCode {
 
     // file domain
     NOT_FOUND_FILE_ID(5001, "요청한 ID에 해당하는 파일이 존재하지 않습니다."),
-    NOT_FOUND_GALLERY_ID(9001, "요청한 ID에 해당하는 갤러리가 존재하지 않습니다.");
+    NOT_FOUND_GALLERY_ID(9001, "요청한 ID에 해당하는 갤러리가 존재하지 않습니다."),
+
+    // excel
+    NOT_COMPATIBLE_EXCEL(71001, "엑셀 파일이 주어진 클래스와 호환되지 않습니다.");
 
     private final int code;
     private final String message;
