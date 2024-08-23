@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class InquiryResponse {
 
     private Long id;
-    private String name;
+    private String authorName;
     private String title;
     private LocalDateTime createdAt;
 
