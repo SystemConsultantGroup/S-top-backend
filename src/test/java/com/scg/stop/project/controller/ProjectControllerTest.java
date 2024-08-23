@@ -216,7 +216,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
                 )
         );
 
-        when(projectService.createProject(any(ProjectRequest.class))).thenReturn(response);
+        when(projectService.createProject(any(ProjectRequest.class), any(User.class))).thenReturn(response);
 
         // when
         ResultActions result = mockMvc.perform(
@@ -431,7 +431,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
                 )
         );
 
-        when(projectService.updateProject(anyLong(), any(ProjectRequest.class))).thenReturn(response);
+        when(projectService.updateProject(anyLong(), any(ProjectRequest.class), any(User.class))).thenReturn(response);
 
         // when
         ResultActions result = mockMvc.perform(
