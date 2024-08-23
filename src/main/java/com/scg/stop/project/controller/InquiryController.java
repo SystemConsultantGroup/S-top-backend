@@ -80,7 +80,7 @@ public class InquiryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(inquiryReplyResponse);
     }
 
-    // 문의 답변
+    // 문의 답변 조회
     @GetMapping("/{inquiryId}/reply")
     public ResponseEntity<InquiryReplyResponse> getInquiryReply(
             @AuthUser(accessType = {AccessType.COMPANY, AccessType.ADMIN}) User user,

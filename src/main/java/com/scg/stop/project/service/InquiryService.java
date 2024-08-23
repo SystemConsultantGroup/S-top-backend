@@ -27,22 +27,24 @@ public class InquiryService {
     private final InquiryReplyRepository inquiryReplyRepository;
     private final EmailService emailService;
 
+    // 문의 목록 조회
     @Transactional(readOnly = true)
     public Page<InquiryResponse> getInquiryList(String title, Pageable pageable) {
         Page<Inquiry> inquiries = inquiryRepository.findInquiries(title, pageable);
-        return inquiries.map(inquiry -> InquiryResponse.of(
-                inquiry.getId(),
-                inquiry.getUser().getName(),
-                inquiry.getTitle(),
-                inquiry.getCreatedAt()
-        ));
+        return inquiries.map(inquiry ->
+                InquiryResponse.of(
+                        inquiry.getId(),
+                        inquiry.getUser().getName(),
+                        inquiry.getTitle(),
+                        inquiry.getCreatedAt()
+                )
+        );
     }
 
-
+    // 문의 상세 조회
     @Transactional(readOnly = true)
     public InquiryDetailResponse getInquiry(Long inquiryId) {
-        Inquiry inquiry = inquiryRepository.findById(inquiryId)
-                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_INQUIRY));
+        Inquiry inquiry = findInquiryById(inquiryId);
         return InquiryDetailResponse.of(
                 inquiry.getId(),
                 inquiry.getUser().getName(),
@@ -55,9 +57,10 @@ public class InquiryService {
         );
     }
 
+    // 문의 수정
+    // TODO: Email 전송 로직 추가
     public InquiryDetailResponse updateInquiry(Long inquiryId, InquiryRequest inquiryUpdateRequest) {
-        Inquiry inquiry = inquiryRepository.findById(inquiryId)
-                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_INQUIRY));
+        Inquiry inquiry = findInquiryById(inquiryId);
         inquiry.updateInquiry(inquiryUpdateRequest.getTitle(), inquiryUpdateRequest.getContent());
         return InquiryDetailResponse.of(
                 inquiry.getId(),
@@ -71,55 +74,89 @@ public class InquiryService {
         );
     }
 
+    // 문의 삭제
     public void deleteInquiry(Long inquiryId) {
-        Inquiry inquiry = inquiryRepository.findById(inquiryId)
-                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_INQUIRY));
+        Inquiry inquiry = findInquiryById(inquiryId);
         inquiryRepository.delete(inquiry);
     }
 
+    // 문의 답변 등록
     public InquiryReplyResponse createInquiryReply(Long inquiryId, InquiryReplyRequest inquiryReplyCreateRequest) {
-        Inquiry inquiry = inquiryRepository.findById(inquiryId)
-                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_INQUIRY));
+        Inquiry inquiry = findInquiryById(inquiryId);
 
         if (inquiry.getReply() != null) {
             throw new BadRequestException(ExceptionCode.ALREADY_EXIST_INQUIRY_REPLY);
         }
 
-        InquiryReply inquiryReply = InquiryReply.createInquiryReply(inquiryReplyCreateRequest.getTitle(),
+        InquiryReply inquiryReply = InquiryReply.createInquiryReply(
+                inquiryReplyCreateRequest.getTitle(),
                 inquiryReplyCreateRequest.getContent(),
-                inquiry);
+                inquiry
+        );
         inquiryReplyRepository.save(inquiryReply);
         emailService.sendEmail(inquiry.getUser().getEmail(), inquiryReply.getTitle(), inquiryReply.getContent());
-        return InquiryReplyResponse.of(inquiryReply.getId(), inquiryReply.getTitle(), inquiryReply.getContent());
+
+        return InquiryReplyResponse.of(
+                inquiryReply.getId(),
+                inquiryReply.getTitle(),
+                inquiryReply.getContent()
+        );
     }
 
+    // 문의 답변 조회
+    @Transactional(readOnly = true)
     public InquiryReplyResponse getInquiryReply(Long inquiryId) {
-        Inquiry inquiry = inquiryRepository.findById(inquiryId)
-                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_INQUIRY));
+        Inquiry inquiry = findInquiryById(inquiryId);
         InquiryReply inquiryReply = inquiry.getReply();
-        return InquiryReplyResponse.of(inquiryReply.getId(), inquiryReply.getTitle(), inquiryReply.getContent());
+
+        if (inquiryReply == null) {
+            throw new BadRequestException(ExceptionCode.NOT_FOUND_INQUIRY_REPLY);
+        }
+
+        return InquiryReplyResponse.of(
+                inquiryReply.getId(),
+                inquiryReply.getTitle(),
+                inquiryReply.getContent()
+        );
     }
 
+    // 문의 답변 수정
+    // TODO: Email 전송 로직 추가
     public InquiryReplyResponse updateInquiryReply(Long inquiryId, InquiryReplyRequest inquiryReplyUpdateRequest) {
-        Inquiry inquiry = inquiryRepository.findById(inquiryId)
-                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_INQUIRY));
-
+        Inquiry inquiry = findInquiryById(inquiryId);
         InquiryReply inquiryReply = inquiry.getReply();
+
         if (inquiryReply == null) {
             throw new BadRequestException(ExceptionCode.NOT_FOUND_INQUIRY_REPLY);
         }
-        inquiryReply.updateInquiryResponse(inquiryReplyUpdateRequest.getTitle(), inquiryReplyUpdateRequest.getContent());
-        return InquiryReplyResponse.of(inquiryReply.getId(), inquiryReply.getTitle(), inquiryReply.getContent());
+
+        inquiryReply.updateInquiryResponse(
+                inquiryReplyUpdateRequest.getTitle(),
+                inquiryReplyUpdateRequest.getContent()
+        );
+
+        return InquiryReplyResponse.of(
+                inquiryReply.getId(),
+                inquiryReply.getTitle(),
+                inquiryReply.getContent()
+        );
     }
 
+    // 문의 답변 삭제
     public void deleteInquiryReply(Long inquiryId) {
-
-        Inquiry inquiry = inquiryRepository.findById(inquiryId)
-                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_INQUIRY));
+        Inquiry inquiry = findInquiryById(inquiryId);
         InquiryReply inquiryReply = inquiry.getReply();
+
         if (inquiryReply == null) {
             throw new BadRequestException(ExceptionCode.NOT_FOUND_INQUIRY_REPLY);
         }
+
         inquiry.deleteReply();
+    }
+
+    // helper method for finding inquiry by id
+    private Inquiry findInquiryById(Long inquiryId) {
+        return inquiryRepository.findById(inquiryId)
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_INQUIRY));
     }
 }
