@@ -4,6 +4,7 @@ import com.scg.stop.auth.annotation.AuthUser;
 import com.scg.stop.video.domain.JobInterviewCategory;
 import com.scg.stop.video.dto.request.JobInterviewRequest;
 import com.scg.stop.video.dto.response.JobInterviewResponse;
+import com.scg.stop.video.service.FavoriteVideoService;
 import com.scg.stop.video.service.JobInterviewService;
 import com.scg.stop.user.domain.AccessType;
 import com.scg.stop.user.domain.User;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/jobInterviews")
 public class JobInterviewController {
     private final JobInterviewService jobInterviewService;
-
+    private final FavoriteVideoService favoriteVideoService;
 
     @PostMapping
     public ResponseEntity<JobInterviewResponse> createJobInterview(
@@ -66,7 +67,23 @@ public class JobInterviewController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @PostMapping("/{jobInterviewId}/favorite")
+    public ResponseEntity<Void> createJobInterviewFavorite(
+            @PathVariable("jobInterviewId") Long jobInterviewId,
+            @AuthUser(accessType = {AccessType.ALL}) User user
+    ) {
+        favoriteVideoService.createJobInterviewFavorite(jobInterviewId, user.getId());
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 
+    @DeleteMapping("/{jobInterviewId}/favorite")
+    public ResponseEntity<Void> deleteJobInterviewFavorite(
+            @PathVariable("jobInterviewId") Long jobInterviewId,
+            @AuthUser(accessType = {AccessType.ALL}) User user
+    ) {
+        favoriteVideoService.deleteJobInterviewFavorite(jobInterviewId, user.getId());
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 
 
 }

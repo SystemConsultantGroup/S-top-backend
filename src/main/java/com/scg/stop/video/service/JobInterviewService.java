@@ -1,9 +1,12 @@
 package com.scg.stop.video.service;
 
+import com.scg.stop.user.domain.User;
+import com.scg.stop.video.domain.FavoriteVideo;
 import com.scg.stop.video.domain.JobInterviewCategory;
 import com.scg.stop.video.domain.JobInterview;
 import com.scg.stop.video.dto.request.JobInterviewRequest;
 import com.scg.stop.video.dto.response.JobInterviewResponse;
+import com.scg.stop.video.repository.FavoriteVideoRepository;
 import com.scg.stop.video.repository.JobInterviewRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
@@ -18,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class JobInterviewService {
     private final JobInterviewRepository jobInterviewRepository;
+    private final FavoriteVideoRepository favoriteVideoRepository;
 
     @Transactional(readOnly = true)
     public JobInterviewResponse getJobInterview(Long id) {
@@ -64,4 +68,6 @@ public class JobInterviewService {
         );
         return JobInterviewResponse.from(jobInterview);
     }
+
+
 }

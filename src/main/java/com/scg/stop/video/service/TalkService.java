@@ -1,9 +1,12 @@
 package com.scg.stop.video.service;
 
+import com.scg.stop.user.domain.User;
+import com.scg.stop.video.domain.FavoriteVideo;
 import com.scg.stop.video.domain.Quiz;
 import com.scg.stop.video.domain.Talk;
 import com.scg.stop.video.dto.request.TalkRequest;
 import com.scg.stop.video.dto.response.TalkResponse;
+import com.scg.stop.video.repository.FavoriteVideoRepository;
 import com.scg.stop.video.repository.QuizRepository;
 import com.scg.stop.video.repository.TalkRepository;
 import com.scg.stop.global.exception.BadRequestException;

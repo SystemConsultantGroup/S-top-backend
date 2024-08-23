@@ -6,6 +6,7 @@ import com.scg.stop.video.controller.JobInterviewController;
 import com.scg.stop.video.domain.JobInterviewCategory;
 import com.scg.stop.video.dto.request.JobInterviewRequest;
 import com.scg.stop.video.dto.response.JobInterviewResponse;
+import com.scg.stop.video.service.FavoriteVideoService;
 import com.scg.stop.video.service.JobInterviewService;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.DisplayName;
@@ -28,6 +29,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
@@ -48,10 +50,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class JobInterviewControllerTest extends AbstractControllerTest {
 
     private static final String ACCESS_TOKEN = "admin_access_token";
+    private static final String USER_ACCESS_TOKEN = "access_token";
     private static final String REFRESH_TOKEN = "refresh_token";
 
     @MockBean
     private JobInterviewService jobInterviewService;
+
+    @MockBean
+    private FavoriteVideoService favoriteVideoService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -286,6 +292,67 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
                                 parameterWithName("jobInterviewId").description("삭제할 잡페어 인터뷰의 ID")
                         )
                 ));
+    }
+
+    @Test
+    @DisplayName("잡페어 인터뷰를 관심 등록할 수 있다.")
+    void createJobInterviewFavorite() throws Exception {
+        //given
+        Long id = 1L;
+        doNothing().when(favoriteVideoService).createJobInterviewFavorite(anyLong(), any());
+        //when
+        ResultActions result = mockMvc.perform(
+                RestDocumentationRequestBuilders.post("/jobInterviews/{jobInterviewId}/favorite", id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, USER_ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
+        //then
+        result.andExpect(status().isCreated())
+                .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
+                        ),
+                        pathParameters(
+                                parameterWithName("jobInterviewId").description("관심 목록에 추가할 잡페어 인터뷰의 ID")
+                        )
+                ));
+    }
+
+    @Test
+    @DisplayName("잡페어 인터뷰를 관심 등록 취소할 수 있다.")
+    void deleteJobInterviewFavorite() throws Exception {
+        //given
+        Long id = 1L;
+        doNothing().when(favoriteVideoService).deleteJobInterviewFavorite(anyLong(), any());
+        //when
+        ResultActions result = mockMvc.perform(
+                RestDocumentationRequestBuilders.delete("/jobInterviews/{jobInterviewId}/favorite", id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, USER_ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
+        //then
+        result.andExpect(status().isNoContent())
+                .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
+                        ),
+                        pathParameters(
+                                parameterWithName("jobInterviewId").description("관심 목록에서 삭제할 잡페어 인터뷰의 ID")
+                        )
+                ));
+
     }
 
 
