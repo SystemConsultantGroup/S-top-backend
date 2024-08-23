@@ -43,15 +43,13 @@ public class ProjectService {
 
     @Transactional(readOnly = true)
     public Page<ProjectResponse> getProjects(String title, Integer year, ProjectCategory category, Pageable pageable, User user){
-
         Page<Project> projects = projectRepository.findProjects(title, year, category, pageable);
 
         Page<ProjectResponse> projectResponses = projects.map(project -> ProjectResponse.of(user, project));
-
         return projectResponses;
     }
   
-    public ProjectDetailResponse createProject(ProjectRequest projectRequest) {
+    public ProjectDetailResponse createProject(ProjectRequest projectRequest, User user) {
         File thumbnail = fileRepository.findById(projectRequest.getThumbnailId())
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT_THUMBNAIL));
         File poster = fileRepository.findById(projectRequest.getPosterId())
@@ -60,7 +58,7 @@ public class ProjectService {
         Project project = projectRequest.toEntity(null, thumbnail, poster);
         projectRepository.save(project);
 
-        return getProject(project.getId(), null);
+        return ProjectDetailResponse.of(user, project);
     }
 
     @Transactional(readOnly = true)
@@ -71,7 +69,7 @@ public class ProjectService {
         return ProjectDetailResponse.of(user, project);
     }
 
-    public ProjectDetailResponse updateProject(Long projectId, ProjectRequest projectRequest) {
+    public ProjectDetailResponse updateProject(Long projectId, ProjectRequest projectRequest, User user) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
 
@@ -83,7 +81,7 @@ public class ProjectService {
         Project newProject = projectRequest.toEntity(projectId, thumbnail, poster);
         project.update(newProject);
 
-        return getProject(projectId, null);
+        return ProjectDetailResponse.of(user, project);
     }
 
     public void deleteProject(Long projectId) {

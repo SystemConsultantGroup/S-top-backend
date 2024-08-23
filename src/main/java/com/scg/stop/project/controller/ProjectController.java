@@ -44,7 +44,7 @@ public class ProjectController {
             @RequestBody @Valid ProjectRequest projectRequest,
             @AuthUser(accessType = {AccessType.ADMIN}) User user
     ) {
-        ProjectDetailResponse projectDetailResponse = projectService.createProject(projectRequest);
+        ProjectDetailResponse projectDetailResponse = projectService.createProject(projectRequest, user);
         return ResponseEntity.status(HttpStatus.CREATED).body(projectDetailResponse);
     }
 
@@ -63,7 +63,7 @@ public class ProjectController {
             @RequestBody @Valid ProjectRequest projectRequest,
             @AuthUser(accessType = {AccessType.ADMIN}) User user
     ) {
-        ProjectDetailResponse projectDetailResponse = projectService.updateProject(projectId, projectRequest);
+        ProjectDetailResponse projectDetailResponse = projectService.updateProject(projectId, projectRequest, user);
         return ResponseEntity.status(HttpStatus.OK).body(projectDetailResponse);
     }
 
