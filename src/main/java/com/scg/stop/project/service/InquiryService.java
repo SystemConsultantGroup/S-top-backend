@@ -34,7 +34,7 @@ public class InquiryService {
         return inquiries.map(inquiry ->
                 InquiryResponse.of(
                         inquiry.getId(),
-                        inquiry.getUser().getName(),
+                        inquiry.getUser() == null ? "탈퇴한 회원" : inquiry.getUser().getName(),
                         inquiry.getTitle(),
                         inquiry.getCreatedAt()
                 )
@@ -45,9 +45,10 @@ public class InquiryService {
     @Transactional(readOnly = true)
     public InquiryDetailResponse getInquiry(Long inquiryId) {
         Inquiry inquiry = findInquiryById(inquiryId);
+
         return InquiryDetailResponse.of(
                 inquiry.getId(),
-                inquiry.getUser().getName(),
+                inquiry.getUser() == null ? "탈퇴한 회원" : inquiry.getUser().getName(),
                 inquiry.getProject().getId(),
                 inquiry.getProject().getName(),
                 inquiry.getTitle(),
@@ -62,9 +63,10 @@ public class InquiryService {
     public InquiryDetailResponse updateInquiry(Long inquiryId, InquiryRequest inquiryUpdateRequest) {
         Inquiry inquiry = findInquiryById(inquiryId);
         inquiry.updateInquiry(inquiryUpdateRequest.getTitle(), inquiryUpdateRequest.getContent());
+
         return InquiryDetailResponse.of(
                 inquiry.getId(),
-                inquiry.getUser().getName(),
+                inquiry.getUser() == null ? "탈퇴한 회원" : inquiry.getUser().getName(),
                 inquiry.getProject().getId(),
                 inquiry.getProject().getName(),
                 inquiry.getTitle(),
@@ -94,7 +96,10 @@ public class InquiryService {
                 inquiry
         );
         inquiryReplyRepository.save(inquiryReply);
-        emailService.sendEmail(inquiry.getUser().getEmail(), inquiryReply.getTitle(), inquiryReply.getContent());
+
+        if (inquiry.getUser() != null) {
+            emailService.sendEmail(inquiry.getUser().getEmail(), inquiryReply.getTitle(), inquiryReply.getContent());
+        }
 
         return InquiryReplyResponse.of(
                 inquiryReply.getId(),
