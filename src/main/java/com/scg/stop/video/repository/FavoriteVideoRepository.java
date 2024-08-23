@@ -9,4 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface FavoriteVideoRepository extends JpaRepository<FavoriteVideo, Long> {
     FavoriteVideo findByTalkAndUser(Talk talk, User user);
     FavoriteVideo findByJobInterviewAndUser(JobInterview jobInterview, User user);
+
+    boolean existsByTalkAndUser(Talk talk, User user);
+    boolean existsByJobInterviewAndUser(JobInterview jobInterview, User user);
 }

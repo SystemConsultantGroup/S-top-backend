@@ -45,20 +45,21 @@ public class QuizService {
         return QuizResponse.from(talk.getQuiz());
     }
 
-    public QuizSubmitResponse submitQuiz(Long talkId, QuizSubmitRequest submitRequest, Long userId) {
+    public QuizSubmitResponse submitQuiz(Long talkId, QuizSubmitRequest submitRequest, User user) {
         Talk talk = talkRepository.findById(talkId).orElseThrow(
                 () -> new BadRequestException(ExceptionCode.TALK_ID_NOT_FOUND)
         );
         if(talk.getQuiz() == null) throw new BadRequestException(ExceptionCode.NO_QUIZ);
-        Quiz quiz = talk.getQuiz();
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new BadRequestException(ExceptionCode.NOT_FOUND_USER_ID)
-        );
         int currentYear = LocalDateTime.now().getYear();
+        if(talk.getYear() != currentYear) {
+            throw new BadRequestException(ExceptionCode.MISMATCH_CURRENT_YEAR);
+        }
+        Quiz quiz = talk.getQuiz();
         EventPeriod currentPeriod = eventPeriodRepository.findByYear(currentYear);
         if(currentPeriod == null) {
             throw new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD);
         }
+
         LocalDateTime currentTime = LocalDateTime.now();
         if(!(currentTime.isAfter(currentPeriod.getStart()) && currentTime.isBefore(currentPeriod.getEnd()))) {
             throw new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD);
@@ -75,8 +76,11 @@ public class QuizService {
         UserQuiz userQuiz = userQuizRepository.findByUserAndQuiz(user, quiz);
         if(userQuiz == null) {
             userQuiz = userQuizRepository.save(UserQuiz.from(user, quiz, isSuccess));
-            user.addUserQuiz(userQuiz);
+            userRepository.save(user);
         } else {
+            if(userQuiz.getTryCount() >= 3) {
+                throw new BadRequestException(ExceptionCode.TOO_MANY_TRY_QUIZ);
+            }
             if(!userQuiz.isSuccess())
                 userQuiz.updateSuccess(isSuccess);
             else throw new BadRequestException(ExceptionCode.ALREADY_QUIZ_SUCCESS);
@@ -85,6 +89,7 @@ public class QuizService {
 
     }
 
+    @Transactional(readOnly = true)
     public Page<UserQuizResultResponse> getQuizResults(Integer year, Pageable pageable) {
         if(year == null) {
             year = LocalDateTime.now().getYear();
@@ -92,6 +97,17 @@ public class QuizService {
         return userQuizRepository.findUserQuizResults(year, pageable);
     }
 
-
+    @Transactional(readOnly = true)
+    public QuizSubmitResponse getUserQuiz(Long talkId, User user) {
+        Talk talk = talkRepository.findById(talkId).orElseThrow(
+                () -> new BadRequestException(ExceptionCode.TALK_ID_NOT_FOUND)
+        );
+        if(talk.getQuiz() == null) throw new BadRequestException(ExceptionCode.NO_QUIZ);
+        UserQuiz userQuiz = userQuizRepository.findByUserAndQuiz(user, talk.getQuiz());
+        if(userQuiz == null) {
+            return new QuizSubmitResponse(false, 0);
+        }
+        return new QuizSubmitResponse(userQuiz.isSuccess(), userQuiz.getTryCount());
+    }
 
 }
