@@ -6,6 +6,7 @@ import static lombok.AccessLevel.PROTECTED;
 
 import com.scg.stop.user.domain.User;
 import com.scg.stop.global.domain.BaseTimeEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -53,7 +54,7 @@ public class Proposal extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne(fetch = LAZY, mappedBy = "proposal")
+    @OneToOne(fetch = LAZY, mappedBy = "proposal", cascade = CascadeType.ALL, orphanRemoval = true)
     private ProposalReply proposalReply;
 
     private Proposal(User user, String title, String projectTypes, String email, String website, String content,
