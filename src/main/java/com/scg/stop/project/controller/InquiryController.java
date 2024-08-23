@@ -81,14 +81,14 @@ public class InquiryController {
     }
 
     // 문의 답변
-//    @GetMapping("/{inquiryId}/reply")
-//    public ResponseEntity<InquiryReplyResponse> getInquiryReply(
-//            @AuthUser(accessType = {AccessType.COMPANY, AccessType.ADMIN}) User user,
-//            @PathVariable("inquiryId") Long inquiryId) {
-//
-//        InquiryReplyResponse inquiryReplyResponse = inquiryService.getInquiryReply(inquiryId);
-//        return ResponseEntity.status(HttpStatus.OK).body(inquiryReplyResponse);
-//    }
+    @GetMapping("/{inquiryId}/reply")
+    public ResponseEntity<InquiryReplyResponse> getInquiryReply(
+            @AuthUser(accessType = {AccessType.COMPANY, AccessType.ADMIN}) User user,
+            @PathVariable("inquiryId") Long inquiryId) {
+
+        InquiryReplyResponse inquiryReplyResponse = inquiryService.getInquiryReply(inquiryId);
+        return ResponseEntity.status(HttpStatus.OK).body(inquiryReplyResponse);
+    }
 
     // 문의 답변 수정
     @PutMapping("/{inquiryId}/reply")

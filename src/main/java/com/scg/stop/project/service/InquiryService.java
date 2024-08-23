@@ -93,6 +93,13 @@ public class InquiryService {
         return InquiryReplyResponse.of(inquiryReply.getId(), inquiryReply.getTitle(), inquiryReply.getContent());
     }
 
+    public InquiryReplyResponse getInquiryReply(Long inquiryId) {
+        Inquiry inquiry = inquiryRepository.findById(inquiryId)
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_INQUIRY));
+        InquiryReply inquiryReply = inquiry.getReply();
+        return InquiryReplyResponse.of(inquiryReply.getId(), inquiryReply.getTitle(), inquiryReply.getContent());
+    }
+
     public InquiryReplyResponse updateInquiryReply(Long inquiryId, InquiryReplyRequest inquiryReplyUpdateRequest) {
         Inquiry inquiry = inquiryRepository.findById(inquiryId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_INQUIRY));
