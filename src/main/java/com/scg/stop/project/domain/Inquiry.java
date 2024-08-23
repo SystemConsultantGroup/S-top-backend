@@ -51,4 +51,8 @@ public class Inquiry extends BaseTimeEntity {
         this.title = title;
         this.content = content;
     }
+
+    public void updateReply(InquiryReply reply) {
+        this.reply = reply;
+    }
 }

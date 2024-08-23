@@ -4,8 +4,11 @@ import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.global.infrastructure.EmailService;
 import com.scg.stop.project.domain.Inquiry;
+import com.scg.stop.project.domain.InquiryReply;
+import com.scg.stop.project.dto.request.InquiryReplyRequest;
 import com.scg.stop.project.dto.request.InquiryRequest;
 import com.scg.stop.project.dto.response.InquiryDetailResponse;
+import com.scg.stop.project.dto.response.InquiryReplyResponse;
 import com.scg.stop.project.dto.response.InquiryResponse;
 import com.scg.stop.project.repository.InquiryReplyRepository;
 import com.scg.stop.project.repository.InquiryRepository;
@@ -55,7 +58,6 @@ public class InquiryService {
     public InquiryDetailResponse updateInquiry(Long inquiryId, InquiryRequest inquiryUpdateRequest) {
         Inquiry inquiry = inquiryRepository.findById(inquiryId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_INQUIRY));
-
         inquiry.updateInquiry(inquiryUpdateRequest.getTitle(), inquiryUpdateRequest.getContent());
         return InquiryDetailResponse.of(
                 inquiry.getId(),
@@ -73,5 +75,43 @@ public class InquiryService {
         Inquiry inquiry = inquiryRepository.findById(inquiryId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_INQUIRY));
         inquiryRepository.delete(inquiry);
+    }
+
+    public InquiryReplyResponse createInquiryReply(Long inquiryId, InquiryReplyRequest inquiryReplyCreateRequest) {
+        Inquiry inquiry = inquiryRepository.findById(inquiryId)
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_INQUIRY));
+
+        if (inquiry.getReply() != null) {
+            throw new BadRequestException(ExceptionCode.ALREADY_EXIST_INQUIRY_REPLY);
+        }
+
+        InquiryReply inquiryReply = InquiryReply.createInquiryReply(inquiryReplyCreateRequest.getTitle(),
+                inquiryReplyCreateRequest.getContent(),
+                inquiry);
+        inquiryReplyRepository.save(inquiryReply);
+        emailService.sendEmail(inquiry.getUser().getEmail(), inquiryReply.getTitle(), inquiryReply.getContent());
+        return InquiryReplyResponse.of(inquiryReply.getId(), inquiryReply.getTitle(), inquiryReply.getContent());
+    }
+
+    public InquiryReplyResponse updateInquiryReply(Long inquiryId, InquiryReplyRequest inquiryReplyUpdateRequest) {
+        Inquiry inquiry = inquiryRepository.findById(inquiryId)
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_INQUIRY));
+
+        InquiryReply inquiryReply = inquiry.getReply();
+        if (inquiryReply == null) {
+            throw new BadRequestException(ExceptionCode.NOT_FOUND_INQUIRY_REPLY);
+        }
+        inquiryReply.updateInquiryResponse(inquiryReplyUpdateRequest.getTitle(), inquiryReplyUpdateRequest.getContent());
+        inquiry.updateReply(inquiryReply);
+        return InquiryReplyResponse.of(inquiryReply.getId(), inquiryReply.getTitle(), inquiryReply.getContent());
+    }
+
+    public void deleteInquiryReply(Long inquiryId) {
+
+        Inquiry inquiry = inquiryRepository.findById(inquiryId)
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_INQUIRY));
+        InquiryReply inquiryReply = inquiry.getReply();
+        inquiryReplyRepository.delete(inquiryReply);
+        inquiry.updateReply(null);
     }
 }

@@ -34,7 +34,7 @@ public class InquiryReply extends BaseTimeEntity {
         this.inquiry = inquiry;
     }
 
-    public static InquiryReply createInquiryResponse(String title, String content, Inquiry inquiry) {
+    public static InquiryReply createInquiryReply(String title, String content, Inquiry inquiry) {
         return new InquiryReply(title, content, inquiry);
     }
 

@@ -7,13 +7,14 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class InquiryRelyResponse {
+public class InquiryReplyResponse {
 
     private Long id;
     private String title;
     private String content;
 
-    public static InquiryRelyResponse of(Long id, String title, String content) {
-        return new InquiryRelyResponse(id, title, content);
+    public static InquiryReplyResponse of(Long id, String title, String content) {
+        return new InquiryReplyResponse(id, title, content);
     }
+    
 }

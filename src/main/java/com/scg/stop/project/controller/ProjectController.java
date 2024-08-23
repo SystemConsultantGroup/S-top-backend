@@ -27,7 +27,7 @@ public class ProjectController {
             @RequestBody @Valid InquiryRequest inquiryRequest) {
 
         InquiryDetailResponse inquiryDetailResponse = projectService.createProjectInquiry(projectId, user, inquiryRequest);
-        return ResponseEntity.status(HttpStatus.OK).body(inquiryDetailResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(inquiryDetailResponse);
 
     }
 

@@ -1,8 +1,10 @@
 package com.scg.stop.project.controller;
 
 import com.scg.stop.auth.annotation.AuthUser;
+import com.scg.stop.project.dto.request.InquiryReplyRequest;
 import com.scg.stop.project.dto.request.InquiryRequest;
 import com.scg.stop.project.dto.response.InquiryDetailResponse;
+import com.scg.stop.project.dto.response.InquiryReplyResponse;
 import com.scg.stop.project.dto.response.InquiryResponse;
 import com.scg.stop.project.service.InquiryService;
 import com.scg.stop.user.domain.AccessType;
@@ -64,6 +66,48 @@ public class InquiryController {
             @PathVariable("inquiryId") Long inquiryId) {
 
         inquiryService.deleteInquiry(inquiryId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    // 문의 답변 등록
+    @PostMapping("/{inquiryId}/reply")
+    public ResponseEntity<InquiryReplyResponse> createInquiryReply(
+            @AuthUser(accessType = {AccessType.ADMIN}) User user,
+            @PathVariable("inquiryId") Long inquiryId,
+            @RequestBody @Valid InquiryReplyRequest inquiryReplyRequest) {
+
+        InquiryReplyResponse inquiryReplyResponse = inquiryService.createInquiryReply(inquiryId, inquiryReplyRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(inquiryReplyResponse);
+    }
+
+    // 문의 답변
+//    @GetMapping("/{inquiryId}/reply")
+//    public ResponseEntity<InquiryReplyResponse> getInquiryReply(
+//            @AuthUser(accessType = {AccessType.COMPANY, AccessType.ADMIN}) User user,
+//            @PathVariable("inquiryId") Long inquiryId) {
+//
+//        InquiryReplyResponse inquiryReplyResponse = inquiryService.getInquiryReply(inquiryId);
+//        return ResponseEntity.status(HttpStatus.OK).body(inquiryReplyResponse);
+//    }
+
+    // 문의 답변 수정
+    @PutMapping("/{inquiryId}/reply")
+    public ResponseEntity<InquiryReplyResponse> updateInquiryReply(
+            @AuthUser(accessType = {AccessType.ADMIN}) User user,
+            @PathVariable("inquiryId") Long inquiryId,
+            @RequestBody @Valid InquiryReplyRequest inquiryReplyRequest) {
+
+        InquiryReplyResponse inquiryReplyResponse = inquiryService.updateInquiryReply(inquiryId, inquiryReplyRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(inquiryReplyResponse);
+    }
+
+    // 문의 답변 삭제
+    @DeleteMapping("/{inquiryId}/reply")
+    public ResponseEntity<Void> deleteInquiryReply(
+            @AuthUser(accessType = {AccessType.ADMIN}) User user,
+            @PathVariable("inquiryId") Long inquiryId) {
+
+        inquiryService.deleteInquiryReply(inquiryId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

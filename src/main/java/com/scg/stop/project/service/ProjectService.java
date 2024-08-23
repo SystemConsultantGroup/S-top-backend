@@ -28,21 +28,15 @@ public class ProjectService {
     private String adminEmail;
 
     public InquiryDetailResponse createProjectInquiry(Long projectId, User user, InquiryRequest inquiryRequest) {
-
-        // find the project by id
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
-
-
         Inquiry inquiry = Inquiry.createInquiry(
                 inquiryRequest.getTitle(),
                 inquiryRequest.getContent(),
                 project,
                 user
         );
-
         inquiryRepository.save(inquiry);
-
         emailService.sendEmail(adminEmail, inquiry.getTitle(), inquiry.getContent());
         return InquiryDetailResponse.of(
                 inquiry.getId(),

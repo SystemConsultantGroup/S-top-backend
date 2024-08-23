@@ -70,6 +70,6 @@ public class Project extends BaseTimeEntity {
     @OneToMany(fetch = LAZY, mappedBy = "project")
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(fetch = LAZY, mappedBy = "project")
+    @OneToMany(fetch = LAZY, mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Inquiry> inquiries = new ArrayList<>();
 }

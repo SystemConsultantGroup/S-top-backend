@@ -48,6 +48,8 @@ public enum ExceptionCode {
 
     // inquiry domain
     NOT_FOUND_INQUIRY(8000, "요청한 ID에 해당하는 문의가 존재하지 않습니다."),
+    NOT_FOUND_INQUIRY_REPLY(8001, "요청한 ID에 해당하는 문의 답변이 존재하지 않습니다."),
+    ALREADY_EXIST_INQUIRY_REPLY(8002, "이미 답변이 등록된 문의입니다."),
 
     // notice domain
     NOTICE_NOT_FOUND(10000, "요청한 ID에 해당하는 공지사항이 존재하지 않습니다."),
