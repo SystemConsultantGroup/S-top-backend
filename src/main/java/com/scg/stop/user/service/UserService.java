@@ -1,23 +1,24 @@
 package com.scg.stop.user.service;
 
 import com.scg.stop.domain.project.domain.Inquiry;
-import com.scg.stop.domain.project.domain.InquiryResponse;
+import com.scg.stop.domain.project.domain.Project;
+import com.scg.stop.domain.project.dto.response.ProjectResponse;
+import com.scg.stop.domain.project.repository.FavoriteProjectRepository;
 import com.scg.stop.domain.project.repository.InquiryRepository;
 import com.scg.stop.domain.proposal.domain.Proposal;
 import com.scg.stop.domain.proposal.repository.ProposalRepository;
+import com.scg.stop.domain.video.domain.JobInterview;
+import com.scg.stop.domain.video.domain.Talk;
+import com.scg.stop.domain.video.dto.response.VideoResponse;
+import com.scg.stop.domain.video.repository.FavoriteVideoRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
-import com.scg.stop.user.domain.Department;
-import com.scg.stop.user.domain.Student;
-import com.scg.stop.user.domain.User;
-import com.scg.stop.user.domain.UserType;
+import com.scg.stop.user.domain.*;
 import com.scg.stop.user.dto.request.UserUpdateRequest;
 import com.scg.stop.user.dto.response.UserInquiryResponse;
 import com.scg.stop.user.dto.response.UserProposalResponse;
 import com.scg.stop.user.dto.response.UserResponse;
-import com.scg.stop.user.repository.ApplicationRepository;
 import com.scg.stop.user.repository.DepartmentRepository;
-import com.scg.stop.user.repository.StudentRepository;
 import com.scg.stop.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,8 @@ public class UserService {
     private final DepartmentRepository departmentRepository;
     private final InquiryRepository inquiryRepository;
     private final ProposalRepository proposalRepository;
+    private final FavoriteProjectRepository favoriteProjectRepository;
+    private final FavoriteVideoRepository favoriteVideoRepository;
 
     public UserResponse getMe(User user) {
         if (user.getUserType().equals(UserType.STUDENT)) {
@@ -117,6 +120,28 @@ public class UserService {
         return proposals.stream()
                 .map(UserProposalResponse::from)
                 .collect(Collectors.toList());
+    }
+
+    public List<?> getUserFavorites(User user, FavoriteType type) {
+        if (type.equals(FavoriteType.PROJECT)) {
+            List<Project> projects = favoriteProjectRepository.findAllByUser(user);
+            return projects.stream()
+                    .map(project -> ProjectResponse.of(project.getId(), project.getName()))
+                    .collect(Collectors.toList());
+        }
+        else if (type.equals(FavoriteType.TALK)) {
+            List<Talk> talks = favoriteVideoRepository.findTalksByUser(user);
+            return talks.stream()
+                    .map(talk -> VideoResponse.of(talk.getId(), talk.getTitle(), talk.getYoutubeId()))
+                    .collect(Collectors.toList());
+        }
+        else { // if (type.equals(FavoriteType.JOBINTERVIEW)) {
+            List<JobInterview> jobInterviews = favoriteVideoRepository.findJobInterviewsByUser(user);
+            return jobInterviews.stream()
+                    .map(jobInterview -> VideoResponse.of(jobInterview.getId(), jobInterview.getTitle(), jobInterview.getYoutubeId()))
+                    .collect(Collectors.toList());
+        }
+
     }
 
 }
