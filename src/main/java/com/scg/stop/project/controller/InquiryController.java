@@ -1,0 +1,71 @@
+package com.scg.stop.project.controller;
+
+import com.scg.stop.auth.annotation.AuthUser;
+import com.scg.stop.project.dto.request.InquiryRequest;
+import com.scg.stop.project.dto.response.InquiryDetailResponse;
+import com.scg.stop.project.dto.response.InquiryResponse;
+import com.scg.stop.project.service.InquiryService;
+import com.scg.stop.user.domain.AccessType;
+import com.scg.stop.user.domain.User;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/inquiries")
+public class InquiryController {
+
+    private final InquiryService inquiryService;
+
+    // 문의 목록 조회
+    @GetMapping()
+    public ResponseEntity<Page<InquiryResponse>> getInquiries(
+            @AuthUser(accessType = {AccessType.COMPANY, AccessType.ADMIN}) User user,
+            @RequestParam(value = "title", required = false) String title,
+            @PageableDefault(page = 0, size = 10) Pageable pageable) {
+
+        Page<InquiryResponse> inquiryList = inquiryService.getInquiryList(title, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(inquiryList);
+    }
+
+    // 문의 상세 조회
+    @GetMapping("/{inquiryId}")
+    public ResponseEntity<InquiryDetailResponse> getInquiry(
+            @AuthUser(accessType = {AccessType.COMPANY, AccessType.ADMIN}) User user,
+            @PathVariable("inquiryId") Long inquiryId) {
+
+        InquiryDetailResponse inquiryDetailResponse = inquiryService.getInquiry(inquiryId);
+        return ResponseEntity.status(HttpStatus.OK).body(inquiryDetailResponse);
+
+    }
+
+    // 문의 수정
+    @PutMapping("/{inquiryId}")
+    public ResponseEntity<InquiryDetailResponse> updateInquiry(
+            @AuthUser(accessType = {AccessType.COMPANY, AccessType.ADMIN}) User user,
+            @PathVariable("inquiryId") Long inquiryId,
+            @RequestBody @Valid InquiryRequest inquiryUpdateRequest) {
+
+        InquiryDetailResponse inquiryDetailResponse = inquiryService.updateInquiry(inquiryId,
+                inquiryUpdateRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(inquiryDetailResponse);
+    }
+
+    // 문의 삭제
+    @DeleteMapping("/{inquiryId}")
+    public ResponseEntity<Void> deleteInquiry(
+            @AuthUser(accessType = {AccessType.ADMIN, AccessType.COMPANY}) User user,
+            @PathVariable("inquiryId") Long inquiryId) {
+
+        inquiryService.deleteInquiry(inquiryId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+
+}

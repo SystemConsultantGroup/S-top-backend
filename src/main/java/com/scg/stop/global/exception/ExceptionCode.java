@@ -46,6 +46,9 @@ public enum ExceptionCode {
     NOT_MATCH_USER(77011, "유저 정보가 일치하지 않습니다"),
     NOT_EVENT_PERIOD(77012, "행사 기간이 아닙니다"),
 
+    // inquiry domain
+    NOT_FOUND_INQUIRY(8000, "요청한 ID에 해당하는 문의가 존재하지 않습니다."),
+
     // notice domain
     NOTICE_NOT_FOUND(10000, "요청한 ID에 해당하는 공지사항이 존재하지 않습니다."),
     EVENT_NOTICE_NOT_FOUND(11000, "요청한 ID에 해당하는 이벤트가 존재하지 않습니다."),
