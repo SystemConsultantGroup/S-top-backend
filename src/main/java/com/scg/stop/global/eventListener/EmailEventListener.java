@@ -1,7 +1,7 @@
 package com.scg.stop.global.eventListener;
 
 
-import com.scg.stop.global.domain.MailEvent;
+import com.scg.stop.global.domain.EmailEvent;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ public class EmailEventListener {
 
     @Async("mailExecutor")
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void listen(MailEvent event) {
+    public void listen(EmailEvent event) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
