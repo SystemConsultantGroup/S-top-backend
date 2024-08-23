@@ -9,6 +9,7 @@ import static lombok.AccessLevel.PROTECTED;
 import com.scg.stop.global.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -54,6 +55,7 @@ public class JobInterview extends BaseTimeEntity {
         this.talkerBelonging = talkerBelonging;
         this.talkerName = talkerName;
         this.category = category;
+        this.favoriteVideos = new ArrayList<>();
     }
 
     public static JobInterview from(
@@ -88,5 +90,13 @@ public class JobInterview extends BaseTimeEntity {
         this.talkerBelonging = talkerBelonging;
         this.talkerName = talkerName;
         this.category = category;
+    }
+
+    public void addFavoriteVideo(FavoriteVideo favoriteVideo) {
+        this.favoriteVideos.add(favoriteVideo);
+    }
+
+    public void removeFavoriteVideo(FavoriteVideo favoriteVideo) {
+        this.favoriteVideos.remove(favoriteVideo);
     }
 }

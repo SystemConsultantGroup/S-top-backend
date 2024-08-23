@@ -41,6 +41,13 @@ public enum ExceptionCode {
     ID_NOT_FOUND(8200,"해당 ID에 해당하는 잡페어 인터뷰가 없습니다."),
     TALK_ID_NOT_FOUND(8400, "해당 ID에 해당하는 대담 영상이 없습니다."),
     NO_QUIZ(8401, "퀴즈 데이터가 존재하지 않습니다."),
+    NOT_FOUND_USER_QUIZ(8402, "퀴즈 제출 데이터가 존재하지 않습니다."),
+    ALREADY_QUIZ_SUCCESS(8601, "이미 퀴즈의 정답을 모두 맞추었습니다."),
+    ALREADY_FAVORITE(8801, "이미 관심 리스트에 추가되었습니다."),
+    NOT_FAVORITE(8802, "이미 관심 리스트에 추가되어 있지 않습니다."),
+    NOT_EVENT_PERIOD(8804, "퀴즈 이벤트 참여 기간이 아닙니다."),
+    MISMATCH_CURRENT_YEAR(8805, "대담 영상과 현재 이벤트 참여 연도가 일치하지 않습니다."),
+    TOO_MANY_TRY_QUIZ(8901, "퀴즈 최대 시도 횟수를 초과하였습니다."),
 
     // file domain
     NOT_FOUND_FILE_ID(5001, "요청한 ID에 해당하는 파일이 존재하지 않습니다."),
