@@ -102,7 +102,6 @@ public class InquiryService {
             throw new BadRequestException(ExceptionCode.NOT_FOUND_INQUIRY_REPLY);
         }
         inquiryReply.updateInquiryResponse(inquiryReplyUpdateRequest.getTitle(), inquiryReplyUpdateRequest.getContent());
-        inquiry.updateReply(inquiryReply);
         return InquiryReplyResponse.of(inquiryReply.getId(), inquiryReply.getTitle(), inquiryReply.getContent());
     }
 
@@ -111,7 +110,9 @@ public class InquiryService {
         Inquiry inquiry = inquiryRepository.findById(inquiryId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_INQUIRY));
         InquiryReply inquiryReply = inquiry.getReply();
-        inquiryReplyRepository.delete(inquiryReply);
-        inquiry.updateReply(null);
+        if (inquiryReply == null) {
+            throw new BadRequestException(ExceptionCode.NOT_FOUND_INQUIRY_REPLY);
+        }
+        inquiry.deleteReply();
     }
 }

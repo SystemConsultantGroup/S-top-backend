@@ -52,7 +52,7 @@ public class Inquiry extends BaseTimeEntity {
         this.content = content;
     }
 
-    public void updateReply(InquiryReply reply) {
-        this.reply = reply;
+    public void deleteReply() {
+        this.reply = null;
     }
 }
