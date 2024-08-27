@@ -2,9 +2,11 @@ package com.scg.stop.video.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
+import com.scg.stop.global.excel.Excel;
 import com.scg.stop.video.dto.response.UserQuizResultResponse;
 import com.scg.stop.video.service.QuizService;
 import jakarta.servlet.http.Cookie;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
 import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
-import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -115,5 +116,40 @@ public class QuizControllerTest extends AbstractControllerTest {
                                 fieldWithPath("content[].successCount").type(JsonFieldType.NUMBER).description("유저가 퀴즈를 성공한 횟수의 합")
                         )
                 ));
+    }
+
+    @Test
+    @DisplayName("관리자는 퀴즈 데이터를 엑셀로 다운로드 받을 수 있다.")
+    void getQuizResultsToExcel() throws Exception {
+        //given
+        //String contentType = "ms-vnd/excel";
+        SXSSFWorkbook workbook = new SXSSFWorkbook();
+        Excel excel = new Excel("excel.xlsx", workbook);
+        when(quizService.getQuizResultToExcel(any())).thenReturn(excel);
+
+        //when
+        ResultActions result = mockMvc.perform(
+            get("/quizzes/result/excel")
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                    .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
+
+        result.andExpect(status().isOk())
+                .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
+                        ),
+                        queryParameters(
+                                parameterWithName("year").description("찾고자 하는 퀴즈 푼 문제의 연도, 기본값 올해").optional()
+                        )
+                ));
+
+
     }
 }
