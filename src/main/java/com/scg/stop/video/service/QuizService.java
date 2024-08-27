@@ -109,12 +109,7 @@ public class QuizService {
         if(year == null) {
             year = LocalDateTime.now().getYear();
         }
-        //List<UserQuizResultResponse> lists = userQuizRepository.findAllByYear(year);
-        List<UserQuizResultResponse> lists = List.of(
-                new UserQuizResultResponse(1L, "김국진", "010-8390-0511", "iam@2tle.io", 10L),
-                new UserQuizResultResponse(2L, "김희찬", "010-8280-0511", "iam@2tle.io", 8L),
-                new UserQuizResultResponse(3L, "김치국", "010-6723-0511", "iam@2tle.io", 4L)
-        );
+        List<UserQuizResultResponse> lists = userQuizRepository.findAllByYear(year);
         SXSSFWorkbook workbook = excelUtil.createExcel(lists, UserQuizResultResponse.class);
         String filename = excelUtil.getFilename(workbook, UserQuizResultResponse.class);
         return excelUtil.toExcel(filename, workbook);
