@@ -2,6 +2,8 @@ package com.scg.stop.video.service;
 
 import com.scg.stop.event.domain.EventPeriod;
 import com.scg.stop.event.repository.EventPeriodRepository;
+import com.scg.stop.global.excel.Excel;
+import com.scg.stop.global.excel.ExcelUtil;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.user.domain.User;
@@ -18,13 +20,16 @@ import com.scg.stop.video.repository.QuizRepository;
 import com.scg.stop.video.repository.TalkRepository;
 import com.scg.stop.video.repository.UserQuizRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -35,6 +40,8 @@ public class QuizService {
     private final UserQuizRepository userQuizRepository;
     private final EventPeriodRepository eventPeriodRepository;
     private final UserRepository userRepository;
+
+    private final ExcelUtil excelUtil;
 
     @Transactional(readOnly = true)
     public QuizResponse getQuiz(Long talkId) {
@@ -95,6 +102,22 @@ public class QuizService {
             year = LocalDateTime.now().getYear();
         }
         return userQuizRepository.findUserQuizResults(year, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Excel getQuizResultToExcel(Integer year) {
+        if(year == null) {
+            year = LocalDateTime.now().getYear();
+        }
+        //List<UserQuizResultResponse> lists = userQuizRepository.findAllByYear(year);
+        List<UserQuizResultResponse> lists = List.of(
+                new UserQuizResultResponse(1L, "김국진", "010-8390-0511", "iam@2tle.io", 10L),
+                new UserQuizResultResponse(2L, "김희찬", "010-8280-0511", "iam@2tle.io", 8L),
+                new UserQuizResultResponse(3L, "김치국", "010-6723-0511", "iam@2tle.io", 4L)
+        );
+        SXSSFWorkbook workbook = excelUtil.createExcel(lists, UserQuizResultResponse.class);
+        String filename = excelUtil.getFilename(workbook, UserQuizResultResponse.class);
+        return excelUtil.toExcel(filename, workbook);
     }
 
     @Transactional(readOnly = true)

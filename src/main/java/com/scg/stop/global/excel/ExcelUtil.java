@@ -17,7 +17,7 @@ import java.util.List;
 public class ExcelUtil {
     public static final int MAX_ROW_ACCESS_SIZE = 10000;
 
-    public Excel of(String filename, Workbook workbook) {
+    public Excel toExcel(String filename, SXSSFWorkbook workbook) {
         return new Excel(filename, workbook);
     }
 
@@ -34,10 +34,10 @@ public class ExcelUtil {
     public <T> SXSSFWorkbook createExcel(List<T> lists, Class<T> clazz) {
         SXSSFWorkbook workbook = createWorkBook();
         workbook.setCompressTempFiles(true);
-        SXSSFSheet sheet = workbook.createSheet(clazz.getDeclaredAnnotation(ExcelDownload.class).sheetName());
+        SXSSFSheet sheet = workbook.createSheet(clazz.getAnnotation(ExcelDownload.class).sheetName());
         int rowNum = 0;
         Row row = sheet.createRow(rowNum++);
-        List<String> headers = Arrays.stream(clazz.getFields())
+        List<String> headers = Arrays.stream(clazz.getDeclaredFields())
                 .filter(field -> field.isAnnotationPresent(ExcelColumn.class))
                 .map( field -> field.getAnnotation(ExcelColumn.class).headerName())
                 .toList();
@@ -70,13 +70,13 @@ public class ExcelUtil {
         int cellIdx = 0;
         for(String header: headers) {
             Cell headerCell = firstRow.createCell(cellIdx++);
-            renderCellValue(headerCell, header);
             setHeaderCellStyle(headerCell);
+            renderCellValue(headerCell, header);
         }
     }
 
     private <T> void renderBodyRow(Row row, T data, Class<T> clazz) {
-        Field[] fields = clazz.getFields();
+        Field[] fields = clazz.getDeclaredFields();
         int cellIdx = 0;
         for(Field field: fields) {
             Cell cell = row.createCell(cellIdx++);
