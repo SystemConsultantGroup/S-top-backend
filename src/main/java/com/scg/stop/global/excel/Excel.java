@@ -16,7 +16,7 @@ public class Excel {
 
     public void write(OutputStream out) throws IOException {
         this.data.write(out);
-        this.data.close();
         this.data.dispose();
+        this.data.close();
     }
 }
