@@ -20,6 +20,6 @@ public class UserQuizResultResponse {
     private String phone;
     @ExcelColumn(headerName = "이메일")
     private String email;
-    @ExcelColumn(headerName = "성공횟수", cellType = CellType.NUMERIC)
+    @ExcelColumn(headerName = "성공횟수")
     private Long successCount;
 }
