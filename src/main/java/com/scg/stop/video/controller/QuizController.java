@@ -11,13 +11,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 
@@ -38,19 +41,25 @@ public class QuizController {
     }
 
     @GetMapping("/result/excel")
-    public void getQuizResultToExcel(
+    public ResponseEntity<byte[]> getQuizResultToExcel(
             @RequestParam(value = "year", required = false) Integer year,
-            //@AuthUser(accessType = {AccessType.ADMIN}) User user,
-            HttpServletResponse response
+            @AuthUser(accessType = {AccessType.ADMIN}) User user
     ) {
         Excel excel = quizService.getQuizResultToExcel(year);
-        response.setContentType("ms-vnd/excel");
-        response.setHeader("Content-Disposition", String.format("attachment; filename=%s",excel.getFilename()));
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
-            excel.write(response.getOutputStream());
+            excel.write(baos);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        byte[] byteData = baos.toByteArray();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=%s",excel.getFilename()));
+
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(byteData);
 
     }
 }
