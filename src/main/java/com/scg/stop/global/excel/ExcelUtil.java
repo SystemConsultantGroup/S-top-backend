@@ -31,7 +31,7 @@ public class ExcelUtil {
         return String.format("%s-%s.xls",clazz.getDeclaredAnnotation(ExcelDownload.class).fileName(), time);
     }
 
-    public <T> Workbook createExcel(List<T> lists, Class<T> clazz) {
+    public <T> SXSSFWorkbook createExcel(List<T> lists, Class<T> clazz) {
         SXSSFWorkbook workbook = createWorkBook();
         workbook.setCompressTempFiles(true);
         SXSSFSheet sheet = workbook.createSheet(clazz.getDeclaredAnnotation(ExcelDownload.class).sheetName());
@@ -49,8 +49,17 @@ public class ExcelUtil {
         return workbook;
     }
 
-    public <T> void append(Workbook workbook, List<T> data, Class<T> clazz) {
-
+    public <T> SXSSFWorkbook append(SXSSFWorkbook workbook, List<T> lists, Class<T> clazz) {
+        SXSSFSheet sheet = workbook.getSheet(
+                clazz.getAnnotation(ExcelDownload.class).sheetName()
+        );
+        int rowNum = sheet.getLastRowNum() + 1;
+        Row row;
+        for(T data: lists) {
+            row = sheet.createRow(rowNum++);
+            renderBodyRow(row, data, clazz);
+        }
+        return workbook;
     }
 
     private SXSSFWorkbook createWorkBook() {
