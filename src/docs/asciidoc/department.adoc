@@ -5,5 +5,5 @@
 
 === 학과 리스트 조회 (GET /departments)
 ====
-operation::department-controller-test/get-departments[snippets="http-request,,http-response,response-fields"]
+operation::department-controller-test/get-departments[snippets="http-request,http-response,response-fields"]
 ====
