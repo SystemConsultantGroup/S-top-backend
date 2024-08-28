@@ -5,22 +5,16 @@ import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
 
-import com.scg.stop.auth.domain.request.RegisterRequest;
 import com.scg.stop.domain.project.domain.Comment;
 import com.scg.stop.domain.project.domain.FavoriteProject;
 import com.scg.stop.domain.project.domain.Inquiry;
 import com.scg.stop.domain.project.domain.Likes;
 import com.scg.stop.domain.proposal.domain.Proposal;
-import com.scg.stop.domain.video.domain.FavoriteVideo;
-import com.scg.stop.domain.video.domain.UserQuiz;
+import com.scg.stop.video.domain.FavoriteVideo;
+import com.scg.stop.video.domain.UserQuiz;
 import com.scg.stop.global.domain.BaseTimeEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
@@ -62,10 +56,10 @@ public class User extends BaseTimeEntity {
     @OneToMany(fetch = LAZY, mappedBy = "user")
     private List<Proposal> proposals = new ArrayList<>();
 
-    @OneToMany(fetch = LAZY, mappedBy = "user")
+    @OneToMany(fetch = LAZY, mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<UserQuiz> userQuizzes = new ArrayList<>();
 
-    @OneToMany(fetch = LAZY, mappedBy = "user")
+    @OneToMany(fetch = LAZY, mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<FavoriteVideo> favoriteVideos = new ArrayList<>();
 
     @OneToMany(fetch = LAZY, mappedBy = "user")
@@ -80,6 +74,15 @@ public class User extends BaseTimeEntity {
     @OneToMany(fetch = LAZY, mappedBy = "user")
     private List<Inquiry> inquiries = new ArrayList<>();
 
+    public void activateUser() {
+        if (userType == UserType.INACTIVE_COMPANY) {
+            userType = UserType.COMPANY;
+        } else if (userType == UserType.INACTIVE_PROFESSOR) {
+            userType = UserType.PROFESSOR;
+        }
+        application.activate();
+    }
+
     public User(String socialLoginId) {
         this.userType = UserType.TEMP;
         this.socialLoginId = socialLoginId;
@@ -92,4 +95,6 @@ public class User extends BaseTimeEntity {
         this.userType = userType;
         this.signupSource = signupSource;
     }
+
+
 }
