@@ -78,7 +78,9 @@ public class UserService {
             user.getStudentInfo().updateDepartment(department);
         }
         else if (Arrays.asList(UserType.INACTIVE_PROFESSOR, UserType.COMPANY, UserType.INACTIVE_COMPANY, UserType.PROFESSOR).contains(user.getUserType())) {
-            if (isNull(request.getDivision()) || isNull(request.getPosition())) {
+            if (!isNull(request.getDivision()) && isBlank(request.getDivision()) ||
+                !isNull(request.getPosition()) && isBlank(request.getPosition())) {
+
                 throw new BadRequestException(ExceptionCode.DIVISION_OR_POSITION_REQUIRED);
             }
 
