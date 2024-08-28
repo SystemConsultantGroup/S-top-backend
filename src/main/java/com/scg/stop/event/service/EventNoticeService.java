@@ -1,7 +1,7 @@
 package com.scg.stop.event.service;
 
-import com.scg.stop.domain.file.domain.File;
-import com.scg.stop.domain.file.repository.FileRepository;
+import com.scg.stop.file.domain.File;
+import com.scg.stop.file.repository.FileRepository;
 import com.scg.stop.event.domain.EventNotice;
 import com.scg.stop.event.dto.request.EventNoticeRequest;
 import com.scg.stop.event.dto.response.EventNoticeListElementResponse;

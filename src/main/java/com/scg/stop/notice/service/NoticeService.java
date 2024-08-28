@@ -1,7 +1,7 @@
 package com.scg.stop.notice.service;
 
-import com.scg.stop.domain.file.domain.File;
-import com.scg.stop.domain.file.repository.FileRepository;
+import com.scg.stop.file.domain.File;
+import com.scg.stop.file.repository.FileRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.notice.domain.Notice;
