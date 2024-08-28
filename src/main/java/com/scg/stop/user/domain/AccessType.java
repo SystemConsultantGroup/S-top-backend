@@ -8,5 +8,6 @@ public enum AccessType {
     PROFESSOR,
     STUDENT,
     COMPANY,
-    ALL
+    ALL,
+    OPTIONAL
 }

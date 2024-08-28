@@ -1,8 +1,14 @@
 package com.scg.stop.video.controller;
 
 import com.scg.stop.auth.annotation.AuthUser;
+import com.scg.stop.video.dto.request.QuizSubmitRequest;
 import com.scg.stop.video.dto.request.TalkRequest;
+import com.scg.stop.video.dto.response.QuizResponse;
+import com.scg.stop.video.dto.response.QuizSubmitResponse;
 import com.scg.stop.video.dto.response.TalkResponse;
+import com.scg.stop.video.dto.response.TalkUserResponse;
+import com.scg.stop.video.service.FavoriteVideoService;
+import com.scg.stop.video.service.QuizService;
 import com.scg.stop.video.service.TalkService;
 import com.scg.stop.user.domain.AccessType;
 import com.scg.stop.user.domain.User;
@@ -21,6 +27,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/talks")
 public class TalkController {
     private final TalkService talkService;
+    private final QuizService quizService;
+    private final FavoriteVideoService favoriteVideoService;
 
     @PostMapping
     public ResponseEntity<TalkResponse> createTalk(
@@ -32,18 +40,22 @@ public class TalkController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<TalkResponse>> getAllTalks(
+    public ResponseEntity<Page<TalkUserResponse>> getAllTalks(
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "year", required = false) Integer year,
+            @AuthUser(accessType = {AccessType.OPTIONAL}) User user,
             @PageableDefault(page = 0, size = 10) Pageable pageable
     ) {
-        Page<TalkResponse> talks = talkService.getTalks(title, year, pageable);
+        Page<TalkUserResponse> talks = talkService.getTalks(user, title, year, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(talks);
     }
 
     @GetMapping("/{talkId}")
-    public ResponseEntity<TalkResponse> getTalk(@PathVariable("talkId") Long talkId) {
-        TalkResponse response = talkService.getTalkById(talkId);
+    public ResponseEntity<TalkUserResponse> getTalk(
+            @PathVariable("talkId") Long talkId,
+            @AuthUser(accessType = {AccessType.OPTIONAL}) User user
+    ) {
+        TalkUserResponse response = talkService.getTalkById(talkId, user);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -63,6 +75,49 @@ public class TalkController {
             @AuthUser(accessType = {AccessType.ADMIN}) User user
     ) {
         talkService.deleteTalk(talkId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/{talkId}/quiz")
+    public ResponseEntity<QuizResponse> getQuiz(@PathVariable("talkId") Long talkId) {
+        QuizResponse quizResponse = quizService.getQuiz(talkId);
+        return ResponseEntity.status(HttpStatus.OK).body(quizResponse);
+    }
+
+    @PostMapping("/{talkId}/quiz")
+    public ResponseEntity<QuizSubmitResponse> submitQuiz(
+            @PathVariable("talkId") Long talkId,
+            @AuthUser(accessType = {AccessType.ALL}) User user,
+            @RequestBody @Valid QuizSubmitRequest request
+    ) {
+        QuizSubmitResponse response = quizService.submitQuiz(talkId, request, user);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/{talkId}/quiz/submit")
+    public ResponseEntity<QuizSubmitResponse> getUserQuiz(
+            @PathVariable("talkId") Long talkId,
+            @AuthUser(accessType = {AccessType.ALL}) User user
+    ) {
+        QuizSubmitResponse response = quizService.getUserQuiz(talkId, user);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PostMapping("/{talkId}/favorite")
+    public ResponseEntity<Void> createTalkFavorite(
+            @PathVariable("talkId") Long talkId,
+            @AuthUser(accessType = {AccessType.ALL}) User user
+    ) {
+        favoriteVideoService.createTalkFavorite(talkId, user);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @DeleteMapping("/{talkId}/favorite")
+    public ResponseEntity<Void> deleteTalkFavorite(
+            @PathVariable("talkId") Long talkId,
+            @AuthUser(accessType = {AccessType.ALL}) User user
+    ) {
+        favoriteVideoService.deleteTalkFavorite(talkId, user);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
