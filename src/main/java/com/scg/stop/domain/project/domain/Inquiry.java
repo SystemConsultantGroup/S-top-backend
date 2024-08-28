@@ -41,4 +41,8 @@ public class Inquiry extends BaseTimeEntity {
 
     @OneToOne(fetch = LAZY, mappedBy = "inquiry")
     private InquiryResponse response;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
