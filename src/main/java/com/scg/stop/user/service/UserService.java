@@ -20,16 +20,15 @@ import com.scg.stop.user.dto.response.UserProposalResponse;
 import com.scg.stop.user.dto.response.UserResponse;
 import com.scg.stop.user.repository.DepartmentRepository;
 import com.scg.stop.user.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static io.micrometer.common.util.StringUtils.isBlank;
-import static io.micrometer.common.util.StringUtils.isNotBlank;
 import static java.util.Objects.isNull;
 
 @Service
@@ -44,6 +43,7 @@ public class UserService {
     private final FavoriteProjectRepository favoriteProjectRepository;
     private final FavoriteVideoRepository favoriteVideoRepository;
 
+    @Transactional(readOnly = true)
     public UserResponse getMe(User user) {
         if (user.getUserType().equals(UserType.STUDENT)) {
             Student studentInfo = user.getStudentInfo();
@@ -117,6 +117,7 @@ public class UserService {
         userRepository.delete(user);
     }
 
+    @Transactional(readOnly = true)
     public List<UserInquiryResponse> getUserInquiries(User user) {
         List<Inquiry> inquiries = inquiryRepository.findByUser(user);
         return inquiries.stream()
@@ -124,6 +125,7 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public List<UserProposalResponse> getUserProposals(User user) {
         List<Proposal> proposals = proposalRepository.findByUser(user);
         return proposals.stream()
@@ -131,6 +133,7 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public List<?> getUserFavorites(User user, FavoriteType type) {
         if (type.equals(FavoriteType.PROJECT)) {
             List<Project> projects = favoriteProjectRepository.findAllByUser(user);
