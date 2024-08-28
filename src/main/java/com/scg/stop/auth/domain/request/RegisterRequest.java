@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import java.util.Arrays;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,6 +41,7 @@ public class RegisterRequest {
 
     public RegisterRequest(String name, String phoneNumber, UserType userType, String email, String signUpSource,
                            StudentInfoDto studentInfo, String division, String position) {
+        validateUserType(userType);
         validateStudentInfo(userType, studentInfo);
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -56,6 +58,12 @@ public class RegisterRequest {
             if(studentInfo.getStudentNumber() == null || studentInfo.getDepartment() == null){
                 throw new BadRequestException(ExceptionCode.INVALID_STUDENTINFO);
             }
+        }
+    }
+
+    private void validateUserType(UserType userType) {
+        if(Arrays.asList(UserType.ADMIN, UserType.PROFESSOR, UserType.COMPANY).contains(userType)) {
+            throw new BadRequestException(ExceptionCode.INVALID_USERTYPE);
         }
     }
 }

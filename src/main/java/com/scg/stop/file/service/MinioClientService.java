@@ -1,8 +1,10 @@
 package com.scg.stop.file.service;
 
+import static com.scg.stop.global.exception.ExceptionCode.FAILED_TO_GET_FILE;
 import static com.scg.stop.global.exception.ExceptionCode.FAILED_TO_UPLOAD_FILE;
 
 import com.scg.stop.global.exception.InternalServerErrorException;
+import io.minio.GetObjectArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import java.io.InputStream;
@@ -31,11 +33,11 @@ public class MinioClientService {
         userMetadata.put("createdAt", createdAt.toString());
         userMetadata.put("originalFilename", file.getOriginalFilename());
 
-        try (InputStream is = file.getInputStream()) {
+        try (InputStream stream = file.getInputStream()) {
             minioClient.putObject(
                     PutObjectArgs.builder()
                             .bucket(bucketName)
-                            .object(uuid.toString()).stream(is, file.getSize(), -1)
+                            .object(uuid.toString()).stream(stream, file.getSize(), -1)
                             .contentType(file.getContentType())
                             .userMetadata(userMetadata)
                             .build()
@@ -46,6 +48,16 @@ public class MinioClientService {
         }
     }
 
-
-//    public void getFile(String uuid) {}
+    public InputStream getFile(String uuid) {
+        try {
+            return minioClient.getObject(
+                    GetObjectArgs.builder()
+                            .bucket(bucketName)
+                            .object(uuid)
+                            .build());
+        } catch(Exception e) {
+            log.error(e.getMessage(), e);
+            throw new InternalServerErrorException(FAILED_TO_GET_FILE);
+        }
+    }
 }

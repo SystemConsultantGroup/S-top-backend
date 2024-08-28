@@ -7,3 +7,8 @@
 ====
 operation::file-controller-test/upload-file[snippets="http-request,request-parts,http-response,response-fields"]
 ====
+
+=== 파일 조회 (GET /files/{fileId})
+====
+operation::file-controller-test/get-file[snippets="http-request,path-parameters,http-response"]
+====
