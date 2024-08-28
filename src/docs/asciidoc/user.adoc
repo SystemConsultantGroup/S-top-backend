@@ -20,10 +20,10 @@ operation::user-controller-test/delete-me[snippets="http-request,http-response"]
 
 === 유저 문의 리스트 조회 (GET /users/inquiries)
 ====
-operation::user-controller-test/get-user-inquiries[snippets="http-request,request-cookies,request-headers,http-response, response-fields"]
+operation::user-controller-test/get-user-inquiries[snippets="http-request,http-response,response-fields"]
 ====
 
 === 유저 과제 제안 리스트 조회 (GET /users/proposals)
 ====
-operation::user-controller-test/get-user-proposals[snippets="http-request,request-cookies,request-headers,http-response, response-fields"]
+operation::user-controller-test/get-user-proposals[snippets="http-request,http-response,response-fields"]
 ====
