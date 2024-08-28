@@ -64,39 +64,36 @@ public class ExcelUtil {
         return workbook;
     }
 
-    public <T> List<T> fromExcel(MultipartFile file, Class<T> clazz) throws IOException {
+    public <T> List<T> fromExcel(MultipartFile file, Class<T> clazz) throws Exception {
+        XSSFWorkbook workbook = null;
         List<T> result = new ArrayList<>();
-        InputStream inputStream = file.getInputStream();
-        XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
-        Sheet sheet = workbook.getSheetAt(0);
-        Row headerRow = sheet.getRow(0); //header
-        int columns = headerRow.getPhysicalNumberOfCells();
-        Row row;
+        try {
+            workbook = new XSSFWorkbook(file.getInputStream());
+            Sheet sheet = workbook.getSheetAt(0);
+            Row headerRow = sheet.getRow(0); //header
+            int columns = headerRow.getPhysicalNumberOfCells();
+            Row row;
 
-        Map<Integer, Field> columnFieldMap = new HashMap<>();
-        Field[] fields = clazz.getFields();
+            Map<Integer, Field> columnFieldMap = new HashMap<>();
+            Field[] fields = clazz.getFields();
 
-        for (int i = 0; i < columns; i++) {
-            String headerValue = headerRow.getCell(i).getStringCellValue();
+            for (int i = 0; i < columns; i++) {
+                String headerValue = headerRow.getCell(i).getStringCellValue();
 
-            for (Field field : fields) {
-                if (field.isAnnotationPresent(ExcelColumn.class)) {
-                    ExcelColumn excelColumn = field.getAnnotation(ExcelColumn.class);
-                    if (excelColumn.headerName().equals(headerValue)) {
-                        field.setAccessible(true);
-                        columnFieldMap.put(i, field);
-                        break;
+                for (Field field : fields) {
+                    if (field.isAnnotationPresent(ExcelColumn.class)) {
+                        ExcelColumn excelColumn = field.getAnnotation(ExcelColumn.class);
+                        if (excelColumn.headerName().equals(headerValue)) {
+                            field.setAccessible(true);
+                            columnFieldMap.put(i, field);
+                            break;
+                        }
                     }
                 }
             }
-        }
-
-
-        for(int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
-            row = sheet.getRow(i);
-            T dto;
-            try {
-                dto = clazz.getDeclaredConstructor().newInstance();
+            for(int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
+                row = sheet.getRow(i);
+                T dto = clazz.getDeclaredConstructor().newInstance();
                 for(Map.Entry<Integer, Field> entry : columnFieldMap.entrySet()) {
                     int columnIdx = entry.getKey();
                     Field field = entry.getValue();
@@ -107,10 +104,12 @@ public class ExcelUtil {
                     }
                 }
                 result.add(dto);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
             }
-
+        } catch (Exception e) {
+            if(workbook != null) {
+                workbook.close();
+            }
+            throw new RuntimeException(e);
         }
         return result;
     }
