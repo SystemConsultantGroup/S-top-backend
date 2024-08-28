@@ -5,13 +5,15 @@ import com.scg.stop.global.excel.annotation.ExcelDownload;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class ExcelUtil {
@@ -60,6 +62,75 @@ public class ExcelUtil {
             renderBodyRow(row, data, clazz);
         }
         return workbook;
+    }
+
+    public <T> List<T> fromExcel(MultipartFile file, Class<T> clazz) throws IOException {
+        List<T> result = new ArrayList<>();
+        InputStream inputStream = file.getInputStream();
+        XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+        Sheet sheet = workbook.getSheetAt(0);
+        Row headerRow = sheet.getRow(0); //header
+        int columns = headerRow.getPhysicalNumberOfCells();
+        Row row;
+
+        Map<Integer, Field> columnFieldMap = new HashMap<>();
+        Field[] fields = clazz.getFields();
+
+        for (int i = 0; i < columns; i++) {
+            String headerValue = headerRow.getCell(i).getStringCellValue();
+
+            for (Field field : fields) {
+                if (field.isAnnotationPresent(ExcelColumn.class)) {
+                    ExcelColumn excelColumn = field.getAnnotation(ExcelColumn.class);
+                    if (excelColumn.headerName().equals(headerValue)) {
+                        field.setAccessible(true);
+                        columnFieldMap.put(i, field);
+                        break;
+                    }
+                }
+            }
+        }
+
+
+        for(int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
+            row = sheet.getRow(i);
+            T dto;
+            try {
+                dto = clazz.getDeclaredConstructor().newInstance();
+                for(Map.Entry<Integer, Field> entry : columnFieldMap.entrySet()) {
+                    int columnIdx = entry.getKey();
+                    Field field = entry.getValue();
+                    Cell cell = row.getCell(columnIdx);
+                    if (cell != null) {
+                        switch (cell.getCellType()) {
+                            case STRING:
+                                field.set(dto, cell.getStringCellValue());
+                                break;
+                            case NUMERIC:
+                                if (DateUtil.isCellDateFormatted(cell)) {
+                                    field.set(dto, cell.getDateCellValue());
+                                } else {
+                                    field.set(dto, cell.getNumericCellValue());
+                                }
+                                break;
+                            case BOOLEAN:
+                                field.set(dto, cell.getBooleanCellValue());
+                                break;
+                            case FORMULA:
+                                field.set(dto, cell.getCellFormula());
+                                break;
+                            default:
+                                field.set(dto, null);
+                        }
+                    }
+                    result.add(dto);
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+        return result;
     }
 
     private SXSSFWorkbook createWorkBook() {
