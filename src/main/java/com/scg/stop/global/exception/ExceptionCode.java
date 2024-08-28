@@ -24,7 +24,8 @@ public enum ExceptionCode {
     NOT_FOUND_DEPARTMENT(4003, "학과가 존재하지 않습니다."),
     INVALID_STUDENTINFO(4004, "학과/학번 정보가 존재하지 않습니다."),
 
-    UNABLE_TO_EDIT_USER_TYPE(4100, "회원 유형은 수정할 수 없습니다.");
+    UNABLE_TO_EDIT_USER_TYPE(4100, "회원 유형은 수정할 수 없습니다."),
+    DIVISION_OR_POSITION_REQUIRED(4101, "소속 또는 직책의 형식이 잘못되었습니다.");
 
     private final int code;
     private final String message;
