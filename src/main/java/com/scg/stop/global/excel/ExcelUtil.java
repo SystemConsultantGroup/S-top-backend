@@ -102,35 +102,64 @@ public class ExcelUtil {
                     Field field = entry.getValue();
                     Cell cell = row.getCell(columnIdx);
                     if (cell != null) {
-                        switch (cell.getCellType()) {
-                            case STRING:
-                                field.set(dto, cell.getStringCellValue());
-                                break;
-                            case NUMERIC:
-                                if (DateUtil.isCellDateFormatted(cell)) {
-                                    field.set(dto, cell.getDateCellValue());
-                                } else {
-                                    field.set(dto, cell.getNumericCellValue());
-                                }
-                                break;
-                            case BOOLEAN:
-                                field.set(dto, cell.getBooleanCellValue());
-                                break;
-                            case FORMULA:
-                                field.set(dto, cell.getCellFormula());
-                                break;
-                            default:
-                                field.set(dto, null);
-                        }
+                        Object cellValue = getCellValue(cell, field.getType());
+                        field.set(dto, cellValue);
                     }
-                    result.add(dto);
                 }
+                result.add(dto);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
 
         }
         return result;
+    }
+
+    private Object getCellValue(Cell cell, Class<?> fieldType) {
+        switch (cell.getCellType()) {
+            case STRING:
+                return convertValue(cell.getStringCellValue(), fieldType);
+            case NUMERIC:
+                if (DateUtil.isCellDateFormatted(cell)) {
+                    return convertValue(cell.getDateCellValue(), fieldType);
+                } else {
+                    return convertValue(cell.getNumericCellValue(), fieldType);
+                }
+            case BOOLEAN:
+                return convertValue(cell.getBooleanCellValue(), fieldType);
+            case FORMULA:
+                return convertValue(cell.getCellFormula(), fieldType);
+            default:
+                return null;
+        }
+    }
+
+    private Object convertValue(Object value, Class<?> fieldType) {
+        if (value == null) {
+            return null;
+        }
+
+        if (fieldType.isAssignableFrom(value.getClass())) {
+            return value;
+        }
+
+        if (fieldType == String.class) {
+            return value.toString();
+        } else if (fieldType == Integer.class || fieldType == int.class) {
+            return ((Number) value).intValue();
+        } else if (fieldType == Long.class || fieldType == long.class) {
+            return ((Number) value).longValue();
+        } else if (fieldType == Double.class || fieldType == double.class) {
+            return ((Number) value).doubleValue();
+        } else if (fieldType == Float.class || fieldType == float.class) {
+            return ((Number) value).floatValue();
+        } else if (fieldType == Boolean.class || fieldType == boolean.class) {
+            return Boolean.valueOf(value.toString());
+        } else if (fieldType == java.util.Date.class && value instanceof java.util.Date) {
+            return value;
+        } else {
+            return value.toString();
+        }
     }
 
     private SXSSFWorkbook createWorkBook() {
