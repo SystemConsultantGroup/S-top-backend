@@ -44,7 +44,6 @@ public enum ExceptionCode {
     NOT_FOUND_LIKE_PROJECT(77009, "좋아요 표시한 프로젝트가 존재하지 않습니다"),
     NOT_FOUND_COMMENT(77010, "댓글을 찾을 수 없습니다"),
     NOT_MATCH_USER(77011, "유저 정보가 일치하지 않습니다"),
-    NOT_EVENT_PERIOD(77012, "행사 기간이 아닙니다"),
 
     // notice domain
     NOTICE_NOT_FOUND(10000, "요청한 ID에 해당하는 공지사항이 존재하지 않습니다."),

@@ -96,5 +96,19 @@ public class User extends BaseTimeEntity {
         this.signupSource = signupSource;
     }
 
+    public void addLikes(Likes likes) {
+        this.likes.add(likes);
+    }
 
+    public void removeLikes(Likes likes) {
+        this.likes.remove(likes);
+    }
+
+    public void addFavoriteProject(FavoriteProject favoriteProject) {
+        this.favoriteProjects.add(favoriteProject);
+    }
+
+    public void removeFavoriteProject(FavoriteProject favoriteProject) {
+        this.favoriteProjects.remove(favoriteProject);
+    }
 }
