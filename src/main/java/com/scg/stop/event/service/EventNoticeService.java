@@ -1,19 +1,16 @@
 package com.scg.stop.event.service;
 
-import com.scg.stop.file.domain.File;
-import com.scg.stop.file.repository.FileRepository;
 import com.scg.stop.event.domain.EventNotice;
 import com.scg.stop.event.dto.request.EventNoticeRequest;
 import com.scg.stop.event.dto.response.EventNoticeListElementResponse;
 import com.scg.stop.event.dto.response.EventNoticeResponse;
 import com.scg.stop.event.repository.EventNoticeRepository;
+import com.scg.stop.file.domain.File;
+import com.scg.stop.file.repository.FileRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,27 +44,35 @@ public class EventNoticeService {
     }
 
     /**
-     * Get a list of eventNotices
+     * Get a list of event notices.
      *
-     * @param title    Title of the eventNotice (optional)
+     * @param title    Title of the event notice (optional)
      * @param pageable Pageable
-     * @return List of eventNotices
+     * @return Paginated list of event notices
      */
     @Transactional(readOnly = true)
     public Page<EventNoticeListElementResponse> getEventNoticeList(String title, Pageable pageable) {
-        List<EventNoticeListElementResponse> fixedEventNotices = eventNoticeRepository.findFixedEventNotices(title);
-        int nonFixedEventNoticesSize = pageable.getPageSize() - fixedEventNotices.size();
-        Pageable adjustedPageable = PageRequest.of(pageable.getPageNumber(), nonFixedEventNoticesSize);
 
+        // Retrieve the sorting from the pageable
+        Sort sort = pageable.getSort();
+
+        // Find fixed notices with title and sorting
+        List<EventNoticeListElementResponse> fixedEventNotices = eventNoticeRepository.findFixedEventNotices(title, sort);
+
+        // Find non-fixed notices with title and sorting
+        int nonFixedEventNoticesSize = pageable.getPageSize() - fixedEventNotices.size();
+        Pageable adjustedPageable = PageRequest.of(pageable.getPageNumber(), Math.max(nonFixedEventNoticesSize, 0), sort);
         Page<EventNoticeListElementResponse> nonFixedEventNotices = eventNoticeRepository.findNonFixedEventNotices(title, adjustedPageable);
 
-        List<EventNoticeListElementResponse> combinedEventNotices = new ArrayList<>();
-        combinedEventNotices.addAll(fixedEventNotices);
+        // Combine fixed and non-fixed notices
+        List<EventNoticeListElementResponse> combinedEventNotices = new ArrayList<>(fixedEventNotices);
         combinedEventNotices.addAll(nonFixedEventNotices.getContent());
 
+        // Calculate the total number of elements and pages
         long totalElements = fixedEventNotices.size() + nonFixedEventNotices.getTotalElements();
         int totalPages = (int) Math.ceil((double) nonFixedEventNotices.getTotalElements() / adjustedPageable.getPageSize());
 
+        // Return the combined result as a Page with sorting
         return new PageImpl<>(combinedEventNotices, pageable, totalElements) {
             @Override
             public int getTotalPages() {
