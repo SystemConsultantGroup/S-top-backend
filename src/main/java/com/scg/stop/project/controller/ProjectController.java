@@ -20,7 +20,7 @@ public class ProjectController {
     private final ProjectService projectService;
 
     // 문의 생성
-    @PostMapping("{projectId}/inquiry")
+    @PostMapping("/{projectId}/inquiry")
     public ResponseEntity<InquiryDetailResponse> createProjectInquiry(
             @PathVariable Long projectId,
             @AuthUser(accessType = AccessType.COMPANY) User user,
