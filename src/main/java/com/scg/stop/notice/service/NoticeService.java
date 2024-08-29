@@ -10,10 +10,7 @@ import com.scg.stop.notice.dto.response.NoticeListElementResponse;
 import com.scg.stop.notice.dto.response.NoticeResponse;
 import com.scg.stop.notice.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,27 +44,36 @@ public class NoticeService {
     }
 
     /**
-     * Get a list of notices
+     * Get a list of notices with sorting
      *
      * @param title    Title of the notice (optional)
-     * @param pageable Pageable
+     * @param pageable Pageable containing sorting information
      * @return List of notices
      */
     @Transactional(readOnly = true)
     public Page<NoticeListElementResponse> getNoticeList(String title, Pageable pageable) {
-        List<NoticeListElementResponse> fixedNotices = noticeRepository.findFixedNotices(title);
-        int nonFixedNoticesSize = pageable.getPageSize() - fixedNotices.size();
-        Pageable adjustedPageable = PageRequest.of(pageable.getPageNumber(), nonFixedNoticesSize);
 
+        // Retrieve the sorting from the pageable
+        Sort sort = pageable.getSort();
+
+        // Find fixed notices with title and sorting
+        List<NoticeListElementResponse> fixedNotices = noticeRepository.findFixedNotices(title, sort);
+
+        // Find non-fixed notices with title and sorting
+        int nonFixedNoticesSize = pageable.getPageSize() - fixedNotices.size();
+        Pageable adjustedPageable = PageRequest.of(pageable.getPageNumber(), Math.max(nonFixedNoticesSize, 0), sort);
         Page<NoticeListElementResponse> nonFixedNotices = noticeRepository.findNonFixedNotices(title, adjustedPageable);
 
+        // Combine fixed and non-fixed notices
         List<NoticeListElementResponse> combinedNotices = new ArrayList<>();
         combinedNotices.addAll(fixedNotices);
         combinedNotices.addAll(nonFixedNotices.getContent());
 
+        // Calculate total elements and pages
         long totalElements = fixedNotices.size() + nonFixedNotices.getTotalElements();
         int totalPages = (int) Math.ceil((double) nonFixedNotices.getTotalElements() / adjustedPageable.getPageSize());
 
+        // Return the combined result as a Page with sorting
         return new PageImpl<>(combinedNotices, pageable, totalElements) {
             @Override
             public int getTotalPages() {
