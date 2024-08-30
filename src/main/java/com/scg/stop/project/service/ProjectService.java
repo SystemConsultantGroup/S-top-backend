@@ -43,6 +43,7 @@ public class ProjectService {
     private final LikeRepository likeRepository;
     private final CommentRepository commentRepository;
     private final EventPeriodRepository eventPeriodRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     private EntityManager entityManager;
@@ -102,6 +103,8 @@ public class ProjectService {
         try {
             FavoriteProject newFavoriteProject = new FavoriteProject(null, project, user);
             favoriteProjectRepository.save(newFavoriteProject);
+            project.addFavoriteProject(newFavoriteProject);
+            userRepository.save(user);
         } catch (DataIntegrityViolationException e){ // DB 사이드에서 동시성 처리
             throw new BadRequestException(ExceptionCode.ALREADY_FAVORITE_PROJECT);
         }
@@ -114,6 +117,8 @@ public class ProjectService {
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
 
         favoriteProjectRepository.delete(favoriteProject);
+        project.removeFavoriteProject(favoriteProject);
+        userRepository.save(user);
     }
 
     public void createProjectLike(Long projectId, User user){
@@ -129,6 +134,8 @@ public class ProjectService {
         try {
             Likes newLike = new Likes(null, project, user);
             likeRepository.save(newLike);
+            project.addLikes(newLike);
+            userRepository.save(user);
         } catch (DataIntegrityViolationException e){ // DB 사이드에서 동시성 처리
             throw new BadRequestException(ExceptionCode.ALREADY_LIKE_PROJECT);
         }
@@ -147,6 +154,8 @@ public class ProjectService {
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
 
         likeRepository.delete(like);
+        project.removeLikes(like);
+        userRepository.save(user);
     }
 
     public CommentResponse createProjectComment(Long projectId, User user, CommentRequest commentRequest){
