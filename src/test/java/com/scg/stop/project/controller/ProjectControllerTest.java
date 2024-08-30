@@ -55,6 +55,7 @@ import java.util.List;
 public class ProjectControllerTest extends AbstractControllerTest {
 
     private static final String ALL_ACCESS_TOKEN = "all_access_token";
+    private static final String OPTIONAL_ACCESS_TOKEN = "optional_access_token";
     private static final String ADMIN_ACCESS_TOKEN = "admin_access_token";
     private static final String REFRESH_TOKEN = "refresh_token";
 
@@ -116,7 +117,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 get("/projects")
                         .contentType(APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, ALL_ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, OPTIONAL_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
@@ -126,7 +127,10 @@ public class ProjectControllerTest extends AbstractControllerTest {
                         queryParameters(
                                 parameterWithName("title").description("프로젝트 이름").optional(),
                                 parameterWithName("year").description("프로젝트 년도").optional(),
-                                parameterWithName("category").description("프로젝트 카테고리").optional()
+                                parameterWithName("category").description("프로젝트 카테고리").optional(),
+                                parameterWithName("page").description("페이지 번호 [default: 0]").optional(),
+                                parameterWithName("size").description("페이지 크기 [default: 10]").optional(),
+                                parameterWithName("sort").description("정렬 기준").optional()
                         ),
                         responseFields(
                                 fieldWithPath("content[].id").type(JsonFieldType.NUMBER).description("프로젝트 ID"),
@@ -326,7 +330,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 get("/projects/{projectId}", 1L)
                         .contentType(APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, ALL_ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, OPTIONAL_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
@@ -789,7 +793,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 get("/projects/award?year={year}", 2024)
                         .contentType(APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, ALL_ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, OPTIONAL_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
@@ -797,7 +801,10 @@ public class ProjectControllerTest extends AbstractControllerTest {
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
                         queryParameters(
-                                parameterWithName("year").description("프로젝트 년도")
+                                parameterWithName("year").description("프로젝트 년도"),
+                                parameterWithName("page").description("페이지 번호 [default: 0]").optional(),
+                                parameterWithName("size").description("페이지 크기 [default: 10]").optional(),
+                                parameterWithName("sort").description("정렬 기준").optional()
                         ),
                         responseFields(
                                 fieldWithPath("content[].id").type(JsonFieldType.NUMBER).description("프로젝트 ID"),
@@ -822,7 +829,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
                                 fieldWithPath("pageable.pageSize").type(JsonFieldType.NUMBER).description("페이지 당 요소 수"),
                                 fieldWithPath("pageable.sort.empty").type(JsonFieldType.BOOLEAN).description("정렬 정보가 비어있는지 여부"),
                                 fieldWithPath("pageable.sort.sorted").type(JsonFieldType.BOOLEAN).description("정렬된 상태인지 여부"),
-                                fieldWithPath("pageable.sort.unsorted").type(JsonFieldType.BOOLEAN).description("정렬되지 않은 상태인지 여부"),
+                                fieldWithPath("page가able.sort.unsorted").type(JsonFieldType.BOOLEAN).description("정렬되지 않은 상태인지 여부"),
                                 fieldWithPath("pageable.offset").type(JsonFieldType.NUMBER).description("오프셋"),
                                 fieldWithPath("pageable.paged").type(JsonFieldType.BOOLEAN).description("페이징된 여부"),
                                 fieldWithPath("pageable.unpaged").type(JsonFieldType.BOOLEAN).description("페이징되지 않은 여부"),
