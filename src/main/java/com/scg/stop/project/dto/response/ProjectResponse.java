@@ -41,8 +41,8 @@ public class ProjectResponse {
                 .map(String::trim)
                 .collect(Collectors.toList());
 
-        Boolean like = project.getLikes().stream().anyMatch(likes -> likes.getUser().getId().equals(user.getId()));
-        Boolean bookMark = project.getFavorites().stream().anyMatch(favoriteProject -> favoriteProject.getUser().getId().equals(user.getId()));
+        Boolean like = user != null ? project.getLikes().stream().anyMatch(likes -> likes.getUser().getId().equals(user.getId())) : false;
+        Boolean bookMark = user != null ? project.getFavorites().stream().anyMatch(favoriteProject -> favoriteProject.getUser().getId().equals(user.getId())) : false;
 
         return new ProjectResponse(
                 project.getId(),
