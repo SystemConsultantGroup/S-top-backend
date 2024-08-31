@@ -2,10 +2,11 @@ package com.scg.stop.user.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
-import com.scg.stop.domain.project.domain.InquiryResponse;
+import com.scg.stop.user.domain.FavoriteType;
 import com.scg.stop.user.domain.User;
 import com.scg.stop.user.domain.UserType;
 import com.scg.stop.user.dto.request.UserUpdateRequest;
+import com.scg.stop.user.dto.response.FavoriteResponse;
 import com.scg.stop.user.dto.response.UserInquiryResponse;
 import com.scg.stop.user.dto.response.UserProposalResponse;
 import com.scg.stop.user.dto.response.UserResponse;
@@ -20,6 +21,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -36,6 +38,7 @@ import static org.springframework.restdocs.cookies.CookieDocumentation.requestCo
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -277,8 +280,46 @@ class UserControllerTest extends AbstractControllerTest {
                                 fieldWithPath("[].title").description("프로젝트명"),
                                 fieldWithPath("[].createdDate").description("과제 제안 생성일")
                         )
-        ));
+                ));
 
+    }
+
+    @Test
+    @DisplayName("유저의 관심 리스트를 조회할 수 있다.")
+    void getUserFavorites() throws Exception {
+        // given
+        List<FavoriteResponse> responses = Arrays.asList(
+                FavoriteResponse.of(1L, "Project 1", "youtube 1"),
+                FavoriteResponse.of(2L, "Project 2", "youtube 2")
+        );
+        when(userService.getUserFavorites(any(User.class), any(FavoriteType.class))).thenReturn(responses);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                RestDocumentationRequestBuilders.get("/users/favorites")
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+                        .param("type", "TALK")
+        );
+
+        // then
+        result.andExpect(status().isOk())
+                .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token").description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization").description("Access Token")
+                        ),
+                        queryParameters(
+                                parameterWithName("type").description("관심 항목의 타입 (PROJECT, TALK, JOBINTERVIEW)")
+                        ),
+                        responseFields(
+                                fieldWithPath("[].id").description("ID"),
+                                fieldWithPath("[].title").description("제목"),
+                                fieldWithPath("[].youtubeId").description("유튜브 ID")
+                        )
+                ));
     }
 
 }

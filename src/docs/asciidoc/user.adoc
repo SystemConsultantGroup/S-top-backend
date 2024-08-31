@@ -18,6 +18,11 @@ operation::user-controller-test/update-me[snippets="http-request,request-fields,
 operation::user-controller-test/delete-me[snippets="http-request,http-response"]
 ====
 
+=== 유저 관심 리스트 조회 (GET /users/favorites)
+====
+operation::user-controller-test/get-user-favorites[snippets="http-request,query-parameters,http-response,response-fields"]
+====
+
 === 유저 문의 리스트 조회 (GET /users/inquiries)
 ====
 operation::user-controller-test/get-user-inquiries[snippets="http-request,http-response,response-fields"]
