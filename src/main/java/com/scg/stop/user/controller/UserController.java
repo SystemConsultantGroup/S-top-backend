@@ -5,6 +5,7 @@ import com.scg.stop.user.domain.AccessType;
 import com.scg.stop.user.domain.FavoriteType;
 import com.scg.stop.user.domain.User;
 import com.scg.stop.user.dto.request.UserUpdateRequest;
+import com.scg.stop.user.dto.response.FavoriteResponse;
 import com.scg.stop.user.dto.response.UserInquiryResponse;
 import com.scg.stop.user.dto.response.UserProposalResponse;
 import com.scg.stop.user.dto.response.UserResponse;
@@ -15,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -58,11 +58,11 @@ public class UserController {
     }
 
     @GetMapping("/favorites")
-    public ResponseEntity<List<?>> getUserFavorites(
+    public ResponseEntity<List<FavoriteResponse>> getUserFavorites(
             @AuthUser(accessType = {AccessType.ALL}) User user,
             @RequestParam("type") FavoriteType type
     ) {
-        List<?> userFavorites = userService.getUserFavorites(user, type);
+        List<FavoriteResponse> userFavorites = userService.getUserFavorites(user, type);
         return ResponseEntity.ok(userFavorites);
     }
 }
