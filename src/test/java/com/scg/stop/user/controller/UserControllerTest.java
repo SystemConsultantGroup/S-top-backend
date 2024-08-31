@@ -2,9 +2,13 @@ package com.scg.stop.user.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
+import com.scg.stop.user.domain.FavoriteType;
 import com.scg.stop.user.domain.User;
 import com.scg.stop.user.domain.UserType;
 import com.scg.stop.user.dto.request.UserUpdateRequest;
+import com.scg.stop.user.dto.response.FavoriteResponse;
+import com.scg.stop.user.dto.response.UserInquiryResponse;
+import com.scg.stop.user.dto.response.UserProposalResponse;
 import com.scg.stop.user.dto.response.UserResponse;
 import com.scg.stop.user.service.UserService;
 import jakarta.servlet.http.Cookie;
@@ -17,11 +21,14 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
@@ -31,6 +38,7 @@ import static org.springframework.restdocs.cookies.CookieDocumentation.requestCo
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -201,6 +209,115 @@ class UserControllerTest extends AbstractControllerTest {
                         requestHeaders(
                                 headerWithName("Authorization")
                                         .description("access token")
+                        )
+                ));
+    }
+
+    @Test
+    @DisplayName("로그인 유저의 프로젝트 문의 리스트를 조회할 수 있다.")
+    void getUserInquiries() throws Exception {
+        // given
+        List<UserInquiryResponse> inquiryResponses = Arrays.asList(
+                new UserInquiryResponse(1L, "Title 1", 1L, LocalDateTime.now()),
+                new UserInquiryResponse(2L, "Title 2", 2L, LocalDateTime.now())
+        );
+        when(userService.getUserInquiries(any(User.class))).thenReturn(inquiryResponses);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                get("/users/inquiries")
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
+
+        // then
+        result.andExpect(status().isOk())
+                .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token").description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization").description("Access Token")
+                        ),
+                        responseFields(
+                                fieldWithPath("[].id").description("문의 ID"),
+                                fieldWithPath("[].title").description("문의 제목"),
+                                fieldWithPath("[].projectId").description("프로젝트 ID"),
+                                fieldWithPath("[].createdDate").description("문의 생성일")
+                        )
+                ));
+
+    }
+
+    @Test
+    @DisplayName("로그인 유저의 과제 제안 리스트를 조회할 수 있다.")
+    void getUserProposals() throws Exception {
+        // given
+        List<UserProposalResponse> proposalResponses = Arrays.asList(
+                new UserProposalResponse(1L, "Title 1", LocalDateTime.now()),
+                new UserProposalResponse(2L, "Title 2", LocalDateTime.now())
+        );
+        when(userService.getUserProposals(any(User.class))).thenReturn(proposalResponses);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                get("/users/proposals")
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
+
+        // then
+        result.andExpect(status().isOk())
+                .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token").description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization").description("Access Token")
+                        ),
+                        responseFields(
+                                fieldWithPath("[].id").description("과제 제안 ID"),
+                                fieldWithPath("[].title").description("프로젝트명"),
+                                fieldWithPath("[].createdDate").description("과제 제안 생성일")
+                        )
+                ));
+
+    }
+
+    @Test
+    @DisplayName("유저의 관심 리스트를 조회할 수 있다.")
+    void getUserFavorites() throws Exception {
+        // given
+        List<FavoriteResponse> responses = Arrays.asList(
+                FavoriteResponse.of(1L, "Project 1", "youtube 1"),
+                FavoriteResponse.of(2L, "Project 2", "youtube 2")
+        );
+        when(userService.getUserFavorites(any(User.class), any(FavoriteType.class))).thenReturn(responses);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                RestDocumentationRequestBuilders.get("/users/favorites")
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+                        .param("type", "TALK")
+        );
+
+        // then
+        result.andExpect(status().isOk())
+                .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token").description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization").description("Access Token")
+                        ),
+                        queryParameters(
+                                parameterWithName("type").description("관심 항목의 타입 (PROJECT, TALK, JOBINTERVIEW)")
+                        ),
+                        responseFields(
+                                fieldWithPath("[].id").description("ID"),
+                                fieldWithPath("[].title").description("제목"),
+                                fieldWithPath("[].youtubeId").description("유튜브 ID")
                         )
                 ));
     }
