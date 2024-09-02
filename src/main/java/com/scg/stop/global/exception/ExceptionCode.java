@@ -32,6 +32,20 @@ public enum ExceptionCode {
     NOT_FOUND_APPLICATION_ID(4010, "ID에 해당하는 인증 신청 정보가 존재하지 않습니다."),
     ALREADY_VERIFIED_USER(4011, "이미 인증 된 회원입니다."),
 
+    // project domain
+    NOT_FOUND_PROJECT(77000, "프로젝트를 찾을 수 없습니다."),
+    NOT_FOUND_PROJECT_THUMBNAIL(77001, "프로젝트 썸네일을 찾을 수 없습니다"),
+    NOT_FOUND_PROJECT_POSTER(77002, "프로젝트 포스터를 찾을 수 없습니다"),
+    INVALID_MEMBER(77003, "멤버 정보가 올바르지 않습니다."),
+    INVALID_TECHSTACK(77004, "기술 스택 정보가 올바르지 않습니다."),
+    ALREADY_FAVORITE_PROJECT(77005, "관심 표시한 프로젝트가 이미 존재합니다"),
+    NOT_FOUND_FAVORITE_PROJECT(77007, "관심 표시한 프로젝트를 찾을 수 없습니다."),
+    ALREADY_LIKE_PROJECT(77008, "이미 좋아요 한 프로젝트입니다."),
+    NOT_FOUND_LIKE_PROJECT(77009, "좋아요 표시한 프로젝트가 존재하지 않습니다"),
+    NOT_FOUND_COMMENT(77010, "댓글을 찾을 수 없습니다"),
+    NOT_MATCH_USER(77011, "유저 정보가 일치하지 않습니다"),
+    NOT_EVENT_PROJECT_PERIOD(77012, "행사 기간이 아닙니다"),
+
     // file domain
     FAILED_TO_UPLOAD_FILE(5000, "파일 업로드를 실패했습니다."),
     FAILED_TO_GET_FILE(5001, "파일 가져오기를 실패했습니다."),

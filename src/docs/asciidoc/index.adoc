@@ -2,7 +2,7 @@
 :doctype: book
 :source-highlighter: highlightjs
 :toc: left
-:toclevels: 2
+:toclevels: 3
 :seclinks:
 
 === 커스텀 예외 코드
@@ -17,4 +17,6 @@ include::notice.adoc[]
 include::eventNotice.adoc[]
 include::eventPeriod.adoc[]
 include::gallery.adoc[]
+include::application.adoc[]
+include::project.adoc[]
 include::application.adoc[]
