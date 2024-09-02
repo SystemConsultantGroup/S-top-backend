@@ -33,7 +33,7 @@ public class ProjectController {
             @RequestParam(value = "year", required = false) Integer year,
             @RequestParam(value = "category", required = false) ProjectCategory category,
             @PageableDefault(page = 0, size = 10) Pageable pageable,
-            @AuthUser(accessType = {AccessType.ALL}) User user // ToDo: 이게 로그인이 안된 상태이면, user가 null로 처리가 되어야함...
+            @AuthUser(accessType = {AccessType.OPTIONAL}) User user
     ){
         Page<ProjectResponse> pageProjectResponse = projectService.getProjects(title, year, category, pageable, user);
         return ResponseEntity.status(HttpStatus.OK).body(pageProjectResponse);
@@ -44,14 +44,14 @@ public class ProjectController {
             @RequestBody @Valid ProjectRequest projectRequest,
             @AuthUser(accessType = {AccessType.ADMIN}) User user
     ) {
-        ProjectDetailResponse projectDetailResponse = projectService.createProject(projectRequest);
+        ProjectDetailResponse projectDetailResponse = projectService.createProject(projectRequest, user);
         return ResponseEntity.status(HttpStatus.CREATED).body(projectDetailResponse);
     }
 
     @GetMapping("/{projectId}")
     public ResponseEntity<ProjectDetailResponse> getProject(
             @PathVariable("projectId") Long projectId,
-            @AuthUser(accessType = {AccessType.ALL}) User user // ToDo: 이게 로그인이 안된 상태이면, user가 null로 처리가 되어야함...
+            @AuthUser(accessType = {AccessType.OPTIONAL}) User user
     ) {
         ProjectDetailResponse projectDetailResponse = projectService.getProject(projectId, user);
         return ResponseEntity.status(HttpStatus.OK).body(projectDetailResponse);
@@ -63,7 +63,7 @@ public class ProjectController {
             @RequestBody @Valid ProjectRequest projectRequest,
             @AuthUser(accessType = {AccessType.ADMIN}) User user
     ) {
-        ProjectDetailResponse projectDetailResponse = projectService.updateProject(projectId, projectRequest);
+        ProjectDetailResponse projectDetailResponse = projectService.updateProject(projectId, projectRequest, user);
         return ResponseEntity.status(HttpStatus.OK).body(projectDetailResponse);
     }
 
@@ -130,5 +130,15 @@ public class ProjectController {
     ){
         projectService.deleteProjectComment(projectId, commentId, user);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/award")
+    public ResponseEntity<Page<ProjectResponse>> getAwardProjects(
+            @RequestParam(value = "year", required = true) Integer year,
+            @PageableDefault(page = 0, size = 10) Pageable pageable,
+            @AuthUser(accessType = {AccessType.OPTIONAL}) User user
+    ){
+        Page<ProjectResponse> pageProjectResponse = projectService.getAwardProjects(year, pageable, user);
+        return ResponseEntity.status(HttpStatus.OK).body(pageProjectResponse);
     }
 }

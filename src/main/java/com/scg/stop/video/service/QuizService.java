@@ -55,10 +55,8 @@ public class QuizService {
             throw new BadRequestException(ExceptionCode.MISMATCH_CURRENT_YEAR);
         }
         Quiz quiz = talk.getQuiz();
-        EventPeriod currentPeriod = eventPeriodRepository.findByYear(currentYear);
-        if(currentPeriod == null) {
-            throw new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD);
-        }
+        EventPeriod currentPeriod = eventPeriodRepository.findByYear(currentYear)
+                .orElseThrow( () -> new BadRequestException(ExceptionCode.NOT_EVENT_PERIOD));
 
         LocalDateTime currentTime = LocalDateTime.now();
         if(!(currentTime.isAfter(currentPeriod.getStart()) && currentTime.isBefore(currentPeriod.getEnd()))) {

@@ -89,4 +89,20 @@ public class Project extends BaseTimeEntity {
         this.poster = project.getPoster();
         this.members = project.getMembers();
     }
+
+    public void addLikes(Likes likes) {
+        this.likes.add(likes);
+    }
+
+    public void removeLikes(Likes likes) {
+        this.likes.remove(likes);
+    }
+
+    public void addFavoriteProject(FavoriteProject favoriteProject) {
+        this.favorites.add(favoriteProject);
+    }
+
+    public void removeFavoriteProject(FavoriteProject favoriteProject) {
+        this.favorites.remove(favoriteProject);
+    }
 }
