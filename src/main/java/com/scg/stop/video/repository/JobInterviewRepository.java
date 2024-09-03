@@ -15,9 +15,8 @@ public interface JobInterviewRepository extends JpaRepository<JobInterview, Long
             "WHERE (:year IS NULL OR j.year = :year) " +
             "AND (:category IS NULL OR j.category = :category) " +
             "AND (:title IS NULL OR j.title LIKE %:title%)")
-    Page<JobInterviewResponse> findJobInterviews(@Param("year") Integer year,
+    Page<JobInterview> findJobInterviews(@Param("year") Integer year,
                                                  @Param("category") JobInterviewCategory category,
                                                  @Param("title") String title,
                                                  Pageable pageable);
-
 }

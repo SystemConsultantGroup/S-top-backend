@@ -32,6 +32,26 @@ public class FavoriteVideo extends BaseTimeEntity {
     private JobInterview jobInterview;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "user_ide")
+    @JoinColumn(name = "user_id")
     private User user;
+
+    private FavoriteVideo(Talk talk, User user) {
+        this.talk = talk;
+        this.user = user;
+    }
+
+    private FavoriteVideo(JobInterview jobInterview, User user) {
+        this.jobInterview = jobInterview;
+        this.user = user;
+    }
+
+    public static FavoriteVideo of(Talk talk, User user) {
+        return new FavoriteVideo(talk, user);
+    }
+
+    public static FavoriteVideo of(JobInterview jobInterview, User user) {
+        return new FavoriteVideo(jobInterview, user);
+    }
+
+
 }

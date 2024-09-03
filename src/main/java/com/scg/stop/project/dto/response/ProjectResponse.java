@@ -1,8 +1,7 @@
 package com.scg.stop.project.dto.response;
 
-import com.scg.stop.project.domain.Project;
-import com.scg.stop.project.domain.ProjectCategory;
-import com.scg.stop.project.domain.ProjectType;
+import com.scg.stop.project.domain.*;
+import com.scg.stop.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -21,15 +20,29 @@ public class ProjectResponse {
     private List<String> professorNames;
     private ProjectType projectType;
     private ProjectCategory projectCategory;
+    private AwardStatus awardStatus;
     private List<String> techStacks;
     private Integer likeCount;
     private Boolean like;
     private Boolean bookMark;
 
-    public static ProjectResponse of(List<String> studentNames, List<String> professorNames, Boolean like, Boolean bookMark, Project project){
+    public static ProjectResponse of(User user, Project project){
+        List<String> studentNames = project.getMembers().stream()
+                .filter(member -> member.getRole() == Role.STUDENT)
+                .map(Member::getName)
+                .collect(Collectors.toList());
+
+        List<String> professorNames = project.getMembers().stream()
+                .filter(member -> member.getRole() == Role.PROFESSOR)
+                .map(Member::getName)
+                .collect(Collectors.toList());
+
         List<String> techStackList = Arrays.stream(project.getTechStack().split(","))
                 .map(String::trim)
                 .collect(Collectors.toList());
+
+        Boolean like = user != null ? project.getLikes().stream().anyMatch(likes -> likes.getUser().getId().equals(user.getId())) : false;
+        Boolean bookMark = user != null ? project.getFavorites().stream().anyMatch(favoriteProject -> favoriteProject.getUser().getId().equals(user.getId())) : false;
 
         return new ProjectResponse(
                 project.getId(),
@@ -40,6 +53,7 @@ public class ProjectResponse {
                 professorNames,
                 project.getType(),
                 project.getCategory(),
+                project.getAwardStatus(),
                 techStackList,
                 project.getLikes().size(),
                 like,

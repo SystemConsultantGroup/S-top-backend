@@ -13,13 +13,8 @@ import com.scg.stop.domain.proposal.domain.Proposal;
 import com.scg.stop.video.domain.FavoriteVideo;
 import com.scg.stop.video.domain.UserQuiz;
 import com.scg.stop.global.domain.BaseTimeEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
@@ -61,10 +56,10 @@ public class User extends BaseTimeEntity {
     @OneToMany(fetch = LAZY, mappedBy = "user")
     private List<Proposal> proposals = new ArrayList<>();
 
-    @OneToMany(fetch = LAZY, mappedBy = "user")
+    @OneToMany(fetch = LAZY, mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<UserQuiz> userQuizzes = new ArrayList<>();
 
-    @OneToMany(fetch = LAZY, mappedBy = "user")
+    @OneToMany(fetch = LAZY, mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<FavoriteVideo> favoriteVideos = new ArrayList<>();
 
     @OneToMany(fetch = LAZY, mappedBy = "user")
@@ -99,5 +94,21 @@ public class User extends BaseTimeEntity {
         this.phone = phone;
         this.userType = userType;
         this.signupSource = signupSource;
+    }
+
+    public void addLikes(Likes likes) {
+        this.likes.add(likes);
+    }
+
+    public void removeLikes(Likes likes) {
+        this.likes.remove(likes);
+    }
+
+    public void addFavoriteProject(FavoriteProject favoriteProject) {
+        this.favoriteProjects.add(favoriteProject);
+    }
+
+    public void removeFavoriteProject(FavoriteProject favoriteProject) {
+        this.favoriteProjects.remove(favoriteProject);
     }
 }
