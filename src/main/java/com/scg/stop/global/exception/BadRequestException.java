@@ -1,4 +1,5 @@
 package com.scg.stop.global.exception;
+
 import lombok.Getter;
 
 @Getter

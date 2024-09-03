@@ -1,11 +1,14 @@
 package com.scg.stop.user.domain;
 
+import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.scg.stop.global.domain.BaseTimeEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -28,6 +31,10 @@ public class Application extends BaseTimeEntity {
 
     private String position; // 직책
 
+    @Column(nullable = false)
+    @Enumerated(value = STRING)
+    ApplicationStatus status = ApplicationStatus.INACTIVE;
+
     @OneToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -36,5 +43,13 @@ public class Application extends BaseTimeEntity {
         this.division = division;
         this.position = position;
         this.user = user;
+    }
+
+    public void activate() {
+        status = ApplicationStatus.ACTIVE;
+    }
+
+    public void reject() {
+        status = ApplicationStatus.REJECTED;
     }
 }

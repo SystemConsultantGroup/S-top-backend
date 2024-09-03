@@ -41,6 +41,7 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
 	//auth
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
@@ -56,6 +57,9 @@ dependencies {
 	implementation 'io.micrometer:micrometer-registry-prometheus'
 
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// minIO
+	implementation "io.minio:minio:8.5.11"
 }
 
 tasks.named('test') {
@@ -88,6 +92,7 @@ tasks.named('asciidoctor') {
 build {
 	dependsOn copyDocument
 }
+
 allprojects {
 	repositories {
 		maven { url 'https://jitpack.io'}
