@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-import static jakarta.persistence.CascadeType.REMOVE;
+import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
@@ -36,7 +36,7 @@ public class EventNotice extends BaseTimeEntity {
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private boolean fixed;
 
-    @OneToMany(fetch = LAZY, mappedBy = "eventNotice", cascade = REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = LAZY, mappedBy = "eventNotice", cascade = ALL, orphanRemoval = true)
     private List<File> files = new ArrayList<>();
 
     private EventNotice(String title, String content, Integer hitCount, boolean fixed, List<File> files) {
