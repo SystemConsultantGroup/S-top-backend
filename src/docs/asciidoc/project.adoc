@@ -1,6 +1,7 @@
 == 프로젝트 API
 :source-highlighter: highlightjs
 
+---
 === 프로젝트 조회 (GET /projects)
 ==== 200 OK
 ====
