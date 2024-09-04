@@ -1,8 +1,8 @@
-package com.scg.stop.domain.file.dto.response;
+package com.scg.stop.file.dto.response;
 
 import static lombok.AccessLevel.PRIVATE;
 
-import com.scg.stop.domain.file.domain.File;
+import com.scg.stop.file.domain.File;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

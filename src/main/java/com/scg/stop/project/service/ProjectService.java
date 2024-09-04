@@ -3,8 +3,8 @@ package com.scg.stop.project.service;
 
 import com.scg.stop.event.domain.EventPeriod;
 import com.scg.stop.event.repository.EventPeriodRepository;
-import com.scg.stop.domain.file.domain.File;
-import com.scg.stop.domain.file.repository.FileRepository;
+import com.scg.stop.file.domain.File;
+import com.scg.stop.file.repository.FileRepository;
 import com.scg.stop.project.domain.*;
 import com.scg.stop.project.dto.request.CommentRequest;
 import com.scg.stop.project.dto.request.ProjectRequest;

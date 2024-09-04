@@ -1,7 +1,7 @@
 package com.scg.stop.notice.dto.response;
 
-import com.scg.stop.domain.file.domain.File;
-import com.scg.stop.domain.file.dto.response.FileResponse;
+import com.scg.stop.file.domain.File;
+import com.scg.stop.file.dto.response.FileResponse;
 import com.scg.stop.notice.domain.Notice;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

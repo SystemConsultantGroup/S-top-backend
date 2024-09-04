@@ -1,6 +1,6 @@
 package com.scg.stop.project.dto.response;
 
-import com.scg.stop.domain.file.domain.File;
+import com.scg.stop.file.domain.File;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

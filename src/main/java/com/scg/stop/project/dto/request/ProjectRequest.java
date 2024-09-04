@@ -1,6 +1,6 @@
 package com.scg.stop.project.dto.request;
 
-import com.scg.stop.domain.file.domain.File;
+import com.scg.stop.file.domain.File;
 import com.scg.stop.project.domain.*;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
