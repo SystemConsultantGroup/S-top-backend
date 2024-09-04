@@ -57,6 +57,9 @@ dependencies {
 	implementation 'io.micrometer:micrometer-registry-prometheus'
 
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// minIO
+	implementation "io.minio:minio:8.5.11"
 }
 
 tasks.named('test') {

@@ -9,6 +9,7 @@
 include::{snippets}/exception-code-controller-test/get-exception-codes/exception-response-fields.adoc[]
 
 include::auth-controller-test.adoc[]
+include::file-controller-test.adoc[]
 include::jobInterview.adoc[]
 include::talk.adoc[]
 include::quiz.adoc[]
