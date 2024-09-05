@@ -22,6 +22,7 @@ public class ProjectResponse {
     private ProjectCategory projectCategory;
     private AwardStatus awardStatus;
     private List<String> techStacks;
+    private Integer year;
     private Integer likeCount;
     private Boolean like;
     private Boolean bookMark;
@@ -55,6 +56,7 @@ public class ProjectResponse {
                 project.getCategory(),
                 project.getAwardStatus(),
                 techStackList,
+                project.getYear(),
                 project.getLikes().size(),
                 like,
                 bookMark
