@@ -85,6 +85,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
                 ProjectCategory.BIG_DATA_ANALYSIS,
                 AwardStatus.FIRST,
                 List.of("파이썬", "SQL"),
+                2023,
                 100,
                 false,
                 false
@@ -105,6 +106,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
                 ProjectCategory.AI_MACHINE_LEARNING,
                 AwardStatus.SECOND,
                 List.of("파이썬", "OpenCV"),
+                2023,
                 100,
                 false,
                 true
@@ -147,6 +149,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
                                 fieldWithPath("content[].projectCategory").type(JsonFieldType.STRING).description("프로젝트 카테고리: COMPUTER_VISION, SYSTEM_NETWORK, WEB_APPLICATION, SECURITY_SOFTWARE_ENGINEERING, NATURAL_LANGUAGE_PROCESSING, BIG_DATA_ANALYSIS, AI_MACHINE_LEARNING, INTERACTION_AUGMENTED_REALITY"),
                                 fieldWithPath("content[].awardStatus").type(JsonFieldType.STRING).description("수상 여부: NONE, FIRST, SECOND, THIRD, FOURTH, FIFTH"),
                                 fieldWithPath("content[].techStacks").type(JsonFieldType.ARRAY).description("기술 스택"),
+                                fieldWithPath("content[].year").type(JsonFieldType.NUMBER).description("프로젝트 년도"),
                                 fieldWithPath("content[].likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
                                 fieldWithPath("content[].like").type(JsonFieldType.BOOLEAN).description("좋아요 여부"),
                                 fieldWithPath("content[].bookMark").type(JsonFieldType.BOOLEAN).description("북마크 여부"),
@@ -761,6 +764,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
                 ProjectCategory.BIG_DATA_ANALYSIS,
                 AwardStatus.FIRST,
                 List.of("파이썬", "SQL"),
+                2023,
                 100,
                 false,
                 false
@@ -781,6 +785,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
                 ProjectCategory.AI_MACHINE_LEARNING,
                 AwardStatus.SECOND,
                 List.of("파이썬", "OpenCV"),
+                2023,
                 100,
                 false,
                 true
@@ -821,6 +826,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
                                 fieldWithPath("content[].projectCategory").type(JsonFieldType.STRING).description("프로젝트 카테고리: COMPUTER_VISION, SYSTEM_NETWORK, WEB_APPLICATION, SECURITY_SOFTWARE_ENGINEERING, NATURAL_LANGUAGE_PROCESSING, BIG_DATA_ANALYSIS, AI_MACHINE_LEARNING, INTERACTION_AUGMENTED_REALITY"),
                                 fieldWithPath("content[].awardStatus").type(JsonFieldType.STRING).description("수상 여부: NONE, FIRST, SECOND, THIRD, FOURTH, FIFTH"),
                                 fieldWithPath("content[].techStacks").type(JsonFieldType.ARRAY).description("기술 스택"),
+                                fieldWithPath("content[].year").type(JsonFieldType.NUMBER).description("프로젝트 년도"),
                                 fieldWithPath("content[].likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
                                 fieldWithPath("content[].like").type(JsonFieldType.BOOLEAN).description("좋아요 여부"),
                                 fieldWithPath("content[].bookMark").type(JsonFieldType.BOOLEAN).description("북마크 여부"),
