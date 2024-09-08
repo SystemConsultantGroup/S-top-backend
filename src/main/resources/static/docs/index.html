@@ -534,6 +534,17 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_교수기업_가입_거절_delete_applicationsapplicationid">교수/기업 가입 거절 (DELETE /applications/{applicationId})</a></li>
 </ul>
 </li>
+<li><a href="#_ai_hub_api">AI HUB API</a>
+<ul class="sectlevel2">
+<li><a href="#_ai_hub_모델_리스트_조회_post_aihubmodels">AI HUB 모델 리스트 조회 (POST /aihub/models)</a></li>
+<li><a href="#_ai_hub_데이터셋_리스트_조회_post_aihubdatasets">AI HUB 데이터셋 리스트 조회 (POST /aihub/datasets)</a></li>
+</ul>
+</li>
+<li><a href="#_job_info_api">JOB INFO API</a>
+<ul class="sectlevel2">
+<li><a href="#_job_info_리스트_조회_post_jobinfos">JOB INFO 리스트 조회 (POST /jobInfos)</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -591,6 +602,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3003</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">유효하지 않은 Access Token 입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">13000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Notion 데이터를 가져오는데 실패했습니다.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">4000</p></td>
@@ -744,8 +759,8 @@ Host: localhost:8080</code></pre>
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Set-Cookie: refresh-token=refresh_token; Path=/; Max-Age=604800; Expires=Wed, 4 Sep 2024 07:16:40 GMT; Secure; HttpOnly; SameSite=None
-Set-Cookie: access-token=access_token; Path=/; Max-Age=604800; Expires=Wed, 4 Sep 2024 07:16:40 GMT; Secure; SameSite=None
+Set-Cookie: refresh-token=refresh_token; Path=/; Max-Age=604800; Expires=Sun, 15 Sep 2024 08:39:09 GMT; Secure; HttpOnly; SameSite=None
+Set-Cookie: access-token=access_token; Path=/; Max-Age=604800; Expires=Sun, 15 Sep 2024 08:39:09 GMT; Secure; SameSite=None
 Location: https://localhost:3000/login/kakao</code></pre>
 </div>
 </div>
@@ -1113,11 +1128,11 @@ Content-Length: 216
 
 {
   "id" : 1,
-  "uuid" : "3976b06a-4ead-4831-a6d2-7e8c2ad09521",
+  "uuid" : "48780c2d-c56d-431e-906d-9263e4ad02f3",
   "name" : "s-top 로고.png",
   "mimeType" : "image/png",
-  "createdAt" : "2024-08-28T16:16:43.421534",
-  "updatedAt" : "2024-08-28T16:16:43.421542"
+  "createdAt" : "2024-09-08T17:39:09.786263",
+  "updatedAt" : "2024-09-08T17:39:09.786267"
 }</code></pre>
 </div>
 </div>
@@ -1343,8 +1358,8 @@ Content-Length: 317
   "talkerBelonging" : "대담자의 소속",
   "talkerName" : "대담자의 성명",
   "category" : "INTERN",
-  "createdAt" : "2024-08-28T16:16:46.129433",
-  "updatedAt" : "2024-08-28T16:16:46.129436"
+  "createdAt" : "2024-09-08T17:39:10.771483",
+  "updatedAt" : "2024-09-08T17:39:10.771485"
 }</code></pre>
 </div>
 </div>
@@ -1496,11 +1511,13 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1206
+Content-Length: 1205
 
 {
   "totalPages" : 1,
   "totalElements" : 2,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
@@ -1511,8 +1528,8 @@ Content-Length: 1206
     "talkerName" : "대담자의 성명1",
     "favorite" : false,
     "category" : "INTERN",
-    "createdAt" : "2024-08-28T16:16:46.069849",
-    "updatedAt" : "2024-08-28T16:16:46.069851"
+    "createdAt" : "2024-09-08T17:39:10.753477",
+    "updatedAt" : "2024-09-08T17:39:10.753479"
   }, {
     "id" : 2,
     "title" : "잡페어 인터뷰의 제목2",
@@ -1522,8 +1539,8 @@ Content-Length: 1206
     "talkerName" : "대담자의 성명2",
     "favorite" : true,
     "category" : "INTERN",
-    "createdAt" : "2024-08-28T16:16:46.069865",
-    "updatedAt" : "2024-08-28T16:16:46.069866"
+    "createdAt" : "2024-09-08T17:39:10.75349",
+    "updatedAt" : "2024-09-08T17:39:10.753491"
   } ],
   "number" : 0,
   "sort" : {
@@ -1544,8 +1561,6 @@ Content-Length: 1206
     "paged" : true,
     "unpaged" : false
   },
-  "first" : true,
-  "last" : true,
   "empty" : false
 }</code></pre>
 </div>
@@ -1802,7 +1817,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 339
+Content-Length: 338
 
 {
   "id" : 1,
@@ -1813,8 +1828,8 @@ Content-Length: 339
   "talkerName" : "대담자의 성명",
   "favorite" : false,
   "category" : "INTERN",
-  "createdAt" : "2024-08-28T16:16:46.112492",
-  "updatedAt" : "2024-08-28T16:16:46.112495"
+  "createdAt" : "2024-09-08T17:39:10.76475",
+  "updatedAt" : "2024-09-08T17:39:10.764752"
 }</code></pre>
 </div>
 </div>
@@ -2028,7 +2043,7 @@ Content-Length: 314
   "talkerName" : "수정된 대담자 성명",
   "category" : "INTERN",
   "createdAt" : "2021-01-01T12:00:00",
-  "updatedAt" : "2024-08-28T16:16:45.995481"
+  "updatedAt" : "2024-09-08T17:39:10.736239"
 }</code></pre>
 </div>
 </div>
@@ -2400,7 +2415,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 502
+Content-Length: 503
 
 {
   "id" : 1,
@@ -2421,8 +2436,8 @@ Content-Length: 502
       "options" : [ "선지1", "선지2" ]
     }
   },
-  "createdAt" : "2024-08-28T16:16:47.052247",
-  "updatedAt" : "2024-08-28T16:16:47.05225"
+  "createdAt" : "2024-09-08T17:39:11.107674",
+  "updatedAt" : "2024-09-08T17:39:11.107677"
 }</code></pre>
 </div>
 </div>
@@ -2598,6 +2613,8 @@ Content-Length: 1043
 {
   "totalPages" : 1,
   "totalElements" : 1,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
@@ -2619,8 +2636,8 @@ Content-Length: 1043
         "options" : [ "선지1", "선지2" ]
       }
     },
-    "createdAt" : "2024-08-28T16:16:47.072478",
-    "updatedAt" : "2024-08-28T16:16:47.072481"
+    "createdAt" : "2024-09-08T17:39:11.115931",
+    "updatedAt" : "2024-09-08T17:39:11.115933"
   } ],
   "number" : 0,
   "sort" : {
@@ -2641,8 +2658,6 @@ Content-Length: 1043
     "paged" : true,
     "unpaged" : false
   },
-  "first" : true,
-  "last" : true,
   "empty" : false
 }</code></pre>
 </div>
@@ -2923,7 +2938,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 524
+Content-Length: 523
 
 {
   "id" : 1,
@@ -2945,8 +2960,8 @@ Content-Length: 524
       "options" : [ "선지1", "선지2" ]
     }
   },
-  "createdAt" : "2024-08-28T16:16:47.025119",
-  "updatedAt" : "2024-08-28T16:16:47.025129"
+  "createdAt" : "2024-09-08T17:39:11.10065",
+  "updatedAt" : "2024-09-08T17:39:11.100652"
 }</code></pre>
 </div>
 </div>
@@ -3208,7 +3223,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 603
+Content-Length: 602
 
 {
   "id" : 1,
@@ -3229,8 +3244,8 @@ Content-Length: 603
       "options" : [ "수정한 선지1", "수정한 선지2" ]
     }
   },
-  "createdAt" : "2024-08-28T16:16:46.859367",
-  "updatedAt" : "2024-08-28T16:16:46.859375"
+  "createdAt" : "2024-09-08T17:39:11.05619",
+  "updatedAt" : "2024-09-08T17:39:11.056195"
 }</code></pre>
 </div>
 </div>
@@ -3905,6 +3920,8 @@ Content-Length: 741
 {
   "totalPages" : 1,
   "totalElements" : 2,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "user_id" : 1,
@@ -3938,8 +3955,6 @@ Content-Length: 741
     "paged" : true,
     "unpaged" : false
   },
-  "first" : true,
-  "last" : true,
   "empty" : false
 }</code></pre>
 </div>
@@ -4210,29 +4225,29 @@ Content-Length: 960
   "content" : "공지 사항 내용",
   "hitCount" : 0,
   "fixed" : true,
-  "createdAt" : "2024-08-28T16:16:45.032594",
-  "updatedAt" : "2024-08-28T16:16:45.032595",
+  "createdAt" : "2024-09-08T17:39:10.415912",
+  "updatedAt" : "2024-09-08T17:39:10.415914",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-08-28T16:16:45.032557",
-    "updatedAt" : "2024-08-28T16:16:45.032588"
+    "createdAt" : "2024-09-08T17:39:10.415901",
+    "updatedAt" : "2024-09-08T17:39:10.415906"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-08-28T16:16:45.03259",
-    "updatedAt" : "2024-08-28T16:16:45.032591"
+    "createdAt" : "2024-09-08T17:39:10.415907",
+    "updatedAt" : "2024-09-08T17:39:10.415908"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-08-28T16:16:45.032592",
-    "updatedAt" : "2024-08-28T16:16:45.032593"
+    "createdAt" : "2024-09-08T17:39:10.41591",
+    "updatedAt" : "2024-09-08T17:39:10.415911"
   } ]
 }</code></pre>
 </div>
@@ -4408,21 +4423,23 @@ Content-Length: 854
 {
   "totalPages" : 1,
   "totalElements" : 2,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
     "title" : "공지 사항 1",
     "hitCount" : 10,
     "fixed" : true,
-    "createdAt" : "2024-08-28T16:16:44.898322",
-    "updatedAt" : "2024-08-28T16:16:44.898329"
+    "createdAt" : "2024-09-08T17:39:10.378562",
+    "updatedAt" : "2024-09-08T17:39:10.378566"
   }, {
     "id" : 2,
     "title" : "공지 사항 2",
     "hitCount" : 10,
     "fixed" : false,
-    "createdAt" : "2024-08-28T16:16:44.898344",
-    "updatedAt" : "2024-08-28T16:16:44.898346"
+    "createdAt" : "2024-09-08T17:39:10.378574",
+    "updatedAt" : "2024-09-08T17:39:10.378576"
   } ],
   "number" : 0,
   "sort" : {
@@ -4443,8 +4460,6 @@ Content-Length: 854
     "paged" : true,
     "unpaged" : false
   },
-  "first" : true,
-  "last" : true,
   "empty" : false
 }</code></pre>
 </div>
@@ -4675,7 +4690,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 949
+Content-Length: 948
 
 {
   "id" : 1,
@@ -4683,29 +4698,29 @@ Content-Length: 949
   "content" : "content",
   "hitCount" : 10,
   "fixed" : true,
-  "createdAt" : "2024-08-28T16:16:45.013707",
-  "updatedAt" : "2024-08-28T16:16:45.013708",
+  "createdAt" : "2024-09-08T17:39:10.408832",
+  "updatedAt" : "2024-09-08T17:39:10.408833",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-08-28T16:16:45.013694",
-    "updatedAt" : "2024-08-28T16:16:45.013699"
+    "createdAt" : "2024-09-08T17:39:10.408814",
+    "updatedAt" : "2024-09-08T17:39:10.408818"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-08-28T16:16:45.013701",
-    "updatedAt" : "2024-08-28T16:16:45.013702"
+    "createdAt" : "2024-09-08T17:39:10.408826",
+    "updatedAt" : "2024-09-08T17:39:10.408828"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-08-28T16:16:45.013704",
-    "updatedAt" : "2024-08-28T16:16:45.013705"
+    "createdAt" : "2024-09-08T17:39:10.40883",
+    "updatedAt" : "2024-09-08T17:39:10.408831"
   } ]
 }</code></pre>
 </div>
@@ -4928,28 +4943,28 @@ Content-Length: 955
   "hitCount" : 10,
   "fixed" : false,
   "createdAt" : "2024-01-01T12:00:00",
-  "updatedAt" : "2024-08-28T16:16:44.939785",
+  "updatedAt" : "2024-09-08T17:39:10.391734",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-08-28T16:16:44.939732"
+    "updatedAt" : "2024-09-08T17:39:10.391688"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-08-28T16:16:44.939741"
+    "updatedAt" : "2024-09-08T17:39:10.391706"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-08-28T16:16:44.939744"
+    "updatedAt" : "2024-09-08T17:39:10.391709"
   } ]
 }</code></pre>
 </div>
@@ -5198,7 +5213,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 981
+Content-Length: 979
 
 {
   "id" : 1,
@@ -5206,29 +5221,29 @@ Content-Length: 981
   "content" : "이벤트 공지 사항 내용",
   "hitCount" : 0,
   "fixed" : true,
-  "createdAt" : "2024-08-28T16:16:41.497586",
-  "updatedAt" : "2024-08-28T16:16:41.497588",
+  "createdAt" : "2024-09-08T17:39:09.26263",
+  "updatedAt" : "2024-09-08T17:39:09.262631",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-08-28T16:16:41.497561",
-    "updatedAt" : "2024-08-28T16:16:41.497568"
+    "createdAt" : "2024-09-08T17:39:09.262616",
+    "updatedAt" : "2024-09-08T17:39:09.26262"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-08-28T16:16:41.497573",
-    "updatedAt" : "2024-08-28T16:16:41.497576"
+    "createdAt" : "2024-09-08T17:39:09.262623",
+    "updatedAt" : "2024-09-08T17:39:09.262625"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-08-28T16:16:41.497581",
-    "updatedAt" : "2024-08-28T16:16:41.497583"
+    "createdAt" : "2024-09-08T17:39:09.262627",
+    "updatedAt" : "2024-09-08T17:39:09.262628"
   } ]
 }</code></pre>
 </div>
@@ -5399,26 +5414,28 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 874
+Content-Length: 873
 
 {
   "totalPages" : 1,
   "totalElements" : 2,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
     "title" : "이벤트 공지 사항 1",
     "hitCount" : 10,
     "fixed" : true,
-    "createdAt" : "2024-08-28T16:16:41.549706",
-    "updatedAt" : "2024-08-28T16:16:41.549713"
+    "createdAt" : "2024-09-08T17:39:09.274356",
+    "updatedAt" : "2024-09-08T17:39:09.27436"
   }, {
     "id" : 2,
     "title" : "이벤트 공지 사항 2",
     "hitCount" : 10,
     "fixed" : false,
-    "createdAt" : "2024-08-28T16:16:41.549726",
-    "updatedAt" : "2024-08-28T16:16:41.549729"
+    "createdAt" : "2024-09-08T17:39:09.274368",
+    "updatedAt" : "2024-09-08T17:39:09.274369"
   } ],
   "number" : 0,
   "sort" : {
@@ -5439,8 +5456,6 @@ Content-Length: 874
     "paged" : true,
     "unpaged" : false
   },
-  "first" : true,
-  "last" : true,
   "empty" : false
 }</code></pre>
 </div>
@@ -5671,7 +5686,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 958
+Content-Length: 959
 
 {
   "id" : 1,
@@ -5679,29 +5694,29 @@ Content-Length: 958
   "content" : "content",
   "hitCount" : 10,
   "fixed" : true,
-  "createdAt" : "2024-08-28T16:16:41.415459",
-  "updatedAt" : "2024-08-28T16:16:41.415461",
+  "createdAt" : "2024-09-08T17:39:09.242212",
+  "updatedAt" : "2024-09-08T17:39:09.242213",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-08-28T16:16:41.415436",
-    "updatedAt" : "2024-08-28T16:16:41.415446"
+    "createdAt" : "2024-09-08T17:39:09.242197",
+    "updatedAt" : "2024-09-08T17:39:09.242202"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-08-28T16:16:41.41545",
-    "updatedAt" : "2024-08-28T16:16:41.415452"
+    "createdAt" : "2024-09-08T17:39:09.242205",
+    "updatedAt" : "2024-09-08T17:39:09.242206"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-08-28T16:16:41.415454",
-    "updatedAt" : "2024-08-28T16:16:41.415456"
+    "createdAt" : "2024-09-08T17:39:09.242208",
+    "updatedAt" : "2024-09-08T17:39:09.242209"
   } ]
 }</code></pre>
 </div>
@@ -5924,28 +5939,28 @@ Content-Length: 975
   "hitCount" : 10,
   "fixed" : false,
   "createdAt" : "2024-01-01T12:00:00",
-  "updatedAt" : "2024-08-28T16:16:41.284473",
+  "updatedAt" : "2024-09-08T17:39:09.220633",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-08-28T16:16:41.284414"
+    "updatedAt" : "2024-09-08T17:39:09.220593"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-08-28T16:16:41.284429"
+    "updatedAt" : "2024-09-08T17:39:09.220603"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-08-28T16:16:41.284435"
+    "updatedAt" : "2024-09-08T17:39:09.220607"
   } ]
 }</code></pre>
 </div>
@@ -6133,8 +6148,8 @@ Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
 {
-  "start" : "2024-08-28T16:16:42.443061",
-  "end" : "2024-09-07T16:16:42.443071"
+  "start" : "2024-09-08T17:39:09.466617",
+  "end" : "2024-09-18T17:39:09.466621"
 }</code></pre>
 </div>
 </div>
@@ -6186,10 +6201,10 @@ Content-Length: 205
 {
   "id" : 1,
   "year" : 2024,
-  "start" : "2024-08-28T16:16:42.443077",
-  "end" : "2024-09-07T16:16:42.443079",
-  "createdAt" : "2024-08-28T16:16:42.443081",
-  "updatedAt" : "2024-08-28T16:16:42.443083"
+  "start" : "2024-09-08T17:39:09.466625",
+  "end" : "2024-09-18T17:39:09.466626",
+  "createdAt" : "2024-09-08T17:39:09.466628",
+  "updatedAt" : "2024-09-08T17:39:09.466629"
 }</code></pre>
 </div>
 </div>
@@ -6278,15 +6293,15 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 204
+Content-Length: 205
 
 {
   "id" : 1,
   "year" : 2024,
-  "start" : "2024-08-28T16:16:42.414453",
-  "end" : "2024-09-07T16:16:42.414456",
-  "createdAt" : "2024-08-28T16:16:42.41446",
-  "updatedAt" : "2024-08-28T16:16:42.414473"
+  "start" : "2024-09-08T17:39:09.458542",
+  "end" : "2024-09-18T17:39:09.458544",
+  "createdAt" : "2024-09-08T17:39:09.458547",
+  "updatedAt" : "2024-09-08T17:39:09.458548"
 }</code></pre>
 </div>
 </div>
@@ -6375,22 +6390,22 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 416
+Content-Length: 415
 
 [ {
   "id" : 1,
   "year" : 2024,
-  "start" : "2024-08-28T16:16:42.467577",
-  "end" : "2024-09-07T16:16:42.467584",
-  "createdAt" : "2024-08-28T16:16:42.467589",
-  "updatedAt" : "2024-08-28T16:16:42.467591"
+  "start" : "2024-09-08T17:39:09.475295",
+  "end" : "2024-09-18T17:39:09.475299",
+  "createdAt" : "2024-09-08T17:39:09.475302",
+  "updatedAt" : "2024-09-08T17:39:09.475304"
 }, {
   "id" : 2,
   "year" : 2025,
-  "start" : "2024-08-28T16:16:42.467594",
-  "end" : "2024-09-07T16:16:42.467599",
-  "createdAt" : "2024-08-28T16:16:42.467602",
-  "updatedAt" : "2024-08-28T16:16:42.467603"
+  "start" : "2024-09-08T17:39:09.475306",
+  "end" : "2024-09-18T17:39:09.475307",
+  "createdAt" : "2024-09-08T17:39:09.475309",
+  "updatedAt" : "2024-09-08T17:39:09.47531"
 } ]</code></pre>
 </div>
 </div>
@@ -6471,8 +6486,8 @@ Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
 {
-  "start" : "2024-08-28T16:16:42.313399",
-  "end" : "2024-09-07T16:16:42.313407"
+  "start" : "2024-09-08T17:39:09.443519",
+  "end" : "2024-09-18T17:39:09.443524"
 }</code></pre>
 </div>
 </div>
@@ -6519,15 +6534,15 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 205
+Content-Length: 204
 
 {
   "id" : 1,
   "year" : 2024,
-  "start" : "2024-08-28T16:16:42.313451",
-  "end" : "2024-09-07T16:16:42.313454",
-  "createdAt" : "2024-08-28T16:16:42.313457",
-  "updatedAt" : "2024-08-28T16:16:42.313459"
+  "start" : "2024-09-08T17:39:09.443556",
+  "end" : "2024-09-18T17:39:09.443557",
+  "createdAt" : "2024-09-08T17:39:09.443559",
+  "updatedAt" : "2024-09-08T17:39:09.44356"
 }</code></pre>
 </div>
 </div>
@@ -6676,7 +6691,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 891
+Content-Length: 888
 
 {
   "id" : 1,
@@ -6684,29 +6699,29 @@ Content-Length: 891
   "year" : 2024,
   "month" : 4,
   "hitCount" : 1,
-  "createdAt" : "2024-08-28T16:16:44.447111",
-  "updatedAt" : "2024-08-28T16:16:44.447113",
+  "createdAt" : "2024-09-08T17:39:10.0561",
+  "updatedAt" : "2024-09-08T17:39:10.056101",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "사진1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-08-28T16:16:44.447089",
-    "updatedAt" : "2024-08-28T16:16:44.447098"
+    "createdAt" : "2024-09-08T17:39:10.056085",
+    "updatedAt" : "2024-09-08T17:39:10.05609"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "사진2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-08-28T16:16:44.447102",
-    "updatedAt" : "2024-08-28T16:16:44.447104"
+    "createdAt" : "2024-09-08T17:39:10.056092",
+    "updatedAt" : "2024-09-08T17:39:10.056094"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "사진3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-08-28T16:16:44.447106",
-    "updatedAt" : "2024-08-28T16:16:44.447108"
+    "createdAt" : "2024-09-08T17:39:10.056095",
+    "updatedAt" : "2024-09-08T17:39:10.056097"
   } ]
 }</code></pre>
 </div>
@@ -6882,11 +6897,13 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1234
+Content-Length: 1233
 
 {
   "totalPages" : 1,
   "totalElements" : 1,
+  "first" : true,
+  "last" : true,
   "size" : 1,
   "content" : [ {
     "id" : 1,
@@ -6894,29 +6911,29 @@ Content-Length: 1234
     "year" : 2024,
     "month" : 4,
     "hitCount" : 0,
-    "createdAt" : "2024-08-28T16:16:44.314917",
-    "updatedAt" : "2024-08-28T16:16:44.314919",
+    "createdAt" : "2024-09-08T17:39:10.03365",
+    "updatedAt" : "2024-09-08T17:39:10.033652",
     "files" : [ {
       "id" : 1,
       "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
       "name" : "사진1.jpg",
       "mimeType" : "image/jpeg",
-      "createdAt" : "2024-08-28T16:16:44.314885",
-      "updatedAt" : "2024-08-28T16:16:44.314894"
+      "createdAt" : "2024-09-08T17:39:10.033635",
+      "updatedAt" : "2024-09-08T17:39:10.03364"
     }, {
       "id" : 2,
       "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
       "name" : "사진2.jpg",
       "mimeType" : "image/jpeg",
-      "createdAt" : "2024-08-28T16:16:44.314898",
-      "updatedAt" : "2024-08-28T16:16:44.314905"
+      "createdAt" : "2024-09-08T17:39:10.033642",
+      "updatedAt" : "2024-09-08T17:39:10.033644"
     }, {
       "id" : 3,
       "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
       "name" : "사진3.jpg",
       "mimeType" : "image/jpeg",
-      "createdAt" : "2024-08-28T16:16:44.314908",
-      "updatedAt" : "2024-08-28T16:16:44.31491"
+      "createdAt" : "2024-09-08T17:39:10.033645",
+      "updatedAt" : "2024-09-08T17:39:10.033647"
     } ]
   } ],
   "number" : 0,
@@ -6927,8 +6944,6 @@ Content-Length: 1234
   },
   "numberOfElements" : 1,
   "pageable" : "INSTANCE",
-  "first" : true,
-  "last" : true,
   "empty" : false
 }</code></pre>
 </div>
@@ -7159,7 +7174,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 889
+Content-Length: 891
 
 {
   "id" : 1,
@@ -7167,29 +7182,29 @@ Content-Length: 889
   "year" : 2024,
   "month" : 4,
   "hitCount" : 1,
-  "createdAt" : "2024-08-28T16:16:44.409517",
-  "updatedAt" : "2024-08-28T16:16:44.409519",
+  "createdAt" : "2024-09-08T17:39:10.047622",
+  "updatedAt" : "2024-09-08T17:39:10.047624",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "사진1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-08-28T16:16:44.4095",
-    "updatedAt" : "2024-08-28T16:16:44.409506"
+    "createdAt" : "2024-09-08T17:39:10.047602",
+    "updatedAt" : "2024-09-08T17:39:10.047606"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "사진2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-08-28T16:16:44.409509",
-    "updatedAt" : "2024-08-28T16:16:44.409511"
+    "createdAt" : "2024-09-08T17:39:10.047613",
+    "updatedAt" : "2024-09-08T17:39:10.047615"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "사진3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-08-28T16:16:44.409513",
-    "updatedAt" : "2024-08-28T16:16:44.409515"
+    "createdAt" : "2024-09-08T17:39:10.047617",
+    "updatedAt" : "2024-09-08T17:39:10.047618"
   } ]
 }</code></pre>
 </div>
@@ -7443,7 +7458,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 888
+Content-Length: 887
 
 {
   "id" : 1,
@@ -7451,29 +7466,29 @@ Content-Length: 888
   "year" : 2024,
   "month" : 5,
   "hitCount" : 1,
-  "createdAt" : "2024-08-28T16:16:44.135012",
-  "updatedAt" : "2024-08-28T16:16:44.135015",
+  "createdAt" : "2024-09-08T17:39:09.991878",
+  "updatedAt" : "2024-09-08T17:39:09.991879",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "사진1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-08-28T16:16:44.134928",
-    "updatedAt" : "2024-08-28T16:16:44.134935"
+    "createdAt" : "2024-09-08T17:39:09.991809",
+    "updatedAt" : "2024-09-08T17:39:09.991814"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "사진2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-08-28T16:16:44.134942",
-    "updatedAt" : "2024-08-28T16:16:44.134944"
+    "createdAt" : "2024-09-08T17:39:09.99182",
+    "updatedAt" : "2024-09-08T17:39:09.991821"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "사진3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-08-28T16:16:44.134947",
-    "updatedAt" : "2024-08-28T16:16:44.134949"
+    "createdAt" : "2024-09-08T17:39:09.991824",
+    "updatedAt" : "2024-09-08T17:39:09.991825"
   } ]
 }</code></pre>
 </div>
@@ -7651,6 +7666,8 @@ Content-Length: 1178
 {
   "totalPages" : 1,
   "totalElements" : 3,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
@@ -7658,24 +7675,24 @@ Content-Length: 1178
     "division" : "배민",
     "position" : null,
     "userType" : "INACTIVE_COMPANY",
-    "createdAt" : "2024-08-28T16:16:45.438068",
-    "updatedAt" : "2024-08-28T16:16:45.438071"
+    "createdAt" : "2024-09-08T17:39:10.554198",
+    "updatedAt" : "2024-09-08T17:39:10.554199"
   }, {
     "id" : 2,
     "name" : "김교수",
     "division" : "솦융대",
     "position" : "교수",
     "userType" : "INACTIVE_PROFESSOR",
-    "createdAt" : "2024-08-28T16:16:45.438085",
-    "updatedAt" : "2024-08-28T16:16:45.438086"
+    "createdAt" : "2024-09-08T17:39:10.554208",
+    "updatedAt" : "2024-09-08T17:39:10.554209"
   }, {
     "id" : 3,
     "name" : "박교수",
     "division" : "정통대",
     "position" : "교수",
     "userType" : "INACTIVE_PROFESSOR",
-    "createdAt" : "2024-08-28T16:16:45.438088",
-    "updatedAt" : "2024-08-28T16:16:45.438089"
+    "createdAt" : "2024-09-08T17:39:10.554212",
+    "updatedAt" : "2024-09-08T17:39:10.554212"
   } ],
   "number" : 0,
   "sort" : {
@@ -7696,8 +7713,6 @@ Content-Length: 1178
     "paged" : true,
     "unpaged" : false
   },
-  "first" : true,
-  "last" : true,
   "empty" : false
 }</code></pre>
 </div>
@@ -7935,7 +7950,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 272
+Content-Length: 270
 
 {
   "id" : 1,
@@ -7945,8 +7960,8 @@ Content-Length: 272
   "division" : "배민",
   "position" : "CEO",
   "userType" : "INACTIVE_COMPANY",
-  "createdAt" : "2024-08-28T16:16:45.552024",
-  "updatedAt" : "2024-08-28T16:16:45.552028"
+  "createdAt" : "2024-09-08T17:39:10.5776",
+  "updatedAt" : "2024-09-08T17:39:10.577602"
 }</code></pre>
 </div>
 </div>
@@ -8075,7 +8090,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 262
+Content-Length: 263
 
 {
   "id" : 1,
@@ -8085,8 +8100,8 @@ Content-Length: 262
   "division" : "배민",
   "position" : "CEO",
   "userType" : "COMPANY",
-  "createdAt" : "2024-08-28T16:16:45.52922",
-  "updatedAt" : "2024-08-28T16:16:45.529224"
+  "createdAt" : "2024-09-08T17:39:10.571684",
+  "updatedAt" : "2024-09-08T17:39:10.571686"
 }</code></pre>
 </div>
 </div>
@@ -8222,11 +8237,1173 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_ai_hub_api">AI HUB API</h2>
+<div class="sectionbody">
+<hr>
+<div class="sect2">
+<h3 id="_ai_hub_모델_리스트_조회_post_aihubmodels">AI HUB 모델 리스트 조회 (POST /aihub/models)</h3>
+<div class="exampleblock">
+<div class="content">
+<div class="sect3">
+<h4 id="_query_parameters">Query parameters</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 번호 [default: 0]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 크기 [default: 10]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_request_fields">Request fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AI 모델 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>learningModels</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">학습 모델</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>topics</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주제 분류</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>developmentYears</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">개발 년도</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>professor</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">담당 교수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>participants</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">참여 학생</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /aihub/models HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 199
+Host: localhost:8080
+
+{
+  "title" : "title",
+  "learningModels" : [ "학습 모델 1" ],
+  "topics" : [ "주제 1" ],
+  "developmentYears" : [ 2024 ],
+  "professor" : "담당 교수 1",
+  "participants" : [ "학생 1" ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+Content-Length: 1221
+
+{
+  "totalPages" : 1,
+  "totalElements" : 2,
+  "first" : true,
+  "last" : true,
+  "size" : 10,
+  "content" : [ {
+    "title" : "title",
+    "learningModels" : [ "학습 모델 1" ],
+    "topics" : [ "주제 1" ],
+    "developmentYears" : [ 2024 ],
+    "professor" : "담당 교수 1",
+    "participants" : [ "학생 1", "학생 2" ],
+    "object" : "page",
+    "id" : "노션 object 아이디",
+    "cover" : "커버 이미지 link",
+    "url" : "노션 redirect url"
+  }, {
+    "title" : "title",
+    "learningModels" : [ "학습 모델 1" ],
+    "topics" : [ "주제 1", "주제 2" ],
+    "developmentYears" : [ 2024 ],
+    "professor" : "담당 교수 1",
+    "participants" : [ "학생 1", "학생 2", "학생 3" ],
+    "object" : "page",
+    "id" : "노션 object 아이디",
+    "cover" : "커버 이미지 link",
+    "url" : "노션 redirect url"
+  } ],
+  "number" : 0,
+  "sort" : {
+    "empty" : true,
+    "sorted" : false,
+    "unsorted" : true
+  },
+  "numberOfElements" : 2,
+  "pageable" : {
+    "pageNumber" : 0,
+    "pageSize" : 10,
+    "sort" : {
+      "empty" : true,
+      "sorted" : false,
+      "unsorted" : true
+    },
+    "offset" : 0,
+    "paged" : true,
+    "unpaged" : false
+  },
+  "empty" : false
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_response_fields">Response fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">object 종류</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">노션 object 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].cover</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">커버 이미지 link</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AI 모델 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].learningModels</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">학습 모델</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].topics</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주제 분류</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].developmentYears</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">개발 년도</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].professor</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">담당 교수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].participants</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">참여 학생</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">노션 redirect url</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 정보</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.pageNumber</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">현재 페이지 번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.pageSize</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 당 요소 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.sort.empty</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬 정보가 비어있는지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.sort.sorted</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬된 상태인지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.sort.unsorted</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬되지 않은 상태인지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.offset</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">오프셋</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.paged</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이징된 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.unpaged</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이징되지 않은 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>totalElements</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전체 요소 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>totalPages</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전체 페이지 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 당 요소 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">현재 페이지 번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>numberOfElements</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">현재 페이지 요소 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>first</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">첫 페이지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>last</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">마지막 페이지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort.empty</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬 정보가 비어있는지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort.unsorted</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬되지 않은 상태인지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort.sorted</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬된 상태인지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>empty</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">비어있는 페이지 여부</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ai_hub_데이터셋_리스트_조회_post_aihubdatasets">AI HUB 데이터셋 리스트 조회 (POST /aihub/datasets)</h3>
+<div class="exampleblock">
+<div class="content">
+<div class="sect3">
+<h4 id="_query_parameters">Query parameters</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 번호 [default: 0]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 크기 [default: 10]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_request_fields">Request fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AI 데이터셋 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>dataTypes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">데이터 유형</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>topics</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주제 분류</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>developmentYears</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">구축 년도</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>professor</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">담당 교수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>participants</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">참여 학생</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /aihub/datasets HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 197
+Host: localhost:8080
+
+{
+  "title" : "title",
+  "dataTypes" : [ "주제 1" ],
+  "topics" : [ "데이터 유형 1" ],
+  "developmentYears" : [ 2024 ],
+  "professor" : "담당 교수 1",
+  "participants" : [ "학생 1" ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+Content-Length: 1217
+
+{
+  "totalPages" : 1,
+  "totalElements" : 2,
+  "first" : true,
+  "last" : true,
+  "size" : 10,
+  "content" : [ {
+    "title" : "title",
+    "dataTypes" : [ "주제 1" ],
+    "topics" : [ "데이터 유형 1" ],
+    "developmentYears" : [ 2024 ],
+    "professor" : "담당 교수 1",
+    "participants" : [ "학생 1", "학생 2" ],
+    "object" : "page",
+    "id" : "노션 object 아이디",
+    "cover" : "커버 이미지 link",
+    "url" : "노션 redirect url"
+  }, {
+    "title" : "title",
+    "dataTypes" : [ "주제 1", "주제 2" ],
+    "topics" : [ "데이터 유형 1" ],
+    "developmentYears" : [ 2024 ],
+    "professor" : "담당 교수 1",
+    "participants" : [ "학생 1", "학생 2", "학생 3" ],
+    "object" : "page",
+    "id" : "노션 object 아이디",
+    "cover" : "커버 이미지 link",
+    "url" : "노션 redirect url"
+  } ],
+  "number" : 0,
+  "sort" : {
+    "empty" : true,
+    "sorted" : false,
+    "unsorted" : true
+  },
+  "numberOfElements" : 2,
+  "pageable" : {
+    "pageNumber" : 0,
+    "pageSize" : 10,
+    "sort" : {
+      "empty" : true,
+      "sorted" : false,
+      "unsorted" : true
+    },
+    "offset" : 0,
+    "paged" : true,
+    "unpaged" : false
+  },
+  "empty" : false
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_response_fields">Response fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">object 종류</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">노션 object 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].cover</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">커버 이미지 link</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AI 데이터셋 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].topics</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주제 분류</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].dataTypes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">데이터 유형</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].developmentYears</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">구축 년도</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].professor</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">담당 교수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].participants</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">참여 학생</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">노션 redirect url</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 정보</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.pageNumber</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">현재 페이지 번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.pageSize</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 당 요소 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.sort.empty</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬 정보가 비어있는지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.sort.sorted</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬된 상태인지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.sort.unsorted</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬되지 않은 상태인지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.offset</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">오프셋</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.paged</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이징된 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.unpaged</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이징되지 않은 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>totalElements</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전체 요소 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>totalPages</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전체 페이지 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 당 요소 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">현재 페이지 번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>numberOfElements</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">현재 페이지 요소 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>first</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">첫 페이지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>last</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">마지막 페이지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort.empty</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬 정보가 비어있는지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort.unsorted</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬되지 않은 상태인지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort.sorted</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬된 상태인지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>empty</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">비어있는 페이지 여부</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_job_info_api">JOB INFO API</h2>
+<div class="sectionbody">
+<hr>
+<div class="sect2">
+<h3 id="_job_info_리스트_조회_post_jobinfos">JOB INFO 리스트 조회 (POST /jobInfos)</h3>
+<div class="exampleblock">
+<div class="content">
+<div class="sect3">
+<h4 id="_query_parameters">Query parameters</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 번호 [default: 0]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 크기 [default: 10]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_request_fields">Request fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>company</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">기업명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jobTypes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">고용 형태</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>region</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">근무 지역</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>position</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">채용 포지션</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hiringTime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">채용 시점</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>state</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">채용 상태</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /jobInfos HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 198
+Host: localhost:8080
+
+{
+  "company" : "기업명 1",
+  "jobTypes" : [ "고용 형태 1" ],
+  "region" : "근무 지역 1",
+  "position" : "채용 포지션 1",
+  "hiringTime" : "채용 시점 1",
+  "state" : [ "open" ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+Content-Length: 1295
+
+{
+  "totalPages" : 1,
+  "totalElements" : 2,
+  "first" : true,
+  "last" : true,
+  "size" : 10,
+  "content" : [ {
+    "company" : "기업명 1",
+    "jobTypes" : [ "고용 형태 1" ],
+    "region" : "근무 지역 1",
+    "position" : "채용 포지션 1",
+    "logo" : "로고 url",
+    "salary" : "연봉",
+    "website" : "웹사이트 url",
+    "state" : [ "open" ],
+    "hiringTime" : "채용 시점 1",
+    "object" : "page",
+    "id" : "노션 object 아이디 1",
+    "url" : "redirect url"
+  }, {
+    "company" : "기업명 1",
+    "jobTypes" : [ "고용 형태 1", "고용 형태 2" ],
+    "region" : "근무 지역 2",
+    "position" : "채용 포지션 1, 채용 시점 2",
+    "logo" : "로고 url",
+    "salary" : "연봉",
+    "website" : "웹사이트 url",
+    "state" : [ "open" ],
+    "hiringTime" : "채용 시점 1",
+    "object" : "page",
+    "id" : "노션 object 아이디 2",
+    "url" : "redirect url"
+  } ],
+  "number" : 0,
+  "sort" : {
+    "empty" : true,
+    "sorted" : false,
+    "unsorted" : true
+  },
+  "numberOfElements" : 2,
+  "pageable" : {
+    "pageNumber" : 0,
+    "pageSize" : 10,
+    "sort" : {
+      "empty" : true,
+      "sorted" : false,
+      "unsorted" : true
+    },
+    "offset" : 0,
+    "paged" : true,
+    "unpaged" : false
+  },
+  "empty" : false
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_response_fields">Response fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">object 종류</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">노션 object 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].company</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">기업명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].jobTypes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">고용 형태</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].region</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">근무 지역</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].position</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">채용 포지션</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].logo</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">로고 url</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].salary</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">연봉</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].website</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">웹사이트 url</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].state</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">채용 상태</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].hiringTime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">채용 시점</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">redirect url</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 정보</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.pageNumber</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">현재 페이지 번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.pageSize</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 당 요소 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.sort.empty</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬 정보가 비어있는지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.sort.sorted</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬된 상태인지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.sort.unsorted</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬되지 않은 상태인지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.offset</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">오프셋</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.paged</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이징된 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.unpaged</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이징되지 않은 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>totalElements</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전체 요소 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>totalPages</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전체 페이지 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 당 요소 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">현재 페이지 번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>numberOfElements</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">현재 페이지 요소 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>first</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">첫 페이지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>last</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">마지막 페이지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort.empty</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬 정보가 비어있는지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort.unsorted</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬되지 않은 상태인지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort.sorted</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬된 상태인지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>empty</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">비어있는 페이지 여부</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-08-28 15:55:49 +0900
+Last updated 2024-09-08 17:36:39 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

@@ -523,8 +523,8 @@ Content-Length: 356
   "position" : null,
   "studentNumber" : "2000123456",
   "departmentName" : "학과",
-  "createdAt" : "2024-08-21T15:21:47.871876",
-  "updatedAt" : "2024-08-21T15:21:47.871886"
+  "createdAt" : "2024-08-24T02:27:24.634547",
+  "updatedAt" : "2024-08-24T02:27:24.634552"
 }</code></pre>
 </div>
 </div>
@@ -765,8 +765,8 @@ Content-Length: 356
   "position" : null,
   "studentNumber" : "2000123456",
   "departmentName" : "학과",
-  "createdAt" : "2024-08-21T15:21:47.966909",
-  "updatedAt" : "2024-08-21T15:21:47.967104"
+  "createdAt" : "2024-08-24T02:27:24.662964",
+  "updatedAt" : "2024-08-24T02:27:24.662969"
 }</code></pre>
 </div>
 </div>
@@ -924,13 +924,195 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_유저_문의_리스트_조회_get_usersinquiries">유저 문의 리스트 조회 (GET /users/inquiries)</h3>
+<div class="exampleblock">
+<div class="content">
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /users/inquiries HTTP/1.1
+Authorization: user_access_token
+Host: localhost:8080
+Cookie: refresh-token=refresh_token</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_request_cookies">Request cookies</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>refresh-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">갱신 토큰</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_request_headers">Request headers</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Access Token</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+Content-Length: 214
+
+[ {
+  "id" : 1,
+  "title" : "Title 1",
+  "projectId" : 1,
+  "createdDate" : "2024-08-24T02:27:24.621653"
+}, {
+  "id" : 2,
+  "title" : "Title 2",
+  "projectId" : 2,
+  "createdDate" : "2024-08-24T02:27:24.621665"
+} ]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>[[_ response_fields]]
+==  response fields</p>
+</div>
+<div class="paragraph">
+<p>Snippet  response-fields not found for operation::user-controller-test/get-user-inquiries</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_유저_과제_제안_리스트_조회_get_usersproposals">유저 과제 제안 리스트 조회 (GET /users/proposals)</h3>
+<div class="exampleblock">
+<div class="content">
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /users/proposals HTTP/1.1
+Authorization: user_access_token
+Host: localhost:8080
+Cookie: refresh-token=refresh_token</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_request_cookies">Request cookies</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>refresh-token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">갱신 토큰</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_request_headers">Request headers</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Access Token</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+Content-Length: 175
+
+[ {
+  "id" : 1,
+  "title" : "Title 1",
+  "createdDate" : "2024-08-24T02:27:24.64757"
+}, {
+  "id" : 2,
+  "title" : "Title 2",
+  "createdDate" : "2024-08-24T02:27:24.647579"
+} ]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>[[_ response_fields]]
+==  response fields</p>
+</div>
+<div class="paragraph">
+<p>Snippet  response-fields not found for operation::user-controller-test/get-user-proposals</p>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-08-21 15:21:05 +0900
+Last updated 2024-08-24 02:22:41 +0900
 </div>
 </div>
 </body>
