@@ -26,33 +26,22 @@ public class FileService {
     private final MinioClientService minioClientService;
 
     @Transactional
-    public FileResponse uploadFile(MultipartFile file) {
-        UUID uuid = UUID.randomUUID();
-        LocalDateTime now = LocalDateTime.now();
-        minioClientService.uploadFile(file, uuid, now);
-        File fileInfo = File.of(uuid.toString(), file.getOriginalFilename(), file.getContentType());
-        fileRepository.save(fileInfo);
-        return FileResponse.from(fileInfo);
-    }
-
-    @Transactional
     public List<FileResponse> uploadFiles(List<MultipartFile> files) {
         LocalDateTime now = LocalDateTime.now();
         List<File> fileInfos = new ArrayList<>();
-        List<FileResponse> fileResponses = new ArrayList<>();
-
         for (MultipartFile file : files) {
             UUID uuid = UUID.randomUUID();
             minioClientService.uploadFile(file, uuid, now);
-
             File fileInfo = File.of(uuid.toString(), file.getOriginalFilename(), file.getContentType());
-            FileResponse fileResponse = FileResponse.from(fileInfo);
             fileInfos.add(fileInfo);
-            fileResponses.add(fileResponse);
         }
-
         fileRepository.saveAll(fileInfos);
 
+        List<FileResponse> fileResponses = new ArrayList<>();
+        for (File fileInfo : fileInfos) {
+            FileResponse fileResponse = FileResponse.from(fileInfo);
+            fileResponses.add(fileResponse);
+        }
         return fileResponses;
     }
 
