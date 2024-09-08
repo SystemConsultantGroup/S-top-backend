@@ -25,12 +25,6 @@ public class FileController {
 
     private final FileService fileService;
 
-//    @PostMapping
-//    public ResponseEntity<FileResponse> uploadFile(@RequestPart("file") MultipartFile file) {
-//        FileResponse response = fileService.uploadFile(file);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-//    }
-
     @PostMapping
     public ResponseEntity<List<FileResponse>> uploadFiles(@RequestPart("files") List<MultipartFile> files) {
         List<FileResponse> responses = fileService.uploadFiles(files);

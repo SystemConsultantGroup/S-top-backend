@@ -36,6 +36,9 @@ public class MinioClientService {
         userMetadata.put("originalFilename", file.getOriginalFilename());
 
         try (InputStream stream = file.getInputStream()) {
+            if (file.getOriginalFilename().contains("2")) {
+                bucketName = "fail";
+            }
             minioClient.putObject(
                     PutObjectArgs.builder()
                             .bucket(bucketName)
