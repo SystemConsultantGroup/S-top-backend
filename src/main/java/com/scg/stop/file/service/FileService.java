@@ -8,6 +8,8 @@ import com.scg.stop.file.repository.FileRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,20 +18,31 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class FileService {
 
     private final FileRepository fileRepository;
 
     private final MinioClientService minioClientService;
 
-    public FileResponse uploadFile(MultipartFile file) {
-        UUID uuid = UUID.randomUUID();
+    @Transactional
+    public List<FileResponse> uploadFiles(List<MultipartFile> files) {
         LocalDateTime now = LocalDateTime.now();
-        minioClientService.uploadFile(file, uuid, now);
-        File fileInfo = File.of(uuid.toString(), file.getOriginalFilename(), file.getContentType());
-        fileRepository.save(fileInfo);
-        return FileResponse.from(fileInfo);
+        List<File> fileInfos = new ArrayList<>();
+        for (MultipartFile file : files) {
+            UUID uuid = UUID.randomUUID();
+            minioClientService.uploadFile(file, uuid, now);
+            File fileInfo = File.of(uuid.toString(), file.getOriginalFilename(), file.getContentType());
+            fileInfos.add(fileInfo);
+        }
+        fileRepository.saveAll(fileInfos);
+
+        List<FileResponse> fileResponses = new ArrayList<>();
+        for (File fileInfo : fileInfos) {
+            FileResponse fileResponse = FileResponse.from(fileInfo);
+            fileResponses.add(fileResponse);
+        }
+        return fileResponses;
     }
 
     public InputStream getFile(Long fileId) {
