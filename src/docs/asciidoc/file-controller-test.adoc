@@ -3,9 +3,9 @@
 
 ---
 
-=== 파일 업로드 (POST /files)
+=== 다중 파일 업로드 (POST /files)
 ====
-operation::file-controller-test/upload-file[snippets="http-request,request-parts,http-response,response-fields"]
+operation::file-controller-test/upload-files[snippets="http-request,request-parts,http-response,response-fields"]
 ====
 
 === 파일 조회 (GET /files/{fileId})

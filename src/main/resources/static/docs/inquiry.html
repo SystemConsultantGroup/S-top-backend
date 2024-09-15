@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<title>대담 영상 API</title>
+<title>프로젝트 문의 사항 API</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -441,42 +441,27 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_대담_영상_api">대담 영상 API</h2>
+<h2 id="_프로젝트_문의_사항_api">프로젝트 문의 사항 API</h2>
 <div class="sectionbody">
 <hr>
 <div class="sect2">
-<h3 id="_대담_영상_생성_post_talks">대담 영상 생성 (POST /talks)</h3>
+<h3 id="_프로젝트_문의_사항_생성_post_projectsprojectidinquiry">프로젝트 문의 사항 생성 (POST /projects/{projectId}/inquiry)</h3>
 <div class="exampleblock">
 <div class="content">
 <div class="sect3">
 <h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /talks HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /projects/1/inquiry HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: admin_access_token
-Content-Length: 399
+Authorization: access_token
+Content-Length: 102
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
 {
-  "title" : "제목",
-  "youtubeId" : "유튜브 고유ID",
-  "year" : 2024,
-  "talkerBelonging" : "대담자 소속",
-  "talkerName" : "대담자 성명",
-  "quiz" : {
-    "0" : {
-      "question" : "질문1",
-      "answer" : 0,
-      "options" : [ "선지1", "선지2" ]
-    },
-    "1" : {
-      "question" : "질문2",
-      "answer" : 0,
-      "options" : [ "선지1", "선지2" ]
-    }
-  }
+  "title" : "프로젝트 문의 사항 제목",
+  "content" : "프로젝트 문의 사항 내용"
 }</code></pre>
 </div>
 </div>
@@ -503,61 +488,13 @@ Cookie: refresh-token=refresh_token
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 제목</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 제목</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>youtubeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">유튜브 영상의 고유 ID</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>year</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 연도</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>talkerBelonging</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담자의 소속된 직장/단체</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>talkerName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담자의 성명</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 데이터, 없는경우 null</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.question</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 질문</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.answer</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 인덱스</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.options</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 리스트</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 내용</p></td>
 </tr>
 </tbody>
 </table>
@@ -571,29 +508,17 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 503
+Content-Length: 284
 
 {
   "id" : 1,
-  "title" : "제목",
-  "youtubeId" : "유튜브 고유ID",
-  "year" : 2024,
-  "talkerBelonging" : "대담자 소속",
-  "talkerName" : "대담자 성명",
-  "quiz" : {
-    "0" : {
-      "question" : "질문1",
-      "answer" : 0,
-      "options" : [ "선지1", "선지2" ]
-    },
-    "1" : {
-      "question" : "질문2",
-      "answer" : 0,
-      "options" : [ "선지1", "선지2" ]
-    }
-  },
-  "createdAt" : "2024-09-12T15:40:15.222717",
-  "updatedAt" : "2024-09-12T15:40:15.222719"
+  "authorName" : "문의 작성자 이름",
+  "projectId" : 1,
+  "projectName" : "프로젝트 이름",
+  "title" : "문의 사항 제목",
+  "content" : "문의 사항 내용",
+  "createdAt" : "2024-08-24T19:39:59.841662",
+  "updatedAt" : "2024-08-24T19:39:59.841664"
 }</code></pre>
 </div>
 </div>
@@ -620,97 +545,68 @@ Content-Length: 503
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authorName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 작성자 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>projectId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 대상 프로젝트 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>projectName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 대상 프로젝트 이름</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 제목</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 제목</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>youtubeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">유튜브 영상의 고유 ID</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>year</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 연도</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>talkerBelonging</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담자의 소속된 직장/단체</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>talkerName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담자의 성명</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 데이터, 없는경우 null</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.question</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 질문</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.answer</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 인덱스</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.options</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 리스트</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 내용</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>createdAt</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 생성일</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 생성 시간</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>updatedAt</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 수정일</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 수정 시간</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 </div>
+<hr>
 </div>
 <div class="sect2">
-<h3 id="_대담_영상_리스트_조회_get_talks">대담 영상 리스트 조회 (GET /talks)</h3>
+<h3 id="_프로젝트_문의_사항_리스트_조회_get_inquiries">프로젝트 문의 사항 리스트 조회 (GET /inquiries)</h3>
 <div class="exampleblock">
 <div class="content">
 <div class="sect3">
 <h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /talks HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /inquiries HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: optional_access_token
+Authorization: access_token
 Host: localhost:8080
 Cookie: refresh-token=refresh_token</code></pre>
 </div>
@@ -733,14 +629,9 @@ Cookie: refresh-token=refresh_token</code></pre>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>year</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">찾고자 하는 대담 영상의 연도</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">찾고자 하는 대담 영상의 제목 일부</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">찾고자 하는 공지 사항 제목</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
@@ -764,56 +655,44 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1043
+Content-Length: 823
 
 {
   "totalPages" : 1,
-  "totalElements" : 1,
+  "totalElements" : 2,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
-    "title" : "제목",
-    "youtubeId" : "유튜브 고유ID",
-    "year" : 2024,
-    "talkerBelonging" : "대담자 소속",
-    "talkerName" : "대담자 성명",
-    "favorite" : true,
-    "quiz" : {
-      "0" : {
-        "question" : "질문1",
-        "answer" : 0,
-        "options" : [ "선지1", "선지2" ]
-      },
-      "1" : {
-        "question" : "질문2",
-        "answer" : 0,
-        "options" : [ "선지1", "선지2" ]
-      }
-    },
-    "createdAt" : "2024-09-12T15:40:15.245016",
-    "updatedAt" : "2024-09-12T15:40:15.245019"
+    "authorName" : "프로젝트 문의 사항 제목",
+    "title" : "프로젝트 문의 사항 내용",
+    "createdAt" : "2024-08-24T19:39:59.816529"
+  }, {
+    "id" : 2,
+    "authorName" : "프로젝트 문의 사항 제목",
+    "title" : "프로젝트 문의 사항 내용",
+    "createdAt" : "2024-08-24T19:39:59.816576"
   } ],
   "number" : 0,
   "sort" : {
     "empty" : true,
-    "unsorted" : true,
-    "sorted" : false
+    "sorted" : false,
+    "unsorted" : true
   },
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
     "sort" : {
       "empty" : true,
-      "unsorted" : true,
-      "sorted" : false
+      "sorted" : false,
+      "unsorted" : true
     },
     "offset" : 0,
     "paged" : true,
     "unpaged" : false
   },
-  "numberOfElements" : 1,
-  "first" : true,
-  "last" : true,
+  "numberOfElements" : 2,
   "empty" : false
 }</code></pre>
 </div>
@@ -838,10 +717,28 @@ Content-Length: 1043
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 정보</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].authorName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 작성자 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].createdAt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 생성 시간</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.pageNumber</code></p></td>
@@ -957,107 +854,24 @@ Content-Length: 1043
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">비어있는 페이지 여부</p></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 ID</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].title</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 제목</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].youtubeId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">유튜브 영상의 고유 ID</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].year</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 연도</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].talkerBelonging</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담자의 소속된 직장/단체</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].talkerName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담자의 성명</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].favorite</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">관심한 대담영상의 여부</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].quiz</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 데이터, 없는경우 null</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].quiz.*</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].quiz.*.question</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 질문</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].quiz.*.answer</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 인덱스</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].quiz.*.options</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 리스트</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].createdAt</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 생성일</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].updatedAt</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 수정일</p></td>
-</tr>
 </tbody>
 </table>
 </div>
 </div>
 </div>
+<hr>
 </div>
 <div class="sect2">
-<h3 id="_대담_영상_단건_조회_get_talkstalkid">대담 영상 단건 조회 (GET /talks/{talkId})</h3>
+<h3 id="_프로젝트_문의_사항_단건_조회_get_inquiriesinquiryid">프로젝트 문의 사항 단건 조회 (GET /inquiries/{inquiryId})</h3>
 <div class="exampleblock">
 <div class="content">
 <div class="sect3">
 <h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /talks/1 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /inquiries/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: optional_access_token
+Authorization: access_token
 Host: localhost:8080
 Cookie: refresh-token=refresh_token</code></pre>
 </div>
@@ -1066,7 +880,7 @@ Cookie: refresh-token=refresh_token</code></pre>
 <div class="sect3">
 <h4 id="_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /talks/{talkId}</caption>
+<caption class="title">Table 1. /inquiries/{inquiryId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1079,8 +893,8 @@ Cookie: refresh-token=refresh_token</code></pre>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>talkId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">조회할 대담 영상의 ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>inquiryId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">조회할 문의 사항 ID</p></td>
 </tr>
 </tbody>
 </table>
@@ -1094,30 +908,17 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 523
+Content-Length: 284
 
 {
   "id" : 1,
-  "title" : "제목",
-  "youtubeId" : "유튜브 고유ID",
-  "year" : 2024,
-  "talkerBelonging" : "대담자 소속",
-  "talkerName" : "대담자 성명",
-  "favorite" : true,
-  "quiz" : {
-    "0" : {
-      "question" : "질문1",
-      "answer" : 0,
-      "options" : [ "선지1", "선지2" ]
-    },
-    "1" : {
-      "question" : "질문2",
-      "answer" : 0,
-      "options" : [ "선지1", "선지2" ]
-    }
-  },
-  "createdAt" : "2024-09-12T15:40:15.199017",
-  "updatedAt" : "2024-09-12T15:40:15.19902"
+  "authorName" : "문의 작성자 이름",
+  "projectId" : 1,
+  "projectName" : "프로젝트 이름",
+  "title" : "문의 사항 제목",
+  "content" : "문의 사항 내용",
+  "createdAt" : "2024-08-24T19:39:59.831956",
+  "updatedAt" : "2024-08-24T19:39:59.831958"
 }</code></pre>
 </div>
 </div>
@@ -1144,125 +945,75 @@ Content-Length: 523
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authorName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 작성자 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>projectId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 대상 프로젝트 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>projectName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 대상 프로젝트 이름</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 제목</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 제목</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>youtubeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">유튜브 영상의 고유 ID</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>year</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 연도</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>talkerBelonging</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담자의 소속된 직장/단체</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>talkerName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담자의 성명</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>favorite</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">관심한 대담영상의 여부</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 데이터, 없는경우 null</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.question</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 질문</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.answer</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 인덱스</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.options</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 리스트</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 내용</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>createdAt</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 생성일</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 생성 시간</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>updatedAt</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 수정일</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 수정 시간</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 </div>
+<hr>
 </div>
 <div class="sect2">
-<h3 id="_대담_영상_수정_put_talkstalkid">대담 영상 수정 (PUT /talks/{talkId})</h3>
+<h3 id="_프로젝트_문의_사항_수정_put_inquiriesinquiryid">프로젝트 문의 사항 수정 (PUT /inquiries/{inquiryId})</h3>
 <div class="exampleblock">
 <div class="content">
 <div class="sect3">
 <h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /talks/1 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /inquiries/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: admin_access_token
-Content-Length: 499
+Authorization: access_token
+Content-Length: 122
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
 {
-  "title" : "수정한 제목",
-  "youtubeId" : "수정한 유튜브 고유ID",
-  "year" : 2024,
-  "talkerBelonging" : "수정한 대담자 소속",
-  "talkerName" : "수정한 대담자 성명",
-  "quiz" : {
-    "0" : {
-      "question" : "수정한 질문1",
-      "answer" : 0,
-      "options" : [ "수정한 선지1", "수정한 선지2" ]
-    },
-    "1" : {
-      "question" : "수정한 질문2",
-      "answer" : 0,
-      "options" : [ "수정한 선지1", "수정한 선지2" ]
-    }
-  }
+  "title" : "수정된 프로젝트 문의 사항 제목",
+  "content" : "수정된 프로젝트 문의 사항 내용"
 }</code></pre>
 </div>
 </div>
@@ -1270,7 +1021,7 @@ Cookie: refresh-token=refresh_token
 <div class="sect3">
 <h4 id="_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /talks/{talkId}</caption>
+<caption class="title">Table 1. /inquiries/{inquiryId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1283,8 +1034,8 @@ Cookie: refresh-token=refresh_token
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>talkId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">수정할 대담 영상의 ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>inquiryId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수정할 문의 사항 ID</p></td>
 </tr>
 </tbody>
 </table>
@@ -1311,61 +1062,13 @@ Cookie: refresh-token=refresh_token
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 제목</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 제목</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>youtubeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">유튜브 영상의 고유 ID</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>year</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 연도</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>talkerBelonging</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담자의 소속된 직장/단체</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>talkerName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담자의 성명</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 데이터, 없는경우 null</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.question</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 질문</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.answer</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 인덱스</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.options</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 리스트</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 내용</p></td>
 </tr>
 </tbody>
 </table>
@@ -1379,29 +1082,17 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 603
+Content-Length: 304
 
 {
   "id" : 1,
-  "title" : "수정한 제목",
-  "youtubeId" : "수정한 유튜브 고유ID",
-  "year" : 2024,
-  "talkerBelonging" : "수정한 대담자 소속",
-  "talkerName" : "수정한 대담자 성명",
-  "quiz" : {
-    "0" : {
-      "question" : "수정한 질문1",
-      "answer" : 0,
-      "options" : [ "수정한 선지1", "수정한 선지2" ]
-    },
-    "1" : {
-      "question" : "수정한 질문2",
-      "answer" : 0,
-      "options" : [ "수정한 선지1", "수정한 선지2" ]
-    }
-  },
-  "createdAt" : "2024-09-12T15:40:15.033431",
-  "updatedAt" : "2024-09-12T15:40:15.033443"
+  "authorName" : "문의 작성자 이름",
+  "projectId" : 1,
+  "projectName" : "프로젝트 이름",
+  "title" : "수정된 문의 사항 제목",
+  "content" : "수정된 문의 사항 내용",
+  "createdAt" : "2024-08-24T19:39:59.860844",
+  "updatedAt" : "2024-08-24T19:39:59.860846"
 }</code></pre>
 </div>
 </div>
@@ -1428,96 +1119,68 @@ Content-Length: 603
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authorName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 작성자 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>projectId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 대상 프로젝트 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>projectName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 대상 프로젝트 이름</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 제목</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수정된 문의 사항 제목</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>youtubeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">유튜브 영상의 고유 ID</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>year</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 연도</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>talkerBelonging</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담자의 소속된 직장/단체</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>talkerName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담자의 성명</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 데이터, 없는경우 null</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.question</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 질문</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.answer</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 인덱스</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.options</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 리스트</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수정된 문의 사항 내용</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>createdAt</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 생성일</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 생성 시간</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>updatedAt</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 수정일</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 수정 시간</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 </div>
+<hr>
 </div>
 <div class="sect2">
-<h3 id="_대담_영상_삭제_delete_talkstalkid">대담 영상 삭제 (DELETE /talks/{talkId})</h3>
+<h3 id="_프로젝트_문의_사항_삭제_delete_inquiriesinquiryid">프로젝트 문의 사항 삭제 (DELETE /inquiries/{inquiryId})</h3>
 <div class="exampleblock">
 <div class="content">
 <div class="sect3">
 <h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /talks/1 HTTP/1.1
-Authorization: admin_access_token
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /inquiries/1 HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: access_token
 Host: localhost:8080
 Cookie: refresh-token=refresh_token</code></pre>
 </div>
@@ -1526,7 +1189,7 @@ Cookie: refresh-token=refresh_token</code></pre>
 <div class="sect3">
 <h4 id="_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /talks/{talkId}</caption>
+<caption class="title">Table 1. /inquiries/{inquiryId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1539,8 +1202,8 @@ Cookie: refresh-token=refresh_token</code></pre>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>talkId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">삭제할 대담 영상의 ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>inquiryId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">삭제할 문의 사항 ID</p></td>
 </tr>
 </tbody>
 </table>
@@ -1558,145 +1221,26 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
+<hr>
 </div>
 <div class="sect2">
-<h3 id="_대담_영상의_퀴즈_조회_get_talkstalkidquiz">대담 영상의 퀴즈 조회 (GET /talks/{talkId}/quiz)</h3>
+<h3 id="_프로젝트_문의_사항_답변_post_inquiriesinquiryidreply">프로젝트 문의 사항 답변 (POST /inquiries/{inquiryId}/reply)</h3>
 <div class="exampleblock">
 <div class="content">
 <div class="sect3">
 <h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /talks/1/quiz HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Host: localhost:8080</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_path_parameters">Path parameters</h4>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /talks/{talkId}/quiz</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>talkId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈를 가져올 대담 영상의 ID</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="_http_response">HTTP response</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-Content-Type: application/json;charset=UTF-8
-Content-Length: 243
-
-{
-  "quiz" : {
-    "0" : {
-      "question" : "질문1",
-      "answer" : 0,
-      "options" : [ "선지1", "선지2" ]
-    },
-    "1" : {
-      "question" : "질문2",
-      "answer" : 1,
-      "options" : [ "선지1", "선지2" ]
-    }
-  }
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_response_fields">Response fields</h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 데이터</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.question</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 질문</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.answer</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 인덱스</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.options</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 리스트</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_대담_영상의_퀴즈_결과_제출_post_talkstalkidquiz">대담 영상의 퀴즈 결과 제출 (POST /talks/{talkId}/quiz)</h3>
-<div class="exampleblock">
-<div class="content">
-<div class="sect3">
-<h4 id="_http_request">HTTP request</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /talks/1/quiz HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /inquiries/1/reply HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: access_token
-Content-Length: 47
+Content-Length: 76
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
 {
-  "result" : {
-    "0" : 0,
-    "1" : 1
-  }
+  "title" : "문의 답변 제목",
+  "content" : "문의 답변 내용"
 }</code></pre>
 </div>
 </div>
@@ -1704,7 +1248,7 @@ Cookie: refresh-token=refresh_token
 <div class="sect3">
 <h4 id="_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /talks/{talkId}/quiz</caption>
+<caption class="title">Table 1. /inquiries/{inquiryId}/reply</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1717,8 +1261,8 @@ Cookie: refresh-token=refresh_token
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>talkId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈를 제출할 대담 영상의 ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>inquiryId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변할 문의 ID</p></td>
 </tr>
 </tbody>
 </table>
@@ -1742,108 +1286,16 @@ Cookie: refresh-token=refresh_token
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈를 푼 결과</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 제목</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.*</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 각 문제별 정답 인덱스, key는 문제 번호</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="_http_response">HTTP response</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-Content-Type: application/json;charset=UTF-8
-Content-Length: 40
-
-{
-  "success" : true,
-  "tryCount" : 1
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_response_fields">Response fields</h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>success</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 성공 여부</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tryCount</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 시도 횟수</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_대담_영상의_관심_등록_post_talkstalkidfavorite">대담 영상의 관심 등록 (POST /talks/{talkId}/favorite)</h3>
-<div class="exampleblock">
-<div class="content">
-<div class="sect3">
-<h4 id="_http_request">HTTP request</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /talks/1/favorite HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Authorization: access_token
-Host: localhost:8080
-Cookie: refresh-token=refresh_token</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_path_parameters">Path parameters</h4>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /talks/{talkId}/favorite</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>talkId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">관심 목록에 추가할 대담 영상의 ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 내용</p></td>
 </tr>
 </tbody>
 </table>
@@ -1855,117 +1307,14 @@ Cookie: refresh-token=refresh_token</code></pre>
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 201 Created
 Vary: Origin
 Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_대담_영상의_관심_삭제_delete_talkstalkidfavorite">대담 영상의 관심 삭제 (DELETE /talks/{talkId}/favorite)</h3>
-<div class="exampleblock">
-<div class="content">
-<div class="sect3">
-<h4 id="_http_request">HTTP request</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /talks/1/favorite HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Authorization: access_token
-Host: localhost:8080
-Cookie: refresh-token=refresh_token</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_path_parameters">Path parameters</h4>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /talks/{talkId}/favorite</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>talkId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">관심 목록에서 삭제할 대담 영상의 ID</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="_http_response">HTTP response</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 204 No Content
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_유저의_퀴즈_제출_기록_조회_get_talkstalkidquizsubmit">유저의 퀴즈 제출 기록 조회 (GET /talks/{talkId/quiz/submit)</h3>
-<div class="exampleblock">
-<div class="content">
-<div class="sect3">
-<h4 id="_http_request">HTTP request</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /talks/1/quiz/submit HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Authorization: access_token
-Host: localhost:8080
-Cookie: refresh-token=refresh_token</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_path_parameters">Path parameters</h4>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /talks/{talkId}/quiz/submit</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>talkId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈가 연결된 대담 영상의 ID</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="_http_response">HTTP response</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
-Vary: Origin
-Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 41
+Content-Length: 88
 
 {
-  "success" : false,
-  "tryCount" : 2
+  "id" : 1,
+  "title" : "문의 답변 제목",
+  "content" : "문의 답변 내용"
 }</code></pre>
 </div>
 </div>
@@ -1989,19 +1338,317 @@ Content-Length: 41
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tryCount</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">시도한 횟수</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 ID</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>success</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 성공 여부</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 내용</p></td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_프로젝트_문의_사항_답변_조회_get_inquiriesinquiryidreply">프로젝트 문의 사항 답변 조회 (GET /inquiries/{inquiryId}/reply)</h3>
+<div class="exampleblock">
+<div class="content">
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /inquiries/1/reply HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: access_token
+Host: localhost:8080
+Cookie: refresh-token=refresh_token</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_path_parameters">Path parameters</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /inquiries/{inquiryId}/reply</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>inquiryId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">조회할 문의 ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+Content-Length: 88
+
+{
+  "id" : 1,
+  "title" : "문의 답변 제목",
+  "content" : "문의 답변 내용"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_response_fields">Response fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 내용</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_프로젝트_문의_사항_답변_수정_put_inquiriesinquiryidreply">프로젝트 문의 사항 답변 수정 (PUT /inquiries/{inquiryId}/reply)</h3>
+<div class="exampleblock">
+<div class="content">
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /inquiries/1/reply HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: access_token
+Content-Length: 96
+Host: localhost:8080
+Cookie: refresh-token=refresh_token
+
+{
+  "title" : "수정된 문의 답변 제목",
+  "content" : "수정된 문의 답변 내용"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_path_parameters">Path parameters</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /inquiries/{inquiryId}/reply</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>inquiryId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수정할 답변 ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_request_fields">Request fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 내용</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+Content-Length: 108
+
+{
+  "id" : 1,
+  "title" : "수정된 문의 답변 제목",
+  "content" : "수정된 문의 답변 내용"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_response_fields">Response fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수정된 답변 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수정된 답변 내용</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_프로젝트_문의_사항_답변_삭제_delete_inquiriesinquiryidreply">프로젝트 문의 사항 답변 삭제 (DELETE /inquiries/{inquiryId}/reply)</h3>
+<div class="exampleblock">
+<div class="content">
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /inquiries/1/reply HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: access_token
+Host: localhost:8080
+Cookie: refresh-token=refresh_token</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_path_parameters">Path parameters</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /inquiries/{inquiryId}/reply</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>inquiryId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">삭제할 답변 ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -2012,7 +1659,7 @@ Content-Length: 41
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-08-31 17:36:52 +0900
+Last updated 2024-08-24 17:38:30 +0900
 </div>
 </div>
 </body>
