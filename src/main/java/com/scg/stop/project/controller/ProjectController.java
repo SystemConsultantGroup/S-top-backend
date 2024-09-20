@@ -3,6 +3,7 @@ package com.scg.stop.project.controller;
 
 import com.scg.stop.auth.annotation.AuthUser;
 import com.scg.stop.project.domain.ProjectCategory;
+import com.scg.stop.project.domain.ProjectType;
 import com.scg.stop.project.dto.request.CommentRequest;
 import com.scg.stop.project.dto.request.ProjectRequest;
 import com.scg.stop.project.dto.response.CommentResponse;
@@ -20,6 +21,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/projects")
@@ -30,12 +33,13 @@ public class ProjectController {
     @GetMapping
     public ResponseEntity<Page<ProjectResponse>> getProjects(
             @RequestParam(value = "title", required = false) String title,
-            @RequestParam(value = "year", required = false) Integer year,
-            @RequestParam(value = "category", required = false) ProjectCategory category,
+            @RequestParam(value = "year", required = false) List<Integer> year,
+            @RequestParam(value = "category", required = false) List<ProjectCategory> category,
+            @RequestParam(value = "type", required = false) List<ProjectType> type,
             @PageableDefault(page = 0, size = 10) Pageable pageable,
             @AuthUser(accessType = {AccessType.OPTIONAL}) User user
     ){
-        Page<ProjectResponse> pageProjectResponse = projectService.getProjects(title, year, category, pageable, user);
+        Page<ProjectResponse> pageProjectResponse = projectService.getProjects(title, year, category, type, pageable, user);
         return ResponseEntity.status(HttpStatus.OK).body(pageProjectResponse);
     }
   

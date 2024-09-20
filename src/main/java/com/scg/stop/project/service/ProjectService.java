@@ -49,8 +49,8 @@ public class ProjectService {
     private EntityManager entityManager;
 
     @Transactional(readOnly = true)
-    public Page<ProjectResponse> getProjects(String title, Integer year, ProjectCategory category, Pageable pageable, User user){
-        Page<Project> projects = projectRepository.findProjects(title, year, category, pageable);
+    public Page<ProjectResponse> getProjects(String title, List<Integer> year, List<ProjectCategory> category, List<ProjectType> type, Pageable pageable, User user){
+        Page<Project> projects = projectRepository.findProjects(title, year, category, type, pageable);
         Page<ProjectResponse> projectResponses = projects.map(project -> ProjectResponse.of(user, project));
         return projectResponses;
     }

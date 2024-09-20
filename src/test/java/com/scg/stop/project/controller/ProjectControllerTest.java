@@ -113,7 +113,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
         );
         Page<ProjectResponse> pageResponse = new PageImpl<>(List.of(projectResponse1, projectResponse2), PageRequest.of(0, 10), 2);
 
-        when(projectService.getProjects(any(), any(), any(), any(), any())).thenReturn(pageResponse);
+        when(projectService.getProjects(any(), any(), any(), any(), any(), any())).thenReturn(pageResponse);
 
         // when
         ResultActions result = mockMvc.perform(
@@ -130,6 +130,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
                                 parameterWithName("title").description("프로젝트 이름").optional(),
                                 parameterWithName("year").description("프로젝트 년도").optional(),
                                 parameterWithName("category").description("프로젝트 카테고리").optional(),
+                                parameterWithName("type").description("프로젝트 타입").optional(),
                                 parameterWithName("page").description("페이지 번호 [default: 0]").optional(),
                                 parameterWithName("size").description("페이지 크기 [default: 10]").optional(),
                                 parameterWithName("sort").description("정렬 기준").optional()
