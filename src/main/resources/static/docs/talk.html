@@ -455,7 +455,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /talks HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 399
+Content-Length: 361
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -465,18 +465,15 @@ Cookie: refresh-token=refresh_token
   "year" : 2024,
   "talkerBelonging" : "대담자 소속",
   "talkerName" : "대담자 성명",
-  "quiz" : {
-    "0" : {
-      "question" : "질문1",
-      "answer" : 0,
-      "options" : [ "선지1", "선지2" ]
-    },
-    "1" : {
-      "question" : "질문2",
-      "answer" : 0,
-      "options" : [ "선지1", "선지2" ]
-    }
-  }
+  "quiz" : [ {
+    "question" : "질문1",
+    "answer" : 0,
+    "options" : [ "선지1", "선지2" ]
+  }, {
+    "question" : "질문2",
+    "answer" : 0,
+    "options" : [ "선지1", "선지2" ]
+  } ]
 }</code></pre>
 </div>
 </div>
@@ -531,30 +528,24 @@ Cookie: refresh-token=refresh_token
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 데이터, 없는경우 null</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.question</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz[].question</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 질문</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.answer</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz[].answer</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 인덱스</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.options</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz[].options</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 리스트</p></td>
@@ -571,7 +562,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 503
+Content-Length: 470
 
 {
   "id" : 1,
@@ -580,20 +571,17 @@ Content-Length: 503
   "year" : 2024,
   "talkerBelonging" : "대담자 소속",
   "talkerName" : "대담자 성명",
-  "quiz" : {
-    "0" : {
-      "question" : "질문1",
-      "answer" : 0,
-      "options" : [ "선지1", "선지2" ]
-    },
-    "1" : {
-      "question" : "질문2",
-      "answer" : 0,
-      "options" : [ "선지1", "선지2" ]
-    }
-  },
-  "createdAt" : "2024-09-19T19:31:37.924986",
-  "updatedAt" : "2024-09-19T19:31:37.924988"
+  "quiz" : [ {
+    "question" : "질문1",
+    "answer" : 0,
+    "options" : [ "선지1", "선지2" ]
+  }, {
+    "question" : "질문2",
+    "answer" : 0,
+    "options" : [ "선지1", "선지2" ]
+  } ],
+  "createdAt" : "2024-10-04T01:07:50.78259322",
+  "updatedAt" : "2024-10-04T01:07:50.782601152"
 }</code></pre>
 </div>
 </div>
@@ -654,30 +642,24 @@ Content-Length: 503
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 데이터, 없는경우 null</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.question</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz[].question</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 질문</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.answer</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz[].answer</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 인덱스</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.options</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz[].options</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 리스트</p></td>
@@ -764,13 +746,11 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1042
+Content-Length: 1005
 
 {
-  "totalPages" : 1,
   "totalElements" : 1,
-  "first" : true,
-  "last" : true,
+  "totalPages" : 1,
   "size" : 10,
   "content" : [ {
     "id" : 1,
@@ -780,20 +760,17 @@ Content-Length: 1042
     "talkerBelonging" : "대담자 소속",
     "talkerName" : "대담자 성명",
     "favorite" : true,
-    "quiz" : {
-      "0" : {
-        "question" : "질문1",
-        "answer" : 0,
-        "options" : [ "선지1", "선지2" ]
-      },
-      "1" : {
-        "question" : "질문2",
-        "answer" : 0,
-        "options" : [ "선지1", "선지2" ]
-      }
-    },
-    "createdAt" : "2024-09-19T19:31:37.933059",
-    "updatedAt" : "2024-09-19T19:31:37.93306"
+    "quiz" : [ {
+      "question" : "질문1",
+      "answer" : 0,
+      "options" : [ "선지1", "선지2" ]
+    }, {
+      "question" : "질문2",
+      "answer" : 0,
+      "options" : [ "선지1", "선지2" ]
+    } ],
+    "createdAt" : "2024-10-04T01:07:50.820922829",
+    "updatedAt" : "2024-10-04T01:07:50.820930169"
   } ],
   "number" : 0,
   "sort" : {
@@ -814,6 +791,8 @@ Content-Length: 1042
     "paged" : true,
     "unpaged" : false
   },
+  "first" : true,
+  "last" : true,
   "empty" : false
 }</code></pre>
 </div>
@@ -1001,30 +980,24 @@ Content-Length: 1042
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].quiz</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 데이터, 없는경우 null</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].quiz.*</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].quiz.*.question</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].quiz[].question</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 질문</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].quiz.*.answer</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].quiz[].answer</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 인덱스</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].quiz.*.options</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].quiz[].options</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 리스트</p></td>
@@ -1094,7 +1067,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 524
+Content-Length: 492
 
 {
   "id" : 1,
@@ -1104,20 +1077,17 @@ Content-Length: 524
   "talkerBelonging" : "대담자 소속",
   "talkerName" : "대담자 성명",
   "favorite" : true,
-  "quiz" : {
-    "0" : {
-      "question" : "질문1",
-      "answer" : 0,
-      "options" : [ "선지1", "선지2" ]
-    },
-    "1" : {
-      "question" : "질문2",
-      "answer" : 0,
-      "options" : [ "선지1", "선지2" ]
-    }
-  },
-  "createdAt" : "2024-09-19T19:31:37.917905",
-  "updatedAt" : "2024-09-19T19:31:37.917907"
+  "quiz" : [ {
+    "question" : "질문1",
+    "answer" : 0,
+    "options" : [ "선지1", "선지2" ]
+  }, {
+    "question" : "질문2",
+    "answer" : 0,
+    "options" : [ "선지1", "선지2" ]
+  } ],
+  "createdAt" : "2024-10-04T01:07:50.744379752",
+  "updatedAt" : "2024-10-04T01:07:50.744388902"
 }</code></pre>
 </div>
 </div>
@@ -1184,30 +1154,24 @@ Content-Length: 524
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 데이터, 없는경우 null</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.question</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz[].question</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 질문</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.answer</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz[].answer</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 인덱스</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.options</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz[].options</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 리스트</p></td>
@@ -1241,7 +1205,7 @@ Content-Length: 524
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /talks/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 499
+Content-Length: 461
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -1251,18 +1215,15 @@ Cookie: refresh-token=refresh_token
   "year" : 2024,
   "talkerBelonging" : "수정한 대담자 소속",
   "talkerName" : "수정한 대담자 성명",
-  "quiz" : {
-    "0" : {
-      "question" : "수정한 질문1",
-      "answer" : 0,
-      "options" : [ "수정한 선지1", "수정한 선지2" ]
-    },
-    "1" : {
-      "question" : "수정한 질문2",
-      "answer" : 0,
-      "options" : [ "수정한 선지1", "수정한 선지2" ]
-    }
-  }
+  "quiz" : [ {
+    "question" : "수정한 질문1",
+    "answer" : 0,
+    "options" : [ "수정한 선지1", "수정한 선지2" ]
+  }, {
+    "question" : "수정한 질문2",
+    "answer" : 0,
+    "options" : [ "수정한 선지1", "수정한 선지2" ]
+  } ]
 }</code></pre>
 </div>
 </div>
@@ -1339,30 +1300,24 @@ Cookie: refresh-token=refresh_token
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 데이터, 없는경우 null</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.question</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz[].question</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 질문</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.answer</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz[].answer</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 인덱스</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.options</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz[].options</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 리스트</p></td>
@@ -1379,7 +1334,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 603
+Content-Length: 571
 
 {
   "id" : 1,
@@ -1388,20 +1343,17 @@ Content-Length: 603
   "year" : 2024,
   "talkerBelonging" : "수정한 대담자 소속",
   "talkerName" : "수정한 대담자 성명",
-  "quiz" : {
-    "0" : {
-      "question" : "수정한 질문1",
-      "answer" : 0,
-      "options" : [ "수정한 선지1", "수정한 선지2" ]
-    },
-    "1" : {
-      "question" : "수정한 질문2",
-      "answer" : 0,
-      "options" : [ "수정한 선지1", "수정한 선지2" ]
-    }
-  },
-  "createdAt" : "2024-09-19T19:31:37.880796",
-  "updatedAt" : "2024-09-19T19:31:37.880797"
+  "quiz" : [ {
+    "question" : "수정한 질문1",
+    "answer" : 0,
+    "options" : [ "수정한 선지1", "수정한 선지2" ]
+  }, {
+    "question" : "수정한 질문2",
+    "answer" : 0,
+    "options" : [ "수정한 선지1", "수정한 선지2" ]
+  } ],
+  "createdAt" : "2024-10-04T01:07:50.602876045",
+  "updatedAt" : "2024-10-04T01:07:50.602884038"
 }</code></pre>
 </div>
 </div>
@@ -1462,30 +1414,24 @@ Content-Length: 603
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 데이터, 없는경우 null</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.question</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz[].question</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 질문</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.answer</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz[].answer</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 인덱스</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.options</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz[].options</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 리스트</p></td>
@@ -1604,21 +1550,18 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 243
+Content-Length: 205
 
 {
-  "quiz" : {
-    "0" : {
-      "question" : "질문1",
-      "answer" : 0,
-      "options" : [ "선지1", "선지2" ]
-    },
-    "1" : {
-      "question" : "질문2",
-      "answer" : 1,
-      "options" : [ "선지1", "선지2" ]
-    }
-  }
+  "quiz" : [ {
+    "question" : "질문1",
+    "answer" : 0,
+    "options" : [ "선지1", "선지2" ]
+  }, {
+    "question" : "질문2",
+    "answer" : 0,
+    "options" : [ "선지1", "선지2" ]
+  } ]
 }</code></pre>
 </div>
 </div>
@@ -1643,32 +1586,26 @@ Content-Length: 243
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 데이터</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 데이터, 없는경우 null</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.question</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz[].question</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 질문</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.answer</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz[].answer</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 인덱스</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz.*.options</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz[].options</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 리스트</p></td>
 </tr>
 </tbody>
@@ -2012,7 +1949,7 @@ Content-Length: 41
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-09-04 13:10:00 +0900
+Last updated 2024-09-10 11:30:29 +0900
 </div>
 </div>
 </body>
