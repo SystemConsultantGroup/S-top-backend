@@ -23,7 +23,7 @@ public class ProjectController {
     @PostMapping("/{projectId}/inquiry")
     public ResponseEntity<InquiryDetailResponse> createProjectInquiry(
             @PathVariable Long projectId,
-            @AuthUser(accessType = AccessType.COMPANY) User user,
+            @AuthUser(accessType = {AccessType.COMPANY, AccessType.ADMIN}) User user,
             @RequestBody @Valid InquiryRequest inquiryRequest) {
 
         InquiryDetailResponse inquiryDetailResponse = projectService.createProjectInquiry(projectId, user, inquiryRequest);
