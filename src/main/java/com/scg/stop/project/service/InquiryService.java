@@ -48,9 +48,12 @@ public class InquiryService {
     public InquiryDetailResponse getInquiry(Long inquiryId, User user) {
         Inquiry inquiry = findInquiryById(inquiryId);
 
-        if (user.getUserType() != UserType.ADMIN && !inquiry.getUser().getId().equals(user.getId())) {
-            throw new BadRequestException(ExceptionCode.UNAUTHORIZED_USER);
+        if (user.getUserType() != UserType.ADMIN) {
+            if (inquiry.getUser() == null || !inquiry.getUser().getId().equals(user.getId())) {
+                throw new BadRequestException(ExceptionCode.UNAUTHORIZED_USER);
+            }
         }
+
 
         return InquiryDetailResponse.of(
                 inquiry.getId(),
@@ -69,9 +72,12 @@ public class InquiryService {
     public InquiryDetailResponse updateInquiry(Long inquiryId, User user, InquiryRequest inquiryUpdateRequest) {
         Inquiry inquiry = findInquiryById(inquiryId);
 
-        if (user.getUserType() != UserType.ADMIN && !inquiry.getUser().getId().equals(user.getId())) {
-            throw new BadRequestException(ExceptionCode.UNAUTHORIZED_USER);
+        if (user.getUserType() != UserType.ADMIN) {
+            if (inquiry.getUser() == null || !inquiry.getUser().getId().equals(user.getId())) {
+                throw new BadRequestException(ExceptionCode.UNAUTHORIZED_USER);
+            }
         }
+
 
         inquiry.updateInquiry(inquiryUpdateRequest.getTitle(), inquiryUpdateRequest.getContent());
 
@@ -91,8 +97,10 @@ public class InquiryService {
     public void deleteInquiry(Long inquiryId, User user) {
         Inquiry inquiry = findInquiryById(inquiryId);
 
-        if (user.getUserType() != UserType.ADMIN && !inquiry.getUser().getId().equals(user.getId())) {
-            throw new BadRequestException(ExceptionCode.UNAUTHORIZED_USER);
+        if (user.getUserType() != UserType.ADMIN) {
+            if (inquiry.getUser() == null || !inquiry.getUser().getId().equals(user.getId())) {
+                throw new BadRequestException(ExceptionCode.UNAUTHORIZED_USER);
+            }
         }
 
         inquiryRepository.delete(inquiry);
@@ -129,8 +137,10 @@ public class InquiryService {
     public InquiryReplyResponse getInquiryReply(Long inquiryId, User user) {
         Inquiry inquiry = findInquiryById(inquiryId);
 
-        if (user.getUserType() != UserType.ADMIN && !inquiry.getUser().getId().equals(user.getId())) {
-            throw new BadRequestException(ExceptionCode.UNAUTHORIZED_USER);
+        if (user.getUserType() != UserType.ADMIN) {
+            if (inquiry.getUser() == null || !inquiry.getUser().getId().equals(user.getId())) {
+                throw new BadRequestException(ExceptionCode.UNAUTHORIZED_USER);
+            }
         }
 
         InquiryReply inquiryReply = inquiry.getReply();
