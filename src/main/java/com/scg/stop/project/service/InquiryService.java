@@ -36,7 +36,7 @@ public class InquiryService {
         return inquiries.map(inquiry ->
                 InquiryResponse.of(
                         inquiry.getId(),
-                        inquiry.getUser() == null ? "탈퇴한 회원" : inquiry.getUser().getName(),
+                        inquiry.getUser() == null ? null : inquiry.getUser().getName(),
                         inquiry.getTitle(),
                         inquiry.getCreatedAt()
                 )
@@ -54,7 +54,7 @@ public class InquiryService {
 
         return InquiryDetailResponse.of(
                 inquiry.getId(),
-                inquiry.getUser() == null ? "탈퇴한 회원" : inquiry.getUser().getName(),
+                inquiry.getUser() == null ? null : inquiry.getUser().getName(),
                 inquiry.getProject().getId(),
                 inquiry.getProject().getName(),
                 inquiry.getTitle(),
@@ -77,7 +77,7 @@ public class InquiryService {
 
         return InquiryDetailResponse.of(
                 inquiry.getId(),
-                inquiry.getUser() == null ? "탈퇴한 회원" : inquiry.getUser().getName(),
+                inquiry.getUser() == null ? null : inquiry.getUser().getName(),
                 inquiry.getProject().getId(),
                 inquiry.getProject().getName(),
                 inquiry.getTitle(),
@@ -132,7 +132,7 @@ public class InquiryService {
         if (user.getUserType() != UserType.ADMIN && !inquiry.getUser().getId().equals(user.getId())) {
             throw new BadRequestException(ExceptionCode.UNAUTHORIZED_USER);
         }
-        
+
         InquiryReply inquiryReply = inquiry.getReply();
 
         if (inquiryReply == null) {
