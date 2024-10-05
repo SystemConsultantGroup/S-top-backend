@@ -186,7 +186,7 @@ public class InquiryControllerTest extends AbstractControllerTest {
         // given
         InquiryDetailResponse response = InquiryDetailResponse.of(1L, "문의 작성자 이름", 1L, "프로젝트 이름", "문의 사항 제목", "문의 사항 내용", LocalDateTime.now(), LocalDateTime.now());
 
-        when(inquiryService.getInquiry(anyLong())).thenReturn(response);
+        when(inquiryService.getInquiry(anyLong(), any(User.class))).thenReturn(response);
 
         // when
         ResultActions result = mockMvc.perform(
@@ -232,7 +232,7 @@ public class InquiryControllerTest extends AbstractControllerTest {
         InquiryRequest request = new InquiryRequest("수정된 프로젝트 문의 사항 제목", "수정된 프로젝트 문의 사항 내용");
         InquiryDetailResponse response = InquiryDetailResponse.of(1L, "문의 작성자 이름", 1L, "프로젝트 이름", "수정된 문의 사항 제목", "수정된 문의 사항 내용", LocalDateTime.now(), LocalDateTime.now());
 
-        when(inquiryService.updateInquiry(anyLong(), any(InquiryRequest.class))).thenReturn(response);
+        when(inquiryService.updateInquiry(anyLong(), any(User.class), any(InquiryRequest.class))).thenReturn(response);
 
         // when
         ResultActions result = mockMvc.perform(
@@ -280,7 +280,7 @@ public class InquiryControllerTest extends AbstractControllerTest {
     void deleteInquiry() throws Exception {
 
         // given
-        doNothing().when(inquiryService).deleteInquiry(anyLong());
+        doNothing().when(inquiryService).deleteInquiry(anyLong(), any(User.class));
 
 
         // when
@@ -362,7 +362,7 @@ public class InquiryControllerTest extends AbstractControllerTest {
         // given
         InquiryReplyResponse response = InquiryReplyResponse.of(1L, "문의 답변 제목", "문의 답변 내용");
 
-        when(inquiryService.getInquiryReply(anyLong())).thenReturn(response);
+        when(inquiryService.getInquiryReply(anyLong(), any(User.class))).thenReturn(response);
 
         // when
         ResultActions result = mockMvc.perform(

@@ -12,6 +12,8 @@ import com.scg.stop.project.dto.response.InquiryReplyResponse;
 import com.scg.stop.project.dto.response.InquiryResponse;
 import com.scg.stop.project.repository.InquiryReplyRepository;
 import com.scg.stop.project.repository.InquiryRepository;
+import com.scg.stop.user.domain.User;
+import com.scg.stop.user.domain.UserType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -43,8 +45,12 @@ public class InquiryService {
 
     // 문의 상세 조회
     @Transactional(readOnly = true)
-    public InquiryDetailResponse getInquiry(Long inquiryId) {
+    public InquiryDetailResponse getInquiry(Long inquiryId, User user) {
         Inquiry inquiry = findInquiryById(inquiryId);
+
+        if (user.getUserType() != UserType.ADMIN && !inquiry.getUser().getId().equals(user.getId())) {
+            throw new BadRequestException(ExceptionCode.UNAUTHORIZED_USER);
+        }
 
         return InquiryDetailResponse.of(
                 inquiry.getId(),
@@ -60,8 +66,13 @@ public class InquiryService {
 
     // 문의 수정
     // TODO: Email 전송 로직 추가
-    public InquiryDetailResponse updateInquiry(Long inquiryId, InquiryRequest inquiryUpdateRequest) {
+    public InquiryDetailResponse updateInquiry(Long inquiryId, User user, InquiryRequest inquiryUpdateRequest) {
         Inquiry inquiry = findInquiryById(inquiryId);
+
+        if (user.getUserType() != UserType.ADMIN && !inquiry.getUser().getId().equals(user.getId())) {
+            throw new BadRequestException(ExceptionCode.UNAUTHORIZED_USER);
+        }
+
         inquiry.updateInquiry(inquiryUpdateRequest.getTitle(), inquiryUpdateRequest.getContent());
 
         return InquiryDetailResponse.of(
@@ -77,8 +88,13 @@ public class InquiryService {
     }
 
     // 문의 삭제
-    public void deleteInquiry(Long inquiryId) {
+    public void deleteInquiry(Long inquiryId, User user) {
         Inquiry inquiry = findInquiryById(inquiryId);
+
+        if (user.getUserType() != UserType.ADMIN && !inquiry.getUser().getId().equals(user.getId())) {
+            throw new BadRequestException(ExceptionCode.UNAUTHORIZED_USER);
+        }
+
         inquiryRepository.delete(inquiry);
     }
 
@@ -110,8 +126,13 @@ public class InquiryService {
 
     // 문의 답변 조회
     @Transactional(readOnly = true)
-    public InquiryReplyResponse getInquiryReply(Long inquiryId) {
+    public InquiryReplyResponse getInquiryReply(Long inquiryId, User user) {
         Inquiry inquiry = findInquiryById(inquiryId);
+
+        if (user.getUserType() != UserType.ADMIN && !inquiry.getUser().getId().equals(user.getId())) {
+            throw new BadRequestException(ExceptionCode.UNAUTHORIZED_USER);
+        }
+        
         InquiryReply inquiryReply = inquiry.getReply();
 
         if (inquiryReply == null) {

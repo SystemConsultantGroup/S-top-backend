@@ -42,7 +42,7 @@ public class InquiryController {
             @AuthUser(accessType = {AccessType.COMPANY, AccessType.ADMIN}) User user,
             @PathVariable("inquiryId") Long inquiryId) {
 
-        InquiryDetailResponse inquiryDetailResponse = inquiryService.getInquiry(inquiryId);
+        InquiryDetailResponse inquiryDetailResponse = inquiryService.getInquiry(inquiryId, user);
         return ResponseEntity.status(HttpStatus.OK).body(inquiryDetailResponse);
 
     }
@@ -54,7 +54,7 @@ public class InquiryController {
             @PathVariable("inquiryId") Long inquiryId,
             @RequestBody @Valid InquiryRequest inquiryUpdateRequest) {
 
-        InquiryDetailResponse inquiryDetailResponse = inquiryService.updateInquiry(inquiryId,
+        InquiryDetailResponse inquiryDetailResponse = inquiryService.updateInquiry(inquiryId, user,
                 inquiryUpdateRequest);
         return ResponseEntity.status(HttpStatus.OK).body(inquiryDetailResponse);
     }
@@ -65,7 +65,7 @@ public class InquiryController {
             @AuthUser(accessType = {AccessType.ADMIN, AccessType.COMPANY}) User user,
             @PathVariable("inquiryId") Long inquiryId) {
 
-        inquiryService.deleteInquiry(inquiryId);
+        inquiryService.deleteInquiry(inquiryId, user);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -86,7 +86,7 @@ public class InquiryController {
             @AuthUser(accessType = {AccessType.COMPANY, AccessType.ADMIN}) User user,
             @PathVariable("inquiryId") Long inquiryId) {
 
-        InquiryReplyResponse inquiryReplyResponse = inquiryService.getInquiryReply(inquiryId);
+        InquiryReplyResponse inquiryReplyResponse = inquiryService.getInquiryReply(inquiryId, user);
         return ResponseEntity.status(HttpStatus.OK).body(inquiryReplyResponse);
     }
 
