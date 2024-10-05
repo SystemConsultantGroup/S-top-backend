@@ -53,7 +53,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureRestDocs
 public class InquiryControllerTest extends AbstractControllerTest {
 
-    private static final String ACCESS_TOKEN = "access_token";
+    private static final String ADMIN_ACCESS_TOKEN = "admin_access_token";
+    private static final String COMPANY_ACCESS_TOKEN = "company_access_token";
     private static final String REFRESH_TOKEN = "refresh_token";
 
 
@@ -79,7 +80,7 @@ public class InquiryControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 post("/projects/{projectId}/inquiry", 1L)
                         .contentType(APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, COMPANY_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
                         .content(objectMapper.writeValueAsString(request))
 
@@ -130,7 +131,7 @@ public class InquiryControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 get("/inquiries")
                         .contentType(APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, COMPANY_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
@@ -191,7 +192,7 @@ public class InquiryControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 get("/inquiries/{inquiryId}", 1L)
                         .contentType(APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, COMPANY_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
@@ -237,7 +238,7 @@ public class InquiryControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 put("/inquiries/{inquiryId}", 1L)
                         .contentType(APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, COMPANY_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
                         .content(objectMapper.writeValueAsString(request))
 
@@ -286,7 +287,7 @@ public class InquiryControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 delete("/inquiries/{inquiryId}", 1L)
                         .contentType(APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, COMPANY_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
@@ -322,7 +323,7 @@ public class InquiryControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 post("/inquiries/{inquiryId}/reply", 1L)
                         .contentType(APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, ADMIN_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
                         .content(objectMapper.writeValueAsString(request))
 
@@ -367,7 +368,7 @@ public class InquiryControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 get("/inquiries/{inquiryId}/reply", 1L)
                         .contentType(APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, COMPANY_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
@@ -407,7 +408,7 @@ public class InquiryControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 put("/inquiries/{inquiryId}/reply", 1L)
                         .contentType(APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, ADMIN_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
                         .content(objectMapper.writeValueAsString(request))
 
@@ -450,7 +451,7 @@ public class InquiryControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 delete("/inquiries/{inquiryId}/reply", 1L)
                         .contentType(APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, ADMIN_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
