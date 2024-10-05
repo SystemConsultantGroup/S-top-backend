@@ -10,8 +10,10 @@ import com.scg.stop.user.domain.AccessType;
 import com.scg.stop.user.domain.User;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -32,26 +34,39 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private static final int ONE_WEEK_SECONDS = 604800;
 
+    @Value("${spring.redirectUri}")
+    private String REDIRECT_URI;
+
     private final AuthService authService;
 
     @GetMapping(value = "/login/kakao")
-    public ResponseEntity<AccessTokenResponse> kakaoLogin(
+    public ResponseEntity<AccessTokenResponse> kakaoLogin (
             @RequestParam("code") String accessCode ,
             HttpServletResponse response
-    ) {
+    ) throws IOException {
         UserToken userTokens = authService.login(accessCode);
 
         ResponseCookie cookie = ResponseCookie.from("refresh-token", userTokens.getRefreshToken())
                 .maxAge(ONE_WEEK_SECONDS)
-//                .secure(true)
+                .secure(true)
                 .httpOnly(true)
                 .sameSite("None")
-                .domain(".stop.scg.skku.ac.kr")  // TODO: domain 수정
+//                .domain(".localhost")  // TODO: domain 수정
                 .path("/")
                 .build();
 
+        ResponseCookie AccessTokenCookie = ResponseCookie.from("access-token", userTokens.getAccessToken())
+                .maxAge(ONE_WEEK_SECONDS)
+                .secure(true)
+                .httpOnly(true)
+                .sameSite("None")
+//                .domain(".localhost")  // TODO: domain 수정
+                .path("/")
+                .build();
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-        return ResponseEntity.ok(new AccessTokenResponse(userTokens.getAccessToken()));
+        response.addHeader(HttpHeaders.SET_COOKIE, AccessTokenCookie.toString());
+        response.sendRedirect(REDIRECT_URI);
+        return ResponseEntity.status(HttpStatus.FOUND).build();
     }
 
     @PostMapping("/register")

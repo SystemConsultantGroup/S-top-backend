@@ -1,4 +1,4 @@
-package com.scg.stop.domain.project.domain;
+package com.scg.stop.project.domain;
 
 public enum ProjectCategory {
 

@@ -1,29 +1,24 @@
 package com.scg.stop.user.domain;
 
-import static jakarta.persistence.EnumType.*;
-import static jakarta.persistence.FetchType.LAZY;
-import static jakarta.persistence.GenerationType.*;
-import static lombok.AccessLevel.*;
-
-import com.scg.stop.domain.project.domain.Comment;
-import com.scg.stop.domain.project.domain.FavoriteProject;
-import com.scg.stop.domain.project.domain.Inquiry;
-import com.scg.stop.domain.project.domain.Likes;
 import com.scg.stop.domain.proposal.domain.Proposal;
+import com.scg.stop.global.domain.BaseTimeEntity;
+import com.scg.stop.project.domain.Comment;
+import com.scg.stop.project.domain.FavoriteProject;
+import com.scg.stop.project.domain.Inquiry;
+import com.scg.stop.project.domain.Likes;
 import com.scg.stop.video.domain.FavoriteVideo;
 import com.scg.stop.video.domain.UserQuiz;
-import com.scg.stop.global.domain.BaseTimeEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
@@ -93,7 +88,7 @@ public class User extends BaseTimeEntity {
         this.socialLoginId = socialLoginId;
     }
 
-    public void register(String name, String email, String phone, UserType userType, String signupSource ) {
+    public void register(String name, String email, String phone, UserType userType, String signupSource) {
         this.name = name;
         this.email = email;
         this.phone = phone;

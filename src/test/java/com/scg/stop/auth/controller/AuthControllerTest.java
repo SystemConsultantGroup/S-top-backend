@@ -6,9 +6,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
 import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
+import static org.springframework.restdocs.cookies.CookieDocumentation.responseCookies;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
-import static org.springframework.restdocs.payload.JsonFieldType.OBJECT;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
@@ -34,6 +34,7 @@ import com.scg.stop.user.domain.UserType;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -41,6 +42,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseCookie;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MvcResult;
@@ -52,6 +54,7 @@ public class AuthControllerTest extends AbstractControllerTest {
     private static final String REISSUED_ACCESS_TOKEN = "reissued_access_token";
     private static final String REFRESH_TOKEN = "refresh_token";
     private static final String accessCode = "codefromkakaologin";
+    private static final long ONE_WEEK_SECONDS = 199999;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -69,26 +72,20 @@ public class AuthControllerTest extends AbstractControllerTest {
 
         when(authService.login(any()))
                 .thenReturn(new UserToken(ACCESS_TOKEN, REFRESH_TOKEN));
-
         MvcResult mvcResult = mockMvc.perform(RestDocumentationRequestBuilders.get("/auth/login/kakao?code=codefromkakaologin"))
                 .andDo(restDocs.document(
                         queryParameters(
                                 parameterWithName("code").description("카카오 인가코드")
-                        ),
-                        responseFields(
-                                fieldWithPath("accessToken")
-                                        .type(STRING)
-                                        .description("access token")
+                                ),
+                        responseCookies(
+                                cookieWithName("refresh-token").description("리프레시 토큰"),
+                                cookieWithName("access-token").description("억세트 토큰")
+                                )
                         )
-                ))
+                )
                 .andReturn();
-        //then
-        AccessTokenResponse accessTokenResponse = objectMapper.readValue(
-                mvcResult.getResponse().getContentAsString(),
-                AccessTokenResponse.class
-        );
 
-        assertThat(accessTokenResponse.getAccessToken()).isEqualTo(ACCESS_TOKEN);
+        assertThat(mvcResult.getResponse().getCookies().length).isEqualTo(2);
     }
     @Test
     @DisplayName("회원가입을 통해 추가 정보를 입력할 수 있다.")
