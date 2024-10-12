@@ -84,11 +84,12 @@ public class ProjectControllerTest extends AbstractControllerTest {
                 ProjectType.STARTUP,
                 ProjectCategory.BIG_DATA_ANALYSIS,
                 AwardStatus.FIRST,
-                List.of("파이썬", "SQL"),
                 2023,
                 100,
                 false,
-                false
+                false,
+                "프로젝트 URL",
+                "프로젝트 설명"
         );
         ProjectResponse projectResponse2 = new ProjectResponse(
                 2L,
@@ -105,11 +106,12 @@ public class ProjectControllerTest extends AbstractControllerTest {
                 ProjectType.LAB,
                 ProjectCategory.AI_MACHINE_LEARNING,
                 AwardStatus.SECOND,
-                List.of("파이썬", "OpenCV"),
                 2023,
                 100,
                 false,
-                true
+                true,
+                "프로젝트 URL",
+                "프로젝트 설명"
         );
         Page<ProjectResponse> pageResponse = new PageImpl<>(List.of(projectResponse1, projectResponse2), PageRequest.of(0, 10), 2);
 
@@ -148,11 +150,12 @@ public class ProjectControllerTest extends AbstractControllerTest {
                                 fieldWithPath("content[].projectType").type(JsonFieldType.STRING).description("프로젝트 타입: RESEARCH_AND_BUSINESS_FOUNDATION, LAB, STARTUP, CLUB"),
                                 fieldWithPath("content[].projectCategory").type(JsonFieldType.STRING).description("프로젝트 카테고리: COMPUTER_VISION, SYSTEM_NETWORK, WEB_APPLICATION, SECURITY_SOFTWARE_ENGINEERING, NATURAL_LANGUAGE_PROCESSING, BIG_DATA_ANALYSIS, AI_MACHINE_LEARNING, INTERACTION_AUGMENTED_REALITY"),
                                 fieldWithPath("content[].awardStatus").type(JsonFieldType.STRING).description("수상 여부: NONE, FIRST, SECOND, THIRD, FOURTH, FIFTH"),
-                                fieldWithPath("content[].techStacks").type(JsonFieldType.ARRAY).description("기술 스택"),
                                 fieldWithPath("content[].year").type(JsonFieldType.NUMBER).description("프로젝트 년도"),
                                 fieldWithPath("content[].likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
                                 fieldWithPath("content[].like").type(JsonFieldType.BOOLEAN).description("좋아요 여부"),
                                 fieldWithPath("content[].bookMark").type(JsonFieldType.BOOLEAN).description("북마크 여부"),
+                                fieldWithPath("content[].url").type(JsonFieldType.STRING).description("프로젝트 URL"),
+                                fieldWithPath("content[].description").type(JsonFieldType.STRING).description("프로젝트 설명"),
                                 fieldWithPath("pageable").type(JsonFieldType.OBJECT).description("페이지 정보"),
                                 fieldWithPath("pageable.pageNumber").type(JsonFieldType.NUMBER).description("현재 페이지 번호"),
                                 fieldWithPath("pageable.pageSize").type(JsonFieldType.NUMBER).description("페이지 당 요소 수"),
@@ -187,7 +190,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
                 new MemberRequest("교수 이름 1", Role.PROFESSOR)
         );
 
-        ProjectRequest projectRequest = new ProjectRequest(1L, 2L, "프로젝트 이름", ProjectType.STARTUP, ProjectCategory.BIG_DATA_ANALYSIS, "팀 이름", "유튜브 ID", "파이썬, SQL", 2021, AwardStatus.NONE, memberRequest);
+        ProjectRequest projectRequest = new ProjectRequest(1L, 2L, "프로젝트 이름", ProjectType.STARTUP, ProjectCategory.BIG_DATA_ANALYSIS, "팀 이름", "유튜브 ID", 2021, AwardStatus.NONE, memberRequest, "프로젝트 URL", "프로젝트 설명");
 
         ProjectDetailResponse response = new ProjectDetailResponse(
                 1L,
@@ -208,7 +211,6 @@ public class ProjectControllerTest extends AbstractControllerTest {
                 ProjectCategory.BIG_DATA_ANALYSIS,
                 "팀 이름",
                 "유튜브 ID",
-                List.of("파이썬", "SQL"),
                 2024,
                 AwardStatus.FIRST,
                 List.of("학생 이름 1", "학생 이름 2"),
@@ -220,7 +222,9 @@ public class ProjectControllerTest extends AbstractControllerTest {
                         new CommentResponse(1L, 1L, "유저 이름", true, "댓글 내용", LocalDateTime.now(), LocalDateTime.now()),
                         new CommentResponse(2L, 1L, "유저 이름", false, "댓글 내용", LocalDateTime.now(), LocalDateTime.now()),
                         new CommentResponse(3L, 1L, "유저 이름", false, "댓글 내용", LocalDateTime.now(), LocalDateTime.now())
-                )
+                ),
+                "프로젝트 URL",
+                "프로젝트 설명"
         );
 
         when(projectService.createProject(any(ProjectRequest.class), any(User.class))).thenReturn(response);
@@ -245,12 +249,13 @@ public class ProjectControllerTest extends AbstractControllerTest {
                                 fieldWithPath("projectCategory").type(JsonFieldType.STRING).description("프로젝트 카테고리: COMPUTER_VISION, SYSTEM_NETWORK, WEB_APPLICATION, SECURITY_SOFTWARE_ENGINEERING, NATURAL_LANGUAGE_PROCESSING, BIG_DATA_ANALYSIS, AI_MACHINE_LEARNING, INTERACTION_AUGMENTED_REALITY\n"),
                                 fieldWithPath("teamName").type(JsonFieldType.STRING).description("팀 이름"),
                                 fieldWithPath("youtubeId").type(JsonFieldType.STRING).description("프로젝트 youtubeId"),
-                                fieldWithPath("techStack").type(JsonFieldType.STRING).description("기술 스택"),
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("프로젝트 년도"),
                                 fieldWithPath("awardStatus").type(JsonFieldType.STRING).description("수상 여부: NONE, FIRST, SECOND, THIRD, FOURTH, FIFTH"),
                                 fieldWithPath("members").type(JsonFieldType.ARRAY).description("멤버"),
                                 fieldWithPath("members[].name").type(JsonFieldType.STRING).description("멤버 이름"),
-                                fieldWithPath("members[].role").type(JsonFieldType.STRING).description("멤버 역할: STUDENT, PROFESSOR")
+                                fieldWithPath("members[].role").type(JsonFieldType.STRING).description("멤버 역할: STUDENT, PROFESSOR"),
+                                fieldWithPath("url").type(JsonFieldType.STRING).description("프로젝트 URL"),
+                                fieldWithPath("description").type(JsonFieldType.STRING).description("프로젝트 설명")
                         ),
                         responseFields(
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("프로젝트 ID"),
@@ -269,7 +274,6 @@ public class ProjectControllerTest extends AbstractControllerTest {
                                 fieldWithPath("projectCategory").type(JsonFieldType.STRING).description("프로젝트 카테고리: COMPUTER_VISION, SYSTEM_NETWORK, WEB_APPLICATION, SECURITY_SOFTWARE_ENGINEERING, NATURAL_LANGUAGE_PROCESSING, BIG_DATA_ANALYSIS, AI_MACHINE_LEARNING, INTERACTION_AUGMENTED_REALITY"),
                                 fieldWithPath("teamName").type(JsonFieldType.STRING).description("팀 이름"),
                                 fieldWithPath("youtubeId").type(JsonFieldType.STRING).description("프로젝트 youtubeId"),
-                                fieldWithPath("techStack").type(JsonFieldType.ARRAY).description("기술 스택"),
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("프로젝트 년도"),
                                 fieldWithPath("awardStatus").type(JsonFieldType.STRING).description("수상 여부: NONE, FIRST, SECOND, THIRD, FOURTH, FIFTH "),
                                 fieldWithPath("studentNames").type(JsonFieldType.ARRAY).description("학생 이름"),
@@ -277,6 +281,8 @@ public class ProjectControllerTest extends AbstractControllerTest {
                                 fieldWithPath("likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
                                 fieldWithPath("like").type(JsonFieldType.BOOLEAN).description("좋아요 여부"),
                                 fieldWithPath("bookMark").type(JsonFieldType.BOOLEAN).description("북마크 여부"),
+                                fieldWithPath("url").type(JsonFieldType.STRING).description("프로젝트 URL"),
+                                fieldWithPath("description").type(JsonFieldType.STRING).description("프로젝트 설명"),
                                 fieldWithPath("comments").type(JsonFieldType.ARRAY).description("댓글"),
                                 fieldWithPath("comments[].id").type(JsonFieldType.NUMBER).description("댓글 ID"),
                                 fieldWithPath("comments[].projectId").type(JsonFieldType.NUMBER).description("유저 ID"),
@@ -312,7 +318,6 @@ public class ProjectControllerTest extends AbstractControllerTest {
                 ProjectCategory.BIG_DATA_ANALYSIS,
                 "팀 이름",
                 "유튜브 ID",
-                List.of("파이썬", "SQL"),
                 2024,
                 AwardStatus.FIRST,
                 List.of("학생 이름 1", "학생 이름 2"),
@@ -324,7 +329,9 @@ public class ProjectControllerTest extends AbstractControllerTest {
                         new CommentResponse(1L, 1L, "유저 이름", true, "댓글 내용", LocalDateTime.now(), LocalDateTime.now()),
                         new CommentResponse(2L, 1L, "유저 이름", false, "댓글 내용", LocalDateTime.now(), LocalDateTime.now()),
                         new CommentResponse(3L, 1L, "유저 이름", false, "댓글 내용", LocalDateTime.now(), LocalDateTime.now())
-                )
+                ),
+                "프로젝트 URL",
+                "프로젝트 설명"
         );
 
         when(projectService.getProject(anyLong(), any(User.class))).thenReturn(response);
@@ -360,7 +367,6 @@ public class ProjectControllerTest extends AbstractControllerTest {
                                 fieldWithPath("projectCategory").type(JsonFieldType.STRING).description("프로젝트 카테고리: COMPUTER_VISION, SYSTEM_NETWORK, WEB_APPLICATION, SECURITY_SOFTWARE_ENGINEERING, NATURAL_LANGUAGE_PROCESSING, BIG_DATA_ANALYSIS, AI_MACHINE_LEARNING, INTERACTION_AUGMENTED_REALITY"),
                                 fieldWithPath("teamName").type(JsonFieldType.STRING).description("팀 이름"),
                                 fieldWithPath("youtubeId").type(JsonFieldType.STRING).description("프로젝트 youtubeId"),
-                                fieldWithPath("techStack").type(JsonFieldType.ARRAY).description("기술 스택"),
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("프로젝트 년도"),
                                 fieldWithPath("awardStatus").type(JsonFieldType.STRING).description("수상 여부: NONE, FIRST, SECOND, THIRD, FOURTH, FIFTH "),
                                 fieldWithPath("studentNames").type(JsonFieldType.ARRAY).description("학생 이름"),
@@ -368,6 +374,8 @@ public class ProjectControllerTest extends AbstractControllerTest {
                                 fieldWithPath("likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
                                 fieldWithPath("like").type(JsonFieldType.BOOLEAN).description("좋아요 여부"),
                                 fieldWithPath("bookMark").type(JsonFieldType.BOOLEAN).description("북마크 여부"),
+                                fieldWithPath("url").type(JsonFieldType.STRING).description("프로젝트 URL"),
+                                fieldWithPath("description").type(JsonFieldType.STRING).description("프로젝트 설명"),
                                 fieldWithPath("comments").type(JsonFieldType.ARRAY).description("댓글"),
                                 fieldWithPath("comments[].id").type(JsonFieldType.NUMBER).description("댓글 ID"),
                                 fieldWithPath("comments[].projectId").type(JsonFieldType.NUMBER).description("유저 ID"),
@@ -398,10 +406,11 @@ public class ProjectControllerTest extends AbstractControllerTest {
                 ProjectCategory.COMPUTER_VISION,
                 "팀 이름",
                 "유튜브 ID",
-                "파이썬, OpenCV, diffusers",
                 2024,
                 AwardStatus.FIRST,
-                memberRequest
+                memberRequest,
+                "프로젝트 URL",
+                "프로젝트 설명"
         );
 
         ProjectDetailResponse response = new ProjectDetailResponse(
@@ -423,7 +432,6 @@ public class ProjectControllerTest extends AbstractControllerTest {
                 ProjectCategory.COMPUTER_VISION,
                 "팀 이름",
                 "유튜브 ID",
-                List.of("파이썬", "OpenCV", "diffusers"),
                 2024,
                 AwardStatus.FIRST,
                 List.of("학생 이름 3", "학생 이름 4"),
@@ -435,7 +443,9 @@ public class ProjectControllerTest extends AbstractControllerTest {
                         new CommentResponse(1L, 1L, "유저 이름", true, "댓글 내용", LocalDateTime.now(), LocalDateTime.now()),
                         new CommentResponse(2L, 1L, "유저 이름", false, "댓글 내용", LocalDateTime.now(), LocalDateTime.now()),
                         new CommentResponse(3L, 1L, "유저 이름", false, "댓글 내용", LocalDateTime.now(), LocalDateTime.now())
-                )
+                ),
+                "프로젝트 URL",
+                "프로젝트 설명"
         );
 
         when(projectService.updateProject(anyLong(), any(ProjectRequest.class), any(User.class))).thenReturn(response);
@@ -463,12 +473,13 @@ public class ProjectControllerTest extends AbstractControllerTest {
                                 fieldWithPath("projectCategory").type(JsonFieldType.STRING).description("프로젝트 카테고리: COMPUTER_VISION, SYSTEM_NETWORK, WEB_APPLICATION, SECURITY_SOFTWARE_ENGINEERING, NATURAL_LANGUAGE_PROCESSING, BIG_DATA_ANALYSIS, AI_MACHINE_LEARNING, INTERACTION_AUGMENTED_REALITY\n"),
                                 fieldWithPath("teamName").type(JsonFieldType.STRING).description("팀 이름"),
                                 fieldWithPath("youtubeId").type(JsonFieldType.STRING).description("프로젝트 youtubeId"),
-                                fieldWithPath("techStack").type(JsonFieldType.STRING).description("기술 스택"),
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("프로젝트 년도"),
                                 fieldWithPath("awardStatus").type(JsonFieldType.STRING).description("수상 여부: NONE, FIRST, SECOND, THIRD, FOURTH, FIFTH"),
                                 fieldWithPath("members").type(JsonFieldType.ARRAY).description("멤버"),
                                 fieldWithPath("members[].name").type(JsonFieldType.STRING).description("멤버 이름"),
-                                fieldWithPath("members[].role").type(JsonFieldType.STRING).description("멤버 역할: STUDENT, PROFESSOR")
+                                fieldWithPath("members[].role").type(JsonFieldType.STRING).description("멤버 역할: STUDENT, PROFESSOR"),
+                                fieldWithPath("url").type(JsonFieldType.STRING).description("프로젝트 URL"),
+                                fieldWithPath("description").type(JsonFieldType.STRING).description("프로젝트 설명")
                         ),
                         responseFields(
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("프로젝트 ID"),
@@ -487,7 +498,6 @@ public class ProjectControllerTest extends AbstractControllerTest {
                                 fieldWithPath("projectCategory").type(JsonFieldType.STRING).description("프로젝트 카테고리: COMPUTER_VISION, SYSTEM_NETWORK, WEB_APPLICATION, SECURITY_SOFTWARE_ENGINEERING, NATURAL_LANGUAGE_PROCESSING, BIG_DATA_ANALYSIS, AI_MACHINE_LEARNING, INTERACTION_AUGMENTED_REALITY"),
                                 fieldWithPath("teamName").type(JsonFieldType.STRING).description("팀 이름"),
                                 fieldWithPath("youtubeId").type(JsonFieldType.STRING).description("프로젝트 youtubeId"),
-                                fieldWithPath("techStack").type(JsonFieldType.ARRAY).description("기술 스택"),
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("프로젝트 년도"),
                                 fieldWithPath("awardStatus").type(JsonFieldType.STRING).description("수상 여부: NONE, FIRST, SECOND, THIRD, FOURTH, FIFTH "),
                                 fieldWithPath("studentNames").type(JsonFieldType.ARRAY).description("학생 이름"),
@@ -495,6 +505,8 @@ public class ProjectControllerTest extends AbstractControllerTest {
                                 fieldWithPath("likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
                                 fieldWithPath("like").type(JsonFieldType.BOOLEAN).description("좋아요 여부"),
                                 fieldWithPath("bookMark").type(JsonFieldType.BOOLEAN).description("북마크 여부"),
+                                fieldWithPath("url").type(JsonFieldType.STRING).description("프로젝트 URL"),
+                                fieldWithPath("description").type(JsonFieldType.STRING).description("프로젝트 설명"),
                                 fieldWithPath("comments").type(JsonFieldType.ARRAY).description("댓글"),
                                 fieldWithPath("comments[].id").type(JsonFieldType.NUMBER).description("댓글 ID"),
                                 fieldWithPath("comments[].projectId").type(JsonFieldType.NUMBER).description("유저 ID"),
@@ -763,11 +775,12 @@ public class ProjectControllerTest extends AbstractControllerTest {
                 ProjectType.STARTUP,
                 ProjectCategory.BIG_DATA_ANALYSIS,
                 AwardStatus.FIRST,
-                List.of("파이썬", "SQL"),
                 2023,
                 100,
                 false,
-                false
+                false,
+                "프로젝트 URL",
+                "프로젝트 설명"
         );
         ProjectResponse projectResponse2 = new ProjectResponse(
                 2L,
@@ -784,11 +797,12 @@ public class ProjectControllerTest extends AbstractControllerTest {
                 ProjectType.LAB,
                 ProjectCategory.AI_MACHINE_LEARNING,
                 AwardStatus.SECOND,
-                List.of("파이썬", "OpenCV"),
                 2023,
                 100,
                 false,
-                true
+                true,
+                "프로젝트 URL",
+                "프로젝트 설명"
         );
         Page<ProjectResponse> pageResponse = new PageImpl<>(List.of(projectResponse1, projectResponse2), PageRequest.of(0, 10), 2);
 
@@ -825,11 +839,12 @@ public class ProjectControllerTest extends AbstractControllerTest {
                                 fieldWithPath("content[].projectType").type(JsonFieldType.STRING).description("프로젝트 타입: RESEARCH_AND_BUSINESS_FOUNDATION, LAB, STARTUP, CLUB"),
                                 fieldWithPath("content[].projectCategory").type(JsonFieldType.STRING).description("프로젝트 카테고리: COMPUTER_VISION, SYSTEM_NETWORK, WEB_APPLICATION, SECURITY_SOFTWARE_ENGINEERING, NATURAL_LANGUAGE_PROCESSING, BIG_DATA_ANALYSIS, AI_MACHINE_LEARNING, INTERACTION_AUGMENTED_REALITY"),
                                 fieldWithPath("content[].awardStatus").type(JsonFieldType.STRING).description("수상 여부: NONE, FIRST, SECOND, THIRD, FOURTH, FIFTH"),
-                                fieldWithPath("content[].techStacks").type(JsonFieldType.ARRAY).description("기술 스택"),
                                 fieldWithPath("content[].year").type(JsonFieldType.NUMBER).description("프로젝트 년도"),
                                 fieldWithPath("content[].likeCount").type(JsonFieldType.NUMBER).description("좋아요 수"),
                                 fieldWithPath("content[].like").type(JsonFieldType.BOOLEAN).description("좋아요 여부"),
                                 fieldWithPath("content[].bookMark").type(JsonFieldType.BOOLEAN).description("북마크 여부"),
+                                fieldWithPath("content[].url").type(JsonFieldType.STRING).description("프로젝트 URL"),
+                                fieldWithPath("content[].description").type(JsonFieldType.STRING).description("프로젝트 설명"),
                                 fieldWithPath("pageable").type(JsonFieldType.OBJECT).description("페이지 정보"),
                                 fieldWithPath("pageable.pageNumber").type(JsonFieldType.NUMBER).description("현재 페이지 번호"),
                                 fieldWithPath("pageable.pageSize").type(JsonFieldType.NUMBER).description("페이지 당 요소 수"),
