@@ -47,6 +47,12 @@ public class ProjectRequest {
     @NotNull(message = "멤버를 입력해주세요")
     private final List<MemberRequest> members;
 
+    @NotBlank(message = "프로젝트 URL을 입력해주세요")
+    private final String url;
+
+    @NotBlank(message = "프로젝트 설명을 입력해주세요")
+    private final String description;
+
     public ProjectRequest(
             Long thumbnailId,
             Long posterId,
@@ -57,7 +63,9 @@ public class ProjectRequest {
             String youtubeId,
             Integer year,
             AwardStatus awardStatus,
-            List<MemberRequest> members
+            List<MemberRequest> members,
+            String url,
+            String description
     ) {
 
         this.thumbnailId = thumbnailId;
@@ -70,6 +78,8 @@ public class ProjectRequest {
         this.year = year;
         this.awardStatus = awardStatus;
         this.members = members;
+        this.url = url;
+        this.description = description;
     }
 
     public Project toEntity(Long id, File thumbnail, File poster) {
@@ -81,6 +91,8 @@ public class ProjectRequest {
                 teamName,
                 youtubeId,
                 year,
+                url,
+                description,
                 awardStatus,
                 thumbnail,
                 poster,

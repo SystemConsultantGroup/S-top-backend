@@ -47,6 +47,12 @@ public class Project extends BaseTimeEntity {
     private Integer year;
 
     @Column(nullable = false)
+    private String url;
+
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String description;
+
+    @Column(nullable = false)
     @Enumerated(value = STRING)
     private AwardStatus awardStatus = AwardStatus.NONE;
 
@@ -80,6 +86,8 @@ public class Project extends BaseTimeEntity {
         this.team = project.getTeam();
         this.youtubeId = project.getYoutubeId();
         this.year = project.getYear();
+        this.url = project.getUrl();
+        this.description = project.getDescription();
         this.awardStatus = project.getAwardStatus();
         this.thumbnail = project.getThumbnail();
         this.poster = project.getPoster();

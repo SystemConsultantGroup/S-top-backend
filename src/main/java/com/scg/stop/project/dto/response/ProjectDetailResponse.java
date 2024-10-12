@@ -29,6 +29,8 @@ public class ProjectDetailResponse {
     private Boolean like;
     private Boolean bookMark;
     private List<CommentResponse> comments;
+    private String url;
+    private String description;
 
     public static ProjectDetailResponse of(User user, Project project){
         List<String> studentNames = project.getMembers().stream()
@@ -64,7 +66,9 @@ public class ProjectDetailResponse {
                 project.getLikes().size(),
                 like,
                 bookMark,
-                commentResponseList
+                commentResponseList,
+                project.getUrl(),
+                project.getDescription()
         );
     }
 }
