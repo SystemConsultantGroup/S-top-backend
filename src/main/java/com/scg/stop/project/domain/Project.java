@@ -44,9 +44,6 @@ public class Project extends BaseTimeEntity {
     private String youtubeId;
 
     @Column(nullable = false)
-    private String techStack;
-
-    @Column(nullable = false)
     private Integer year;
 
     @Column(nullable = false)
@@ -82,7 +79,6 @@ public class Project extends BaseTimeEntity {
         this.category = project.getCategory();
         this.team = project.getTeam();
         this.youtubeId = project.getYoutubeId();
-        this.techStack = project.getTechStack();
         this.year = project.getYear();
         this.awardStatus = project.getAwardStatus();
         this.thumbnail = project.getThumbnail();

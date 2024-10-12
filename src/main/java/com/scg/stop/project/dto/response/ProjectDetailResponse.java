@@ -21,7 +21,6 @@ public class ProjectDetailResponse {
     private ProjectCategory projectCategory;
     private String teamName;
     private String youtubeId;
-    private List<String> techStack;
     private Integer year;
     private AwardStatus awardStatus;
     private List<String> studentNames;
@@ -42,10 +41,6 @@ public class ProjectDetailResponse {
                 .map(Member::getName)
                 .collect(Collectors.toList());
 
-        List<String> techStackList = Arrays.stream(project.getTechStack().split(","))
-                .map(String::trim)
-                .collect(Collectors.toList());
-
         Boolean like = user != null ? project.getLikes().stream().anyMatch(likes -> likes.getUser().getId().equals(user.getId())) : false;
         Boolean bookMark = user != null ? project.getFavorites().stream().anyMatch(favoriteProject -> favoriteProject.getUser().getId().equals(user.getId())) : false;
 
@@ -62,7 +57,6 @@ public class ProjectDetailResponse {
                 project.getCategory(),
                 project.getTeam(),
                 project.getYoutubeId(),
-                techStackList,
                 project.getYear(),
                 project.getAwardStatus(),
                 studentNames,
