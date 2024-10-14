@@ -21,11 +21,12 @@ public class ProjectResponse {
     private ProjectType projectType;
     private ProjectCategory projectCategory;
     private AwardStatus awardStatus;
-    private List<String> techStacks;
     private Integer year;
     private Integer likeCount;
     private Boolean like;
     private Boolean bookMark;
+    private String url;
+    private String description;
 
     public static ProjectResponse of(User user, Project project){
         List<String> studentNames = project.getMembers().stream()
@@ -36,10 +37,6 @@ public class ProjectResponse {
         List<String> professorNames = project.getMembers().stream()
                 .filter(member -> member.getRole() == Role.PROFESSOR)
                 .map(Member::getName)
-                .collect(Collectors.toList());
-
-        List<String> techStackList = Arrays.stream(project.getTechStack().split(","))
-                .map(String::trim)
                 .collect(Collectors.toList());
 
         Boolean like = user != null ? project.getLikes().stream().anyMatch(likes -> likes.getUser().getId().equals(user.getId())) : false;
@@ -55,11 +52,12 @@ public class ProjectResponse {
                 project.getType(),
                 project.getCategory(),
                 project.getAwardStatus(),
-                techStackList,
                 project.getYear(),
                 project.getLikes().size(),
                 like,
-                bookMark
+                bookMark,
+                project.getUrl(),
+                project.getDescription()
         );
     }
 }

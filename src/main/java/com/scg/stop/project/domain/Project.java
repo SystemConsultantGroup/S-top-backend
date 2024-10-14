@@ -44,10 +44,12 @@ public class Project extends BaseTimeEntity {
     private String youtubeId;
 
     @Column(nullable = false)
-    private String techStack;
-
-    @Column(nullable = false)
     private Integer year;
+
+    private String url;
+
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String description;
 
     @Column(nullable = false)
     @Enumerated(value = STRING)
@@ -82,8 +84,9 @@ public class Project extends BaseTimeEntity {
         this.category = project.getCategory();
         this.team = project.getTeam();
         this.youtubeId = project.getYoutubeId();
-        this.techStack = project.getTechStack();
         this.year = project.getYear();
+        this.url = project.getUrl();
+        this.description = project.getDescription();
         this.awardStatus = project.getAwardStatus();
         this.thumbnail = project.getThumbnail();
         this.poster = project.getPoster();
