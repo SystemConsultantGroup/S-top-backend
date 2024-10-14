@@ -443,6 +443,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect1">
 <h2 id="_프로젝트_api">프로젝트 API</h2>
 <div class="sectionbody">
+<hr>
 <div class="sect2">
 <h3 id="_프로젝트_조회_get_projects">프로젝트 조회 (GET /projects)</h3>
 <div class="sect3">
@@ -470,11 +471,13 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1660
+Content-Length: 1759
 
 {
-  "totalPages" : 1,
   "totalElements" : 2,
+  "totalPages" : 1,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
@@ -491,10 +494,12 @@ Content-Length: 1660
     "projectType" : "STARTUP",
     "projectCategory" : "BIG_DATA_ANALYSIS",
     "awardStatus" : "FIRST",
-    "techStacks" : [ "파이썬", "SQL" ],
+    "year" : 2023,
     "likeCount" : 100,
     "like" : false,
-    "bookMark" : false
+    "bookMark" : false,
+    "url" : "프로젝트 URL",
+    "description" : "프로젝트 설명"
   }, {
     "id" : 2,
     "thumbnailInfo" : {
@@ -510,10 +515,12 @@ Content-Length: 1660
     "projectType" : "LAB",
     "projectCategory" : "AI_MACHINE_LEARNING",
     "awardStatus" : "SECOND",
-    "techStacks" : [ "파이썬", "OpenCV" ],
+    "year" : 2023,
     "likeCount" : 100,
     "like" : false,
-    "bookMark" : true
+    "bookMark" : true,
+    "url" : "프로젝트 URL",
+    "description" : "프로젝트 설명"
   } ],
   "number" : 0,
   "sort" : {
@@ -534,8 +541,6 @@ Content-Length: 1660
     "paged" : true,
     "unpaged" : false
   },
-  "first" : true,
-  "last" : true,
   "empty" : false
 }</code></pre>
 </div>
@@ -687,10 +692,10 @@ Content-Length: 1660
 <td class="tableblock halign-left valign-top"><p class="tableblock">수상 여부: NONE, FIRST, SECOND, THIRD, FOURTH, FIFTH</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].techStacks</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].year</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">기술 스택</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 년도</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].likeCount</code></p></td>
@@ -709,6 +714,18 @@ Content-Length: 1660
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">북마크 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 URL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 설명</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable</code></p></td>
@@ -850,7 +867,7 @@ Content-Length: 1660
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /projects HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 498
+Content-Length: 535
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -862,7 +879,6 @@ Cookie: refresh-token=refresh_token
   "projectCategory" : "BIG_DATA_ANALYSIS",
   "teamName" : "팀 이름",
   "youtubeId" : "유튜브 ID",
-  "techStack" : "파이썬, SQL",
   "year" : 2021,
   "awardStatus" : "NONE",
   "members" : [ {
@@ -874,7 +890,9 @@ Cookie: refresh-token=refresh_token
   }, {
     "name" : "교수 이름 1",
     "role" : "PROFESSOR"
-  } ]
+  } ],
+  "url" : "프로젝트 URL",
+  "description" : "프로젝트 설명"
 }</code></pre>
 </div>
 </div>
@@ -888,7 +906,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1450
+Content-Length: 1480
 
 {
   "id" : 1,
@@ -909,7 +927,6 @@ Content-Length: 1450
   "projectCategory" : "BIG_DATA_ANALYSIS",
   "teamName" : "팀 이름",
   "youtubeId" : "유튜브 ID",
-  "techStack" : [ "파이썬", "SQL" ],
   "year" : 2024,
   "awardStatus" : "FIRST",
   "studentNames" : [ "학생 이름 1", "학생 이름 2" ],
@@ -923,25 +940,27 @@ Content-Length: 1450
     "userName" : "유저 이름",
     "isAnonymous" : true,
     "content" : "댓글 내용",
-    "createdAt" : "2024-08-31T13:40:14.491907",
-    "updatedAt" : "2024-08-31T13:40:14.491912"
+    "createdAt" : "2024-10-14T14:10:19.17581",
+    "updatedAt" : "2024-10-14T14:10:19.175811"
   }, {
     "id" : 2,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-08-31T13:40:14.491915",
-    "updatedAt" : "2024-08-31T13:40:14.491917"
+    "createdAt" : "2024-10-14T14:10:19.175813",
+    "updatedAt" : "2024-10-14T14:10:19.175814"
   }, {
     "id" : 3,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-08-31T13:40:14.491918",
-    "updatedAt" : "2024-08-31T13:40:14.491919"
-  } ]
+    "createdAt" : "2024-10-14T14:10:19.175817",
+    "updatedAt" : "2024-10-14T14:10:19.175818"
+  } ],
+  "url" : "프로젝트 URL",
+  "description" : "프로젝트 설명"
 }</code></pre>
 </div>
 </div>
@@ -1007,12 +1026,6 @@ Content-Length: 1450
 <td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 youtubeId</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>techStack</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">기술 스택</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>year</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
@@ -1041,6 +1054,18 @@ Content-Length: 1450
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">멤버 역할: STUDENT, PROFESSOR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 URL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 설명</p></td>
 </tr>
 </tbody>
 </table>
@@ -1160,12 +1185,6 @@ Content-Length: 1450
 <td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 youtubeId</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>techStack</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">기술 스택</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>year</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
@@ -1206,6 +1225,18 @@ Content-Length: 1450
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">북마크 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 URL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 설명</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments</code></p></td>
@@ -1289,7 +1320,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1450
+Content-Length: 1481
 
 {
   "id" : 1,
@@ -1310,7 +1341,6 @@ Content-Length: 1450
   "projectCategory" : "BIG_DATA_ANALYSIS",
   "teamName" : "팀 이름",
   "youtubeId" : "유튜브 ID",
-  "techStack" : [ "파이썬", "SQL" ],
   "year" : 2024,
   "awardStatus" : "FIRST",
   "studentNames" : [ "학생 이름 1", "학생 이름 2" ],
@@ -1324,25 +1354,27 @@ Content-Length: 1450
     "userName" : "유저 이름",
     "isAnonymous" : true,
     "content" : "댓글 내용",
-    "createdAt" : "2024-08-31T13:40:14.359074",
-    "updatedAt" : "2024-08-31T13:40:14.359079"
+    "createdAt" : "2024-10-14T14:10:19.149705",
+    "updatedAt" : "2024-10-14T14:10:19.149706"
   }, {
     "id" : 2,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-08-31T13:40:14.359081",
-    "updatedAt" : "2024-08-31T13:40:14.359083"
+    "createdAt" : "2024-10-14T14:10:19.149707",
+    "updatedAt" : "2024-10-14T14:10:19.149708"
   }, {
     "id" : 3,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-08-31T13:40:14.359084",
-    "updatedAt" : "2024-08-31T13:40:14.359085"
-  } ]
+    "createdAt" : "2024-10-14T14:10:19.149709",
+    "updatedAt" : "2024-10-14T14:10:19.149709"
+  } ],
+  "url" : "프로젝트 URL",
+  "description" : "프로젝트 설명"
 }</code></pre>
 </div>
 </div>
@@ -1484,12 +1516,6 @@ Content-Length: 1450
 <td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 youtubeId</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>techStack</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">기술 스택</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>year</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
@@ -1530,6 +1556,18 @@ Content-Length: 1450
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">북마크 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 URL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 설명</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments</code></p></td>
@@ -1599,7 +1637,7 @@ Content-Length: 1450
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /projects/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 507
+Content-Length: 530
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -1611,7 +1649,6 @@ Cookie: refresh-token=refresh_token
   "projectCategory" : "COMPUTER_VISION",
   "teamName" : "팀 이름",
   "youtubeId" : "유튜브 ID",
-  "techStack" : "파이썬, OpenCV, diffusers",
   "year" : 2024,
   "awardStatus" : "FIRST",
   "members" : [ {
@@ -1623,7 +1660,9 @@ Cookie: refresh-token=refresh_token
   }, {
     "name" : "교수 이름 2",
     "role" : "PROFESSOR"
-  } ]
+  } ],
+  "url" : "프로젝트 URL",
+  "description" : "프로젝트 설명"
 }</code></pre>
 </div>
 </div>
@@ -1637,7 +1676,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1460
+Content-Length: 1477
 
 {
   "id" : 1,
@@ -1658,7 +1697,6 @@ Content-Length: 1460
   "projectCategory" : "COMPUTER_VISION",
   "teamName" : "팀 이름",
   "youtubeId" : "유튜브 ID",
-  "techStack" : [ "파이썬", "OpenCV", "diffusers" ],
   "year" : 2024,
   "awardStatus" : "FIRST",
   "studentNames" : [ "학생 이름 3", "학생 이름 4" ],
@@ -1672,25 +1710,27 @@ Content-Length: 1460
     "userName" : "유저 이름",
     "isAnonymous" : true,
     "content" : "댓글 내용",
-    "createdAt" : "2024-08-31T13:40:13.94677",
-    "updatedAt" : "2024-08-31T13:40:13.946778"
+    "createdAt" : "2024-10-14T14:10:19.060578",
+    "updatedAt" : "2024-10-14T14:10:19.060579"
   }, {
     "id" : 2,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-08-31T13:40:13.946784",
-    "updatedAt" : "2024-08-31T13:40:13.94679"
+    "createdAt" : "2024-10-14T14:10:19.060583",
+    "updatedAt" : "2024-10-14T14:10:19.060584"
   }, {
     "id" : 3,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-08-31T13:40:13.946792",
-    "updatedAt" : "2024-08-31T13:40:13.946794"
-  } ]
+    "createdAt" : "2024-10-14T14:10:19.060584",
+    "updatedAt" : "2024-10-14T14:10:19.060585"
+  } ],
+  "url" : "프로젝트 URL",
+  "description" : "프로젝트 설명"
 }</code></pre>
 </div>
 </div>
@@ -1778,12 +1818,6 @@ Content-Length: 1460
 <td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 youtubeId</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>techStack</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">기술 스택</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>year</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
@@ -1812,6 +1846,18 @@ Content-Length: 1460
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">멤버 역할: STUDENT, PROFESSOR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 URL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 설명</p></td>
 </tr>
 </tbody>
 </table>
@@ -1931,12 +1977,6 @@ Content-Length: 1460
 <td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 youtubeId</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>techStack</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">기술 스택</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>year</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
@@ -1977,6 +2017,18 @@ Content-Length: 1460
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">북마크 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 URL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 설명</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments</code></p></td>
@@ -2349,8 +2401,8 @@ Content-Length: 212
   "userName" : "유저 이름",
   "isAnonymous" : true,
   "content" : "댓글 내용",
-  "createdAt" : "2024-08-31T13:40:14.318178",
-  "updatedAt" : "2024-08-31T13:40:14.318184"
+  "createdAt" : "2024-10-14T14:10:19.138385",
+  "updatedAt" : "2024-10-14T14:10:19.138386"
 }</code></pre>
 </div>
 </div>
@@ -2563,11 +2615,13 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1660
+Content-Length: 1759
 
 {
-  "totalPages" : 1,
   "totalElements" : 2,
+  "totalPages" : 1,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
@@ -2584,10 +2638,12 @@ Content-Length: 1660
     "projectType" : "STARTUP",
     "projectCategory" : "BIG_DATA_ANALYSIS",
     "awardStatus" : "FIRST",
-    "techStacks" : [ "파이썬", "SQL" ],
+    "year" : 2023,
     "likeCount" : 100,
     "like" : false,
-    "bookMark" : false
+    "bookMark" : false,
+    "url" : "프로젝트 URL",
+    "description" : "프로젝트 설명"
   }, {
     "id" : 2,
     "thumbnailInfo" : {
@@ -2603,10 +2659,12 @@ Content-Length: 1660
     "projectType" : "LAB",
     "projectCategory" : "AI_MACHINE_LEARNING",
     "awardStatus" : "SECOND",
-    "techStacks" : [ "파이썬", "OpenCV" ],
+    "year" : 2023,
     "likeCount" : 100,
     "like" : false,
-    "bookMark" : true
+    "bookMark" : true,
+    "url" : "프로젝트 URL",
+    "description" : "프로젝트 설명"
   } ],
   "number" : 0,
   "sort" : {
@@ -2627,8 +2685,6 @@ Content-Length: 1660
     "paged" : true,
     "unpaged" : false
   },
-  "first" : true,
-  "last" : true,
   "empty" : false
 }</code></pre>
 </div>
@@ -2770,10 +2826,10 @@ Content-Length: 1660
 <td class="tableblock halign-left valign-top"><p class="tableblock">수상 여부: NONE, FIRST, SECOND, THIRD, FOURTH, FIFTH</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].techStacks</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].year</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">기술 스택</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 년도</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].likeCount</code></p></td>
@@ -2792,6 +2848,18 @@ Content-Length: 1660
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">북마크 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 URL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 설명</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable</code></p></td>
@@ -2926,7 +2994,7 @@ Content-Length: 1660
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-08-31 13:22:28 +0900
+Last updated 2024-09-05 18:32:34 +0900
 </div>
 </div>
 </body>

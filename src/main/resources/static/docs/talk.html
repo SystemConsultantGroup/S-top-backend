@@ -571,7 +571,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 503
+Content-Length: 502
 
 {
   "id" : 1,
@@ -592,8 +592,8 @@ Content-Length: 503
       "options" : [ "선지1", "선지2" ]
     }
   },
-  "createdAt" : "2024-09-12T15:40:15.222717",
-  "updatedAt" : "2024-09-12T15:40:15.222719"
+  "createdAt" : "2024-10-14T14:10:19.857708",
+  "updatedAt" : "2024-10-14T14:10:19.85771"
 }</code></pre>
 </div>
 </div>
@@ -767,8 +767,10 @@ Content-Type: application/json;charset=UTF-8
 Content-Length: 1043
 
 {
-  "totalPages" : 1,
   "totalElements" : 1,
+  "totalPages" : 1,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
@@ -790,30 +792,28 @@ Content-Length: 1043
         "options" : [ "선지1", "선지2" ]
       }
     },
-    "createdAt" : "2024-09-12T15:40:15.245016",
-    "updatedAt" : "2024-09-12T15:40:15.245019"
+    "createdAt" : "2024-10-14T14:10:19.869194",
+    "updatedAt" : "2024-10-14T14:10:19.869195"
   } ],
   "number" : 0,
   "sort" : {
     "empty" : true,
-    "unsorted" : true,
-    "sorted" : false
+    "sorted" : false,
+    "unsorted" : true
   },
+  "numberOfElements" : 1,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
     "sort" : {
       "empty" : true,
-      "unsorted" : true,
-      "sorted" : false
+      "sorted" : false,
+      "unsorted" : true
     },
     "offset" : 0,
     "paged" : true,
     "unpaged" : false
   },
-  "numberOfElements" : 1,
-  "first" : true,
-  "last" : true,
   "empty" : false
 }</code></pre>
 </div>
@@ -1094,7 +1094,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 523
+Content-Length: 524
 
 {
   "id" : 1,
@@ -1116,8 +1116,8 @@ Content-Length: 523
       "options" : [ "선지1", "선지2" ]
     }
   },
-  "createdAt" : "2024-09-12T15:40:15.199017",
-  "updatedAt" : "2024-09-12T15:40:15.19902"
+  "createdAt" : "2024-10-14T14:10:19.849266",
+  "updatedAt" : "2024-10-14T14:10:19.849267"
 }</code></pre>
 </div>
 </div>
@@ -1400,8 +1400,8 @@ Content-Length: 603
       "options" : [ "수정한 선지1", "수정한 선지2" ]
     }
   },
-  "createdAt" : "2024-09-12T15:40:15.033431",
-  "updatedAt" : "2024-09-12T15:40:15.033443"
+  "createdAt" : "2024-10-14T14:10:19.814454",
+  "updatedAt" : "2024-10-14T14:10:19.814456"
 }</code></pre>
 </div>
 </div>
@@ -2012,7 +2012,7 @@ Content-Length: 41
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-08-31 17:36:52 +0900
+Last updated 2024-09-04 13:10:00 +0900
 </div>
 </div>
 </body>
