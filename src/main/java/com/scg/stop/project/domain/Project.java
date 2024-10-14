@@ -46,7 +46,6 @@ public class Project extends BaseTimeEntity {
     @Column(nullable = false)
     private Integer year;
 
-    @Column(nullable = false)
     private String url;
 
     @Column(nullable = false, columnDefinition = "TEXT")
