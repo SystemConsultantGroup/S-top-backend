@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
-import com.scg.stop.domain.file.dto.response.FileResponse;
+import com.scg.stop.file.dto.response.FileResponse;
 import com.scg.stop.gallery.dto.request.GalleryRequest;
 import com.scg.stop.gallery.dto.response.GalleryResponse;
 import com.scg.stop.gallery.service.GalleryService;

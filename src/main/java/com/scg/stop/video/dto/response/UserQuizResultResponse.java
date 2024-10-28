@@ -6,7 +6,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class UserQuizResultResponse {
-    private Long user_id;
+
+    private Long userId;
     private String name;
     private String phone;
     private String email;

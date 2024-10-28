@@ -57,6 +57,13 @@ dependencies {
 	implementation 'io.micrometer:micrometer-registry-prometheus'
 
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// apache.poi for excel
+	implementation 'org.apache.poi:poi-ooxml:5.2.2'
+	implementation 'org.apache.poi:poi:5.2.2'
+
+	// minIO
+	implementation "io.minio:minio:8.5.11"
 }
 
 tasks.named('test') {
