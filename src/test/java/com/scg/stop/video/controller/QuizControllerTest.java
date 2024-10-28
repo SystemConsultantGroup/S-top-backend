@@ -55,7 +55,7 @@ public class QuizControllerTest extends AbstractControllerTest {
     @DisplayName("관리자는 올해의 퀴즈 제출 기록을 가져올 수 있다.")
     void getQuizResults() throws Exception {
         //given
-        UserQuizResultResponse response1 = new UserQuizResultResponse(1L, "name", "010-1111-1111","scg@scg.skku.ac.kr", 3L);
+        UserQuizResultResponse response1 = new UserQuizResultResponse(1L,"name", "010-1111-1111","scg@scg.skku.ac.kr", 3L);
         UserQuizResultResponse response2 = new UserQuizResultResponse(2L, "name2", "010-0000-1234", "iam@2tle.io",1L);
         Page<UserQuizResultResponse> pages = new PageImpl<>(List.of(response1, response2), PageRequest.of(0,10), 2);
 
@@ -109,7 +109,7 @@ public class QuizControllerTest extends AbstractControllerTest {
                                 fieldWithPath("sort.sorted").type(JsonFieldType.BOOLEAN).description("정렬된 상태인지 여부"),
                                 fieldWithPath("empty").type(JsonFieldType.BOOLEAN).description("비어있는 페이지 여부"),
                                 //content
-                                fieldWithPath("content[].user_id").type(JsonFieldType.NUMBER).description("유저의 ID"),
+                                fieldWithPath("content[].userId").type(JsonFieldType.STRING).description("유저의 아이디"),
                                 fieldWithPath("content[].name").type(JsonFieldType.STRING).description("유저의 이름"),
                                 fieldWithPath("content[].phone").type(JsonFieldType.STRING).description("유저의 연락처"),
                                 fieldWithPath("content[].email").type(JsonFieldType.STRING).description("유저의 이메일"),
