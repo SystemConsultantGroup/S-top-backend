@@ -2,7 +2,7 @@ package com.scg.stop.gallery.dto.response;
 
 import static lombok.AccessLevel.PRIVATE;
 
-import com.scg.stop.domain.file.dto.response.FileResponse;
+import com.scg.stop.file.dto.response.FileResponse;
 import com.scg.stop.gallery.domain.Gallery;
 import java.time.LocalDateTime;
 import java.util.List;

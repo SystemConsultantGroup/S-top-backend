@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -19,16 +21,18 @@ public class QuizRequest {
     //@NotNull(message = "퀴즈를 입력해주세요.")
     @Size(min=1, message = "퀴즈는 1개 이상이어야 합니다.")
     @Valid
-    public Map<String,
-            @Valid QuizInfoRequest> quiz;
+    public List<@Valid QuizInfoRequest> quiz;
 
     public Quiz toEntity() { return Quiz.from(
             this.toQuizInfoMap()
     ); }
 
     public Map<String, QuizInfo> toQuizInfoMap() {
-        return quiz.entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().toQuizInfo()));
+        Map<String, QuizInfo> quizInfoMap = new HashMap<>();
+        for(int i = 0; i < quiz.size(); i++) {
+            quizInfoMap.put(Integer.toString(i), quiz.get(i).toQuizInfo());
+        }
+        return quizInfoMap;
     }
 
 }

@@ -38,7 +38,8 @@ public class EventPeriodService {
     @Transactional(readOnly = true)
     public EventPeriodResponse getEventPeriod() {
         int currentYear = LocalDateTime.now().getYear();
-        EventPeriod eventPeriod = eventPeriodRepository.findByYear(currentYear);
+        EventPeriod eventPeriod = eventPeriodRepository.findByYear(currentYear)
+                .orElseThrow(() -> new BadRequestException(NOT_FOUND_EVENT_PERIOD));
         return EventPeriodResponse.from(eventPeriod);
     }
 
@@ -52,10 +53,8 @@ public class EventPeriodService {
 
     public EventPeriodResponse updateEventPeriod(EventPeriodRequest request) {
         int currentYear = LocalDateTime.now().getYear();
-        EventPeriod currentEventPeriod = eventPeriodRepository.findByYear(currentYear);
-        if (currentEventPeriod == null) {
-            throw new BadRequestException(NOT_FOUND_EVENT_PERIOD);
-        }
+        EventPeriod currentEventPeriod = eventPeriodRepository.findByYear(currentYear)
+                .orElseThrow(() -> new BadRequestException(NOT_FOUND_EVENT_PERIOD));
         currentEventPeriod.update(request.getStart(), request.getEnd());
         return EventPeriodResponse.from(currentEventPeriod);
     }
