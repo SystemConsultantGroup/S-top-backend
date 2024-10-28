@@ -6,3 +6,8 @@
 ====
 operation::quiz-controller-test/get-quiz-results[snippets="http-request,query-parameters,http-response,response-fields"]
 ====
+
+=== 퀴즈 결과를 엑셀로 받기 (GET /quizzes/result/excel)
+====
+operation::quiz-controller-test/get-quiz-results-to-excel[snippets="http-request,query-parameters,http-response"]
+====

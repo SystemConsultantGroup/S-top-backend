@@ -2,6 +2,8 @@ package com.scg.stop.video.service;
 
 import com.scg.stop.event.domain.EventPeriod;
 import com.scg.stop.event.repository.EventPeriodRepository;
+import com.scg.stop.global.excel.Excel;
+import com.scg.stop.global.excel.ExcelUtil;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.user.domain.User;
@@ -13,18 +15,22 @@ import com.scg.stop.video.domain.UserQuiz;
 import com.scg.stop.video.dto.request.QuizSubmitRequest;
 import com.scg.stop.video.dto.response.QuizResponse;
 import com.scg.stop.video.dto.response.QuizSubmitResponse;
+import com.scg.stop.video.dto.response.UserQuizResultExcelResponse;
 import com.scg.stop.video.dto.response.UserQuizResultResponse;
 import com.scg.stop.video.repository.QuizRepository;
 import com.scg.stop.video.repository.TalkRepository;
 import com.scg.stop.video.repository.UserQuizRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -35,6 +41,8 @@ public class QuizService {
     private final UserQuizRepository userQuizRepository;
     private final EventPeriodRepository eventPeriodRepository;
     private final UserRepository userRepository;
+
+    private final ExcelUtil excelUtil;
 
     @Transactional(readOnly = true)
     public QuizResponse getQuiz(Long talkId) {
@@ -93,6 +101,17 @@ public class QuizService {
             year = LocalDateTime.now().getYear();
         }
         return userQuizRepository.findUserQuizResults(year, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Excel getQuizResultToExcel(Integer year) {
+        if(year == null) {
+            year = LocalDateTime.now().getYear();
+        }
+        List<UserQuizResultExcelResponse> lists = userQuizRepository.findAllByYear(year);
+        SXSSFWorkbook workbook = excelUtil.createExcel(lists, UserQuizResultExcelResponse.class);
+        String filename = excelUtil.getFilename(workbook, UserQuizResultExcelResponse.class);
+        return excelUtil.toExcel(filename, workbook);
     }
 
     @Transactional(readOnly = true)

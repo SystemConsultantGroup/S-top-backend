@@ -71,6 +71,9 @@ public enum ExceptionCode {
     MISMATCH_CURRENT_YEAR(8805, "대담 영상과 현재 이벤트 참여 연도가 일치하지 않습니다."),
     TOO_MANY_TRY_QUIZ(8901, "퀴즈 최대 시도 횟수를 초과하였습니다."),
 
+    // excel
+    NOT_COMPATIBLE_EXCEL(71001, "엑셀 파일이 주어진 클래스와 호환되지 않습니다."),
+
     // gallery domain
     NOT_FOUND_GALLERY_ID(9001, "요청한 ID에 해당하는 갤러리가 존재하지 않습니다.");
 

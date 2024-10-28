@@ -2,9 +2,11 @@ package com.scg.stop.video.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
+import com.scg.stop.global.excel.Excel;
 import com.scg.stop.video.dto.response.UserQuizResultResponse;
 import com.scg.stop.video.service.QuizService;
 import jakarta.servlet.http.Cookie;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
 import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
-import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -54,7 +55,7 @@ public class QuizControllerTest extends AbstractControllerTest {
     @DisplayName("관리자는 올해의 퀴즈 제출 기록을 가져올 수 있다.")
     void getQuizResults() throws Exception {
         //given
-        UserQuizResultResponse response1 = new UserQuizResultResponse(1L, "name", "010-1111-1111","scg@scg.skku.ac.kr", 3L);
+        UserQuizResultResponse response1 = new UserQuizResultResponse(1L,"name", "010-1111-1111","scg@scg.skku.ac.kr", 3L);
         UserQuizResultResponse response2 = new UserQuizResultResponse(2L, "name2", "010-0000-1234", "iam@2tle.io",1L);
         Page<UserQuizResultResponse> pages = new PageImpl<>(List.of(response1, response2), PageRequest.of(0,10), 2);
 
@@ -108,12 +109,47 @@ public class QuizControllerTest extends AbstractControllerTest {
                                 fieldWithPath("sort.sorted").type(JsonFieldType.BOOLEAN).description("정렬된 상태인지 여부"),
                                 fieldWithPath("empty").type(JsonFieldType.BOOLEAN).description("비어있는 페이지 여부"),
                                 //content
-                                fieldWithPath("content[].user_id").type(JsonFieldType.NUMBER).description("유저의 ID"),
+                                fieldWithPath("content[].userId").type(JsonFieldType.NUMBER).description("유저의 아이디"),
                                 fieldWithPath("content[].name").type(JsonFieldType.STRING).description("유저의 이름"),
                                 fieldWithPath("content[].phone").type(JsonFieldType.STRING).description("유저의 연락처"),
                                 fieldWithPath("content[].email").type(JsonFieldType.STRING).description("유저의 이메일"),
                                 fieldWithPath("content[].successCount").type(JsonFieldType.NUMBER).description("유저가 퀴즈를 성공한 횟수의 합")
                         )
                 ));
+    }
+
+    @Test
+    @DisplayName("관리자는 퀴즈 데이터를 엑셀로 다운로드 받을 수 있다.")
+    void getQuizResultsToExcel() throws Exception {
+        //given
+        //String contentType = "ms-vnd/excel";
+        SXSSFWorkbook workbook = new SXSSFWorkbook();
+        Excel excel = new Excel("excel.xlsx", workbook);
+        when(quizService.getQuizResultToExcel(any())).thenReturn(excel);
+
+        //when
+        ResultActions result = mockMvc.perform(
+            get("/quizzes/result/excel")
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                    .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
+
+        result.andExpect(status().isOk())
+                .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
+                        ),
+                        queryParameters(
+                                parameterWithName("year").description("찾고자 하는 퀴즈 푼 문제의 연도, 기본값 올해").optional()
+                        )
+                ));
+
+
     }
 }
