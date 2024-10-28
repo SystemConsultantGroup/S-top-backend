@@ -109,7 +109,7 @@ public class QuizControllerTest extends AbstractControllerTest {
                                 fieldWithPath("sort.sorted").type(JsonFieldType.BOOLEAN).description("정렬된 상태인지 여부"),
                                 fieldWithPath("empty").type(JsonFieldType.BOOLEAN).description("비어있는 페이지 여부"),
                                 //content
-                                fieldWithPath("content[].userId").type(JsonFieldType.STRING).description("유저의 아이디"),
+                                fieldWithPath("content[].userId").type(JsonFieldType.NUMBER).description("유저의 아이디"),
                                 fieldWithPath("content[].name").type(JsonFieldType.STRING).description("유저의 이름"),
                                 fieldWithPath("content[].phone").type(JsonFieldType.STRING).description("유저의 연락처"),
                                 fieldWithPath("content[].email").type(JsonFieldType.STRING).description("유저의 이메일"),
