@@ -445,7 +445,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <hr>
 <div class="sect2">
-<h3 id="_파일_업로드_post_files">파일 업로드 (POST /files)</h3>
+<h3 id="_다중_파일_업로드_post_files">다중 파일 업로드 (POST /files)</h3>
 <div class="exampleblock">
 <div class="content">
 <div class="sect3">
@@ -457,10 +457,15 @@ Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWA
 Host: localhost:8080
 
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=file; filename=s-top 로고.png
+Content-Disposition: form-data; name=files; filename=첨부파일1.png
 Content-Type: image/png
 
 [BINARY DATA - PNG IMAGE CONTENT]
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=files; filename=첨부파일2.pdf
+Content-Type: application/pdf
+
+[BINARY DATA - PDF CONTENT]
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
 </div>
 </div>
@@ -480,8 +485,8 @@ Content-Type: image/png
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>file</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">업로드할 파일</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>files</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">업로드할 파일 리스트</p></td>
 </tr>
 </tbody>
 </table>
@@ -495,16 +500,23 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 216
+Content-Length: 446
 
-{
+[ {
   "id" : 1,
-  "uuid" : "36786f77-c44c-4f94-a782-4e8d3e5b3321",
-  "name" : "s-top 로고.png",
+  "uuid" : "e5fd517c-7376-4dce-83ea-693607200e43",
+  "name" : "첨부파일1.png",
   "mimeType" : "image/png",
-  "createdAt" : "2024-08-09T00:38:14.256937",
-  "updatedAt" : "2024-08-09T00:38:14.256947"
-}</code></pre>
+  "createdAt" : "2024-10-29T22:38:55.703391",
+  "updatedAt" : "2024-10-29T22:38:55.703395"
+}, {
+  "id" : 2,
+  "uuid" : "338f27eb-914c-4ef2-a5b2-6f0d6b7f2053",
+  "name" : "첨부파일2.pdf",
+  "mimeType" : "application/pdf",
+  "createdAt" : "2024-10-29T22:38:55.703419",
+  "updatedAt" : "2024-10-29T22:38:55.703421"
+} ]</code></pre>
 </div>
 </div>
 </div>
@@ -512,46 +524,54 @@ Content-Length: 216
 <h4 id="_response_fields">Response fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Name</th>
 <th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Required</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">파일 ID</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>uuid</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].uuid</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">파일 UUID</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].name</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">파일 이름</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mimeType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].mimeType</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">파일의 MIME 타입</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>createdAt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].createdAt</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">파일 생성일</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>updatedAt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].updatedAt</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">파일 수정일</p></td>
 </tr>
 </tbody>
@@ -619,7 +639,7 @@ Content-Length: 33
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-08-09 00:37:44 +0900
+Last updated 2024-10-29 22:17:27 +0900
 </div>
 </div>
 </body>

@@ -58,7 +58,7 @@ public class AuthController {
         ResponseCookie AccessTokenCookie = ResponseCookie.from("access-token", userTokens.getAccessToken())
                 .maxAge(ONE_WEEK_SECONDS)
                 .secure(true)
-                .httpOnly(true)
+                .httpOnly(false)
                 .sameSite("None")
 //                .domain(".localhost")  // TODO: domain 수정
                 .path("/")

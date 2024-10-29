@@ -2,7 +2,7 @@ package com.scg.stop.notice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
-import com.scg.stop.domain.file.dto.response.FileResponse;
+import com.scg.stop.file.dto.response.FileResponse;
 import com.scg.stop.notice.dto.request.NoticeRequest;
 import com.scg.stop.notice.dto.response.NoticeListElementResponse;
 import com.scg.stop.notice.dto.response.NoticeResponse;

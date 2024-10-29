@@ -1,24 +1,24 @@
 package com.scg.stop.user.domain;
 
-import com.scg.stop.domain.proposal.domain.Proposal;
-import com.scg.stop.global.domain.BaseTimeEntity;
+import static jakarta.persistence.EnumType.*;
+import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.*;
+import static lombok.AccessLevel.*;
+
 import com.scg.stop.project.domain.Comment;
 import com.scg.stop.project.domain.FavoriteProject;
 import com.scg.stop.project.domain.Inquiry;
 import com.scg.stop.project.domain.Likes;
+import com.scg.stop.domain.proposal.domain.Proposal;
 import com.scg.stop.video.domain.FavoriteVideo;
 import com.scg.stop.video.domain.UserQuiz;
+import com.scg.stop.global.domain.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static jakarta.persistence.EnumType.STRING;
-import static jakarta.persistence.FetchType.LAZY;
-import static jakarta.persistence.GenerationType.IDENTITY;
-import static lombok.AccessLevel.PROTECTED;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
@@ -56,10 +56,10 @@ public class User extends BaseTimeEntity {
     @OneToMany(fetch = LAZY, mappedBy = "user")
     private List<Proposal> proposals = new ArrayList<>();
 
-    @OneToMany(fetch = LAZY, mappedBy = "user")
+    @OneToMany(fetch = LAZY, mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<UserQuiz> userQuizzes = new ArrayList<>();
 
-    @OneToMany(fetch = LAZY, mappedBy = "user")
+    @OneToMany(fetch = LAZY, mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<FavoriteVideo> favoriteVideos = new ArrayList<>();
 
     @OneToMany(fetch = LAZY, mappedBy = "user")
@@ -88,11 +88,27 @@ public class User extends BaseTimeEntity {
         this.socialLoginId = socialLoginId;
     }
 
-    public void register(String name, String email, String phone, UserType userType, String signupSource) {
+    public void register(String name, String email, String phone, UserType userType, String signupSource ) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.userType = userType;
         this.signupSource = signupSource;
+    }
+
+    public void addLikes(Likes likes) {
+        this.likes.add(likes);
+    }
+
+    public void removeLikes(Likes likes) {
+        this.likes.remove(likes);
+    }
+
+    public void addFavoriteProject(FavoriteProject favoriteProject) {
+        this.favoriteProjects.add(favoriteProject);
+    }
+
+    public void removeFavoriteProject(FavoriteProject favoriteProject) {
+        this.favoriteProjects.remove(favoriteProject);
     }
 }

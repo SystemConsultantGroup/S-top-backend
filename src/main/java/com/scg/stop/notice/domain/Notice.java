@@ -1,6 +1,6 @@
 package com.scg.stop.notice.domain;
 
-import com.scg.stop.domain.file.domain.File;
+import com.scg.stop.file.domain.File;
 import com.scg.stop.global.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -7,6 +7,7 @@ import static lombok.AccessLevel.PROTECTED;
 import com.scg.stop.global.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,7 +39,7 @@ public class Talk extends BaseTimeEntity {
     @OneToOne(fetch = LAZY, mappedBy = "talk", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Quiz quiz;
 
-    @OneToMany(fetch = LAZY, mappedBy = "talk")
+    @OneToMany(fetch = LAZY, mappedBy = "talk", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<FavoriteVideo> favoriteVideos;
 
     public Talk(String title, String youtubeId, Integer year, String talkerBelonging, String talkerName) {
@@ -47,6 +48,7 @@ public class Talk extends BaseTimeEntity {
         this.year = year;
         this.talkerBelonging = talkerBelonging;
         this.talkerName = talkerName;
+        this.favoriteVideos = new ArrayList<>();
     }
     public static Talk from(
             String title,
@@ -86,6 +88,14 @@ public class Talk extends BaseTimeEntity {
         if(quiz != null) {
             quiz.setTalk(this);
         }
+    }
+
+    public void addFavoriteVideo(FavoriteVideo favoriteVideo) {
+        this.favoriteVideos.add(favoriteVideo);
+    }
+
+    public void removeFavoriteVideo(FavoriteVideo favoriteVideo) {
+        this.favoriteVideos.remove(favoriteVideo);
     }
 
 }

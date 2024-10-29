@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class EventNoticeController {
     @GetMapping
     public ResponseEntity<Page<EventNoticeListElementResponse>> getEventNoticeList(
             @RequestParam(value = "title", required = false) String title,
-            @PageableDefault(page = 0, size = 10) Pageable pageable) {
+            @PageableDefault(page = 0, size = 10, sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable) {
         Page<EventNoticeListElementResponse> eventNoticeList = eventNoticeService.getEventNoticeList(title, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(eventNoticeList);
     }
