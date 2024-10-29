@@ -42,6 +42,7 @@ jobs:
           echo "${{ secrets.OAUTH_YML }}" | base64 --decode > src/main/resources/application-oauth.yml
           echo "${{ secrets.MINIO_YML }}" | base64 --decode > src/main/resources/application-minio.yml
           echo "${{ secrets.NOTION_YML }}" | base64 --decode > src/main/resources/application-notion.yml
+          echo "${{ secrets.EMAIL_YML }}" | base64 --decode > src/main/resources/application-email.yml
           find src
 
       - name: gradlew 권한 부여
