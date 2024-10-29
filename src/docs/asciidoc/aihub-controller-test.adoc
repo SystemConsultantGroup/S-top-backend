@@ -1,0 +1,16 @@
+== AI HUB API
+:source-highlighter: highlightjs
+
+---
+
+=== AI HUB 모델 리스트 조회 (POST /aihub/models)
+
+====
+operation::ai-hub-controller-test/get-ai-hub-models[snippets="query-parameters,request-fields,http-request,http-response,response-fields"]
+====
+
+=== AI HUB 데이터셋 리스트 조회 (POST /aihub/datasets)
+
+====
+operation::ai-hub-controller-test/get-ai-hub-datasets[snippets="query-parameters,request-fields,http-request,http-response,response-fields"]
+====

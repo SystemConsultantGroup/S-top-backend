@@ -37,4 +37,19 @@ public class UserQuiz extends BaseTimeEntity {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
+
+    private UserQuiz(User user, Quiz quiz, boolean isSuccess) {
+        this.user = user;
+        this.quiz = quiz;
+        this.isSuccess = isSuccess;
+    }
+
+    public static UserQuiz from(User user, Quiz quiz, boolean isSuccess) {
+        return new UserQuiz(user, quiz, isSuccess);
+    }
+
+    public void updateSuccess(boolean success) {
+        isSuccess = success;
+        tryCount = tryCount + 1;
+    }
 }

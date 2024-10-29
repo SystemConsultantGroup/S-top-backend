@@ -42,6 +42,14 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
         if (request == null) {
             throw new InvalidJwtException(ExceptionCode.FAILED_TO_VALIDATE_TOKEN);
         }
+
+        AccessType[] allowedTypes = Objects.requireNonNull(parameter.getParameterAnnotation(AuthUser.class)).accessType();
+        List<AccessType> accessTypeList = Arrays.asList(allowedTypes);
+
+        if(accessTypeList.contains(AccessType.OPTIONAL) && !hasAccessToken(request)) {
+            return null;
+        }
+
         String contextPath = request.getRequestURI();
         String refreshToken = extractRefreshToken(request);
         String accessToken = extractAccessToken(request);
@@ -62,10 +70,9 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
                     throw new BadRequestException(ExceptionCode.REGISTER_NOT_FINISHED);
                 }
             }
-            AccessType[] allowedTypes = Objects.requireNonNull(parameter.getParameterAnnotation(AuthUser.class)).accessType();
-            List<AccessType> accessTypeList = Arrays.asList(allowedTypes);
 
-            if (accessTypeList.contains(AccessType.ALL)) {
+
+            if (accessTypeList.contains(AccessType.ALL) || accessTypeList.contains(AccessType.OPTIONAL)) {
                 return extractedUser;
             }
             else if (extractedUserType.equals(UserType.ADMIN)) {
@@ -118,5 +125,11 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
 
         return userRepository.findById(userId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_USER_ID));
+    }
+
+    private boolean hasAccessToken(HttpServletRequest request) {
+        final String BEARER = "Bearer ";
+        String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        return authHeader != null && authHeader.startsWith(BEARER);
     }
 }

@@ -3,8 +3,8 @@ package com.scg.stop.gallery.service;
 import static com.scg.stop.global.exception.ExceptionCode.NOT_FOUND_FILE_ID;
 import static com.scg.stop.global.exception.ExceptionCode.NOT_FOUND_GALLERY_ID;
 
-import com.scg.stop.domain.file.domain.File;
-import com.scg.stop.domain.file.repository.FileRepository;
+import com.scg.stop.file.domain.File;
+import com.scg.stop.file.repository.FileRepository;
 import com.scg.stop.gallery.domain.Gallery;
 import com.scg.stop.gallery.dto.request.GalleryRequest;
 import com.scg.stop.gallery.dto.response.GalleryResponse;
