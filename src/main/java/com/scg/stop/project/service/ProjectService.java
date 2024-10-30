@@ -17,6 +17,13 @@ import com.scg.stop.project.repository.LikeRepository;
 import com.scg.stop.project.repository.ProjectRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
+import com.scg.stop.global.infrastructure.EmailService;
+import com.scg.stop.project.domain.Inquiry;
+import com.scg.stop.project.domain.Project;
+import com.scg.stop.project.dto.request.InquiryRequest;
+import com.scg.stop.project.dto.response.InquiryDetailResponse;
+import com.scg.stop.project.repository.InquiryRepository;
+import com.scg.stop.project.repository.ProjectRepository;
 import com.scg.stop.user.domain.User;
 import com.scg.stop.user.repository.UserRepository;
 import jakarta.persistence.EntityManager;
@@ -27,6 +34,8 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -44,6 +53,11 @@ public class ProjectService {
     private final CommentRepository commentRepository;
     private final EventPeriodRepository eventPeriodRepository;
     private final UserRepository userRepository;
+    private final InquiryRepository inquiryRepository;
+    private final EmailService emailService;
+
+    @Value("${spring.mail.adminEmail}")
+    private String adminEmail;
 
     @Autowired
     private EntityManager entityManager;
@@ -54,7 +68,7 @@ public class ProjectService {
         Page<ProjectResponse> projectResponses = projects.map(project -> ProjectResponse.of(user, project));
         return projectResponses;
     }
-  
+
     public ProjectDetailResponse createProject(ProjectRequest projectRequest, User user) {
         File thumbnail = fileRepository.findById(projectRequest.getThumbnailId())
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT_THUMBNAIL));
@@ -182,5 +196,29 @@ public class ProjectService {
         Page<Project> projects = projectRepository.findAwardProjects(year, page);
         Page<ProjectResponse> projectResponses = projects.map(project -> ProjectResponse.of(user, project));
         return projectResponses;
+    }
+
+    public InquiryDetailResponse createProjectInquiry(Long projectId, User user, InquiryRequest inquiryRequest) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT));
+        Inquiry inquiry = Inquiry.createInquiry(
+                inquiryRequest.getTitle(),
+                inquiryRequest.getContent(),
+                project,
+                user
+        );
+        inquiryRepository.save(inquiry);
+        emailService.sendEmail(adminEmail, inquiry.getTitle(), inquiry.getContent());
+        return InquiryDetailResponse.of(
+                inquiry.getId(),
+                user.getName(),
+                project.getId(),
+                project.getName(),
+                inquiry.getTitle(),
+                inquiry.getContent(),
+                inquiry.getCreatedAt(),
+                inquiry.getUpdatedAt()
+        );
+
     }
 }

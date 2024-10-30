@@ -1,6 +1,5 @@
 package com.scg.stop.project.controller;
 
-
 import com.scg.stop.auth.annotation.AuthUser;
 import com.scg.stop.project.domain.ProjectCategory;
 import com.scg.stop.project.domain.ProjectType;
@@ -9,6 +8,8 @@ import com.scg.stop.project.dto.request.ProjectRequest;
 import com.scg.stop.project.dto.response.CommentResponse;
 import com.scg.stop.project.dto.response.ProjectDetailResponse;
 import com.scg.stop.project.dto.response.ProjectResponse;
+import com.scg.stop.project.dto.request.InquiryRequest;
+import com.scg.stop.project.dto.response.InquiryDetailResponse;
 import com.scg.stop.project.service.ProjectService;
 import com.scg.stop.user.domain.AccessType;
 import com.scg.stop.user.domain.User;
@@ -42,7 +43,7 @@ public class ProjectController {
         Page<ProjectResponse> pageProjectResponse = projectService.getProjects(title, year, category, type, pageable, user);
         return ResponseEntity.status(HttpStatus.OK).body(pageProjectResponse);
     }
-  
+
     @PostMapping
     public ResponseEntity<ProjectDetailResponse> createProject(
             @RequestBody @Valid ProjectRequest projectRequest,
@@ -144,5 +145,17 @@ public class ProjectController {
     ){
         Page<ProjectResponse> pageProjectResponse = projectService.getAwardProjects(year, pageable, user);
         return ResponseEntity.status(HttpStatus.OK).body(pageProjectResponse);
+    }
+
+    // 문의 생성
+    @PostMapping("/{projectId}/inquiry")
+    public ResponseEntity<InquiryDetailResponse> createProjectInquiry(
+            @PathVariable Long projectId,
+            @AuthUser(accessType = {AccessType.COMPANY, AccessType.ADMIN}) User user,
+            @RequestBody @Valid InquiryRequest inquiryRequest) {
+
+        InquiryDetailResponse inquiryDetailResponse = projectService.createProjectInquiry(projectId, user, inquiryRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(inquiryDetailResponse);
+
     }
 }

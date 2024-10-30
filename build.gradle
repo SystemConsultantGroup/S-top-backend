@@ -56,6 +56,14 @@ dependencies {
 	//metrics
 	implementation 'io.micrometer:micrometer-registry-prometheus'
 
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    //email
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    //thymeleaf(for email service)
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 	// apache.poi for excel
