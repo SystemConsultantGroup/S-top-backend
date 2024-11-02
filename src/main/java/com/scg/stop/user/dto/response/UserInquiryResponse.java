@@ -16,13 +16,15 @@ public class UserInquiryResponse {
     private String title;
     private Long projectId;
     private LocalDateTime createdDate;
+    private boolean hasResponse;
 
     public static UserInquiryResponse from(Inquiry inquiry) {
         return new UserInquiryResponse(
                 inquiry.getId(),
                 inquiry.getTitle(),
                 inquiry.getProject() != null ? inquiry.getProject().getId() : null,
-                inquiry.getCreatedAt()
+                inquiry.getCreatedAt(),
+                inquiry.getResponse() != null
         );
     }
 }

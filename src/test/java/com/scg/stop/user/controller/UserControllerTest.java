@@ -218,8 +218,8 @@ class UserControllerTest extends AbstractControllerTest {
     void getUserInquiries() throws Exception {
         // given
         List<UserInquiryResponse> inquiryResponses = Arrays.asList(
-                new UserInquiryResponse(1L, "Title 1", 1L, LocalDateTime.now()),
-                new UserInquiryResponse(2L, "Title 2", 2L, LocalDateTime.now())
+                new UserInquiryResponse(1L, "Title 1", 1L, LocalDateTime.now(), true),
+                new UserInquiryResponse(2L, "Title 2", 2L, LocalDateTime.now(), false)
         );
         when(userService.getUserInquiries(any(User.class))).thenReturn(inquiryResponses);
 
@@ -243,7 +243,8 @@ class UserControllerTest extends AbstractControllerTest {
                                 fieldWithPath("[].id").description("문의 ID"),
                                 fieldWithPath("[].title").description("문의 제목"),
                                 fieldWithPath("[].projectId").description("프로젝트 ID"),
-                                fieldWithPath("[].createdDate").description("문의 생성일")
+                                fieldWithPath("[].createdDate").description("문의 생성일"),
+                                fieldWithPath("[].hasResponse").description("답변 여부")
                         )
                 ));
 
@@ -254,8 +255,8 @@ class UserControllerTest extends AbstractControllerTest {
     void getUserProposals() throws Exception {
         // given
         List<UserProposalResponse> proposalResponses = Arrays.asList(
-                new UserProposalResponse(1L, "Title 1", LocalDateTime.now()),
-                new UserProposalResponse(2L, "Title 2", LocalDateTime.now())
+                new UserProposalResponse(1L, "Title 1", LocalDateTime.now(), true),
+                new UserProposalResponse(2L, "Title 2", LocalDateTime.now(), false)
         );
         when(userService.getUserProposals(any(User.class))).thenReturn(proposalResponses);
 
@@ -278,7 +279,8 @@ class UserControllerTest extends AbstractControllerTest {
                         responseFields(
                                 fieldWithPath("[].id").description("과제 제안 ID"),
                                 fieldWithPath("[].title").description("프로젝트명"),
-                                fieldWithPath("[].createdDate").description("과제 제안 생성일")
+                                fieldWithPath("[].createdDate").description("과제 제안 생성일"),
+                                fieldWithPath("[].hasResponse").description("답변 여부")
                         )
                 ));
 
