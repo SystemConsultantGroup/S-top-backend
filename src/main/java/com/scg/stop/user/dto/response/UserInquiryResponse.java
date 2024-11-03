@@ -6,8 +6,6 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-import static lombok.AccessLevel.PRIVATE;
-
 @Getter
 @AllArgsConstructor
 public class UserInquiryResponse {
@@ -16,7 +14,7 @@ public class UserInquiryResponse {
     private String title;
     private Long projectId;
     private LocalDateTime createdDate;
-    private boolean hasResponse;
+    private boolean hasReply;
 
     public static UserInquiryResponse from(Inquiry inquiry) {
         return new UserInquiryResponse(
@@ -24,7 +22,7 @@ public class UserInquiryResponse {
                 inquiry.getTitle(),
                 inquiry.getProject() != null ? inquiry.getProject().getId() : null,
                 inquiry.getCreatedAt(),
-                inquiry.getResponse() != null
+                inquiry.getReply() != null
         );
     }
 }

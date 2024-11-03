@@ -244,7 +244,7 @@ class UserControllerTest extends AbstractControllerTest {
                                 fieldWithPath("[].title").description("문의 제목"),
                                 fieldWithPath("[].projectId").description("프로젝트 ID"),
                                 fieldWithPath("[].createdDate").description("문의 생성일"),
-                                fieldWithPath("[].hasResponse").description("답변 여부")
+                                fieldWithPath("[].hasReply").description("답변 여부")
                         )
                 ));
 
@@ -280,7 +280,7 @@ class UserControllerTest extends AbstractControllerTest {
                                 fieldWithPath("[].id").description("과제 제안 ID"),
                                 fieldWithPath("[].title").description("프로젝트명"),
                                 fieldWithPath("[].createdDate").description("과제 제안 생성일"),
-                                fieldWithPath("[].hasResponse").description("답변 여부")
+                                fieldWithPath("[].hasReply").description("답변 여부")
                         )
                 ));
 
