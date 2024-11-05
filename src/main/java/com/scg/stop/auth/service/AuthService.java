@@ -67,7 +67,7 @@ public class AuthService {
             studentRepository.save(student);
             user.updateStudentInfo(student);
         }
-        else if (Arrays.asList(UserType.INACTIVE_PROFESSOR, UserType.COMPANY, UserType.INACTIVE_COMPANY, UserType.PROFESSOR)
+        else if (Arrays.asList(UserType.INACTIVE_PROFESSOR, UserType.INACTIVE_COMPANY)
                 .contains(registerRequest.getUserType())) {
             Application application = new Application(registerRequest.getDivision(), registerRequest.getPosition(),
                     user);

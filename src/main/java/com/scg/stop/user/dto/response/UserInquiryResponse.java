@@ -1,6 +1,6 @@
 package com.scg.stop.user.dto.response;
 
-import com.scg.stop.domain.project.domain.Inquiry;
+import com.scg.stop.project.domain.Inquiry;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

@@ -25,7 +25,7 @@ public class Student extends BaseTimeEntity {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String studentNumber;
 
     @OneToOne(fetch = LAZY)

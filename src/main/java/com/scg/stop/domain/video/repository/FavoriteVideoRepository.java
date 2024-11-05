@@ -1,8 +1,8 @@
 package com.scg.stop.domain.video.repository;
 
-import com.scg.stop.domain.video.domain.FavoriteVideo;
-import com.scg.stop.domain.video.domain.JobInterview;
-import com.scg.stop.domain.video.domain.Talk;
+import com.scg.stop.video.domain.FavoriteVideo;
+import com.scg.stop.video.domain.JobInterview;
+import com.scg.stop.video.domain.Talk;
 import com.scg.stop.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

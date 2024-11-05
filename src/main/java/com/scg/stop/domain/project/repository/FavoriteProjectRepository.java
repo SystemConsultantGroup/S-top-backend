@@ -1,7 +1,7 @@
 package com.scg.stop.domain.project.repository;
 
-import com.scg.stop.domain.project.domain.FavoriteProject;
-import com.scg.stop.domain.project.domain.Project;
+import com.scg.stop.project.domain.FavoriteProject;
+import com.scg.stop.project.domain.Project;
 import com.scg.stop.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -1,0 +1,73 @@
+== 프로젝트 문의 사항 API
+:source-highlighter: highlightjs
+
+---
+=== 프로젝트 문의 사항 생성 (POST /projects/{projectId}/inquiry)
+
+====
+operation::inquiry-controller-test/create-inquiry[snippets="http-request,request-fields,http-response,response-fields"]
+====
+
+---
+
+=== 프로젝트 문의 사항 리스트 조회 (GET /inquiries)
+
+====
+operation::inquiry-controller-test/get-inquiries[snippets="http-request,query-parameters,http-response,response-fields"]
+====
+
+---
+
+=== 프로젝트 문의 사항 단건 조회 (GET /inquiries/{inquiryId})
+
+====
+operation::inquiry-controller-test/get-inquiry[snippets="http-request,path-parameters,http-response,response-fields"]
+====
+
+---
+
+=== 프로젝트 문의 사항 수정 (PUT /inquiries/{inquiryId})
+
+====
+operation::inquiry-controller-test/update-inquiry[snippets="http-request,path-parameters,request-fields,http-response,response-fields"]
+====
+
+---
+
+=== 프로젝트 문의 사항 삭제 (DELETE /inquiries/{inquiryId})
+
+====
+operation::inquiry-controller-test/delete-inquiry[snippets="http-request,path-parameters,http-response"]
+====
+
+---
+
+=== 프로젝트 문의 사항 답변 (POST /inquiries/{inquiryId}/reply)
+
+====
+operation::inquiry-controller-test/create-inquiry-reply[snippets="http-request,path-parameters,request-fields,http-response,response-fields"]
+====
+
+---
+
+=== 프로젝트 문의 사항 답변 조회 (GET /inquiries/{inquiryId}/reply)
+
+====
+operation::inquiry-controller-test/get-inquiry-reply[snippets="http-request,path-parameters,http-response,response-fields"]
+====
+
+---
+
+=== 프로젝트 문의 사항 답변 수정 (PUT /inquiries/{inquiryId}/reply)
+
+====
+operation::inquiry-controller-test/update-inquiry-reply[snippets="http-request,path-parameters,request-fields,http-response,response-fields"]
+====
+
+---
+
+=== 프로젝트 문의 사항 답변 삭제 (DELETE /inquiries/{inquiryId}/reply)
+
+====
+operation::inquiry-controller-test/delete-inquiry-reply[snippets="http-request,path-parameters,http-response"]
+====

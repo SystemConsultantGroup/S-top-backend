@@ -1,13 +1,13 @@
 package com.scg.stop.user.service;
 
-import com.scg.stop.domain.project.domain.Inquiry;
-import com.scg.stop.domain.project.domain.Project;
+import com.scg.stop.project.domain.Inquiry;
+import com.scg.stop.project.domain.Project;
 import com.scg.stop.domain.project.repository.FavoriteProjectRepository;
 import com.scg.stop.domain.project.repository.InquiryRepository;
 import com.scg.stop.domain.proposal.domain.Proposal;
 import com.scg.stop.domain.proposal.repository.ProposalRepository;
-import com.scg.stop.domain.video.domain.JobInterview;
-import com.scg.stop.domain.video.domain.Talk;
+import com.scg.stop.video.domain.JobInterview;
+import com.scg.stop.video.domain.Talk;
 import com.scg.stop.domain.video.repository.FavoriteVideoRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
