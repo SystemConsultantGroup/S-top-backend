@@ -13,6 +13,8 @@ import com.scg.stop.proposal.domain.response.ProposalResponse;
 import com.scg.stop.proposal.repository.ProposalReplyRepository;
 import com.scg.stop.proposal.repository.ProposalRepository;
 import com.scg.stop.user.domain.User;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class ProposalService {
 
     private final ProposalRepository proposalRepository;
@@ -50,6 +51,7 @@ public class ProposalService {
         );
     }
 
+    @Transactional
     public ProposalDetailResponse createProposal(User user, ProposalRequest proposalCreateRequest) {
         Proposal proposal = Proposal.createProposal(user,
                 proposalCreateRequest.getTitle(),
@@ -67,6 +69,7 @@ public class ProposalService {
                 proposal.getTitle(), proposal.getDescription(), proposal.getProjectTypes(), proposal.getContent());
     }
 
+    @Transactional
     public ProposalDetailResponse updateProposal(Long proposalId, ProposalRequest proposalUpdateRequest) {
         Proposal proposal = proposalRepository.findById(proposalId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROPOSAL));
@@ -84,6 +87,8 @@ public class ProposalService {
         return ProposalDetailResponse.of(proposal.getId(), proposal.getUser().getName(), proposal.getEmail(), proposal.getWebsite(),
                 proposal.getTitle(), proposal.getDescription(), proposal.getProjectTypes(), proposal.getContent());
     }
+
+    @Transactional
     public ProposalReplyResponse createProposalReply(Long proposalId, ProposalReplyRequest proposalReplyCreateRequest) {
         Proposal proposal = proposalRepository.findById(proposalId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROPOSAL));
@@ -95,6 +100,7 @@ public class ProposalService {
         return ProposalReplyResponse.of(proposalReply.getId(), proposalReply.getTitle(), proposalReply.getContent());
     }
 
+    @Transactional
     public ProposalReplyResponse updateProposalReply(Long proposalReplyId, ProposalReplyRequest proposalReplyUpdateRequest) {
         ProposalReply proposalReply = proposalReplyRepository.findById(proposalReplyId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROPOSALREPLY));
@@ -103,12 +109,14 @@ public class ProposalService {
         return ProposalReplyResponse.of(proposalReply.getId(), proposalReply.getTitle(), proposalReply.getContent());
     }
 
+    @Transactional
     public void deleteProposalReply(Long proposalReplyId) {
         ProposalReply proposalReply = proposalReplyRepository.findById(proposalReplyId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROPOSALREPLY));
         proposalReplyRepository.delete(proposalReply);
     }
 
+    @Transactional
     public void deleteProposal(Long proposalId) {
         Proposal proposal = proposalRepository.findById(proposalId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROPOSAL));
@@ -116,4 +124,13 @@ public class ProposalService {
     }
 
 
+    public List<ProposalReplyResponse> getProposalReplies(Long proposalId) {
+        Proposal proposal = proposalRepository.findById(proposalId)
+                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROPOSAL));
+        return proposalReplyRepository.findByProposal(proposal)
+                .stream()
+                .map((proposalReply) -> ProposalReplyResponse.of(proposalReply.getId(), proposalReply.getTitle(), proposalReply.getContent()))
+                .collect(Collectors.toList());
+
+    }
 }

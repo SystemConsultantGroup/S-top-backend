@@ -10,6 +10,7 @@ import com.scg.stop.proposal.service.ProposalService;
 import com.scg.stop.user.domain.AccessType;
 import com.scg.stop.user.domain.User;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -95,4 +96,11 @@ public class ProposalController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @GetMapping("/{proposalId}/reply")
+    public ResponseEntity<List<ProposalReplyResponse>> getProposalReplies(@AuthUser(accessType = {AccessType.ADMIN}) User user,
+                                                                          @PathVariable("proposalId") Long proposalId) {
+        List<ProposalReplyResponse> proposalReplies = proposalService.getProposalReplies(proposalId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(proposalReplies);
+    }
 }
