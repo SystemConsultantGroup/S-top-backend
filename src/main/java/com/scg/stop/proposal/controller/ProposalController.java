@@ -1,7 +1,7 @@
 package com.scg.stop.proposal.controller;
 
 import com.scg.stop.auth.annotation.AuthUser;
-import com.scg.stop.proposal.domain.request.ProposalRequest;
+import com.scg.stop.proposal.domain.request.CreateProposalRequest;
 import com.scg.stop.proposal.domain.request.ProposalReplyRequest;
 import com.scg.stop.proposal.domain.response.ProposalDetailResponse;
 import com.scg.stop.proposal.domain.response.ProposalReplyResponse;
@@ -10,7 +10,6 @@ import com.scg.stop.proposal.service.ProposalService;
 import com.scg.stop.user.domain.AccessType;
 import com.scg.stop.user.domain.User;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -51,7 +50,7 @@ public class ProposalController {
 
     @PostMapping()
     public ResponseEntity<ProposalDetailResponse> createProposal(@AuthUser(accessType = {AccessType.COMPANY}) User user,
-                                                                 @RequestBody @Valid ProposalRequest proposalCreateRequest) {
+                                                                 @RequestBody @Valid CreateProposalRequest proposalCreateRequest) {
         ProposalDetailResponse proposalDetailResponse = proposalService.createProposal(user, proposalCreateRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(proposalDetailResponse);
     }
@@ -59,7 +58,7 @@ public class ProposalController {
     @PutMapping("/{proposalId}")
     public ResponseEntity<ProposalDetailResponse> updateProposal(@AuthUser(accessType = {AccessType.COMPANY, AccessType.ADMIN}) User user,
                                                                  @PathVariable("proposalId") Long proposalId,
-                                                                 @RequestBody @Valid ProposalRequest proposalUpdateRequest) {
+                                                                 @RequestBody @Valid CreateProposalRequest proposalUpdateRequest) {
         ProposalDetailResponse proposalDetailResponse = proposalService.updateProposal(proposalId,
                 proposalUpdateRequest);
         return ResponseEntity.status(HttpStatus.OK).body(proposalDetailResponse);
@@ -97,10 +96,10 @@ public class ProposalController {
     }
 
     @GetMapping("/{proposalId}/reply")
-    public ResponseEntity<List<ProposalReplyResponse>> getProposalReplies(@AuthUser(accessType = {AccessType.ADMIN}) User user,
-                                                                          @PathVariable("proposalId") Long proposalId) {
-        List<ProposalReplyResponse> proposalReplies = proposalService.getProposalReplies(proposalId);
-
-        return ResponseEntity.status(HttpStatus.OK).body(proposalReplies);
+    public ResponseEntity<ProposalReplyResponse> getProposalReplies(@AuthUser(accessType = {AccessType.ADMIN}) User user,
+                                                                    @PathVariable("proposalId") Long proposalId) {
+//        List<ProposalReplyResponse> proposalReplies = proposalService.getProposalReplies(proposalId);
+        ProposalReplyResponse proposalReply = proposalService.getProposalReply(proposalId);
+        return ResponseEntity.status(HttpStatus.OK).body(proposalReply);
     }
 }

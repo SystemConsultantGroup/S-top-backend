@@ -1,11 +1,14 @@
 package com.scg.stop.proposal.service;
 
+import static com.scg.stop.proposal.domain.Proposal.convertProjectTypesToString;
+import static com.scg.stop.proposal.domain.Proposal.convertStringToProjectTypes;
+
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.global.infrastructure.EmailService;
 import com.scg.stop.proposal.domain.Proposal;
 import com.scg.stop.proposal.domain.ProposalReply;
-import com.scg.stop.proposal.domain.request.ProposalRequest;
+import com.scg.stop.proposal.domain.request.CreateProposalRequest;
 import com.scg.stop.proposal.domain.request.ProposalReplyRequest;
 import com.scg.stop.proposal.domain.response.ProposalDetailResponse;
 import com.scg.stop.proposal.domain.response.ProposalReplyResponse;
@@ -43,19 +46,19 @@ public class ProposalService {
                 proposal.getId(),
                 proposal.getUser().getName(),
                 proposal.getEmail(),
-                proposal.getWebsite(),
+                proposal.getWebSite(),
                 proposal.getTitle(),
                 proposal.getDescription(),
-                proposal.getProjectTypes(),
+                convertStringToProjectTypes(proposal.getProjectTypes()),
                 proposal.getContent()
         );
     }
 
     @Transactional
-    public ProposalDetailResponse createProposal(User user, ProposalRequest proposalCreateRequest) {
+    public ProposalDetailResponse createProposal(User user, CreateProposalRequest proposalCreateRequest) {
         Proposal proposal = Proposal.createProposal(user,
                 proposalCreateRequest.getTitle(),
-                proposalCreateRequest.getProjectTypes(),
+                convertProjectTypesToString(proposalCreateRequest.getProjectTypes()),
                 proposalCreateRequest.getEmail(),
                 proposalCreateRequest.getWebSite(),
                 proposalCreateRequest.getContent(),
@@ -65,17 +68,17 @@ public class ProposalService {
         proposalRepository.save(proposal);
         //TODO: 이메일 형식 정하기  & 과제 제안메일은 어드민 이메일로만 보내면 되는지?
         emailService.sendEmail(proposal.getEmail(), proposal.getTitle(), proposal.getContent());
-        return ProposalDetailResponse.of(proposal.getId(), proposal.getUser().getName(), proposal.getEmail(), proposal.getWebsite(),
-                proposal.getTitle(), proposal.getDescription(), proposal.getProjectTypes(), proposal.getContent());
+        return ProposalDetailResponse.of(proposal.getId(), proposal.getUser().getName(), proposal.getEmail(), proposal.getWebSite(),
+                proposal.getTitle(), proposal.getDescription(), convertStringToProjectTypes(proposal.getProjectTypes()), proposal.getContent());
     }
 
     @Transactional
-    public ProposalDetailResponse updateProposal(Long proposalId, ProposalRequest proposalUpdateRequest) {
+    public ProposalDetailResponse updateProposal(Long proposalId, CreateProposalRequest proposalUpdateRequest) {
         Proposal proposal = proposalRepository.findById(proposalId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROPOSAL));
         proposal.update(
                 proposalUpdateRequest.getTitle(),
-                proposalUpdateRequest.getProjectTypes(),
+                convertProjectTypesToString(proposalUpdateRequest.getProjectTypes()),
                 proposalUpdateRequest.getEmail(),
                 proposalUpdateRequest.getWebSite(),
                 proposalUpdateRequest.getContent(),
@@ -84,8 +87,8 @@ public class ProposalService {
                 proposalUpdateRequest.getIsAnonymous()
         );
 //        emailService.sendEmail();
-        return ProposalDetailResponse.of(proposal.getId(), proposal.getUser().getName(), proposal.getEmail(), proposal.getWebsite(),
-                proposal.getTitle(), proposal.getDescription(), proposal.getProjectTypes(), proposal.getContent());
+        return ProposalDetailResponse.of(proposal.getId(), proposal.getUser().getName(), proposal.getEmail(), proposal.getWebSite(),
+                proposal.getTitle(), proposal.getDescription(), convertStringToProjectTypes(proposal.getProjectTypes()), proposal.getContent());
     }
 
     @Transactional
@@ -123,14 +126,22 @@ public class ProposalService {
         proposalRepository.delete(proposal);
     }
 
+    //TODO: 답변이 복수일경우
+//    @Transactional(readOnly = true)
+//    public List<ProposalReplyResponse> getProposalReplies(Long proposalId) {
+//        Proposal proposal = proposalRepository.findById(proposalId)
+//                .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROPOSAL));
+//        return proposalReplyRepository.findByProposal(proposal)
+//                .stream()
+//                .map((proposalReply) -> ProposalReplyResponse.of(proposalReply.getId(), proposalReply.getTitle(), proposalReply.getContent()))
+//                .collect(Collectors.toList());
+//    }
 
-    public List<ProposalReplyResponse> getProposalReplies(Long proposalId) {
+    @Transactional(readOnly = true)
+    public ProposalReplyResponse getProposalReply(Long proposalId) {
         Proposal proposal = proposalRepository.findById(proposalId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROPOSAL));
-        return proposalReplyRepository.findByProposal(proposal)
-                .stream()
-                .map((proposalReply) -> ProposalReplyResponse.of(proposalReply.getId(), proposalReply.getTitle(), proposalReply.getContent()))
-                .collect(Collectors.toList());
-
+        ProposalReply proposalReply = proposalReplyRepository.findByProposal(proposal);
+        return ProposalReplyResponse.of(proposalReply.getId(), proposalReply.getTitle(), proposalReply.getContent());
     }
 }

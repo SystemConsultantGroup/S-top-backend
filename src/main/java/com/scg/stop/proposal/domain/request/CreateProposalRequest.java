@@ -1,14 +1,17 @@
 package com.scg.stop.proposal.domain.request;
 
+import com.scg.stop.domain.project.domain.ProjectType;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 import lombok.Getter;
 
 
 @Getter
-public class ProposalRequest {
+public class CreateProposalRequest {
 
     @NotBlank(message = "과제 웹사이트를 입력해주세요.")
     private final String webSite;
@@ -22,8 +25,8 @@ public class ProposalRequest {
     @NotBlank(message = "과제 개요를 입력해주세요.")
     private final String description;
 
-    @NotBlank(message = "과제 유형을 입력해주세요.")
-    private final String projectTypes;
+    @NotEmpty(message = "과제 유형을 입력해주세요.")
+    private final List<ProjectType> projectTypes;
 
     @NotBlank(message = "과제 내용을 입력해주세요.")
     private final String content;
@@ -35,17 +38,17 @@ public class ProposalRequest {
     private Boolean isAnonymous;
 //    private String fileUuid;
 
-    public ProposalRequest(
+    public CreateProposalRequest(
             String webSite,
             String title,
             String email,
             String description,
-            String projectTypes,
+            List<ProjectType> projectTypes,
             String content,
             String isVisible,
             String isAnonymous
     ) {
-        validateProjectTypes(projectTypes);
+//        validateProjectTypes(projectType);
         validateAndCastBoolean(isVisible, isAnonymous);
         this.webSite = webSite;
         this.email = email;

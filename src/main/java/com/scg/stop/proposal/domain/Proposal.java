@@ -4,6 +4,7 @@ import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
+import com.scg.stop.domain.project.domain.ProjectType;
 import com.scg.stop.user.domain.User;
 import com.scg.stop.global.domain.BaseTimeEntity;
 import jakarta.persistence.CascadeType;
@@ -14,6 +15,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -36,7 +41,7 @@ public class Proposal extends BaseTimeEntity {
     private String email;
 
     @Column(nullable = false)
-    private String website;
+    private String webSite;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
@@ -62,7 +67,7 @@ public class Proposal extends BaseTimeEntity {
         this.title = title;
         this.projectTypes= projectTypes;
         this.email = email;
-        this.website = website;
+        this.webSite = website;
         this.content = content;
         this.description = description;
         this.isAnonymous = isAnonymous;
@@ -78,12 +83,30 @@ public class Proposal extends BaseTimeEntity {
     public void update(String title, String projectTypes, String email, String website, String content,
                        String description, Boolean isVisible, Boolean isAnonymous) {
         this.title = title;
-        this.projectTypes= projectTypes;
+        this.projectTypes = projectTypes;
         this.email = email;
-        this.website = website;
+        this.webSite = website;
         this.content = content;
         this.description = description;
         this.isAnonymous = isAnonymous;
         this.isVisible = isVisible;
+    }
+
+    public static String convertProjectTypesToString(List<ProjectType> proposalTypes) {
+        if (proposalTypes == null || proposalTypes.isEmpty()) {
+            return "";
+        }
+        return proposalTypes.stream()
+                .map(Enum::name)
+                .collect(Collectors.joining(","));
+    }
+
+    public static List<ProjectType> convertStringToProjectTypes(String proposalTypes) {
+        if (proposalTypes == null || proposalTypes.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return Arrays.stream(proposalTypes.split(","))
+                .map(ProjectType::valueOf)
+                .collect(Collectors.toList());
     }
 }

@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.Query;
 public interface ProposalReplyRepository extends JpaRepository<ProposalReply, Long> {
 
 //    @Query("select p from ProposalReply p where p.proposal = :proposal")
-    List<ProposalReply> findByProposal(Proposal proposal);
+    ProposalReply findByProposal(Proposal proposal);
 }

@@ -14,14 +14,13 @@ public class ProposalDetailResponse {
     private String authorName;
     private String email;
     private String webSite;
-
     private String title;
     private String summary;
-    private List<String> projectTypes;
+    private List<ProjectType> projectTypes;
     private String content;
 //    private String fileUUID;
 
-    public static ProposalDetailResponse of(Long id, String authorName, String email, String webSite, String title, String summary, String projectTypes, String content) {
+    public static ProposalDetailResponse of(Long id, String authorName, String email, String webSite, String title, String summary, List<ProjectType> projectTypes, String content) {
         return new ProposalDetailResponse(
                 id,
                 authorName,
@@ -29,7 +28,7 @@ public class ProposalDetailResponse {
                 webSite,
                 title,
                 summary,
-                List.of(projectTypes.split(",")),
+                projectTypes,
                 content);
 //                fileUUID);
     }
