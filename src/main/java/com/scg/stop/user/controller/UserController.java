@@ -1,8 +1,8 @@
 package com.scg.stop.user.controller;
 
 import com.scg.stop.auth.annotation.AuthUser;
+import com.scg.stop.project.dto.response.ProjectResponse;
 import com.scg.stop.user.domain.AccessType;
-import com.scg.stop.user.domain.FavoriteType;
 import com.scg.stop.user.domain.User;
 import com.scg.stop.user.dto.request.UserUpdateRequest;
 import com.scg.stop.user.dto.response.FavoriteResponse;
@@ -10,6 +10,8 @@ import com.scg.stop.user.dto.response.UserInquiryResponse;
 import com.scg.stop.user.dto.response.UserProposalResponse;
 import com.scg.stop.user.dto.response.UserResponse;
 import com.scg.stop.user.service.UserService;
+import com.scg.stop.video.dto.response.JobInterviewUserResponse;
+import com.scg.stop.video.dto.response.TalkUserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -57,12 +59,21 @@ public class UserController {
         return ResponseEntity.ok(proposals);
     }
 
-    @GetMapping("/favorites")
-    public ResponseEntity<List<FavoriteResponse>> getUserFavorites(
-            @AuthUser(accessType = {AccessType.ALL}) User user,
-            @RequestParam("type") FavoriteType type
-    ) {
-        List<FavoriteResponse> userFavorites = userService.getUserFavorites(user, type);
-        return ResponseEntity.ok(userFavorites);
+    @GetMapping("/favorites/projects")
+    public ResponseEntity<List<ProjectResponse>> getUserFavoriteProjects(@AuthUser(accessType = {AccessType.ALL}) User user) {
+        List<ProjectResponse> userFavoriteProjects = userService.getUserFavoriteProjects(user);
+        return ResponseEntity.ok(userFavoriteProjects);
+    }
+
+    @GetMapping("/favorites/talks")
+    public ResponseEntity<List<TalkUserResponse>> getUserFavoriteTalks(@AuthUser(accessType = {AccessType.ALL}) User user) {
+        List<TalkUserResponse> userFavoriteTalks = userService.getUserFavoriteTalks(user);
+        return ResponseEntity.ok(userFavoriteTalks);
+    }
+
+    @GetMapping("/favorites/jobInterviews")
+    public ResponseEntity<List<JobInterviewUserResponse>> getUserFavoriteInterviews(@AuthUser(accessType = {AccessType.ALL}) User user) {
+        List<JobInterviewUserResponse> userFavoriteInterviews = userService.getUserFavoriteInterviews(user);
+        return ResponseEntity.ok(userFavoriteInterviews);
     }
 }
