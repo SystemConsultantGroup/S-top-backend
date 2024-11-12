@@ -54,6 +54,7 @@ public enum ExceptionCode {
     FAILED_TO_GET_FILE(5001, "파일 가져오기를 실패했습니다."),
     FILE_NOT_FOUND(5002, "요청한 ID에 해당하는 파일이 존재하지 않습니다."),
     NOT_FOUND_FILE_ID(5002, "요청한 ID에 해당하는 파일이 존재하지 않습니다."),
+    INVALID_FILE_PATH(5004, "파일을 찾을 수 없습니다."),
 
     // notice domain
     NOTICE_NOT_FOUND(10000, "요청한 ID에 해당하는 공지사항이 존재하지 않습니다."),
