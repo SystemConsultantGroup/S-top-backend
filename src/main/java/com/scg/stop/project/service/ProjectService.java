@@ -216,6 +216,7 @@ public class ProjectService {
                 project.getName(),
                 inquiry.getTitle(),
                 inquiry.getContent(),
+                inquiry.getReply() != null,
                 inquiry.getCreatedAt(),
                 inquiry.getUpdatedAt()
         );
