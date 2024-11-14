@@ -524,7 +524,6 @@ Content-Length: 1759
     "sorted" : false,
     "unsorted" : true
   },
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -537,6 +536,7 @@ Content-Length: 1759
     "paged" : true,
     "unpaged" : false
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
   "empty" : false
@@ -906,7 +906,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1479
+Content-Length: 1481
 
 {
   "id" : 1,
@@ -940,24 +940,24 @@ Content-Length: 1479
     "userName" : "유저 이름",
     "isAnonymous" : true,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-14T02:05:36.416785",
-    "updatedAt" : "2024-11-14T02:05:36.416798"
+    "createdAt" : "2024-11-14T20:55:20.729214",
+    "updatedAt" : "2024-11-14T20:55:20.729252"
   }, {
     "id" : 2,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-14T02:05:36.416799",
-    "updatedAt" : "2024-11-14T02:05:36.4168"
+    "createdAt" : "2024-11-14T20:55:20.729265",
+    "updatedAt" : "2024-11-14T20:55:20.729266"
   }, {
     "id" : 3,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-14T02:05:36.416801",
-    "updatedAt" : "2024-11-14T02:05:36.416802"
+    "createdAt" : "2024-11-14T20:55:20.729267",
+    "updatedAt" : "2024-11-14T20:55:20.729268"
   } ],
   "url" : "프로젝트 URL",
   "description" : "프로젝트 설명"
@@ -1315,19 +1315,44 @@ Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
 Content-Disposition: form-data; name=thumbnails; filename=thumbnails.json
 Content-Type: application/json
 
-[{"id":1,"uuid":"36f0e9cf-deaf-4f49-87c7-e62899ac5189","name":"썸네일1.png","mimeType":"image/png","createdAt":"2024-11-14T02:05:36.962575","updatedAt":"2024-11-14T02:05:36.962592"},{"id":1,"uuid":"2c7fc601-1387-4018-89c1-d325e50372b2","name":"썸네일2.png","mimeType":"image/png","createdAt":"2024-11-14T02:05:36.962633","updatedAt":"2024-11-14T02:05:36.962634"}]
+[{"id":1,"uuid":"7160e925-8ada-4834-b3ac-1fc18d452d8c","name":"썸네일1.png","mimeType":"image/png","createdAt":"2024-11-14T20:55:21.578151","updatedAt":"2024-11-14T20:55:21.578154"},{"id":1,"uuid":"4ca0ea00-ff83-4351-a7be-cd7687a6bc81","name":"썸네일2.png","mimeType":"image/png","createdAt":"2024-11-14T20:55:21.578197","updatedAt":"2024-11-14T20:55:21.578198"}]
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=posters; filename=thumbnails.json
 Content-Type: application/json
 
-[{"id":1,"uuid":"ef27020e-d0eb-4825-9685-5de456925f0d","name":"포스터1.png","mimeType":"image/png","createdAt":"2024-11-14T02:05:36.962665","updatedAt":"2024-11-14T02:05:36.962666"},{"id":1,"uuid":"a866b217-ed36-46b8-bd36-e52a4b35ae0f","name":"포스터2.png","mimeType":"image/png","createdAt":"2024-11-14T02:05:36.962672","updatedAt":"2024-11-14T02:05:36.962673"}]
+[{"id":1,"uuid":"8593808b-52f5-4039-8a2d-3a20e876a7f6","name":"포스터1.png","mimeType":"image/png","createdAt":"2024-11-14T20:55:21.578229","updatedAt":"2024-11-14T20:55:21.57823"},{"id":1,"uuid":"fd8d3ff3-24b4-4bf0-88b6-4e38cc0de862","name":"포스터2.png","mimeType":"image/png","createdAt":"2024-11-14T20:55:21.578235","updatedAt":"2024-11-14T20:55:21.578236"}]
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_request_fields">Request fields</h4>
-
+<h4 id="_request_parts">Request parts</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Part</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>excel</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">업로드할 Excel 파일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>thumbnails</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">썸네일 등록 응답 JSON 파일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>posters</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">포스터 등록 응답 JSON 파일</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="_http_response">HTTP response</h4>
@@ -1338,10 +1363,10 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 25
+Content-Length: 24
 
 {
-  "successCount" : 10
+  "successCount" : 2
 }</code></pre>
 </div>
 </div>
@@ -1401,7 +1426,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1481
+Content-Length: 1480
 
 {
   "id" : 1,
@@ -1435,24 +1460,24 @@ Content-Length: 1481
     "userName" : "유저 이름",
     "isAnonymous" : true,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-14T02:05:36.333792",
-    "updatedAt" : "2024-11-14T02:05:36.333833"
+    "createdAt" : "2024-11-14T20:55:20.389211",
+    "updatedAt" : "2024-11-14T20:55:20.38923"
   }, {
     "id" : 2,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-14T02:05:36.333837",
-    "updatedAt" : "2024-11-14T02:05:36.333837"
+    "createdAt" : "2024-11-14T20:55:20.389318",
+    "updatedAt" : "2024-11-14T20:55:20.389324"
   }, {
     "id" : 3,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-14T02:05:36.333838",
-    "updatedAt" : "2024-11-14T02:05:36.333839"
+    "createdAt" : "2024-11-14T20:55:20.389329",
+    "updatedAt" : "2024-11-14T20:55:20.389332"
   } ],
   "url" : "프로젝트 URL",
   "description" : "프로젝트 설명"
@@ -1788,24 +1813,24 @@ Content-Length: 1477
     "userName" : "유저 이름",
     "isAnonymous" : true,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-14T02:05:35.964914",
-    "updatedAt" : "2024-11-14T02:05:35.964918"
+    "createdAt" : "2024-11-14T20:55:19.689131",
+    "updatedAt" : "2024-11-14T20:55:19.689135"
   }, {
     "id" : 2,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-14T02:05:35.964922",
-    "updatedAt" : "2024-11-14T02:05:35.964923"
+    "createdAt" : "2024-11-14T20:55:19.689141",
+    "updatedAt" : "2024-11-14T20:55:19.689142"
   }, {
     "id" : 3,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-14T02:05:35.964925",
-    "updatedAt" : "2024-11-14T02:05:35.964926"
+    "createdAt" : "2024-11-14T20:55:19.689144",
+    "updatedAt" : "2024-11-14T20:55:19.689148"
   } ],
   "url" : "프로젝트 URL",
   "description" : "프로젝트 설명"
@@ -2461,8 +2486,8 @@ Content-Length: 212
   "userName" : "유저 이름",
   "isAnonymous" : true,
   "content" : "댓글 내용",
-  "createdAt" : "2024-11-14T02:05:36.292255",
-  "updatedAt" : "2024-11-14T02:05:36.292258"
+  "createdAt" : "2024-11-14T20:55:20.150468",
+  "updatedAt" : "2024-11-14T20:55:20.150474"
 }</code></pre>
 </div>
 </div>
@@ -2724,7 +2749,6 @@ Content-Length: 1759
     "sorted" : false,
     "unsorted" : true
   },
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -2737,6 +2761,7 @@ Content-Length: 1759
     "paged" : true,
     "unpaged" : false
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
   "empty" : false
@@ -3047,7 +3072,7 @@ Content-Length: 1759
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-11-14 01:20:11 +0900
+Last updated 2024-11-14 18:01:33 +0900
 </div>
 </div>
 </body>

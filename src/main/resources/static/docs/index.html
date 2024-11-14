@@ -716,6 +716,54 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">유저 정보가 일치하지 않습니다</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">78000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">엑셀 행의 개수와 업로드한 이미지의 개수가 일치해야합니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">78001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">썸네일 이미지 이름을 찾을 수 없습니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">78002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">포스터 이미지 이름을 찾을 수 없습니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">78003</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수상 내역의 한글 이름이 올바르지 않습니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">78004</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 종류의 한글 이름이 올바르지 않습니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">78005</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 분야의 한글 이름이 올바르지 않습니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">78006</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">모든 셀은 값이 있어야 합니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">78007</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">엑셀 형식이 올바르지 않습니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">78008</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">중복된 썸네일 이미지 이름이 존재합니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">78009</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">중복된 포스터 이미지 이름이 존재합니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">780010</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 년도는 숫자만 입력해야 합니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">780011</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">엑셀 파일을 열 수 없습니다.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">5000</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">파일 업로드를 실패했습니다.</p></td>
 </tr>
@@ -859,8 +907,8 @@ Host: localhost:8080</code></pre>
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Set-Cookie: refresh-token=refresh_token; Path=/; Max-Age=604800; Expires=Wed, 20 Nov 2024 17:05:29 GMT; Secure; HttpOnly; SameSite=None
-Set-Cookie: access-token=access_token; Path=/; Max-Age=604800; Expires=Wed, 20 Nov 2024 17:05:29 GMT; Secure; SameSite=None
+Set-Cookie: refresh-token=refresh_token; Path=/; Max-Age=604800; Expires=Thu, 21 Nov 2024 11:55:14 GMT; Secure; HttpOnly; SameSite=None
+Set-Cookie: access-token=access_token; Path=/; Max-Age=604800; Expires=Thu, 21 Nov 2024 11:55:14 GMT; Secure; SameSite=None
 Location: https://localhost:3000/login/kakao</code></pre>
 </div>
 </div>
@@ -1229,22 +1277,22 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 445
+Content-Length: 446
 
 [ {
   "id" : 1,
-  "uuid" : "393f63e9-2c49-4769-8bf9-56b1a40f2827",
+  "uuid" : "20a48290-b8f0-4d16-a9aa-b3fdabe7ac41",
   "name" : "첨부파일1.png",
   "mimeType" : "image/png",
-  "createdAt" : "2024-11-14T02:05:32.274523",
-  "updatedAt" : "2024-11-14T02:05:32.274531"
+  "createdAt" : "2024-11-14T20:55:16.968419",
+  "updatedAt" : "2024-11-14T20:55:16.968427"
 }, {
   "id" : 2,
-  "uuid" : "77cdeb11-3021-4935-a0ea-3bba82a0cd91",
+  "uuid" : "2dc16146-410c-4ea0-9b62-5b3b61e703b1",
   "name" : "첨부파일2.pdf",
   "mimeType" : "application/pdf",
-  "createdAt" : "2024-11-14T02:05:32.274683",
-  "updatedAt" : "2024-11-14T02:05:32.27469"
+  "createdAt" : "2024-11-14T20:55:16.968559",
+  "updatedAt" : "2024-11-14T20:55:16.968562"
 } ]</code></pre>
 </div>
 </div>
@@ -1494,7 +1542,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 317
+Content-Length: 316
 
 {
   "id" : 1,
@@ -1504,8 +1552,8 @@ Content-Length: 317
   "talkerBelonging" : "대담자의 소속",
   "talkerName" : "대담자의 성명",
   "category" : "INTERN",
-  "createdAt" : "2024-11-14T02:05:38.769299",
-  "updatedAt" : "2024-11-14T02:05:38.769301"
+  "createdAt" : "2024-11-14T20:55:22.65649",
+  "updatedAt" : "2024-11-14T20:55:22.656493"
 }</code></pre>
 </div>
 </div>
@@ -1657,7 +1705,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1205
+Content-Length: 1206
 
 {
   "totalPages" : 1,
@@ -1672,8 +1720,8 @@ Content-Length: 1205
     "talkerName" : "대담자의 성명1",
     "favorite" : false,
     "category" : "INTERN",
-    "createdAt" : "2024-11-14T02:05:38.70791",
-    "updatedAt" : "2024-11-14T02:05:38.707913"
+    "createdAt" : "2024-11-14T20:55:22.607416",
+    "updatedAt" : "2024-11-14T20:55:22.607419"
   }, {
     "id" : 2,
     "title" : "잡페어 인터뷰의 제목2",
@@ -1683,8 +1731,8 @@ Content-Length: 1205
     "talkerName" : "대담자의 성명2",
     "favorite" : true,
     "category" : "INTERN",
-    "createdAt" : "2024-11-14T02:05:38.707934",
-    "updatedAt" : "2024-11-14T02:05:38.707935"
+    "createdAt" : "2024-11-14T20:55:22.607433",
+    "updatedAt" : "2024-11-14T20:55:22.607434"
   } ],
   "number" : 0,
   "sort" : {
@@ -1692,7 +1740,6 @@ Content-Length: 1205
     "sorted" : false,
     "unsorted" : true
   },
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -1705,6 +1752,7 @@ Content-Length: 1205
     "paged" : true,
     "unpaged" : false
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
   "empty" : false
@@ -1974,8 +2022,8 @@ Content-Length: 339
   "talkerName" : "대담자의 성명",
   "favorite" : false,
   "category" : "INTERN",
-  "createdAt" : "2024-11-14T02:05:38.749842",
-  "updatedAt" : "2024-11-14T02:05:38.749844"
+  "createdAt" : "2024-11-14T20:55:22.641034",
+  "updatedAt" : "2024-11-14T20:55:22.641036"
 }</code></pre>
 </div>
 </div>
@@ -2189,7 +2237,7 @@ Content-Length: 314
   "talkerName" : "수정된 대담자 성명",
   "category" : "INTERN",
   "createdAt" : "2021-01-01T12:00:00",
-  "updatedAt" : "2024-11-14T02:05:38.600602"
+  "updatedAt" : "2024-11-14T20:55:22.525694"
 }</code></pre>
 </div>
 </div>
@@ -2570,8 +2618,8 @@ Content-Length: 465
     "answer" : 0,
     "options" : [ "선지1", "선지2" ]
   } ],
-  "createdAt" : "2024-11-14T02:05:40.197264",
-  "updatedAt" : "2024-11-14T02:05:40.197278"
+  "createdAt" : "2024-11-14T20:55:24.274476",
+  "updatedAt" : "2024-11-14T20:55:24.274479"
 }</code></pre>
 </div>
 </div>
@@ -2759,8 +2807,8 @@ Content-Length: 999
       "answer" : 0,
       "options" : [ "선지1", "선지2" ]
     } ],
-    "createdAt" : "2024-11-14T02:05:40.225808",
-    "updatedAt" : "2024-11-14T02:05:40.225811"
+    "createdAt" : "2024-11-14T20:55:24.299936",
+    "updatedAt" : "2024-11-14T20:55:24.299966"
   } ],
   "number" : 0,
   "sort" : {
@@ -2768,7 +2816,6 @@ Content-Length: 999
     "sorted" : false,
     "unsorted" : true
   },
-  "numberOfElements" : 1,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -2781,6 +2828,7 @@ Content-Length: 999
     "paged" : true,
     "unpaged" : false
   },
+  "numberOfElements" : 1,
   "first" : true,
   "last" : true,
   "empty" : false
@@ -3076,8 +3124,8 @@ Content-Length: 486
     "answer" : 0,
     "options" : [ "선지1", "선지2" ]
   } ],
-  "createdAt" : "2024-11-14T02:05:40.171272",
-  "updatedAt" : "2024-11-14T02:05:40.171276"
+  "createdAt" : "2024-11-14T20:55:24.246305",
+  "updatedAt" : "2024-11-14T20:55:24.246308"
 }</code></pre>
 </div>
 </div>
@@ -3342,8 +3390,8 @@ Content-Length: 564
     "answer" : 0,
     "options" : [ "수정한 선지1", "수정한 선지2" ]
   } ],
-  "createdAt" : "2024-11-14T02:05:40.000744",
-  "updatedAt" : "2024-11-14T02:05:40.00075"
+  "createdAt" : "2024-11-14T20:55:24.099474",
+  "updatedAt" : "2024-11-14T20:55:24.09948"
 }</code></pre>
 </div>
 </div>
@@ -4023,7 +4071,6 @@ Content-Length: 739
     "sorted" : false,
     "unsorted" : true
   },
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -4036,6 +4083,7 @@ Content-Length: 739
     "paged" : true,
     "unpaged" : false
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
   "empty" : false
@@ -4273,9 +4321,10 @@ PK-                      [Content_Types].xml�S�n1��U��&amp;�
 �($}��v?�I�Q.���uӂ�h���x&gt;=��@��p�H"�~�}�	�n����*"�H�׺؁�����8�Z�^'�#��7m{��O�3���G�u�ܓ�'��y|a�����D�	��l_EYȾ� ���vql3�ML�eh���*���\3�Y0���oJ׏�	:��^��}PK��z��       I      PK-                      docProps/app.xmlM��
 �0D�~EȽ��ADҔ���A? ��6�lB�J?ߜ���0���ͯ�)�@��׍H6���V&gt;��$;�SC
 ;̢(�ra�g�l�&amp;�e��L!y�%��49��`_���4G���F��J��Wg�GS�b����
-~�PK�|wؑ       �       PK-                      docProps/core.xmlm��J�0E��=M�5�D�(�����I��ߛֱ���d��8��f������	�r��F���C�M�H�ג�FcM�!���	�p�E�I�hτ�I�e ^����"�c�b��!^]��W�!y~
-�&lt;p���]�䠔bU�77.) GT���Q�a:��X����a��iʦr��F�no���A�_H��f�!(�(`���F�����ݒ�ȋ��Ҕ�-=e�1+ϟ+�5?���5������̭�����PK'�      �      PK-                      xl/sharedStrings.xml=�A�  ﾂ��.z0Ɣ�`������,�����q2��o�ԇ���N�E��x5�z&gt;�W���(R�K���^4{�����ŀ�5��y�V����y�m�XV�\�.�j����8� PKp��&amp;x       �       PK-                      xl/styles.xml���n� ��&gt;bop2TQ��P)U�RWb�6*�����ӤS�Nw�s���3ߍ֐���t��(l��������ҝx�!N=@$ɀ��}��3c���ʰr`:i��2��w,�
-�d�T��R#�voc �;c�iE��Û��E&lt;|��4Iɣ����F#��n���B�z�F���y�j3y��yҥ�jt&gt;���2��Lژ�!6��2F�OY��4@M�!���G��������1�t��y��p��"	n����u�����a�ΦDi�9�&amp;#��%I��9��}���cK��T��$?������`J������7���o��f��M|PK�1X@C      �      PK-                      xl/workbook.xmlM���0��&gt;E�wi1ƨ����z/�HmI�_j��qf��)ʧٌ��w�L C��ָ��[u��T�b�a��؊;���8�9��G�)��5�|�:�2&lt;8MuK=b�#�	q�V�u����K��H\)�\�&amp;�t͌��%���?��B��T�PK	��       �       PK-                      xl/_rels/workbook.xml.rels��ͪ1�_�d�tt!"V7�n�� ����LZ�(����r����p����6�JY���U����s����;[�E8D&amp;a��h@-��$� Xt�im���F�*&amp;�41���̭M��ؒ]����WL�f�}��9anIH���Qs1���KtO��ll���O���X߬�	�{�ŋ����œ�?o'�&gt; PK�(2�       �      PK-        �q,-  �                   [Content_Types].xmlPK-        ��z��   I               v  _rels/.relsPK-        �|wؑ   �                �  docProps/app.xmlPK-        '�  �               q  docProps/core.xmlPK-        p��&amp;x   �                �  xl/sharedStrings.xmlPK-        �1X@C  �                 xl/styles.xmlPK-        	��   �                  xl/workbook.xmlPK-        �(2�   �               �  xl/_rels/workbook.xml.relsPK      �  �</code></pre>
+~�PK�|wؑ       �       PK-                      docProps/core.xmlm��J�0F_�依��	mQ�+�w!�b�C����u���%��&amp;_�;�1yG��kB��$�����j����s������XmȮ��e�8&lt;8cх}5�3ak҇`�=*�H���x�Wׁ��wE�����%fajW#9)�X��͍�@
+����f~؀N��d%�~X�i���\����ۛ�e�t�����:��p��$
+X�����䱼�j��)�b�R��MK)�nYQ&gt;W�k~~��k.b!=&amp;���[�+�Ss�	PK��b      �      PK-                      xl/sharedStrings.xml=�A�  ﾂ��.z0Ɣ�`������,�����q2��o�ԇ���N�E��x5�z&gt;�W���(R�K���^4{�����ŀ�5��y�V����y�m�XV�\�.�j����8� PKp��&amp;x       �       PK-                      xl/styles.xml���n� ��&gt;bop2TQ��P)U�RWb�6*�����ӤS�Nw�s���3ߍ֐���t��(l��������ҝx�!N=@$ɀ��}��3c���ʰr`:i��2��w,�
+�d�T��R#�voc �;c�iE��Û��E&lt;|��4Iɣ����F#��n���B�z�F���y�j3y��yҥ�jt&gt;���2��Lژ�!6��2F�OY��4@M�!���G��������1�t��y��p��"	n����u�����a�ΦDi�9�&amp;#��%I��9��}���cK��T��$?������`J������7���o��f��M|PK�1X@C      �      PK-                      xl/workbook.xmlM���0��&gt;E�wi1ƨ����z/�HmI�_j��qf��)ʧٌ��w�L C��ָ��[u��T�b�a��؊;���8�9��G�)��5�|�:�2&lt;8MuK=b�#�	q�V�u����K��H\)�\�&amp;�t͌��%���?��B��T�PK	��       �       PK-                      xl/_rels/workbook.xml.rels��ͪ1�_�d�tt!"V7�n�� ����LZ�(����r����p����6�JY���U����s����;[�E8D&amp;a��h@-��$� Xt�im���F�*&amp;�41���̭M��ؒ]����WL�f�}��9anIH���Qs1���KtO��ll���O���X߬�	�{�ŋ����œ�?o'�&gt; PK�(2�       �      PK-        �q,-  �                   [Content_Types].xmlPK-        ��z��   I               v  _rels/.relsPK-        �|wؑ   �                �  docProps/app.xmlPK-        ��b  �               q  docProps/core.xmlPK-        p��&amp;x   �                �  xl/sharedStrings.xmlPK-        �1X@C  �                 xl/styles.xmlPK-        	��   �                  xl/workbook.xmlPK-        �(2�   �               �  xl/_rels/workbook.xml.relsPK      �  �</code></pre>
 </div>
 </div>
 </div>
@@ -4373,29 +4422,29 @@ Content-Length: 961
   "content" : "공지 사항 내용",
   "hitCount" : 0,
   "fixed" : true,
-  "createdAt" : "2024-11-14T02:05:35.601844",
-  "updatedAt" : "2024-11-14T02:05:35.601845",
+  "createdAt" : "2024-11-14T20:55:19.349331",
+  "updatedAt" : "2024-11-14T20:55:19.349332",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-14T02:05:35.601837",
-    "updatedAt" : "2024-11-14T02:05:35.601839"
+    "createdAt" : "2024-11-14T20:55:19.349319",
+    "updatedAt" : "2024-11-14T20:55:19.349323"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-14T02:05:35.601841",
-    "updatedAt" : "2024-11-14T02:05:35.601841"
+    "createdAt" : "2024-11-14T20:55:19.349325",
+    "updatedAt" : "2024-11-14T20:55:19.349327"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-14T02:05:35.601842",
-    "updatedAt" : "2024-11-14T02:05:35.601843"
+    "createdAt" : "2024-11-14T20:55:19.349328",
+    "updatedAt" : "2024-11-14T20:55:19.349329"
   } ]
 }</code></pre>
 </div>
@@ -4577,15 +4626,15 @@ Content-Length: 854
     "title" : "공지 사항 1",
     "hitCount" : 10,
     "fixed" : true,
-    "createdAt" : "2024-11-14T02:05:35.471007",
-    "updatedAt" : "2024-11-14T02:05:35.471009"
+    "createdAt" : "2024-11-14T20:55:19.227367",
+    "updatedAt" : "2024-11-14T20:55:19.227371"
   }, {
     "id" : 2,
     "title" : "공지 사항 2",
     "hitCount" : 10,
     "fixed" : false,
-    "createdAt" : "2024-11-14T02:05:35.471018",
-    "updatedAt" : "2024-11-14T02:05:35.471019"
+    "createdAt" : "2024-11-14T20:55:19.227384",
+    "updatedAt" : "2024-11-14T20:55:19.227386"
   } ],
   "number" : 0,
   "sort" : {
@@ -4593,7 +4642,6 @@ Content-Length: 854
     "sorted" : false,
     "unsorted" : true
   },
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -4606,6 +4654,7 @@ Content-Length: 854
     "paged" : true,
     "unpaged" : false
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
   "empty" : false
@@ -4838,7 +4887,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 949
+Content-Length: 946
 
 {
   "id" : 1,
@@ -4846,29 +4895,29 @@ Content-Length: 949
   "content" : "content",
   "hitCount" : 10,
   "fixed" : true,
-  "createdAt" : "2024-11-14T02:05:35.582179",
-  "updatedAt" : "2024-11-14T02:05:35.582179",
+  "createdAt" : "2024-11-14T20:55:19.328911",
+  "updatedAt" : "2024-11-14T20:55:19.328912",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-14T02:05:35.582169",
-    "updatedAt" : "2024-11-14T02:05:35.582172"
+    "createdAt" : "2024-11-14T20:55:19.3289",
+    "updatedAt" : "2024-11-14T20:55:19.328904"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-14T02:05:35.582174",
-    "updatedAt" : "2024-11-14T02:05:35.582174"
+    "createdAt" : "2024-11-14T20:55:19.328906",
+    "updatedAt" : "2024-11-14T20:55:19.328908"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-14T02:05:35.582175",
-    "updatedAt" : "2024-11-14T02:05:35.582178"
+    "createdAt" : "2024-11-14T20:55:19.328909",
+    "updatedAt" : "2024-11-14T20:55:19.32891"
   } ]
 }</code></pre>
 </div>
@@ -5091,28 +5140,28 @@ Content-Length: 955
   "hitCount" : 10,
   "fixed" : false,
   "createdAt" : "2024-01-01T12:00:00",
-  "updatedAt" : "2024-11-14T02:05:35.516521",
+  "updatedAt" : "2024-11-14T20:55:19.267453",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-14T02:05:35.516473"
+    "updatedAt" : "2024-11-14T20:55:19.267403"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-14T02:05:35.516481"
+    "updatedAt" : "2024-11-14T20:55:19.267411"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-14T02:05:35.516483"
+    "updatedAt" : "2024-11-14T20:55:19.267415"
   } ]
 }</code></pre>
 </div>
@@ -5361,7 +5410,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 980
+Content-Length: 981
 
 {
   "id" : 1,
@@ -5369,29 +5418,29 @@ Content-Length: 980
   "content" : "이벤트 공지 사항 내용",
   "hitCount" : 0,
   "fixed" : true,
-  "createdAt" : "2024-11-14T02:05:30.466039",
-  "updatedAt" : "2024-11-14T02:05:30.466041",
+  "createdAt" : "2024-11-14T20:55:14.881844",
+  "updatedAt" : "2024-11-14T20:55:14.881846",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-14T02:05:30.466018",
-    "updatedAt" : "2024-11-14T02:05:30.466027"
+    "createdAt" : "2024-11-14T20:55:14.881818",
+    "updatedAt" : "2024-11-14T20:55:14.881827"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-14T02:05:30.46603",
-    "updatedAt" : "2024-11-14T02:05:30.466033"
+    "createdAt" : "2024-11-14T20:55:14.881831",
+    "updatedAt" : "2024-11-14T20:55:14.881834"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-14T02:05:30.466035",
-    "updatedAt" : "2024-11-14T02:05:30.466037"
+    "createdAt" : "2024-11-14T20:55:14.881839",
+    "updatedAt" : "2024-11-14T20:55:14.881842"
   } ]
 }</code></pre>
 </div>
@@ -5562,7 +5611,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 873
+Content-Length: 874
 
 {
   "totalPages" : 1,
@@ -5573,15 +5622,15 @@ Content-Length: 873
     "title" : "이벤트 공지 사항 1",
     "hitCount" : 10,
     "fixed" : true,
-    "createdAt" : "2024-11-14T02:05:30.512909",
-    "updatedAt" : "2024-11-14T02:05:30.512917"
+    "createdAt" : "2024-11-14T20:55:14.921845",
+    "updatedAt" : "2024-11-14T20:55:14.921853"
   }, {
     "id" : 2,
     "title" : "이벤트 공지 사항 2",
     "hitCount" : 10,
     "fixed" : false,
-    "createdAt" : "2024-11-14T02:05:30.512937",
-    "updatedAt" : "2024-11-14T02:05:30.51294"
+    "createdAt" : "2024-11-14T20:55:14.921872",
+    "updatedAt" : "2024-11-14T20:55:14.921874"
   } ],
   "number" : 0,
   "sort" : {
@@ -5589,7 +5638,6 @@ Content-Length: 873
     "sorted" : false,
     "unsorted" : true
   },
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -5602,6 +5650,7 @@ Content-Length: 873
     "paged" : true,
     "unpaged" : false
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
   "empty" : false
@@ -5842,29 +5891,29 @@ Content-Length: 958
   "content" : "content",
   "hitCount" : 10,
   "fixed" : true,
-  "createdAt" : "2024-11-14T02:05:30.404104",
-  "updatedAt" : "2024-11-14T02:05:30.404106",
+  "createdAt" : "2024-11-14T20:55:14.82253",
+  "updatedAt" : "2024-11-14T20:55:14.822532",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-14T02:05:30.404081",
-    "updatedAt" : "2024-11-14T02:05:30.40409"
+    "createdAt" : "2024-11-14T20:55:14.822507",
+    "updatedAt" : "2024-11-14T20:55:14.822517"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-14T02:05:30.404093",
-    "updatedAt" : "2024-11-14T02:05:30.404095"
+    "createdAt" : "2024-11-14T20:55:14.822521",
+    "updatedAt" : "2024-11-14T20:55:14.822523"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-14T02:05:30.404099",
-    "updatedAt" : "2024-11-14T02:05:30.404101"
+    "createdAt" : "2024-11-14T20:55:14.822525",
+    "updatedAt" : "2024-11-14T20:55:14.822527"
   } ]
 }</code></pre>
 </div>
@@ -6087,28 +6136,28 @@ Content-Length: 975
   "hitCount" : 10,
   "fixed" : false,
   "createdAt" : "2024-01-01T12:00:00",
-  "updatedAt" : "2024-11-14T02:05:30.309552",
+  "updatedAt" : "2024-11-14T20:55:14.700819",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-14T02:05:30.309464"
+    "updatedAt" : "2024-11-14T20:55:14.700767"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-14T02:05:30.309483"
+    "updatedAt" : "2024-11-14T20:55:14.700783"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-14T02:05:30.309494"
+    "updatedAt" : "2024-11-14T20:55:14.700788"
   } ]
 }</code></pre>
 </div>
@@ -6291,13 +6340,13 @@ Vary: Access-Control-Request-Headers</code></pre>
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /eventPeriods HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 84
+Content-Length: 83
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
 {
-  "start" : "2024-11-14T02:05:31.062658",
-  "end" : "2024-11-24T02:05:31.062666"
+  "start" : "2024-11-14T20:55:15.489517",
+  "end" : "2024-11-24T20:55:15.48953"
 }</code></pre>
 </div>
 </div>
@@ -6344,15 +6393,15 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 204
+Content-Length: 205
 
 {
   "id" : 1,
   "year" : 2024,
-  "start" : "2024-11-14T02:05:31.062672",
-  "end" : "2024-11-24T02:05:31.062677",
-  "createdAt" : "2024-11-14T02:05:31.06268",
-  "updatedAt" : "2024-11-14T02:05:31.062681"
+  "start" : "2024-11-14T20:55:15.489536",
+  "end" : "2024-11-24T20:55:15.489539",
+  "createdAt" : "2024-11-14T20:55:15.489541",
+  "updatedAt" : "2024-11-14T20:55:15.489543"
 }</code></pre>
 </div>
 </div>
@@ -6446,10 +6495,10 @@ Content-Length: 205
 {
   "id" : 1,
   "year" : 2024,
-  "start" : "2024-11-14T02:05:31.038835",
-  "end" : "2024-11-24T02:05:31.038838",
-  "createdAt" : "2024-11-14T02:05:31.038842",
-  "updatedAt" : "2024-11-14T02:05:31.038844"
+  "start" : "2024-11-14T20:55:15.467784",
+  "end" : "2024-11-24T20:55:15.467791",
+  "createdAt" : "2024-11-14T20:55:15.467795",
+  "updatedAt" : "2024-11-14T20:55:15.467797"
 }</code></pre>
 </div>
 </div>
@@ -6538,22 +6587,22 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 416
+Content-Length: 414
 
 [ {
   "id" : 1,
   "year" : 2024,
-  "start" : "2024-11-14T02:05:31.096556",
-  "end" : "2024-11-24T02:05:31.096569",
-  "createdAt" : "2024-11-14T02:05:31.096574",
-  "updatedAt" : "2024-11-14T02:05:31.096576"
+  "start" : "2024-11-14T20:55:15.515195",
+  "end" : "2024-11-24T20:55:15.515205",
+  "createdAt" : "2024-11-14T20:55:15.51521",
+  "updatedAt" : "2024-11-14T20:55:15.515213"
 }, {
   "id" : 2,
   "year" : 2025,
-  "start" : "2024-11-14T02:05:31.096579",
-  "end" : "2024-11-24T02:05:31.096581",
-  "createdAt" : "2024-11-14T02:05:31.096584",
-  "updatedAt" : "2024-11-14T02:05:31.096586"
+  "start" : "2024-11-14T20:55:15.515216",
+  "end" : "2024-11-24T20:55:15.515218",
+  "createdAt" : "2024-11-14T20:55:15.51522",
+  "updatedAt" : "2024-11-14T20:55:15.515226"
 } ]</code></pre>
 </div>
 </div>
@@ -6634,8 +6683,8 @@ Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
 {
-  "start" : "2024-11-14T02:05:30.975221",
-  "end" : "2024-11-24T02:05:30.975232"
+  "start" : "2024-11-14T20:55:15.398864",
+  "end" : "2024-11-24T20:55:15.398872"
 }</code></pre>
 </div>
 </div>
@@ -6687,10 +6736,10 @@ Content-Length: 205
 {
   "id" : 1,
   "year" : 2024,
-  "start" : "2024-11-14T02:05:30.975281",
-  "end" : "2024-11-24T02:05:30.975283",
-  "createdAt" : "2024-11-14T02:05:30.975285",
-  "updatedAt" : "2024-11-14T02:05:30.975287"
+  "start" : "2024-11-14T20:55:15.398912",
+  "end" : "2024-11-24T20:55:15.398914",
+  "createdAt" : "2024-11-14T20:55:15.398916",
+  "updatedAt" : "2024-11-14T20:55:15.398918"
 }</code></pre>
 </div>
 </div>
@@ -6847,29 +6896,29 @@ Content-Length: 891
   "year" : 2024,
   "month" : 4,
   "hitCount" : 1,
-  "createdAt" : "2024-11-14T02:05:33.277261",
-  "updatedAt" : "2024-11-14T02:05:33.277263",
+  "createdAt" : "2024-11-14T20:55:17.635454",
+  "updatedAt" : "2024-11-14T20:55:17.635455",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "사진1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-14T02:05:33.277241",
-    "updatedAt" : "2024-11-14T02:05:33.277246"
+    "createdAt" : "2024-11-14T20:55:17.635432",
+    "updatedAt" : "2024-11-14T20:55:17.635438"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "사진2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-14T02:05:33.277249",
-    "updatedAt" : "2024-11-14T02:05:33.277256"
+    "createdAt" : "2024-11-14T20:55:17.635445",
+    "updatedAt" : "2024-11-14T20:55:17.635447"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "사진3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-14T02:05:33.277257",
-    "updatedAt" : "2024-11-14T02:05:33.277258"
+    "createdAt" : "2024-11-14T20:55:17.635449",
+    "updatedAt" : "2024-11-14T20:55:17.635451"
   } ]
 }</code></pre>
 </div>
@@ -7045,7 +7094,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1234
+Content-Length: 1235
 
 {
   "totalPages" : 1,
@@ -7057,29 +7106,29 @@ Content-Length: 1234
     "year" : 2024,
     "month" : 4,
     "hitCount" : 0,
-    "createdAt" : "2024-11-14T02:05:33.190696",
-    "updatedAt" : "2024-11-14T02:05:33.190698",
+    "createdAt" : "2024-11-14T20:55:17.562337",
+    "updatedAt" : "2024-11-14T20:55:17.562339",
     "files" : [ {
       "id" : 1,
       "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
       "name" : "사진1.jpg",
       "mimeType" : "image/jpeg",
-      "createdAt" : "2024-11-14T02:05:33.190672",
-      "updatedAt" : "2024-11-14T02:05:33.190679"
+      "createdAt" : "2024-11-14T20:55:17.562316",
+      "updatedAt" : "2024-11-14T20:55:17.562322"
     }, {
       "id" : 2,
       "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
       "name" : "사진2.jpg",
       "mimeType" : "image/jpeg",
-      "createdAt" : "2024-11-14T02:05:33.190682",
-      "updatedAt" : "2024-11-14T02:05:33.190683"
+      "createdAt" : "2024-11-14T20:55:17.562326",
+      "updatedAt" : "2024-11-14T20:55:17.562327"
     }, {
       "id" : 3,
       "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
       "name" : "사진3.jpg",
       "mimeType" : "image/jpeg",
-      "createdAt" : "2024-11-14T02:05:33.190688",
-      "updatedAt" : "2024-11-14T02:05:33.19069"
+      "createdAt" : "2024-11-14T20:55:17.562329",
+      "updatedAt" : "2024-11-14T20:55:17.562331"
     } ]
   } ],
   "number" : 0,
@@ -7088,8 +7137,8 @@ Content-Length: 1234
     "sorted" : false,
     "unsorted" : true
   },
-  "numberOfElements" : 1,
   "pageable" : "INSTANCE",
+  "numberOfElements" : 1,
   "first" : true,
   "last" : true,
   "empty" : false
@@ -7330,29 +7379,29 @@ Content-Length: 890
   "year" : 2024,
   "month" : 4,
   "hitCount" : 1,
-  "createdAt" : "2024-11-14T02:05:33.243854",
-  "updatedAt" : "2024-11-14T02:05:33.243855",
+  "createdAt" : "2024-11-14T20:55:17.609161",
+  "updatedAt" : "2024-11-14T20:55:17.609163",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "사진1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-14T02:05:33.243833",
-    "updatedAt" : "2024-11-14T02:05:33.243841"
+    "createdAt" : "2024-11-14T20:55:17.609139",
+    "updatedAt" : "2024-11-14T20:55:17.60915"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "사진2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-14T02:05:33.243844",
-    "updatedAt" : "2024-11-14T02:05:33.243848"
+    "createdAt" : "2024-11-14T20:55:17.609153",
+    "updatedAt" : "2024-11-14T20:55:17.609155"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "사진3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-14T02:05:33.24385",
-    "updatedAt" : "2024-11-14T02:05:33.243852"
+    "createdAt" : "2024-11-14T20:55:17.609157",
+    "updatedAt" : "2024-11-14T20:55:17.609159"
   } ]
 }</code></pre>
 </div>
@@ -7606,7 +7655,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 888
+Content-Length: 886
 
 {
   "id" : 1,
@@ -7614,29 +7663,29 @@ Content-Length: 888
   "year" : 2024,
   "month" : 5,
   "hitCount" : 1,
-  "createdAt" : "2024-11-14T02:05:33.063028",
-  "updatedAt" : "2024-11-14T02:05:33.063035",
+  "createdAt" : "2024-11-14T20:55:17.466313",
+  "updatedAt" : "2024-11-14T20:55:17.466316",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "사진1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-14T02:05:33.062854",
-    "updatedAt" : "2024-11-14T02:05:33.062885"
+    "createdAt" : "2024-11-14T20:55:17.46623",
+    "updatedAt" : "2024-11-14T20:55:17.466237"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "사진2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-14T02:05:33.062894",
-    "updatedAt" : "2024-11-14T02:05:33.062896"
+    "createdAt" : "2024-11-14T20:55:17.466243",
+    "updatedAt" : "2024-11-14T20:55:17.466245"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "사진3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-14T02:05:33.062899",
-    "updatedAt" : "2024-11-14T02:05:33.062901"
+    "createdAt" : "2024-11-14T20:55:17.466249",
+    "updatedAt" : "2024-11-14T20:55:17.46625"
   } ]
 }</code></pre>
 </div>
@@ -7809,7 +7858,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 1178
+Content-Length: 1174
 
 {
   "totalPages" : 1,
@@ -7821,24 +7870,24 @@ Content-Length: 1178
     "division" : "배민",
     "position" : null,
     "userType" : "INACTIVE_COMPANY",
-    "createdAt" : "2024-11-14T02:05:37.939288",
-    "updatedAt" : "2024-11-14T02:05:37.939428"
+    "createdAt" : "2024-11-14T20:55:21.999",
+    "updatedAt" : "2024-11-14T20:55:21.999002"
   }, {
     "id" : 2,
     "name" : "김교수",
     "division" : "솦융대",
     "position" : "교수",
     "userType" : "INACTIVE_PROFESSOR",
-    "createdAt" : "2024-11-14T02:05:37.939455",
-    "updatedAt" : "2024-11-14T02:05:37.939456"
+    "createdAt" : "2024-11-14T20:55:21.999019",
+    "updatedAt" : "2024-11-14T20:55:21.99902"
   }, {
     "id" : 3,
     "name" : "박교수",
     "division" : "정통대",
     "position" : "교수",
     "userType" : "INACTIVE_PROFESSOR",
-    "createdAt" : "2024-11-14T02:05:37.939458",
-    "updatedAt" : "2024-11-14T02:05:37.939459"
+    "createdAt" : "2024-11-14T20:55:21.999022",
+    "updatedAt" : "2024-11-14T20:55:21.999023"
   } ],
   "number" : 0,
   "sort" : {
@@ -7846,7 +7895,6 @@ Content-Length: 1178
     "sorted" : false,
     "unsorted" : true
   },
-  "numberOfElements" : 3,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -7859,6 +7907,7 @@ Content-Length: 1178
     "paged" : true,
     "unpaged" : false
   },
+  "numberOfElements" : 3,
   "first" : true,
   "last" : true,
   "empty" : false
@@ -8108,8 +8157,8 @@ Content-Length: 272
   "division" : "배민",
   "position" : "CEO",
   "userType" : "INACTIVE_COMPANY",
-  "createdAt" : "2024-11-14T02:05:38.094722",
-  "updatedAt" : "2024-11-14T02:05:38.094724"
+  "createdAt" : "2024-11-14T20:55:22.069588",
+  "updatedAt" : "2024-11-14T20:55:22.069591"
 }</code></pre>
 </div>
 </div>
@@ -8238,7 +8287,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 262
+Content-Length: 263
 
 {
   "id" : 1,
@@ -8248,8 +8297,8 @@ Content-Length: 262
   "division" : "배민",
   "position" : "CEO",
   "userType" : "COMPANY",
-  "createdAt" : "2024-11-14T02:05:38.04811",
-  "updatedAt" : "2024-11-14T02:05:38.048112"
+  "createdAt" : "2024-11-14T20:55:22.051256",
+  "updatedAt" : "2024-11-14T20:55:22.051259"
 }</code></pre>
 </div>
 </div>
@@ -8462,8 +8511,8 @@ Content-Length: 284
   "projectName" : "프로젝트 이름",
   "title" : "문의 사항 제목",
   "content" : "문의 사항 내용",
-  "createdAt" : "2024-11-14T02:05:33.952899",
-  "updatedAt" : "2024-11-14T02:05:33.952902"
+  "createdAt" : "2024-11-14T20:55:18.271689",
+  "updatedAt" : "2024-11-14T20:55:18.271696"
 }</code></pre>
 </div>
 </div>
@@ -8600,7 +8649,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 823
+Content-Length: 821
 
 {
   "totalPages" : 1,
@@ -8610,12 +8659,12 @@ Content-Length: 823
     "id" : 1,
     "authorName" : "프로젝트 문의 사항 제목",
     "title" : "프로젝트 문의 사항 내용",
-    "createdAt" : "2024-11-14T02:05:33.860213"
+    "createdAt" : "2024-11-14T20:55:18.1834"
   }, {
     "id" : 2,
     "authorName" : "프로젝트 문의 사항 제목",
     "title" : "프로젝트 문의 사항 내용",
-    "createdAt" : "2024-11-14T02:05:33.860272"
+    "createdAt" : "2024-11-14T20:55:18.183461"
   } ],
   "number" : 0,
   "sort" : {
@@ -8623,7 +8672,6 @@ Content-Length: 823
     "sorted" : false,
     "unsorted" : true
   },
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -8636,6 +8684,7 @@ Content-Length: 823
     "paged" : true,
     "unpaged" : false
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
   "empty" : false
@@ -8862,8 +8911,8 @@ Content-Length: 284
   "projectName" : "프로젝트 이름",
   "title" : "문의 사항 제목",
   "content" : "문의 사항 내용",
-  "createdAt" : "2024-11-14T02:05:33.915703",
-  "updatedAt" : "2024-11-14T02:05:33.915707"
+  "createdAt" : "2024-11-14T20:55:18.238298",
+  "updatedAt" : "2024-11-14T20:55:18.238303"
 }</code></pre>
 </div>
 </div>
@@ -9036,8 +9085,8 @@ Content-Length: 304
   "projectName" : "프로젝트 이름",
   "title" : "수정된 문의 사항 제목",
   "content" : "수정된 문의 사항 내용",
-  "createdAt" : "2024-11-14T02:05:34.064408",
-  "updatedAt" : "2024-11-14T02:05:34.064411"
+  "createdAt" : "2024-11-14T20:55:18.328876",
+  "updatedAt" : "2024-11-14T20:55:18.328882"
 }</code></pre>
 </div>
 </div>
@@ -9684,7 +9733,6 @@ Content-Length: 1759
     "sorted" : false,
     "unsorted" : true
   },
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -9697,6 +9745,7 @@ Content-Length: 1759
     "paged" : true,
     "unpaged" : false
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
   "empty" : false
@@ -10066,7 +10115,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1479
+Content-Length: 1481
 
 {
   "id" : 1,
@@ -10100,24 +10149,24 @@ Content-Length: 1479
     "userName" : "유저 이름",
     "isAnonymous" : true,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-14T02:05:36.416785",
-    "updatedAt" : "2024-11-14T02:05:36.416798"
+    "createdAt" : "2024-11-14T20:55:20.729214",
+    "updatedAt" : "2024-11-14T20:55:20.729252"
   }, {
     "id" : 2,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-14T02:05:36.416799",
-    "updatedAt" : "2024-11-14T02:05:36.4168"
+    "createdAt" : "2024-11-14T20:55:20.729265",
+    "updatedAt" : "2024-11-14T20:55:20.729266"
   }, {
     "id" : 3,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-14T02:05:36.416801",
-    "updatedAt" : "2024-11-14T02:05:36.416802"
+    "createdAt" : "2024-11-14T20:55:20.729267",
+    "updatedAt" : "2024-11-14T20:55:20.729268"
   } ],
   "url" : "프로젝트 URL",
   "description" : "프로젝트 설명"
@@ -10475,19 +10524,44 @@ Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
 Content-Disposition: form-data; name=thumbnails; filename=thumbnails.json
 Content-Type: application/json
 
-[{"id":1,"uuid":"36f0e9cf-deaf-4f49-87c7-e62899ac5189","name":"썸네일1.png","mimeType":"image/png","createdAt":"2024-11-14T02:05:36.962575","updatedAt":"2024-11-14T02:05:36.962592"},{"id":1,"uuid":"2c7fc601-1387-4018-89c1-d325e50372b2","name":"썸네일2.png","mimeType":"image/png","createdAt":"2024-11-14T02:05:36.962633","updatedAt":"2024-11-14T02:05:36.962634"}]
+[{"id":1,"uuid":"7160e925-8ada-4834-b3ac-1fc18d452d8c","name":"썸네일1.png","mimeType":"image/png","createdAt":"2024-11-14T20:55:21.578151","updatedAt":"2024-11-14T20:55:21.578154"},{"id":1,"uuid":"4ca0ea00-ff83-4351-a7be-cd7687a6bc81","name":"썸네일2.png","mimeType":"image/png","createdAt":"2024-11-14T20:55:21.578197","updatedAt":"2024-11-14T20:55:21.578198"}]
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=posters; filename=thumbnails.json
 Content-Type: application/json
 
-[{"id":1,"uuid":"ef27020e-d0eb-4825-9685-5de456925f0d","name":"포스터1.png","mimeType":"image/png","createdAt":"2024-11-14T02:05:36.962665","updatedAt":"2024-11-14T02:05:36.962666"},{"id":1,"uuid":"a866b217-ed36-46b8-bd36-e52a4b35ae0f","name":"포스터2.png","mimeType":"image/png","createdAt":"2024-11-14T02:05:36.962672","updatedAt":"2024-11-14T02:05:36.962673"}]
+[{"id":1,"uuid":"8593808b-52f5-4039-8a2d-3a20e876a7f6","name":"포스터1.png","mimeType":"image/png","createdAt":"2024-11-14T20:55:21.578229","updatedAt":"2024-11-14T20:55:21.57823"},{"id":1,"uuid":"fd8d3ff3-24b4-4bf0-88b6-4e38cc0de862","name":"포스터2.png","mimeType":"image/png","createdAt":"2024-11-14T20:55:21.578235","updatedAt":"2024-11-14T20:55:21.578236"}]
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_request_fields">Request fields</h4>
-
+<h4 id="_request_parts">Request parts</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Part</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>excel</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">업로드할 Excel 파일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>thumbnails</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">썸네일 등록 응답 JSON 파일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>posters</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">포스터 등록 응답 JSON 파일</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="_http_response">HTTP response</h4>
@@ -10498,10 +10572,10 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 25
+Content-Length: 24
 
 {
-  "successCount" : 10
+  "successCount" : 2
 }</code></pre>
 </div>
 </div>
@@ -10561,7 +10635,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1481
+Content-Length: 1480
 
 {
   "id" : 1,
@@ -10595,24 +10669,24 @@ Content-Length: 1481
     "userName" : "유저 이름",
     "isAnonymous" : true,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-14T02:05:36.333792",
-    "updatedAt" : "2024-11-14T02:05:36.333833"
+    "createdAt" : "2024-11-14T20:55:20.389211",
+    "updatedAt" : "2024-11-14T20:55:20.38923"
   }, {
     "id" : 2,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-14T02:05:36.333837",
-    "updatedAt" : "2024-11-14T02:05:36.333837"
+    "createdAt" : "2024-11-14T20:55:20.389318",
+    "updatedAt" : "2024-11-14T20:55:20.389324"
   }, {
     "id" : 3,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-14T02:05:36.333838",
-    "updatedAt" : "2024-11-14T02:05:36.333839"
+    "createdAt" : "2024-11-14T20:55:20.389329",
+    "updatedAt" : "2024-11-14T20:55:20.389332"
   } ],
   "url" : "프로젝트 URL",
   "description" : "프로젝트 설명"
@@ -10948,24 +11022,24 @@ Content-Length: 1477
     "userName" : "유저 이름",
     "isAnonymous" : true,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-14T02:05:35.964914",
-    "updatedAt" : "2024-11-14T02:05:35.964918"
+    "createdAt" : "2024-11-14T20:55:19.689131",
+    "updatedAt" : "2024-11-14T20:55:19.689135"
   }, {
     "id" : 2,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-14T02:05:35.964922",
-    "updatedAt" : "2024-11-14T02:05:35.964923"
+    "createdAt" : "2024-11-14T20:55:19.689141",
+    "updatedAt" : "2024-11-14T20:55:19.689142"
   }, {
     "id" : 3,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-14T02:05:35.964925",
-    "updatedAt" : "2024-11-14T02:05:35.964926"
+    "createdAt" : "2024-11-14T20:55:19.689144",
+    "updatedAt" : "2024-11-14T20:55:19.689148"
   } ],
   "url" : "프로젝트 URL",
   "description" : "프로젝트 설명"
@@ -11621,8 +11695,8 @@ Content-Length: 212
   "userName" : "유저 이름",
   "isAnonymous" : true,
   "content" : "댓글 내용",
-  "createdAt" : "2024-11-14T02:05:36.292255",
-  "updatedAt" : "2024-11-14T02:05:36.292258"
+  "createdAt" : "2024-11-14T20:55:20.150468",
+  "updatedAt" : "2024-11-14T20:55:20.150474"
 }</code></pre>
 </div>
 </div>
@@ -11884,7 +11958,6 @@ Content-Length: 1759
     "sorted" : false,
     "unsorted" : true
   },
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -11897,6 +11970,7 @@ Content-Length: 1759
     "paged" : true,
     "unpaged" : false
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
   "empty" : false
@@ -12361,7 +12435,6 @@ Content-Length: 1221
     "sorted" : false,
     "unsorted" : true
   },
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -12374,6 +12447,7 @@ Content-Length: 1221
     "paged" : true,
     "unpaged" : false
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
   "empty" : false
@@ -12739,7 +12813,6 @@ Content-Length: 1217
     "sorted" : false,
     "unsorted" : true
   },
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -12752,6 +12825,7 @@ Content-Length: 1217
     "paged" : true,
     "unpaged" : false
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
   "empty" : false
@@ -13127,7 +13201,6 @@ Content-Length: 1295
     "sorted" : false,
     "unsorted" : true
   },
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -13140,6 +13213,7 @@ Content-Length: 1295
     "paged" : true,
     "unpaged" : false
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
   "empty" : false
