@@ -18,9 +18,10 @@ public class ProposalDetailResponse {
     private String summary;
     private List<ProjectType> projectTypes;
     private String content;
+    private Boolean replied;
 //    private String fileUUID;
 
-    public static ProposalDetailResponse of(Long id, String authorName, String email, String webSite, String title, String summary, List<ProjectType> projectTypes, String content) {
+    public static ProposalDetailResponse of(Long id, String authorName, String email, String webSite, String title, String summary, List<ProjectType> projectTypes, String content, Boolean replied) {
         return new ProposalDetailResponse(
                 id,
                 authorName,
@@ -29,7 +30,9 @@ public class ProposalDetailResponse {
                 title,
                 summary,
                 projectTypes,
-                content);
+                content,
+                replied
+        );
 //                fileUUID);
     }
 }

@@ -121,7 +121,7 @@ public class ProposalControllerTest extends AbstractControllerTest {
         //given
         ProposalDetailResponse proposalDetailResponse = new ProposalDetailResponse(1L, "작성자", "작성자@email.com",
                 "website.com", "과제 제안 제목", "과제 제안 요약", List.of(
-                ProjectType.LAB, ProjectType.CLUB), "과제제안 내용");
+                ProjectType.LAB, ProjectType.CLUB), "과제제안 내용", false);
 
         when(proposalService.getProposalDetail(any())).thenReturn(proposalDetailResponse);
 
@@ -143,7 +143,8 @@ public class ProposalControllerTest extends AbstractControllerTest {
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("과제 제안 제목"),
                                 fieldWithPath("summary").type(JsonFieldType.STRING).description("과제 제안 요약"),
                                 fieldWithPath("projectTypes").type(JsonFieldType.ARRAY).description("과제 제안 프로젝트 유형들"),
-                                fieldWithPath("content").type(JsonFieldType.STRING).description("과제 제안 내용")
+                                fieldWithPath("content").type(JsonFieldType.STRING).description("과제 제안 내용"),
+                                fieldWithPath("replied").type(JsonFieldType.BOOLEAN).description("과제 제안 답변 유무")
                         )
                 ));
     }
@@ -155,7 +156,7 @@ public class ProposalControllerTest extends AbstractControllerTest {
                 "이메일@email.com", "과제 설명", List.of(ProjectType.LAB, ProjectType.CLUB), "과제제안내용", "true", "true");
 
         ProposalDetailResponse proposalDetailResponse = new ProposalDetailResponse(1L, "작성자", "이메일@email.com",
-                "website.com", "과제제안제목", "과제제안요약", List.of(ProjectType.LAB, ProjectType.CLUB), "과제제안내용");
+                "website.com", "과제제안제목", "과제제안요약", List.of(ProjectType.LAB, ProjectType.CLUB), "과제제안내용", false);
         when(proposalService.createProposal(any(), any())).thenReturn(proposalDetailResponse);
 
         ResultActions result = mockMvc.perform(post("/proposals")
@@ -195,7 +196,8 @@ public class ProposalControllerTest extends AbstractControllerTest {
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("과제 제안 제목"),
                                 fieldWithPath("summary").type(JsonFieldType.STRING).description("과제 제안 요약"),
                                 fieldWithPath("projectTypes").type(JsonFieldType.ARRAY).description("과제 제안 프로젝트 유형들"),
-                                fieldWithPath("content").type(JsonFieldType.STRING).description("과제 제안 내용")
+                                fieldWithPath("content").type(JsonFieldType.STRING).description("과제 제안 내용"),
+                                fieldWithPath("replied").type(JsonFieldType.BOOLEAN).description("과제 제안 답변 유무")
                         )
                 ));
     }
@@ -207,7 +209,7 @@ public class ProposalControllerTest extends AbstractControllerTest {
                 "이메일@email.com", "과제 설명", List.of(ProjectType.LAB, ProjectType.CLUB), "과제제안내용", "true", "true");
 
         ProposalDetailResponse proposalDetailResponse = new ProposalDetailResponse(1L, "작성자", "이메일@email.com",
-                "website.com", "과제제안제목", "과제제안요약", List.of(ProjectType.LAB, ProjectType.CLUB), "과제제안내용");
+                "website.com", "과제제안제목", "과제제안요약", List.of(ProjectType.LAB, ProjectType.CLUB), "과제제안내용", false);
         when(proposalService.updateProposal(any(), any())).thenReturn(proposalDetailResponse);
 
         ResultActions result = mockMvc.perform(put("/proposals/{proposalId}", 1L)
@@ -250,7 +252,8 @@ public class ProposalControllerTest extends AbstractControllerTest {
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("과제 제안 제목"),
                                 fieldWithPath("summary").type(JsonFieldType.STRING).description("과제 제안 요약"),
                                 fieldWithPath("projectTypes").type(JsonFieldType.ARRAY).description("과제 제안 프로젝트 유형들"),
-                                fieldWithPath("content").type(JsonFieldType.STRING).description("과제 제안 내용")
+                                fieldWithPath("content").type(JsonFieldType.STRING).description("과제 제안 내용"),
+                                fieldWithPath("replied").type(JsonFieldType.BOOLEAN).description("과제 제안 답변 유무")
                         )
                 ));
     }

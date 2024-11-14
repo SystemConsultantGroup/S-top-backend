@@ -16,8 +16,6 @@ import com.scg.stop.proposal.domain.response.ProposalResponse;
 import com.scg.stop.proposal.repository.ProposalReplyRepository;
 import com.scg.stop.proposal.repository.ProposalRepository;
 import com.scg.stop.user.domain.User;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,7 +48,8 @@ public class ProposalService {
                 proposal.getTitle(),
                 proposal.getDescription(),
                 convertStringToProjectTypes(proposal.getProjectTypes()),
-                proposal.getContent()
+                proposal.getContent(),
+                proposal.getProposalReply() != null
         );
     }
 
@@ -69,7 +68,7 @@ public class ProposalService {
         //TODO: 이메일 형식 정하기  & 과제 제안메일은 어드민 이메일로만 보내면 되는지?
         emailService.sendEmail(proposal.getEmail(), proposal.getTitle(), proposal.getContent());
         return ProposalDetailResponse.of(proposal.getId(), proposal.getUser().getName(), proposal.getEmail(), proposal.getWebSite(),
-                proposal.getTitle(), proposal.getDescription(), convertStringToProjectTypes(proposal.getProjectTypes()), proposal.getContent());
+                proposal.getTitle(), proposal.getDescription(), convertStringToProjectTypes(proposal.getProjectTypes()), proposal.getContent(), proposal.getProposalReply() != null);
     }
 
     @Transactional
@@ -88,7 +87,7 @@ public class ProposalService {
         );
 //        emailService.sendEmail();
         return ProposalDetailResponse.of(proposal.getId(), proposal.getUser().getName(), proposal.getEmail(), proposal.getWebSite(),
-                proposal.getTitle(), proposal.getDescription(), convertStringToProjectTypes(proposal.getProjectTypes()), proposal.getContent());
+                proposal.getTitle(), proposal.getDescription(), convertStringToProjectTypes(proposal.getProjectTypes()), proposal.getContent(), proposal.getProposalReply() != null);
     }
 
     @Transactional
