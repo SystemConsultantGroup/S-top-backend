@@ -62,6 +62,7 @@ public class InquiryService {
                 inquiry.getProject().getName(),
                 inquiry.getTitle(),
                 inquiry.getContent(),
+                inquiry.getReply() != null,
                 inquiry.getCreatedAt(),
                 inquiry.getUpdatedAt()
         );
@@ -88,6 +89,7 @@ public class InquiryService {
                 inquiry.getProject().getName(),
                 inquiry.getTitle(),
                 inquiry.getContent(),
+                inquiry.getReply() != null,
                 inquiry.getCreatedAt(),
                 inquiry.getUpdatedAt()
         );
