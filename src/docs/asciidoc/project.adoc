@@ -17,7 +17,7 @@ operation::project-controller-test/create-project[snippets="http-request,http-re
 === 프로젝트 엑셀 일괄등록 (POST /projects/excel)
 
 ====
-operation::project-excel-controller-test/create-project-excel[snippets="http-request,http-response,response-fields"]
+operation::project-excel-controller-test/create-project-excel[snippets="http-request,request-parts,http-response,response-fields"]
 ====
 
 === 프로젝트 조회 (GET /projects/{projectId})

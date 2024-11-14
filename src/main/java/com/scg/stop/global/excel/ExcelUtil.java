@@ -2,28 +2,15 @@ package com.scg.stop.global.excel;
 
 import com.scg.stop.global.excel.annotation.ExcelColumn;
 import com.scg.stop.global.excel.annotation.ExcelDownload;
-import java.lang.reflect.Field;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.DateUtil;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
+
+import java.lang.reflect.Field;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 @Component
 public class ExcelUtil {
@@ -124,103 +111,5 @@ public class ExcelUtil {
         cellStyle.setAlignment(HorizontalAlignment.CENTER);
 
         cell.setCellStyle(cellStyle);
-    }
-
-    public <T> List<T> fromExcel(MultipartFile file, Class<T> clazz) throws Exception {
-        XSSFWorkbook workbook = null;
-        List<T> result = new ArrayList<>();
-        try {
-            workbook = new XSSFWorkbook(file.getInputStream());
-            Sheet sheet = workbook.getSheetAt(0);
-            Row headerRow = sheet.getRow(0); //header
-            int columns = headerRow.getPhysicalNumberOfCells();
-            Row row;
-
-            Map<Integer, Field> columnFieldMap = new HashMap<>();
-            Field[] fields = clazz.getFields();
-
-            for (int i = 0; i < columns; i++) {
-                String headerValue = headerRow.getCell(i).getStringCellValue();
-
-                for (Field field : fields) {
-                    if (field.isAnnotationPresent(ExcelColumn.class)) {
-                        ExcelColumn excelColumn = field.getAnnotation(ExcelColumn.class);
-                        if (excelColumn.headerName().equals(headerValue)) {
-                            field.setAccessible(true);
-                            columnFieldMap.put(i, field);
-                            break;
-                        }
-                    }
-                }
-            }
-            for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
-                row = sheet.getRow(i);
-                T dto = clazz.getDeclaredConstructor().newInstance();
-                for (Map.Entry<Integer, Field> entry : columnFieldMap.entrySet()) {
-                    int columnIdx = entry.getKey();
-                    Field field = entry.getValue();
-                    Cell cell = row.getCell(columnIdx);
-                    if (cell != null) {
-                        Object cellValue = getCellValue(cell, field.getType());
-                        field.set(dto, cellValue);
-                    }
-                }
-                result.add(dto);
-            }
-        } catch (Exception e) {
-            if (workbook != null) {
-                workbook.close();
-            }
-            throw new RuntimeException(e);
-        }
-        return result;
-    }
-
-
-    private Object getCellValue(Cell cell, Class<?> fieldType) {
-        switch (cell.getCellType()) {
-            case STRING:
-                return convertValue(cell.getStringCellValue(), fieldType);
-            case NUMERIC:
-                if (DateUtil.isCellDateFormatted(cell)) {
-                    return convertValue(cell.getDateCellValue(), fieldType);
-                } else {
-                    return convertValue(cell.getNumericCellValue(), fieldType);
-                }
-            case BOOLEAN:
-                return convertValue(cell.getBooleanCellValue(), fieldType);
-            case FORMULA:
-                return convertValue(cell.getCellFormula(), fieldType);
-            default:
-                return null;
-        }
-    }
-
-    private Object convertValue(Object value, Class<?> fieldType) {
-        if (value == null) {
-            return null;
-        }
-
-        if (fieldType.isAssignableFrom(value.getClass())) {
-            return value;
-        }
-
-        if (fieldType == String.class) {
-            return value.toString();
-        } else if (fieldType == Integer.class || fieldType == int.class) {
-            return ((Number) value).intValue();
-        } else if (fieldType == Long.class || fieldType == long.class) {
-            return ((Number) value).longValue();
-        } else if (fieldType == Double.class || fieldType == double.class) {
-            return ((Number) value).doubleValue();
-        } else if (fieldType == Float.class || fieldType == float.class) {
-            return ((Number) value).floatValue();
-        } else if (fieldType == Boolean.class || fieldType == boolean.class) {
-            return Boolean.valueOf(value.toString());
-        } else if (fieldType == java.util.Date.class && value instanceof java.util.Date) {
-            return value;
-        } else {
-            return value.toString();
-        }
     }
 }
