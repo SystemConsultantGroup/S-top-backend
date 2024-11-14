@@ -1,6 +1,7 @@
 package com.scg.stop.proposal.controller;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -29,9 +30,12 @@ import com.scg.stop.proposal.domain.response.ProposalDetailResponse;
 import com.scg.stop.proposal.domain.response.ProposalReplyResponse;
 import com.scg.stop.proposal.domain.response.ProposalResponse;
 import com.scg.stop.proposal.service.ProposalService;
+import com.scg.stop.user.domain.User;
+import com.scg.stop.user.domain.UserType;
 import jakarta.servlet.http.Cookie;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +50,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 
 @WebMvcTest(ProposalController.class)
 @MockBean(JpaMetamodelMappingContext.class)
@@ -61,22 +66,39 @@ public class ProposalControllerTest extends AbstractControllerTest {
     @MockBean
     ProposalService proposalService;
 
+    @BeforeEach
+    void setUp() {
+        User adminUser = new User("admin");
+        adminUser.register(
+                "어드민",
+                "email.com",
+                "phone",
+                UserType.ADMIN,
+                "temp"
+        );
+//        when(authUserArgumentResolver.supportsParameter(any())).thenReturn(true);
+        doCallRealMethod().when(authUserArgumentResolver).supportsParameter(any());
+        when(authUserArgumentResolver.resolveArgument(any(), any(), any(), any()))
+                .thenReturn(adminUser);
+    }
     @Test
     @DisplayName("과제제안 리스트를 조회할 수 있다")
     void getProposals() throws Exception {
         //given
-//        User newUser = new User("1");
         ProposalResponse proposal1 = ProposalResponse.of(1L, "과제 제안1", "이름", LocalDateTime.now());
         ProposalResponse proposal2 = ProposalResponse.of(2L, "과제 제안2", "이름", LocalDateTime.now());
 
-        Page<ProposalResponse> proposalPage = new PageImpl<>(List.of(proposal1, proposal2), PageRequest.of(0, 10), 2);
-        when(proposalService.getProposalList(any(), any())).thenReturn(proposalPage);
+        Page<ProposalResponse> proposalPage = new PageImpl<>(
+                List.of(proposal1, proposal2),
+                PageRequest.of(0, 10), 2
+        );
+        when(proposalService.getProposalList(any(), any(), any())).thenReturn(proposalPage);
 
         //when
-        ResultActions result = mockMvc.perform(
-                get("/proposals")
-                        .contentType(MediaType.APPLICATION_JSON)
-        );
+        ResultActions result = mockMvc.perform(get(
+                "/proposals")
+                .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                .cookie(new Cookie("refresh-token", REFRESH_TOKEN)));
 
         //then
         result.andExpect(status().isOk())
@@ -119,11 +141,16 @@ public class ProposalControllerTest extends AbstractControllerTest {
     @DisplayName("과제 제안의 상세 페이지를 조회할 수 있다.")
     void getProposalDetail() throws Exception {
         //given
-        ProposalDetailResponse proposalDetailResponse = new ProposalDetailResponse(1L, "작성자", "작성자@email.com",
-                "website.com", "과제 제안 제목", "과제 제안 요약", List.of(
-                ProjectType.LAB, ProjectType.CLUB), "과제제안 내용", false);
+        ProposalDetailResponse proposalDetailResponse = new ProposalDetailResponse(1L,
+                "작성자",
+                "작성자@email.com",
+                "website.com",
+                "과제 제안 제목",
+                List.of(ProjectType.LAB, ProjectType.CLUB, ProjectType.STARTUP, ProjectType.RESEARCH_AND_BUSINESS_FOUNDATION),
+                "과제제안 내용",
+                false);
 
-        when(proposalService.getProposalDetail(any())).thenReturn(proposalDetailResponse);
+        when(proposalService.getProposalDetail(any(), any())).thenReturn(proposalDetailResponse);
 
         //when
         ResultActions result = mockMvc.perform(get("/proposals/{proposalId}", 1L)
@@ -141,7 +168,6 @@ public class ProposalControllerTest extends AbstractControllerTest {
                                 fieldWithPath("email").type(JsonFieldType.STRING).description("과제 제안 이메일"),
                                 fieldWithPath("webSite").type(JsonFieldType.STRING).description("과제 제안 사이트"),
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("과제 제안 제목"),
-                                fieldWithPath("summary").type(JsonFieldType.STRING).description("과제 제안 요약"),
                                 fieldWithPath("projectTypes").type(JsonFieldType.ARRAY).description("과제 제안 프로젝트 유형들"),
                                 fieldWithPath("content").type(JsonFieldType.STRING).description("과제 제안 내용"),
                                 fieldWithPath("replied").type(JsonFieldType.BOOLEAN).description("과제 제안 답변 유무")
@@ -152,11 +178,23 @@ public class ProposalControllerTest extends AbstractControllerTest {
     @Test
     @DisplayName("과제 제안을 생성할 수 있다.")
     void createProposal() throws Exception {
-        CreateProposalRequest createProposalRequest = new CreateProposalRequest("website.com", "과제제안제목",
-                "이메일@email.com", "과제 설명", List.of(ProjectType.LAB, ProjectType.CLUB), "과제제안내용", "true", "true");
+        CreateProposalRequest createProposalRequest = new CreateProposalRequest(
+                "website.com",
+                "과제제안제목",
+                "이메일@email.com",
+                List.of(ProjectType.LAB, ProjectType.CLUB),
+                "과제제안내용",
+                "true", "true");
 
-        ProposalDetailResponse proposalDetailResponse = new ProposalDetailResponse(1L, "작성자", "이메일@email.com",
-                "website.com", "과제제안제목", "과제제안요약", List.of(ProjectType.LAB, ProjectType.CLUB), "과제제안내용", false);
+        ProposalDetailResponse proposalDetailResponse = new ProposalDetailResponse(
+                1L,
+                "작성자",
+                "이메일@email.com",
+                "website.com",
+                "과제제안제목",
+                List.of(ProjectType.LAB, ProjectType.CLUB),
+                "과제제안내용",
+                false);
         when(proposalService.createProposal(any(), any())).thenReturn(proposalDetailResponse);
 
         ResultActions result = mockMvc.perform(post("/proposals")
@@ -180,10 +218,9 @@ public class ProposalControllerTest extends AbstractControllerTest {
                         requestFields(
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("과제제안 제목"),
                                 fieldWithPath("content").type(JsonFieldType.STRING).description("과제제안 내용"),
-                                fieldWithPath("webSite").type(JsonFieldType.STRING).description("과제제안 사이트"),
+                                fieldWithPath("webSite").type(JsonFieldType.STRING).description("과제제안 사이트").optional(),
                                 fieldWithPath("projectTypes").type(JsonFieldType.ARRAY).description("과제제안 프로젝트 유형들"),
                                 fieldWithPath("email").type(JsonFieldType.STRING).description("과제제안 이메일"),
-                                fieldWithPath("description").type(JsonFieldType.STRING).description("과제제안 설명"),
                                 fieldWithPath("isVisible").type(JsonFieldType.BOOLEAN).description("공개 여부"),
                                 fieldWithPath("isAnonymous").type(JsonFieldType.BOOLEAN).description("익명 여부")
 
@@ -194,7 +231,6 @@ public class ProposalControllerTest extends AbstractControllerTest {
                                 fieldWithPath("email").type(JsonFieldType.STRING).description("과제 제안 이메일"),
                                 fieldWithPath("webSite").type(JsonFieldType.STRING).description("과제 제안 사이트"),
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("과제 제안 제목"),
-                                fieldWithPath("summary").type(JsonFieldType.STRING).description("과제 제안 요약"),
                                 fieldWithPath("projectTypes").type(JsonFieldType.ARRAY).description("과제 제안 프로젝트 유형들"),
                                 fieldWithPath("content").type(JsonFieldType.STRING).description("과제 제안 내용"),
                                 fieldWithPath("replied").type(JsonFieldType.BOOLEAN).description("과제 제안 답변 유무")
@@ -205,12 +241,25 @@ public class ProposalControllerTest extends AbstractControllerTest {
     @Test
     @DisplayName("과제 제안을 수정할 수 있다.")
     void updateProposal() throws Exception{
-        CreateProposalRequest updateProposalRequest = new CreateProposalRequest("website.com", "과제제안제목",
-                "이메일@email.com", "과제 설명", List.of(ProjectType.LAB, ProjectType.CLUB), "과제제안내용", "true", "true");
+        CreateProposalRequest updateProposalRequest = new CreateProposalRequest(
+                "website.com",
+                "과제제안제목",
+                "이메일@email.com",
+                 List.of(ProjectType.LAB, ProjectType.CLUB),
+                "과제제안내용",
+                "true",
+                "true");
 
-        ProposalDetailResponse proposalDetailResponse = new ProposalDetailResponse(1L, "작성자", "이메일@email.com",
-                "website.com", "과제제안제목", "과제제안요약", List.of(ProjectType.LAB, ProjectType.CLUB), "과제제안내용", false);
-        when(proposalService.updateProposal(any(), any())).thenReturn(proposalDetailResponse);
+        ProposalDetailResponse proposalDetailResponse = new ProposalDetailResponse(
+                1L,
+                "작성자",
+                "이메일@email.com",
+                "website.com",
+                "과제제안제목",
+                List.of(ProjectType.LAB, ProjectType.CLUB),
+                "과제제안내용",
+                false);
+        when(proposalService.updateProposal(any(), any(), any())).thenReturn(proposalDetailResponse);
 
         ResultActions result = mockMvc.perform(put("/proposals/{proposalId}", 1L)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -236,10 +285,9 @@ public class ProposalControllerTest extends AbstractControllerTest {
                         requestFields(
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("과제제안 제목"),
                                 fieldWithPath("content").type(JsonFieldType.STRING).description("과제제안 내용"),
-                                fieldWithPath("webSite").type(JsonFieldType.STRING).description("과제제안 사이트"),
+                                fieldWithPath("webSite").type(JsonFieldType.STRING).description("과제제안 사이트").optional(),
                                 fieldWithPath("projectTypes").type(JsonFieldType.ARRAY).description("과제제안 프로젝트 유형들"),
                                 fieldWithPath("email").type(JsonFieldType.STRING).description("과제제안 이메일"),
-                                fieldWithPath("description").type(JsonFieldType.STRING).description("과제제안 설명"),
                                 fieldWithPath("isVisible").type(JsonFieldType.BOOLEAN).description("공개 여부"),
                                 fieldWithPath("isAnonymous").type(JsonFieldType.BOOLEAN).description("익명 여부")
 
@@ -250,7 +298,6 @@ public class ProposalControllerTest extends AbstractControllerTest {
                                 fieldWithPath("email").type(JsonFieldType.STRING).description("과제 제안 이메일"),
                                 fieldWithPath("webSite").type(JsonFieldType.STRING).description("과제 제안 사이트"),
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("과제 제안 제목"),
-                                fieldWithPath("summary").type(JsonFieldType.STRING).description("과제 제안 요약"),
                                 fieldWithPath("projectTypes").type(JsonFieldType.ARRAY).description("과제 제안 프로젝트 유형들"),
                                 fieldWithPath("content").type(JsonFieldType.STRING).description("과제 제안 내용"),
                                 fieldWithPath("replied").type(JsonFieldType.BOOLEAN).description("과제 제안 답변 유무")
@@ -262,7 +309,7 @@ public class ProposalControllerTest extends AbstractControllerTest {
     @DisplayName("과제 제안을 삭제 할 수 있다.")
     void deleteProposal() throws Exception{
         //given
-        doNothing().when(proposalService).deleteProposal(any());
+        doNothing().when(proposalService).deleteProposal(any(), any());
 
         // when
         ResultActions result = mockMvc.perform(
@@ -408,7 +455,7 @@ public class ProposalControllerTest extends AbstractControllerTest {
         //given
         ProposalReplyResponse proposalReplyResponse = ProposalReplyResponse.of(1L, "과제제안 답변 제목", "과제제안 답변 내용");
 
-        when(proposalService.getProposalReply(any())).thenReturn(proposalReplyResponse);
+        when(proposalService.getProposalReply(any(), any())).thenReturn(proposalReplyResponse);
 
         // when
         ResultActions result = mockMvc.perform(

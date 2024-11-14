@@ -5,6 +5,8 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.scg.stop.global.domain.BaseTimeEntity;
+import com.scg.stop.user.domain.User;
+import com.scg.stop.user.domain.UserType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -44,5 +46,9 @@ public class ProposalReply extends BaseTimeEntity {
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public boolean isAuthorized(User requestUser) {
+        return requestUser.getUserType().equals(UserType.ADMIN) || proposal.getUser().equals(requestUser);
     }
 }

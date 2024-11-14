@@ -13,7 +13,6 @@ import lombok.Getter;
 @Getter
 public class CreateProposalRequest {
 
-    @NotBlank(message = "과제 웹사이트를 입력해주세요.")
     private final String webSite;
 
     @NotBlank(message = "과제 이름을 입력해주세요.")
@@ -21,9 +20,6 @@ public class CreateProposalRequest {
 
     @NotBlank(message = "알림을 받을 이메일을 입력해주세요.")
     private final String email;
-
-    @NotBlank(message = "과제 개요를 입력해주세요.")
-    private final String description;
 
     @NotEmpty(message = "과제 유형을 입력해주세요.")
     private final List<ProjectType> projectTypes;
@@ -42,18 +38,15 @@ public class CreateProposalRequest {
             String webSite,
             String title,
             String email,
-            String description,
             List<ProjectType> projectTypes,
             String content,
             String isVisible,
             String isAnonymous
     ) {
-//        validateProjectTypes(projectType);
         validateAndCastBoolean(isVisible, isAnonymous);
         this.webSite = webSite;
         this.email = email;
         this.title = title;
-        this.description = description;
         this.content = content;
         this.projectTypes = projectTypes;
     }
@@ -69,14 +62,4 @@ public class CreateProposalRequest {
 
     }
 
-    //    public Proposal toEntity(String webSite, String title, String description, String content) {
-//        return new Proposal()
-//    }
-    private void validateProjectTypes(String projectTypes) {
-        String PROJECT_PATTERN = "^([\\w가-힣]+)(, [\\w가-힣]+)*$";
-
-        if (!projectTypes.matches(PROJECT_PATTERN)) {
-            throw new BadRequestException(ExceptionCode.INVALID_PROJECT_TYPE);
-        }
-    }
 }

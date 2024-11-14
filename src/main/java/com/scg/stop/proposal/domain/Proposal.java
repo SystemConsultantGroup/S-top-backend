@@ -7,6 +7,7 @@ import static lombok.AccessLevel.PROTECTED;
 import com.scg.stop.domain.project.domain.ProjectType;
 import com.scg.stop.user.domain.User;
 import com.scg.stop.global.domain.BaseTimeEntity;
+import com.scg.stop.user.domain.UserType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -40,14 +41,11 @@ public class Proposal extends BaseTimeEntity {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
+    @Column()
     private String webSite;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
-
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String description;
 
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private boolean isVisible;
@@ -62,32 +60,38 @@ public class Proposal extends BaseTimeEntity {
     @OneToOne(fetch = LAZY, mappedBy = "proposal", cascade = CascadeType.ALL, orphanRemoval = true)
     private ProposalReply proposalReply;
 
+
+    public static final String HIDDEN_TITLE = "비밀글";
+    public static final String HIDDEN_CONTENT = "비밀글입니다";
+    public static final String HIDDEN_EMAIL = "비공개 이메일";
+    public static final String HIDDEN_WEBSITE = "비공개 웹사이트";
+    public static final String HIDDEN_USER = "익명 사용자";
+
+
     private Proposal(User user, String title, String projectTypes, String email, String website, String content,
-                            String description, Boolean isVisible, Boolean isAnonymous) {
+                     Boolean isVisible, Boolean isAnonymous) {
         this.title = title;
         this.projectTypes= projectTypes;
         this.email = email;
         this.webSite = website;
         this.content = content;
-        this.description = description;
         this.isAnonymous = isAnonymous;
         this.isVisible = isVisible;
         this.user = user;
     }
 
     public static Proposal createProposal(User user, String title, String projectTypes, String email, String website,
-                                           String content, String description, Boolean isVisible, Boolean isAnonymous) {
-        return new Proposal(user, title, projectTypes, email, website, content, description, isVisible, isAnonymous);
+                                           String content, Boolean isVisible, Boolean isAnonymous) {
+        return new Proposal(user, title, projectTypes, email, website, content, isVisible, isAnonymous);
     }
 
     public void update(String title, String projectTypes, String email, String website, String content,
-                       String description, Boolean isVisible, Boolean isAnonymous) {
+                       Boolean isVisible, Boolean isAnonymous) {
         this.title = title;
         this.projectTypes = projectTypes;
         this.email = email;
         this.webSite = website;
         this.content = content;
-        this.description = description;
         this.isAnonymous = isAnonymous;
         this.isVisible = isVisible;
     }
@@ -108,5 +112,33 @@ public class Proposal extends BaseTimeEntity {
         return Arrays.stream(proposalTypes.split(","))
                 .map(ProjectType::valueOf)
                 .collect(Collectors.toList());
+    }
+
+    public String getDisplayTitle(User requestUser) {
+        return shouldHideContent(requestUser) ? HIDDEN_TITLE : this.title;
+    }
+
+    public String getDisplayContent(User requestUser) {
+        return shouldHideContent(requestUser) ? HIDDEN_CONTENT : this.content;
+    }
+
+    public String getDisplayEmail(User requestUser) {
+        return isAnonymous && !isAuthorized(requestUser) ? HIDDEN_EMAIL : this.email;
+    }
+
+    public String getDisplayWebsite(User requestUser) {
+        return isAnonymous && !isAuthorized(requestUser) ? HIDDEN_WEBSITE : this.webSite;
+    }
+
+    public String getDisplayUser(User requestUser) {
+        return (isAnonymous || !isVisible) && !isAuthorized(requestUser) ? HIDDEN_USER : user.getName();
+    }
+
+    private boolean shouldHideContent(User requestUser) {
+        return !isVisible && !isAuthorized(requestUser);
+    }
+
+    public boolean isAuthorized(User requestUser) {
+        return requestUser.getUserType() == UserType.ADMIN || this.user.equals(requestUser);
     }
 }

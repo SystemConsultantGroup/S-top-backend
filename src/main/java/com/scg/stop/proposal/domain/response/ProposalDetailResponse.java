@@ -15,20 +15,19 @@ public class ProposalDetailResponse {
     private String email;
     private String webSite;
     private String title;
-    private String summary;
     private List<ProjectType> projectTypes;
     private String content;
     private Boolean replied;
 //    private String fileUUID;
 
-    public static ProposalDetailResponse of(Long id, String authorName, String email, String webSite, String title, String summary, List<ProjectType> projectTypes, String content, Boolean replied) {
+    public static ProposalDetailResponse of(Long id, String authorName, String email, String webSite, String title,
+                                            List<ProjectType> projectTypes, String content, Boolean replied) {
         return new ProposalDetailResponse(
                 id,
                 authorName,
                 email,
                 webSite,
                 title,
-                summary,
                 projectTypes,
                 content,
                 replied

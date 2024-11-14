@@ -16,6 +16,7 @@ import com.scg.stop.proposal.domain.response.ProposalResponse;
 import com.scg.stop.proposal.repository.ProposalReplyRepository;
 import com.scg.stop.proposal.repository.ProposalRepository;
 import com.scg.stop.user.domain.User;
+import com.scg.stop.user.domain.UserType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,23 +31,30 @@ public class ProposalService {
     private final ProposalReplyRepository proposalReplyRepository;
     private final EmailService emailService;
     @Transactional(readOnly = true)
-    public Page<ProposalResponse> getProposalList(String title, Pageable pageable) {
+    public Page<ProposalResponse> getProposalList(String title, Pageable pageable, User requestUser) {
         Page<Proposal> proposals = proposalRepository.findProposals(title, pageable);
         return proposals
-                .map(proposal -> ProposalResponse.of(proposal.getId(), proposal.getTitle(), proposal.getUser().getName(), proposal.getCreatedAt()));
+                .map(proposal ->
+                        ProposalResponse.of(
+                                proposal.getId(),
+                                proposal.getDisplayTitle(requestUser),
+                                proposal.getDisplayUser(requestUser),
+                                proposal.getCreatedAt()
+                        )
+                );
     }
 
     @Transactional(readOnly = true)
-    public ProposalDetailResponse getProposalDetail(Long proposalId) {
+    public ProposalDetailResponse getProposalDetail(Long proposalId, User requestUser) {
         Proposal proposal = proposalRepository.findById(proposalId)
                 .orElseThrow(()-> new BadRequestException(ExceptionCode.NOT_FOUND_PROPOSAL));
+        if (!proposal.isAuthorized(requestUser)) throw new BadRequestException(ExceptionCode.NOT_AUTHORIZED);
         return ProposalDetailResponse.of(
                 proposal.getId(),
                 proposal.getUser().getName(),
                 proposal.getEmail(),
                 proposal.getWebSite(),
                 proposal.getTitle(),
-                proposal.getDescription(),
                 convertStringToProjectTypes(proposal.getProjectTypes()),
                 proposal.getContent(),
                 proposal.getProposalReply() != null
@@ -61,40 +69,39 @@ public class ProposalService {
                 proposalCreateRequest.getEmail(),
                 proposalCreateRequest.getWebSite(),
                 proposalCreateRequest.getContent(),
-                proposalCreateRequest.getDescription(),
                 proposalCreateRequest.getIsVisible(),
                 proposalCreateRequest.getIsAnonymous());
         proposalRepository.save(proposal);
         //TODO: 이메일 형식 정하기  & 과제 제안메일은 어드민 이메일로만 보내면 되는지?
         emailService.sendEmail(proposal.getEmail(), proposal.getTitle(), proposal.getContent());
         return ProposalDetailResponse.of(proposal.getId(), proposal.getUser().getName(), proposal.getEmail(), proposal.getWebSite(),
-                proposal.getTitle(), proposal.getDescription(), convertStringToProjectTypes(proposal.getProjectTypes()), proposal.getContent(), proposal.getProposalReply() != null);
+                proposal.getTitle(), convertStringToProjectTypes(proposal.getProjectTypes()), proposal.getContent(), proposal.getProposalReply() != null);
     }
 
     @Transactional
-    public ProposalDetailResponse updateProposal(Long proposalId, CreateProposalRequest proposalUpdateRequest) {
+    public ProposalDetailResponse updateProposal(Long proposalId, CreateProposalRequest proposalUpdateRequest, User requestUser) {
         Proposal proposal = proposalRepository.findById(proposalId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROPOSAL));
+        if (!proposal.isAuthorized(requestUser)) throw new BadRequestException(ExceptionCode.NOT_AUTHORIZED);
         proposal.update(
                 proposalUpdateRequest.getTitle(),
                 convertProjectTypesToString(proposalUpdateRequest.getProjectTypes()),
                 proposalUpdateRequest.getEmail(),
                 proposalUpdateRequest.getWebSite(),
                 proposalUpdateRequest.getContent(),
-                proposalUpdateRequest.getDescription(),
                 proposalUpdateRequest.getIsVisible(),
                 proposalUpdateRequest.getIsAnonymous()
         );
 //        emailService.sendEmail();
         return ProposalDetailResponse.of(proposal.getId(), proposal.getUser().getName(), proposal.getEmail(), proposal.getWebSite(),
-                proposal.getTitle(), proposal.getDescription(), convertStringToProjectTypes(proposal.getProjectTypes()), proposal.getContent(), proposal.getProposalReply() != null);
+                proposal.getTitle(), convertStringToProjectTypes(proposal.getProjectTypes()), proposal.getContent(), proposal.getProposalReply() != null);
     }
 
     @Transactional
-    public ProposalReplyResponse createProposalReply(Long proposalId, ProposalReplyRequest proposalReplyCreateRequest) {
+    public ProposalReplyResponse createProposalReply(Long proposalId,
+                                                     ProposalReplyRequest proposalReplyCreateRequest) {
         Proposal proposal = proposalRepository.findById(proposalId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROPOSAL));
-
         ProposalReply proposalReply = ProposalReply.createProposalReply(proposalReplyCreateRequest.getTitle(),
                 proposalReplyCreateRequest.getContent(),
                 proposal);
@@ -103,7 +110,8 @@ public class ProposalService {
     }
 
     @Transactional
-    public ProposalReplyResponse updateProposalReply(Long proposalReplyId, ProposalReplyRequest proposalReplyUpdateRequest) {
+    public ProposalReplyResponse updateProposalReply(Long proposalReplyId,
+                                                     ProposalReplyRequest proposalReplyUpdateRequest) {
         ProposalReply proposalReply = proposalReplyRepository.findById(proposalReplyId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROPOSALREPLY));
 
@@ -115,13 +123,15 @@ public class ProposalService {
     public void deleteProposalReply(Long proposalReplyId) {
         ProposalReply proposalReply = proposalReplyRepository.findById(proposalReplyId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROPOSALREPLY));
+
         proposalReplyRepository.delete(proposalReply);
     }
 
     @Transactional
-    public void deleteProposal(Long proposalId) {
+    public void deleteProposal(Long proposalId, User requestUser) {
         Proposal proposal = proposalRepository.findById(proposalId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROPOSAL));
+        if (proposal.isAuthorized(requestUser)) throw new BadRequestException(ExceptionCode.NOT_AUTHORIZED);
         proposalRepository.delete(proposal);
     }
 
@@ -137,10 +147,11 @@ public class ProposalService {
 //    }
 
     @Transactional(readOnly = true)
-    public ProposalReplyResponse getProposalReply(Long proposalId) {
+    public ProposalReplyResponse getProposalReply(Long proposalId, User requestUser) {
         Proposal proposal = proposalRepository.findById(proposalId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROPOSAL));
         ProposalReply proposalReply = proposalReplyRepository.findByProposal(proposal);
+        if (proposalReply.isAuthorized(requestUser)) throw new BadRequestException(ExceptionCode.NOT_AUTHORIZED);
         return ProposalReplyResponse.of(proposalReply.getId(), proposalReply.getTitle(), proposalReply.getContent());
     }
 }
