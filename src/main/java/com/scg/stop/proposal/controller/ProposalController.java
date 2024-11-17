@@ -52,7 +52,7 @@ public class ProposalController {
     }
 
     @PostMapping()
-    public ResponseEntity<ProposalDetailResponse> createProposal(@AuthUser(accessType = {AccessType.COMPANY}) User user,
+    public ResponseEntity<ProposalDetailResponse> createProposal(@AuthUser(accessType = {AccessType.COMPANY, AccessType.ADMIN}) User user,
                                                                  @RequestBody @Valid CreateProposalRequest proposalCreateRequest) {
         ProposalDetailResponse proposalDetailResponse = proposalService.createProposal(user, proposalCreateRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(proposalDetailResponse);
@@ -102,7 +102,7 @@ public class ProposalController {
     }
 
     @GetMapping("/{proposalId}/reply")
-    public ResponseEntity<ProposalReplyResponse> getProposalReplies(@AuthUser(accessType = {AccessType.ADMIN}) User user,
+    public ResponseEntity<ProposalReplyResponse> getProposalReplies(@AuthUser(accessType = {AccessType.ADMIN, AccessType.COMPANY}) User user,
                                                                     @PathVariable("proposalId") Long proposalId) {
 //        List<ProposalReplyResponse> proposalReplies = proposalService.getProposalReplies(proposalId);
         ProposalReplyResponse proposalReply = proposalService.getProposalReply(proposalId, user);
