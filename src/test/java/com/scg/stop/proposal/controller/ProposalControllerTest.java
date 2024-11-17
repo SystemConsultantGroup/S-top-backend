@@ -50,14 +50,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 
 @WebMvcTest(ProposalController.class)
 @MockBean(JpaMetamodelMappingContext.class)
 @AutoConfigureRestDocs
 public class ProposalControllerTest extends AbstractControllerTest {
 
-    private static final String ACCESS_TOKEN = "admin_access_token";
+    private static final String ADMIN_ACCESS_TOKEN = "admin_access_token";
+    private static final String ADMIN_OR_COMPANY_ACCESS_TOKEN = "admin_or_company_access_token";
+    private static final String ALL_ACCESS_TOKEN = "all_user_access_token";
     private static final String REFRESH_TOKEN = "refresh_token";
 
     @Autowired
@@ -97,7 +98,7 @@ public class ProposalControllerTest extends AbstractControllerTest {
         //when
         ResultActions result = mockMvc.perform(get(
                 "/proposals")
-                .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, ALL_ACCESS_TOKEN)
                 .cookie(new Cookie("refresh-token", REFRESH_TOKEN)));
 
         //then
@@ -154,7 +155,9 @@ public class ProposalControllerTest extends AbstractControllerTest {
 
         //when
         ResultActions result = mockMvc.perform(get("/proposals/{proposalId}", 1L)
-                .contentType(MediaType.APPLICATION_JSON));
+                .contentType(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, ADMIN_OR_COMPANY_ACCESS_TOKEN)
+                .cookie(new Cookie("refresh-token", REFRESH_TOKEN)));
 
         //then
         result.andExpect(status().isOk())
@@ -200,7 +203,7 @@ public class ProposalControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(post("/proposals")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(createProposalRequest))
-                .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, ADMIN_OR_COMPANY_ACCESS_TOKEN)
                 .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
@@ -219,7 +222,8 @@ public class ProposalControllerTest extends AbstractControllerTest {
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("과제제안 제목"),
                                 fieldWithPath("content").type(JsonFieldType.STRING).description("과제제안 내용"),
                                 fieldWithPath("webSite").type(JsonFieldType.STRING).description("과제제안 사이트").optional(),
-                                fieldWithPath("projectTypes").type(JsonFieldType.ARRAY).description("과제제안 프로젝트 유형들"),
+                                fieldWithPath("projectTypes").type(JsonFieldType.ARRAY).description("과제제안 프로젝트 유형:"
+                                        + "RESEARCH_AND_BUSINESS_FOUNDATION, LAB, STARTUP, CLUB"),
                                 fieldWithPath("email").type(JsonFieldType.STRING).description("과제제안 이메일"),
                                 fieldWithPath("isVisible").type(JsonFieldType.BOOLEAN).description("공개 여부"),
                                 fieldWithPath("isAnonymous").type(JsonFieldType.BOOLEAN).description("익명 여부")
@@ -264,7 +268,7 @@ public class ProposalControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(put("/proposals/{proposalId}", 1L)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(updateProposalRequest))
-                .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, ADMIN_OR_COMPANY_ACCESS_TOKEN)
                 .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
@@ -286,7 +290,7 @@ public class ProposalControllerTest extends AbstractControllerTest {
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("과제제안 제목"),
                                 fieldWithPath("content").type(JsonFieldType.STRING).description("과제제안 내용"),
                                 fieldWithPath("webSite").type(JsonFieldType.STRING).description("과제제안 사이트").optional(),
-                                fieldWithPath("projectTypes").type(JsonFieldType.ARRAY).description("과제제안 프로젝트 유형들"),
+                                fieldWithPath("projectTypes").type(JsonFieldType.ARRAY).description("과제제안 프로젝트 유형:" + "RESEARCH_AND_BUSINESS_FOUNDATION, LAB, STARTUP, CLUB"),
                                 fieldWithPath("email").type(JsonFieldType.STRING).description("과제제안 이메일"),
                                 fieldWithPath("isVisible").type(JsonFieldType.BOOLEAN).description("공개 여부"),
                                 fieldWithPath("isAnonymous").type(JsonFieldType.BOOLEAN).description("익명 여부")
@@ -315,7 +319,7 @@ public class ProposalControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 delete("/proposals/{proposalId}", 1L)
                         .contentType(APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, ADMIN_OR_COMPANY_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
@@ -346,7 +350,7 @@ public class ProposalControllerTest extends AbstractControllerTest {
 
         ResultActions result = mockMvc.perform(post("/proposals/{proposalId}/reply", 1L)
                 .contentType(APPLICATION_JSON)
-                .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, ADMIN_OR_COMPANY_ACCESS_TOKEN)
                 .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
                 .content(objectMapper.writeValueAsString(proposalReplyRequest))
         );
@@ -386,7 +390,7 @@ public class ProposalControllerTest extends AbstractControllerTest {
 
         ResultActions result = mockMvc.perform(put("/proposals/{proposalId}/reply/{replyId}", 1L, 1L)
                 .contentType(APPLICATION_JSON)
-                .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, ADMIN_OR_COMPANY_ACCESS_TOKEN)
                 .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
                 .content(objectMapper.writeValueAsString(proposalReplyRequest))
         );
@@ -427,7 +431,7 @@ public class ProposalControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 delete("/proposals/{proposalId}/reply/{proposalReplyId}", 1L, 1L)
                         .contentType(APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, ADMIN_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
@@ -461,7 +465,7 @@ public class ProposalControllerTest extends AbstractControllerTest {
         ResultActions result = mockMvc.perform(
                 get("/proposals/{proposalId}/reply", 1L)
                         .contentType(APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, ADMIN_OR_COMPANY_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
         );
 
