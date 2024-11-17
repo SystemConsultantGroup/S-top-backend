@@ -131,7 +131,7 @@ public class ProposalService {
     public void deleteProposal(Long proposalId, User requestUser) {
         Proposal proposal = proposalRepository.findById(proposalId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROPOSAL));
-        if (proposal.isAuthorized(requestUser)) throw new BadRequestException(ExceptionCode.NOT_AUTHORIZED);
+        if (!proposal.isAuthorized(requestUser)) throw new BadRequestException(ExceptionCode.NOT_AUTHORIZED);
         proposalRepository.delete(proposal);
     }
 
@@ -151,7 +151,7 @@ public class ProposalService {
         Proposal proposal = proposalRepository.findById(proposalId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROPOSAL));
         ProposalReply proposalReply = proposalReplyRepository.findByProposal(proposal);
-        if (proposalReply.isAuthorized(requestUser)) throw new BadRequestException(ExceptionCode.NOT_AUTHORIZED);
+        if (!proposalReply.isAuthorized(requestUser)) throw new BadRequestException(ExceptionCode.NOT_AUTHORIZED);
         return ProposalReplyResponse.of(proposalReply.getId(), proposalReply.getTitle(), proposalReply.getContent());
     }
 }
