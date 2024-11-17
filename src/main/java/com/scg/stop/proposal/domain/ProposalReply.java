@@ -49,6 +49,7 @@ public class ProposalReply extends BaseTimeEntity {
     }
 
     public boolean isAuthorized(User requestUser) {
-        return requestUser.getUserType().equals(UserType.ADMIN) || proposal.getUser().equals(requestUser);
+        if (proposal.getUser() == null) return false;
+        return requestUser.getUserType().equals(UserType.ADMIN) || proposal.getUser().getId().equals(requestUser.getId());
     }
 }

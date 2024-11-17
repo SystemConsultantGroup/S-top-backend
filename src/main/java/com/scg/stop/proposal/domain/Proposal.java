@@ -139,6 +139,7 @@ public class Proposal extends BaseTimeEntity {
     }
 
     public boolean isAuthorized(User requestUser) {
-        return requestUser.getUserType() == UserType.ADMIN || this.user.equals(requestUser);
+        if (user.getId() == null) return false;
+        return requestUser.getUserType() == UserType.ADMIN || this.user.getId().equals(requestUser.getId());
     }
 }
