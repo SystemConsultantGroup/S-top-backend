@@ -60,6 +60,9 @@ public class ProjectExcelService {
         List<ProjectRequest> projectRequests = new ArrayList<>();
         for (int rowIndex = 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
             Row row = sheet.getRow(rowIndex);
+            if (isRowEmpty(row)) {
+                continue;
+            }
             try {
                 validateNoEmptyShell(row);
                 projectRequests.add(convertRowToDto(row, headerMap, thumbnails, posters));
