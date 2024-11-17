@@ -85,6 +85,7 @@ public class ProjectExcelService {
         String posterImageName = row.getCell(headerMap.get("포스터 이미지")).getStringCellValue().strip();
 
         // 이미지 이름으로 아이디 검색
+
         Long thumbnailId = thumbnails.stream()
                 .filter(thumbnail -> thumbnail.getName().equals(thumbnailImageName))
                 .map(FileResponse::getId)
@@ -145,7 +146,7 @@ public class ProjectExcelService {
     private void validateRequestSize(Sheet sheet, int thumbnails, int posters) {
         int dataRowCount = 0;
         for (int rowIndex = 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
-            if (isRowNowEmpty(sheet.getRow(rowIndex))) {
+            if (!isRowEmpty(sheet.getRow(rowIndex))) {
                 dataRowCount++;
             }
         }
@@ -168,8 +169,20 @@ public class ProjectExcelService {
         }
     }
 
-    private boolean isRowNowEmpty(Row row) {
-        return row != null && row.cellIterator().hasNext();
+    private boolean isRowEmpty(Row row) {
+        if (row == null) {
+            return true;
+        }
+        for (Cell cell : row) {
+            if (!isCellEmpty(cell)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isCellEmpty(Cell cell) {
+        return cell == null || cell.getCellType() == CellType.BLANK;
     }
 
     private Map<String, Integer> getHeaderMap(XSSFSheet sheet) {
