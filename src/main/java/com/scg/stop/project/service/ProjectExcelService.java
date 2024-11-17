@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.Normalizer;
 import java.util.*;
 
 import static com.scg.stop.global.exception.ExceptionCode.*;
@@ -85,14 +86,13 @@ public class ProjectExcelService {
         String posterImageName = row.getCell(headerMap.get("포스터 이미지")).getStringCellValue().strip();
 
         // 이미지 이름으로 아이디 검색
-
         Long thumbnailId = thumbnails.stream()
-                .filter(thumbnail -> thumbnail.getName().equals(thumbnailImageName))
+                .filter(thumbnail -> normalize(thumbnail.getName()).equals(normalize(thumbnailImageName)))
                 .map(FileResponse::getId)
                 .findFirst()
                 .orElseThrow(() -> new BadRequestException(INVALID_THUMBNAIL_NAME));
         Long posterId = posters.stream()
-                .filter(poster -> poster.getName().equals(posterImageName))
+                .filter(poster -> normalize(poster.getName()).equals(normalize(posterImageName)))
                 .map(FileResponse::getId)
                 .findFirst()
                 .orElseThrow(() -> new BadRequestException(INVALID_POSTER_NAME));
@@ -183,6 +183,13 @@ public class ProjectExcelService {
 
     private boolean isCellEmpty(Cell cell) {
         return cell == null || cell.getCellType() == CellType.BLANK;
+    }
+
+    /**
+     * 문자열 유니코드 정규화
+     */
+    private String normalize(String input) {
+        return Normalizer.normalize(input, Normalizer.Form.NFC);
     }
 
     private Map<String, Integer> getHeaderMap(XSSFSheet sheet) {
