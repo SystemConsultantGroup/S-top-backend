@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div style="margin:100px;">
+    <h1>Today's Overview on NESS</h1>
+    <br>
+    <p th:text="|${date}의 할일 목록입니다.|">오늘의 할일 목록입니다.</p>
+</div>
+</body>
+</html>
