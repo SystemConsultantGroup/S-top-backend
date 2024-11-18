@@ -5,7 +5,6 @@ import com.scg.stop.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +31,7 @@ public class ProjectDetailResponse {
     private String url;
     private String description;
 
-    public static ProjectDetailResponse of(User user, Project project){
+    public static ProjectDetailResponse of(User user, Project project) {
         List<String> studentNames = project.getMembers().stream()
                 .filter(member -> member.getRole() == Role.STUDENT)
                 .map(Member::getName)

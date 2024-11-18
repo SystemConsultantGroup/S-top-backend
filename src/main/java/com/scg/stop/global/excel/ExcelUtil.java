@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,13 +21,12 @@ public class ExcelUtil {
     }
 
 
-
     public <T> String getFilename(Workbook workbook, Class<T> clazz) {
         LocalDateTime time = LocalDateTime.now();
-        if( workbook instanceof SXSSFWorkbook) {
-            return String.format("%s-%s.xlsx",clazz.getDeclaredAnnotation(ExcelDownload.class).fileName(), time);
+        if (workbook instanceof SXSSFWorkbook) {
+            return String.format("%s-%s.xlsx", clazz.getDeclaredAnnotation(ExcelDownload.class).fileName(), time);
         }
-        return String.format("%s-%s.xls",clazz.getDeclaredAnnotation(ExcelDownload.class).fileName(), time);
+        return String.format("%s-%s.xls", clazz.getDeclaredAnnotation(ExcelDownload.class).fileName(), time);
     }
 
     public <T> SXSSFWorkbook createExcel(List<T> lists, Class<T> clazz) {
@@ -39,10 +37,10 @@ public class ExcelUtil {
         Row row = sheet.createRow(rowNum++);
         List<String> headers = Arrays.stream(clazz.getDeclaredFields())
                 .filter(field -> field.isAnnotationPresent(ExcelColumn.class))
-                .map( field -> field.getAnnotation(ExcelColumn.class).headerName())
+                .map(field -> field.getAnnotation(ExcelColumn.class).headerName())
                 .toList();
         renderHeaderRow(row, headers);
-        for(T data: lists) {
+        for (T data : lists) {
             row = sheet.createRow(rowNum++);
             renderBodyRow(row, data, clazz);
         }
@@ -55,7 +53,7 @@ public class ExcelUtil {
         );
         int rowNum = sheet.getLastRowNum() + 1;
         Row row;
-        for(T data: lists) {
+        for (T data : lists) {
             row = sheet.createRow(rowNum++);
             renderBodyRow(row, data, clazz);
         }
@@ -68,7 +66,7 @@ public class ExcelUtil {
 
     private void renderHeaderRow(Row firstRow, List<String> headers) {
         int cellIdx = 0;
-        for(String header: headers) {
+        for (String header : headers) {
             Cell headerCell = firstRow.createCell(cellIdx++);
             setHeaderCellStyle(headerCell);
             renderCellValue(headerCell, header);
@@ -78,7 +76,7 @@ public class ExcelUtil {
     private <T> void renderBodyRow(Row row, T data, Class<T> clazz) {
         Field[] fields = clazz.getDeclaredFields();
         int cellIdx = 0;
-        for(Field field: fields) {
+        for (Field field : fields) {
             Cell cell = row.createCell(cellIdx++);
             Object value;
             field.setAccessible(true);
@@ -93,7 +91,7 @@ public class ExcelUtil {
     }
 
     private void renderCellValue(Cell cell, Object value) {
-        if(value instanceof Number num) {
+        if (value instanceof Number num) {
             cell.setCellValue(num.doubleValue());
             return;
         }
