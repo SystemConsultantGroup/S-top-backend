@@ -446,12 +446,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 <div class="sect2">
 <h3 id="_프로젝트_조회_get_projects">프로젝트 조회 (GET /projects)</h3>
-<div class="sect3">
-<h4 id="_200_ok">200 OK</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /projects HTTP/1.1
@@ -462,8 +460,8 @@ Cookie: refresh-token=refresh_token</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -476,8 +474,6 @@ Content-Length: 1759
 {
   "totalPages" : 1,
   "totalElements" : 2,
-  "first" : true,
-  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
@@ -528,7 +524,6 @@ Content-Length: 1759
     "sorted" : false,
     "unsorted" : true
   },
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -541,13 +536,16 @@ Content-Length: 1759
     "paged" : true,
     "unpaged" : false
   },
+  "numberOfElements" : 2,
+  "first" : true,
+  "last" : true,
   "empty" : false
 }</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_query_parameters">Query parameters</h5>
+<div class="sect3">
+<h4 id="_query_parameters">Query parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -600,8 +598,8 @@ Content-Length: 1759
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_response_fields">Response fields</h5>
+<div class="sect3">
+<h4 id="_response_fields">Response fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -858,15 +856,12 @@ Content-Length: 1759
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="_프로젝트_생성_post_projects">프로젝트 생성 (POST /projects)</h3>
-<div class="sect3">
-<h4 id="_201_created">201 Created</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /projects HTTP/1.1
@@ -902,8 +897,8 @@ Cookie: refresh-token=refresh_token
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 201 Created
@@ -911,7 +906,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1480
+Content-Length: 1481
 
 {
   "id" : 1,
@@ -945,24 +940,24 @@ Content-Length: 1480
     "userName" : "유저 이름",
     "isAnonymous" : true,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-13T23:55:21.206867",
-    "updatedAt" : "2024-11-13T23:55:21.206868"
+    "createdAt" : "2024-11-18T19:55:52.832829",
+    "updatedAt" : "2024-11-18T19:55:52.832841"
   }, {
     "id" : 2,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-13T23:55:21.206869",
-    "updatedAt" : "2024-11-13T23:55:21.20687"
+    "createdAt" : "2024-11-18T19:55:52.832843",
+    "updatedAt" : "2024-11-18T19:55:52.832844"
   }, {
     "id" : 3,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-13T23:55:21.206871",
-    "updatedAt" : "2024-11-13T23:55:21.206871"
+    "createdAt" : "2024-11-18T19:55:52.832844",
+    "updatedAt" : "2024-11-18T19:55:52.832845"
   } ],
   "url" : "프로젝트 URL",
   "description" : "프로젝트 설명"
@@ -970,8 +965,8 @@ Content-Length: 1480
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_request_fields">Request fields</h5>
+<div class="sect3">
+<h4 id="_request_fields">Request fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1075,8 +1070,8 @@ Content-Length: 1480
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_response_fields">Response fields</h5>
+<div class="sect3">
+<h4 id="_response_fields">Response fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1297,15 +1292,121 @@ Content-Length: 1480
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_프로젝트_엑셀_일괄등록_post_projectsexcel">프로젝트 엑셀 일괄등록 (POST /projects/excel)</h3>
+<div class="exampleblock">
+<div class="content">
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /projects/excel HTTP/1.1
+Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Authorization: admin_access_token
+Host: localhost:8080
+Cookie: refresh-token=refresh_token
+
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=excel; filename=project_upload_form.xlsx
+Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+
+[BINARY DATA]
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=thumbnails; filename=thumbnails.json
+Content-Type: application/json
+
+[{"id":1,"uuid":"c7fabd9b-eea0-48c9-b94d-8fab318b2c88","name":"썸네일1.png","mimeType":"image/png","createdAt":"2024-11-18T19:55:53.698466","updatedAt":"2024-11-18T19:55:53.698477"},{"id":1,"uuid":"989ca4f3-9b7b-4784-b842-64b2314903ca","name":"썸네일2.png","mimeType":"image/png","createdAt":"2024-11-18T19:55:53.698519","updatedAt":"2024-11-18T19:55:53.69852"}]
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=posters; filename=thumbnails.json
+Content-Type: application/json
+
+[{"id":1,"uuid":"cdf4712a-9d35-4c99-9ad3-e97036c7028c","name":"포스터1.png","mimeType":"image/png","createdAt":"2024-11-18T19:55:53.698555","updatedAt":"2024-11-18T19:55:53.698556"},{"id":1,"uuid":"eb4efbf9-9539-466b-a349-b56970cfad1b","name":"포스터2.png","mimeType":"image/png","createdAt":"2024-11-18T19:55:53.698561","updatedAt":"2024-11-18T19:55:53.698562"}]
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_request_parts">Request parts</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Part</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>excel</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">업로드할 Excel 파일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>thumbnails</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">썸네일 등록 응답 JSON 파일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>posters</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">포스터 등록 응답 JSON 파일</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+Content-Length: 24
+
+{
+  "successCount" : 2
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_response_fields">Response fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>successCount</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">생성에 성공한 프로젝트 개수</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_프로젝트_조회_get_projectsprojectid">프로젝트 조회 (GET /projects/{projectId})</h3>
-<div class="sect3">
-<h4 id="_200_ok_2">200 OK</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /projects/1 HTTP/1.1
@@ -1316,8 +1417,8 @@ Cookie: refresh-token=refresh_token</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -1359,24 +1460,24 @@ Content-Length: 1481
     "userName" : "유저 이름",
     "isAnonymous" : true,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-13T23:55:21.180036",
-    "updatedAt" : "2024-11-13T23:55:21.180037"
+    "createdAt" : "2024-11-18T19:55:52.750773",
+    "updatedAt" : "2024-11-18T19:55:52.750777"
   }, {
     "id" : 2,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-13T23:55:21.180041",
-    "updatedAt" : "2024-11-13T23:55:21.180041"
+    "createdAt" : "2024-11-18T19:55:52.750782",
+    "updatedAt" : "2024-11-18T19:55:52.750783"
   }, {
     "id" : 3,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-13T23:55:21.180042",
-    "updatedAt" : "2024-11-13T23:55:21.180043"
+    "createdAt" : "2024-11-18T19:55:52.750784",
+    "updatedAt" : "2024-11-18T19:55:52.750784"
   } ],
   "url" : "프로젝트 URL",
   "description" : "프로젝트 설명"
@@ -1384,8 +1485,8 @@ Content-Length: 1481
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_path_parameters">Path parameters</h5>
+<div class="sect3">
+<h4 id="_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /projects/{projectId}</caption>
 <colgroup>
@@ -1406,8 +1507,8 @@ Content-Length: 1481
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_response_fields">Response fields</h5>
+<div class="sect3">
+<h4 id="_response_fields">Response fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1628,15 +1729,12 @@ Content-Length: 1481
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="_프로젝트_수정_put_projectsprojectid">프로젝트 수정 (PUT /projects/{projectId})</h3>
-<div class="sect3">
-<h4 id="_200_ok_3">200 OK</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /projects/1 HTTP/1.1
@@ -1672,8 +1770,8 @@ Cookie: refresh-token=refresh_token
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -1681,7 +1779,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1476
+Content-Length: 1477
 
 {
   "id" : 1,
@@ -1715,24 +1813,24 @@ Content-Length: 1476
     "userName" : "유저 이름",
     "isAnonymous" : true,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-13T23:55:21.08522",
-    "updatedAt" : "2024-11-13T23:55:21.085222"
+    "createdAt" : "2024-11-18T19:55:52.387676",
+    "updatedAt" : "2024-11-18T19:55:52.387679"
   }, {
     "id" : 2,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-13T23:55:21.085225",
-    "updatedAt" : "2024-11-13T23:55:21.085226"
+    "createdAt" : "2024-11-18T19:55:52.387684",
+    "updatedAt" : "2024-11-18T19:55:52.387684"
   }, {
     "id" : 3,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-13T23:55:21.085227",
-    "updatedAt" : "2024-11-13T23:55:21.085227"
+    "createdAt" : "2024-11-18T19:55:52.387687",
+    "updatedAt" : "2024-11-18T19:55:52.387687"
   } ],
   "url" : "프로젝트 URL",
   "description" : "프로젝트 설명"
@@ -1740,8 +1838,8 @@ Content-Length: 1476
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_path_parameters">Path parameters</h5>
+<div class="sect3">
+<h4 id="_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /projects/{projectId}</caption>
 <colgroup>
@@ -1762,8 +1860,8 @@ Content-Length: 1476
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_request_fields">Request fields</h5>
+<div class="sect3">
+<h4 id="_request_fields">Request fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1867,8 +1965,8 @@ Content-Length: 1476
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_response_fields">Response fields</h5>
+<div class="sect3">
+<h4 id="_response_fields">Response fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2089,15 +2187,12 @@ Content-Length: 1476
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="_프로젝트_삭제_delete_projectsprojectid">프로젝트 삭제 (DELETE /projects/{projectId})</h3>
-<div class="sect3">
-<h4 id="_204_no_content">204 No Content</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /projects/1 HTTP/1.1
@@ -2108,8 +2203,8 @@ Cookie: refresh-token=refresh_token</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 204 No Content
@@ -2119,8 +2214,8 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_path_parameters">Path parameters</h5>
+<div class="sect3">
+<h4 id="_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /projects/{projectId}</caption>
 <colgroup>
@@ -2144,15 +2239,12 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="_관심_프로젝트_등록_post_projectsprojectidfavorite">관심 프로젝트 등록 (POST /projects/{projectId}/favorite)</h3>
-<div class="sect3">
-<h4 id="_201_created_2">201 Created</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /projects/1/favorite HTTP/1.1
@@ -2163,8 +2255,8 @@ Cookie: refresh-token=refresh_token</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 201 Created
@@ -2174,8 +2266,8 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_path_parameters">Path parameters</h5>
+<div class="sect3">
+<h4 id="_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /projects/{projectId}/favorite</caption>
 <colgroup>
@@ -2199,15 +2291,12 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="_관심_프로젝트_삭제_delete_projectsprojectidfavorite">관심 프로젝트 삭제 (DELETE /projects/{projectId}/favorite)</h3>
-<div class="sect3">
-<h4 id="_204_no_content_2">204 No Content</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /projects/1/favorite HTTP/1.1
@@ -2218,8 +2307,8 @@ Cookie: refresh-token=refresh_token</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 204 No Content
@@ -2229,8 +2318,8 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_path_parameters">Path parameters</h5>
+<div class="sect3">
+<h4 id="_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /projects/{projectId}/favorite</caption>
 <colgroup>
@@ -2254,15 +2343,12 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="_프로젝트_좋아요_등록_post_projectsprojectidlike">프로젝트 좋아요 등록 (POST /projects/{projectId}/like)</h3>
-<div class="sect3">
-<h4 id="_201_created_3">201 Created</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /projects/1/like HTTP/1.1
@@ -2273,8 +2359,8 @@ Cookie: refresh-token=refresh_token</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 201 Created
@@ -2284,8 +2370,8 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_path_parameters">Path parameters</h5>
+<div class="sect3">
+<h4 id="_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /projects/{projectId}/like</caption>
 <colgroup>
@@ -2309,15 +2395,12 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="_프로젝트_좋아요_삭제_delete_projectsprojectidlike">프로젝트 좋아요 삭제 (DELETE /projects/{projectId}/like)</h3>
-<div class="sect3">
-<h4 id="_204_no_content_3">204 No Content</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /projects/1/like HTTP/1.1
@@ -2328,8 +2411,8 @@ Cookie: refresh-token=refresh_token</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 204 No Content
@@ -2339,8 +2422,8 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_path_parameters">Path parameters</h5>
+<div class="sect3">
+<h4 id="_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /projects/{projectId}/like</caption>
 <colgroup>
@@ -2364,15 +2447,12 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="_프로젝트_댓글_등록_post_projectsprojectidcomment">프로젝트 댓글 등록 (POST /projects/{projectId}/comment)</h3>
-<div class="sect3">
-<h4 id="_201_created_4">201 Created</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /projects/1/comment HTTP/1.1
@@ -2389,8 +2469,8 @@ Cookie: refresh-token=refresh_token
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 201 Created
@@ -2406,14 +2486,14 @@ Content-Length: 212
   "userName" : "유저 이름",
   "isAnonymous" : true,
   "content" : "댓글 내용",
-  "createdAt" : "2024-11-13T23:55:21.171022",
-  "updatedAt" : "2024-11-13T23:55:21.171023"
+  "createdAt" : "2024-11-18T19:55:52.720346",
+  "updatedAt" : "2024-11-18T19:55:52.720349"
 }</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_path_parameters">Path parameters</h5>
+<div class="sect3">
+<h4 id="_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /projects/{projectId}/comment</caption>
 <colgroup>
@@ -2434,8 +2514,8 @@ Content-Length: 212
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_request_fields">Request fields</h5>
+<div class="sect3">
+<h4 id="_request_fields">Request fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2467,8 +2547,8 @@ Content-Length: 212
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_response_fields">Response fields</h5>
+<div class="sect3">
+<h4 id="_response_fields">Response fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2533,15 +2613,12 @@ Content-Length: 212
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="_프로젝트_댓글_삭제_delete_projectsprojectidcomment">프로젝트 댓글 삭제 (DELETE /projects/{projectId}/comment)</h3>
-<div class="sect3">
-<h4 id="_204_no_content_4">204 No Content</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /projects/1/comment/1 HTTP/1.1
@@ -2552,8 +2629,8 @@ Cookie: refresh-token=refresh_token</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 204 No Content
@@ -2563,8 +2640,8 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_path_parameters">Path parameters</h5>
+<div class="sect3">
+<h4 id="_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /projects/{projectId}/comment/{commentId}</caption>
 <colgroup>
@@ -2592,15 +2669,12 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="_수상_프로젝트_조회_get_projectsawardyearyear">수상 프로젝트 조회 (GET /projects/award?year={year})</h3>
-<div class="sect3">
-<h4 id="_200_no_content">200 No Content</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /projects/award?year=2024 HTTP/1.1
@@ -2611,8 +2685,8 @@ Cookie: refresh-token=refresh_token</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -2625,8 +2699,6 @@ Content-Length: 1759
 {
   "totalPages" : 1,
   "totalElements" : 2,
-  "first" : true,
-  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
@@ -2677,7 +2749,6 @@ Content-Length: 1759
     "sorted" : false,
     "unsorted" : true
   },
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -2690,13 +2761,16 @@ Content-Length: 1759
     "paged" : true,
     "unpaged" : false
   },
+  "numberOfElements" : 2,
+  "first" : true,
+  "last" : true,
   "empty" : false
 }</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_query_parameters">Query parameters</h5>
+<div class="sect3">
+<h4 id="_query_parameters">Query parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -2734,8 +2808,8 @@ Content-Length: 1759
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_response_fields">Response fields</h5>
+<div class="sect3">
+<h4 id="_response_fields">Response fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2995,11 +3069,10 @@ Content-Length: 1759
 </div>
 </div>
 </div>
-</div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-10-29 22:56:22 +0900
+Last updated 2024-11-18 19:49:26 +0900
 </div>
 </div>
 </body>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<title>퀴즈 결과 API</title>
+<title>학과 API</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -441,58 +441,22 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_퀴즈_결과_api">퀴즈 결과 API</h2>
+<h2 id="_학과_api">학과 API</h2>
 <div class="sectionbody">
 <hr>
 <div class="sect2">
-<h3 id="_퀴즈_결과_조회_get_quizzesresult">퀴즈 결과 조회 (GET /quizzes/result)</h3>
+<h3 id="_학과_리스트_조회_get_departments">학과 리스트 조회 (GET /departments)</h3>
 <div class="exampleblock">
 <div class="content">
 <div class="sect3">
 <h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /quizzes/result HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /departments HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: admin_access_token
-Host: localhost:8080
-Cookie: refresh-token=refresh_token</code></pre>
+Host: localhost:8080</code></pre>
 </div>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_query_parameters">Query parameters</h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>year</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">찾고자 하는 퀴즈 푼 문제의 연도</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 번호 [default: 0]</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 크기 [default: 10]</p></td>
-</tr>
-</tbody>
-</table>
 </div>
 <div class="sect3">
 <h4 id="_http_response">HTTP response</h4>
@@ -502,49 +466,16 @@ Cookie: refresh-token=refresh_token</code></pre>
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Content-Type: application/json;charset=UTF-8
-Content-Length: 739
+Content-Type: application/json
+Content-Length: 92
 
-{
-  "totalPages" : 1,
-  "totalElements" : 2,
-  "size" : 10,
-  "content" : [ {
-    "userId" : 1,
-    "name" : "name",
-    "phone" : "010-1111-1111",
-    "email" : "scg@scg.skku.ac.kr",
-    "successCount" : 3
-  }, {
-    "userId" : 2,
-    "name" : "name2",
-    "phone" : "010-0000-1234",
-    "email" : "iam@2tle.io",
-    "successCount" : 1
-  } ],
-  "number" : 0,
-  "sort" : {
-    "empty" : true,
-    "sorted" : false,
-    "unsorted" : true
-  },
-  "pageable" : {
-    "pageNumber" : 0,
-    "pageSize" : 10,
-    "sort" : {
-      "empty" : true,
-      "sorted" : false,
-      "unsorted" : true
-    },
-    "offset" : 0,
-    "paged" : true,
-    "unpaged" : false
-  },
-  "numberOfElements" : 2,
-  "first" : true,
-  "last" : true,
-  "empty" : false
-}</code></pre>
+[ {
+  "id" : 1,
+  "name" : "소프트웨어학과"
+}, {
+  "id" : 2,
+  "name" : "학과2"
+} ]</code></pre>
 </div>
 </div>
 </div>
@@ -552,237 +483,30 @@ Content-Length: 739
 <h4 id="_response_fields">Response fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 정보</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.pageNumber</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">현재 페이지 번호</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.pageSize</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 당 요소 수</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.sort.empty</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">정렬 정보가 비어있는지 여부</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.sort.sorted</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">정렬된 상태인지 여부</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.sort.unsorted</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">정렬되지 않은 상태인지 여부</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.offset</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">오프셋</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.paged</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">페이징된 여부</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageable.unpaged</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">페이징되지 않은 여부</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>totalElements</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">전체 요소 수</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>totalPages</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">전체 페이지 수</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 당 요소 수</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">현재 페이지 번호</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>numberOfElements</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">현재 페이지 요소 수</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>first</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">첫 페이지 여부</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>last</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">마지막 페이지 여부</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort.empty</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">정렬 정보가 비어있는지 여부</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort.unsorted</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">정렬되지 않은 상태인지 여부</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort.sorted</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">정렬된 상태인지 여부</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>empty</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">비어있는 페이지 여부</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].userId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">유저의 아이디</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">유저의 이름</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].phone</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">유저의 연락처</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].email</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">유저의 이메일</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].successCount</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">유저가 퀴즈를 성공한 횟수의 합</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_퀴즈_결과를_엑셀로_받기_get_quizzesresultexcel">퀴즈 결과를 엑셀로 받기 (GET /quizzes/result/excel)</h3>
-<div class="exampleblock">
-<div class="content">
-<div class="sect3">
-<h4 id="_http_request">HTTP request</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /quizzes/result/excel HTTP/1.1
-Content-Type: application/octet-stream;charset=UTF-8
-Authorization: admin_access_token
-Host: localhost:8080
-Cookie: refresh-token=refresh_token</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_query_parameters">Query parameters</h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
 <col style="width: 33.3334%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>year</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">찾고자 하는 퀴즈 푼 문제의 연도, 기본값 올해</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">학과 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">학과 이름</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="sect3">
-<h4 id="_http_response">HTTP response</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-Content-Type: application/octet-stream;charset=UTF-8
-Content-Disposition: attachment; filename=excel.xlsx
-Content-Length: 2821
-
-PK-                      [Content_Types].xml�S�n1��U��&amp;����X8�ql�J?�M��y)1��^�RT�S��xfl%��ڻj���q+G� ���k����~U!\؈�t2�o��[CiDO��*�GEƄ��6f�e�T����ht�t��j4�d��-,UO��A�����S�U0G��^Pft[N�m*7L�˚Uv�0Z�:��q�������E�mk5����[$�M�23Y��A�7�,��&lt;c�(���x֢cƳ�E�GӖ�L��;Yz�h&gt;(�c�b��/�s�Ɲ��`�\s|J6�r��y���௶�j�PK�q,-      �      PK-                      _rels/.rels���j�0�_���8�`�Q��2�m��4[ILb��ږ���.[K
-�($}��v?�I�Q.���uӂ�h���x&gt;=��@��p�H"�~�}�	�n����*"�H�׺؁�����8�Z�^'�#��7m{��O�3���G�u�ܓ�'��y|a�����D�	��l_EYȾ� ���vql3�ML�eh���*���\3�Y0���oJ׏�	:��^��}PK��z��       I      PK-                      docProps/app.xmlM��
-�0D�~EȽ��ADҔ���A? ��6�lB�J?ߜ���0���ͯ�)�@��׍H6���V&gt;��$;�SC
-;̢(�ra�g�l�&amp;�e��L!y�%��49��`_���4G���F��J��Wg�GS�b����
-~�PK�|wؑ       �       PK-                      docProps/core.xmlm��J�0F_%依����.�,��(ޅdl��I��ֵۛ�
-�H�;s�L�=ꁼ��55eyA	iUoښ&gt;vن��Qb�kj,�6�t\Z�{o��c Ic���]��١!O�I��Z���-8!_E�P�9h�B�(`fn1ғR�E���0�P��X�����u��aN����1W3�&amp;b�t{s?��f��D�T'5�EDE����6�&lt;�.�;ڔEy�1��́|�N繂_����n}s��!��]O�R��Ϛ�OPK���x      �      PK-                      xl/sharedStrings.xml=�A�  ﾂ��.z0Ɣ�`������,�����q2��o�ԇ���N�E��x5�z&gt;�W���(R�K���^4{�����ŀ�5��y�V����y�m�XV�\�.�j����8� PKp��&amp;x       �       PK-                      xl/styles.xml���n� ��&gt;bop2TQ��P)U�RWb�6*�����ӤS�Nw�s���3ߍ֐���t��(l��������ҝx�!N=@$ɀ��}��3c���ʰr`:i��2��w,�
-�d�T��R#�voc �;c�iE��Û��E&lt;|��4Iɣ����F#��n���B�z�F���y�j3y��yҥ�jt&gt;���2��Lژ�!6��2F�OY��4@M�!���G��������1�t��y��p��"	n����u�����a�ΦDi�9�&amp;#��%I��9��}���cK��T��$?������`J������7���o��f��M|PK�1X@C      �      PK-                      xl/workbook.xmlM���0��&gt;E�wi1ƨ����z/�HmI�_j��qf��)ʧٌ��w�L C��ָ��[u��T�b�a��؊;���8�9��G�)��5�|�:�2&lt;8MuK=b�#�	q�V�u����K��H\)�\�&amp;�t͌��%���?��B��T�PK	��       �       PK-                      xl/_rels/workbook.xml.rels��ͪ1�_�d�tt!"V7�n�� ����LZ�(����r����p����6�JY���U����s����;[�E8D&amp;a��h@-��$� Xt�im���F�*&amp;�41���̭M��ؒ]����WL�f�}��9anIH���Qs1���KtO��ll���O���X߬�	�{�ŋ����œ�?o'�&gt; PK�(2�       �      PK-        �q,-  �                   [Content_Types].xmlPK-        ��z��   I               v  _rels/.relsPK-        �|wؑ   �                �  docProps/app.xmlPK-        ���x  �               q  docProps/core.xmlPK-        p��&amp;x   �                �  xl/sharedStrings.xmlPK-        �1X@C  �                 xl/styles.xmlPK-        	��   �                  xl/workbook.xmlPK-        �(2�   �               �  xl/_rels/workbook.xml.relsPK      �  �</code></pre>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -793,7 +517,7 @@ PK-                      [Content_Types].xml�S�n1��U��&amp;�
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-11-17 02:43:03 +0900
+Last updated 2024-10-12 22:02:06 +0900
 </div>
 </div>
 </body>
