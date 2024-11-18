@@ -216,6 +216,7 @@ public class ProjectService {
                 project.getName(),
                 inquiry.getTitle(),
                 inquiry.getContent(),
+                false, // 막 생성된 문의는 답변이 달리지 않은 상태
                 inquiry.getCreatedAt(),
                 inquiry.getUpdatedAt()
         );

@@ -72,7 +72,7 @@ public class InquiryControllerTest extends AbstractControllerTest {
     void createInquiry() throws Exception {
         // given
         InquiryRequest request = new InquiryRequest("프로젝트 문의 사항 제목", "프로젝트 문의 사항 내용");
-        InquiryDetailResponse response = InquiryDetailResponse.of(1L, "문의 작성자 이름", 1L, "프로젝트 이름", "문의 사항 제목", "문의 사항 내용", LocalDateTime.now(), LocalDateTime.now());
+        InquiryDetailResponse response = InquiryDetailResponse.of(1L, "문의 작성자 이름", 1L, "프로젝트 이름", "문의 사항 제목", "문의 사항 내용", false, LocalDateTime.now(), LocalDateTime.now());
 
         when(projectService.createProjectInquiry(anyLong(), any(User.class), any(InquiryRequest.class))).thenReturn(response);
 
@@ -111,6 +111,7 @@ public class InquiryControllerTest extends AbstractControllerTest {
                                 fieldWithPath("projectName").type(JsonFieldType.STRING).description("문의 대상 프로젝트 이름"),
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("문의 사항 제목"),
                                 fieldWithPath("content").type(JsonFieldType.STRING).description("문의 사항 내용"),
+                                fieldWithPath("replied").type(JsonFieldType.BOOLEAN).description("답변 등록 여부"),
                                 fieldWithPath("createdAt").type(JsonFieldType.STRING).description("문의 사항 생성 시간"),
                                 fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("문의 사항 수정 시간")
                         )
@@ -184,7 +185,7 @@ public class InquiryControllerTest extends AbstractControllerTest {
     void getInquiry() throws Exception {
 
         // given
-        InquiryDetailResponse response = InquiryDetailResponse.of(1L, "문의 작성자 이름", 1L, "프로젝트 이름", "문의 사항 제목", "문의 사항 내용", LocalDateTime.now(), LocalDateTime.now());
+        InquiryDetailResponse response = InquiryDetailResponse.of(1L, "문의 작성자 이름", 1L, "프로젝트 이름", "문의 사항 제목", "문의 사항 내용", false, LocalDateTime.now(), LocalDateTime.now());
 
         when(inquiryService.getInquiry(anyLong(), any(User.class))).thenReturn(response);
 
@@ -217,6 +218,7 @@ public class InquiryControllerTest extends AbstractControllerTest {
                                 fieldWithPath("projectName").type(JsonFieldType.STRING).description("문의 대상 프로젝트 이름"),
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("문의 사항 제목"),
                                 fieldWithPath("content").type(JsonFieldType.STRING).description("문의 사항 내용"),
+                                fieldWithPath("replied").type(JsonFieldType.BOOLEAN).description("답변 등록 여부"),
                                 fieldWithPath("createdAt").type(JsonFieldType.STRING).description("문의 사항 생성 시간"),
                                 fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("문의 사항 수정 시간")
                         )
@@ -230,7 +232,7 @@ public class InquiryControllerTest extends AbstractControllerTest {
 
         // given
         InquiryRequest request = new InquiryRequest("수정된 프로젝트 문의 사항 제목", "수정된 프로젝트 문의 사항 내용");
-        InquiryDetailResponse response = InquiryDetailResponse.of(1L, "문의 작성자 이름", 1L, "프로젝트 이름", "수정된 문의 사항 제목", "수정된 문의 사항 내용", LocalDateTime.now(), LocalDateTime.now());
+        InquiryDetailResponse response = InquiryDetailResponse.of(1L, "문의 작성자 이름", 1L, "프로젝트 이름", "수정된 문의 사항 제목", "수정된 문의 사항 내용", false ,LocalDateTime.now(), LocalDateTime.now());
 
         when(inquiryService.updateInquiry(anyLong(), any(User.class), any(InquiryRequest.class))).thenReturn(response);
 
@@ -269,6 +271,7 @@ public class InquiryControllerTest extends AbstractControllerTest {
                                 fieldWithPath("projectName").type(JsonFieldType.STRING).description("문의 대상 프로젝트 이름"),
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("수정된 문의 사항 제목"),
                                 fieldWithPath("content").type(JsonFieldType.STRING).description("수정된 문의 사항 내용"),
+                                fieldWithPath("replied").type(JsonFieldType.BOOLEAN).description("답변 등록 여부"),
                                 fieldWithPath("createdAt").type(JsonFieldType.STRING).description("문의 사항 생성 시간"),
                                 fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("문의 사항 수정 시간")
                         )
