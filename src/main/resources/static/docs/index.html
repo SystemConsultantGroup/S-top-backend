@@ -459,6 +459,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_다중_파일_업로드_post_files">다중 파일 업로드 (POST /files)</a></li>
 <li><a href="#_파일_조회_get_filesfileid">파일 조회 (GET /files/{fileId})</a></li>
+<li><a href="#_프로젝트_일괄_등록_양식_다운로드_get_filesformprojects">프로젝트 일괄 등록 양식 다운로드 (GET /files/form/projects)</a></li>
 </ul>
 </li>
 <li><a href="#_잡페어_인터뷰_api">잡페어 인터뷰 API</a>
@@ -552,6 +553,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_프로젝트_조회_get_projects">프로젝트 조회 (GET /projects)</a></li>
 <li><a href="#_프로젝트_생성_post_projects">프로젝트 생성 (POST /projects)</a></li>
+<li><a href="#_프로젝트_엑셀_일괄등록_post_projectsexcel">프로젝트 엑셀 일괄등록 (POST /projects/excel)</a></li>
 <li><a href="#_프로젝트_조회_get_projectsprojectid">프로젝트 조회 (GET /projects/{projectId})</a></li>
 <li><a href="#_프로젝트_수정_put_projectsprojectid">프로젝트 수정 (PUT /projects/{projectId})</a></li>
 <li><a href="#_프로젝트_삭제_delete_projectsprojectid">프로젝트 삭제 (DELETE /projects/{projectId})</a></li>
@@ -580,7 +582,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_로그인_유저_기본_정보_조회_get_usersme">로그인 유저 기본 정보 조회 (GET /users/me)</a></li>
 <li><a href="#_로그인_유저_기본_정보_수정_put_usersme">로그인 유저 기본 정보 수정 (PUT /users/me)</a></li>
 <li><a href="#_유저_탈퇴_delete_usersme">유저 탈퇴 (DELETE /users/me)</a></li>
-<li><a href="#_유저_관심_리스트_조회_get_usersfavorites">유저 관심 리스트 조회 (GET /users/favorites)</a></li>
+<li><a href="#_유저_관심_프로젝트_리스트_조회_get_usersfavoritesprojects">유저 관심 프로젝트 리스트 조회 (GET /users/favorites/projects)</a></li>
+<li><a href="#_유저_관심_대담영상_리스트_조회_get_usersfavoritestalks">유저 관심 대담영상 리스트 조회 (GET /users/favorites/talks)</a></li>
+<li><a href="#_유저_관심_잡페어인터뷰영상_리스트_조회_get_usersfavoritesjobinterviews">유저 관심 잡페어인터뷰영상 리스트 조회 (GET /users/favorites/jobInterviews)</a></li>
 <li><a href="#_유저_문의_리스트_조회_get_usersinquiries">유저 문의 리스트 조회 (GET /users/inquiries)</a></li>
 <li><a href="#_유저_과제_제안_리스트_조회_get_usersproposals">유저 과제 제안 리스트 조회 (GET /users/proposals)</a></li>
 </ul>
@@ -737,6 +741,54 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">유저 정보가 일치하지 않습니다</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">78000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">엑셀 행의 개수와 업로드한 이미지의 개수가 일치해야합니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">78001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">썸네일 이미지 이름을 찾을 수 없습니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">78002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">포스터 이미지 이름을 찾을 수 없습니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">78003</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수상 내역의 한글 이름이 올바르지 않습니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">78004</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 종류의 한글 이름이 올바르지 않습니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">78005</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 분야의 한글 이름이 올바르지 않습니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">78006</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">모든 셀은 값이 있어야 합니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">78007</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">엑셀 형식이 올바르지 않습니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">78008</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">중복된 썸네일 이미지 이름이 존재합니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">78009</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">중복된 포스터 이미지 이름이 존재합니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">780010</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 년도는 숫자만 입력해야 합니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">780011</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">엑셀 파일을 열 수 없습니다.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">5000</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">파일 업로드를 실패했습니다.</p></td>
 </tr>
@@ -751,6 +803,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">5002</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">요청한 ID에 해당하는 파일이 존재하지 않습니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5004</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">파일을 찾을 수 없습니다.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">10000</p></td>
@@ -876,8 +932,8 @@ Host: localhost:8080</code></pre>
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Set-Cookie: refresh-token=refresh_token; Path=/; Max-Age=604800; Expires=Tue, 19 Nov 2024 06:04:01 GMT; Secure; HttpOnly; SameSite=None
-Set-Cookie: access-token=access_token; Path=/; Max-Age=604800; Expires=Tue, 19 Nov 2024 06:04:01 GMT; Secure; SameSite=None
+Set-Cookie: refresh-token=refresh_token; Path=/; Max-Age=604800; Expires=Tue, 26 Nov 2024 06:22:25 GMT; Secure; HttpOnly; SameSite=None
+Set-Cookie: access-token=access_token; Path=/; Max-Age=604800; Expires=Tue, 26 Nov 2024 06:22:25 GMT; Secure; SameSite=None
 Location: https://localhost:3000/login/kakao</code></pre>
 </div>
 </div>
@@ -1232,18 +1288,18 @@ Content-Length: 464
 
 [ {
   "id" : 1,
-  "uuid" : "6759ebde-c9ff-45d7-9d74-e32a43dc3cf2",
+  "uuid" : "93c1cbe0-8c44-4432-9ac2-906feb256ba9",
   "name" : "첨부파일1.png",
   "mimeType" : "image/png",
-  "createdAt" : "2024-11-12T15:04:07.8310858",
-  "updatedAt" : "2024-11-12T15:04:07.8310858"
+  "createdAt" : "2024-11-19T15:22:29.6605669",
+  "updatedAt" : "2024-11-19T15:22:29.6605669"
 }, {
   "id" : 2,
-  "uuid" : "cebc684a-eb66-4bf5-b420-40a6303271f3",
+  "uuid" : "99547005-27d9-4c62-b6a2-134f9a8d669e",
   "name" : "첨부파일2.pdf",
   "mimeType" : "application/pdf",
-  "createdAt" : "2024-11-12T15:04:07.8310858",
-  "updatedAt" : "2024-11-12T15:04:07.8310858"
+  "createdAt" : "2024-11-19T15:22:29.6605669",
+  "updatedAt" : "2024-11-19T15:22:29.6605669"
 } ]</code></pre>
 </div>
 </div>
@@ -1361,6 +1417,40 @@ Content-Length: 33
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_프로젝트_일괄_등록_양식_다운로드_get_filesformprojects">프로젝트 일괄 등록 양식 다운로드 (GET /files/form/projects)</h3>
+<div class="exampleblock">
+<div class="content">
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /files/form/projects HTTP/1.1
+Authorization: admin_access_token
+Host: localhost:8080
+Cookie: refresh-token=refresh_token</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Disposition: form-data; name="attachment"; filename="project_upload_form.xlsx"
+Content-Type: application/octet-stream;charset=UTF-8
+Content-Length: 19
+
+project_upload_form</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1469,8 +1559,8 @@ Content-Length: 329
   "talkerBelonging" : "대담자의 소속",
   "talkerName" : "대담자의 성명",
   "category" : "INTERN",
-  "createdAt" : "2024-11-12T15:04:20.7648021",
-  "updatedAt" : "2024-11-12T15:04:20.7648021"
+  "createdAt" : "2024-11-19T15:22:43.6470123",
+  "updatedAt" : "2024-11-19T15:22:43.6470123"
 }</code></pre>
 </div>
 </div>
@@ -1622,7 +1712,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1259
+Content-Length: 1255
 
 {
   "totalElements" : 2,
@@ -1637,8 +1727,8 @@ Content-Length: 1259
     "talkerName" : "대담자의 성명1",
     "favorite" : false,
     "category" : "INTERN",
-    "createdAt" : "2024-11-12T15:04:20.6120226",
-    "updatedAt" : "2024-11-12T15:04:20.6120226"
+    "createdAt" : "2024-11-19T15:22:43.500491",
+    "updatedAt" : "2024-11-19T15:22:43.500491"
   }, {
     "id" : 2,
     "title" : "잡페어 인터뷰의 제목2",
@@ -1648,8 +1738,8 @@ Content-Length: 1259
     "talkerName" : "대담자의 성명2",
     "favorite" : true,
     "category" : "INTERN",
-    "createdAt" : "2024-11-12T15:04:20.6120226",
-    "updatedAt" : "2024-11-12T15:04:20.6120226"
+    "createdAt" : "2024-11-19T15:22:43.500491",
+    "updatedAt" : "2024-11-19T15:22:43.500491"
   } ],
   "number" : 0,
   "sort" : {
@@ -1657,9 +1747,9 @@ Content-Length: 1259
     "sorted" : false,
     "unsorted" : true
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -1669,8 +1759,8 @@ Content-Length: 1259
       "unsorted" : true
     },
     "offset" : 0,
-    "paged" : true,
-    "unpaged" : false
+    "unpaged" : false,
+    "paged" : true
   },
   "empty" : false
 }</code></pre>
@@ -1939,8 +2029,8 @@ Content-Length: 352
   "talkerName" : "대담자의 성명",
   "favorite" : false,
   "category" : "INTERN",
-  "createdAt" : "2024-11-12T15:04:20.7001261",
-  "updatedAt" : "2024-11-12T15:04:20.7001261"
+  "createdAt" : "2024-11-19T15:22:43.5889318",
+  "updatedAt" : "2024-11-19T15:22:43.5889318"
 }</code></pre>
 </div>
 </div>
@@ -2154,7 +2244,7 @@ Content-Length: 325
   "talkerName" : "수정된 대담자 성명",
   "category" : "INTERN",
   "createdAt" : "2021-01-01T12:00:00",
-  "updatedAt" : "2024-11-12T15:04:20.4670126"
+  "updatedAt" : "2024-11-19T15:22:43.3501083"
 }</code></pre>
 </div>
 </div>
@@ -2517,7 +2607,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 483
+Content-Length: 485
 
 {
   "id" : 1,
@@ -2535,8 +2625,8 @@ Content-Length: 483
     "answer" : 0,
     "options" : [ "선지1", "선지2" ]
   } ],
-  "createdAt" : "2024-11-12T15:04:24.845687",
-  "updatedAt" : "2024-11-12T15:04:24.845687"
+  "createdAt" : "2024-11-19T15:22:47.8125417",
+  "updatedAt" : "2024-11-19T15:22:47.8125417"
 }</code></pre>
 </div>
 </div>
@@ -2724,8 +2814,8 @@ Content-Length: 1047
       "answer" : 0,
       "options" : [ "선지1", "선지2" ]
     } ],
-    "createdAt" : "2024-11-12T15:04:24.9098651",
-    "updatedAt" : "2024-11-12T15:04:24.9098651"
+    "createdAt" : "2024-11-19T15:22:47.8752375",
+    "updatedAt" : "2024-11-19T15:22:47.8752375"
   } ],
   "number" : 0,
   "sort" : {
@@ -2733,9 +2823,9 @@ Content-Length: 1047
     "sorted" : false,
     "unsorted" : true
   },
+  "numberOfElements" : 1,
   "first" : true,
   "last" : true,
-  "numberOfElements" : 1,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -2745,8 +2835,8 @@ Content-Length: 1047
       "unsorted" : true
     },
     "offset" : 0,
-    "paged" : true,
-    "unpaged" : false
+    "unpaged" : false,
+    "paged" : true
   },
   "empty" : false
 }</code></pre>
@@ -3041,8 +3131,8 @@ Content-Length: 507
     "answer" : 0,
     "options" : [ "선지1", "선지2" ]
   } ],
-  "createdAt" : "2024-11-12T15:04:24.7720184",
-  "updatedAt" : "2024-11-12T15:04:24.7720184"
+  "createdAt" : "2024-11-19T15:22:47.7544993",
+  "updatedAt" : "2024-11-19T15:22:47.7544993"
 }</code></pre>
 </div>
 </div>
@@ -3307,8 +3397,8 @@ Content-Length: 585
     "answer" : 0,
     "options" : [ "수정한 선지1", "수정한 선지2" ]
   } ],
-  "createdAt" : "2024-11-12T15:04:24.5646962",
-  "updatedAt" : "2024-11-12T15:04:24.5646962"
+  "createdAt" : "2024-11-19T15:22:47.5460119",
+  "updatedAt" : "2024-11-19T15:22:47.5460119"
 }</code></pre>
 </div>
 </div>
@@ -3988,9 +4078,9 @@ Content-Length: 778
     "sorted" : false,
     "unsorted" : true
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -4000,8 +4090,8 @@ Content-Length: 778
       "unsorted" : true
     },
     "offset" : 0,
-    "paged" : true,
-    "unpaged" : false
+    "unpaged" : false,
+    "paged" : true
   },
   "empty" : false
 }</code></pre>
@@ -4232,19 +4322,18 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/octet-stream;charset=UTF-8
 Content-Disposition: attachment; filename=excel.xlsx
-Content-Length: 2828
+Content-Length: 2829
 
 PK-                      [Content_Types].xml�S�n1��U��&amp;����X8�ql�J?�M��y)1��^�RT�S��xfl%��ڻj���q+G� ���k����~U!\؈�t2�o��[CiDO��*�GEƄ��6f�e�T����ht�t��j4�d��-,UO��A�����S�U0G��^Pft[N�m*7L�˚Uv�0Z�:��q�������E�mk5����[$�M�23Y��A�7�,��&lt;c�(���x֢cƳ�E�GӖ�L��;Yz�h&gt;(�c�b��/�s�Ɲ��`�\s|J6�r��y���௶�j�PK�q,-      �      PK-                      _rels/.rels���j�0�_���8�`�Q��2�m��4[ILb��ږ���.[K
 �($}��v?�I�Q.���uӂ�h���x&gt;=��@��p�H"�~�}�	�n����*"�H�׺؁�����8�Z�^'�#��7m{��O�3���G�u�ܓ�'��y|a�����D�	��l_EYȾ� ���vql3�ML�eh���*���\3�Y0���oJ׏�	:��^��}PK��z��       I      PK-                      docProps/app.xmlM��
-�0D��ro�z�4� �'{����MHV�盓z���T��E�1e�����Ɇ�ѳ����:�No7jH!bb�Y��V��������T�)$o���0M��9ؗGb�7�pe��*~�R�&gt;��Y�EB���nW������ PK6n�!�       �       PK-                      docProps/core.xmlm�]K�0��J�}���!��e (�(ޅ����h�7����.�������̀&gt; �����bV9�۶Ə�]q�QL�j985�o�Jy�\�}pB�!���Q(_�.%/��#c�	��W�L�Z�z�-N�HR�$�$,�b�'�V�ҿ�ahE` 6E�JF~����d!��_�q�q5sy#F��n���N_W���*�L�Q���s#?�������
-�|]0V0~�Aׂ������g��\Hh3q�sE�jn� PK�iX�      �      PK-                      xl/sharedStrings.xml=�A
+�0D��ro�z�4� �'{����MHV�盓z���T��E�1e�����Ɇ�ѳ����:�No7jH!bb�Y��V��������T�)$o���0M��9ؗGb�7�pe��*~�R�&gt;��Y�EB���nW������ PK6n�!�       �       PK-                      docProps/core.xmlm�]K�0��J�}{�n
+m�(Aq`e�]H�m�� �v�{�:+�wI��&lt;���������r��F����c�K�I�גFcE�!ۺ�	�p�Ez�I�hτ�H�e ^t���"�c�b��!^]��W�"y���K8L��.FrRJ�(�f��*���(�������B}�P�8f�j��F��n���^O_H��f�!(�(`���F�����ّ�ȋuJiJ/�|Ê��ϞK�5?	���՗�������-�%����PK��g      �      PK-                      xl/sharedStrings.xml=�A
 �0 �{��D�i�/��tm�&amp;f7�����0Ì�7mꃕc&amp;���B�y��Zx&gt;���~72��X�I��nx�s�["�5����R7�\���u�\*����M��9��"��~PKh���y       �       PK-  
    xl/styles.xml���n� ��J}���d���&amp;C%W��J]�9ۨpX@"�O_0N�L:�������n4���ye���UA	`c�®���iKw���aҰ����C^�MF�� �Ik�!��c~p �O&amp;�٦(��
 )/�dj&lt;i�	CE�x�Z�*k�^�or:*i���XmQ(aY�m�P�]�B��S3O��,o�0O����%��[��Ii�;Ćf���ֱ K~��(Z�������}�91�8�/&gt;Z'�nߟ%^jhC48��);�t�51�Jt�NȋcI"���iu��{lI���L����_�8ВfL.�����ƒ����hv���PK����E      �      PK-                      xl/workbook.xmlM���0��&amp;�C�wi1ƨ����z/�@mI�_0��83��d��l�@�;	i"���|m\+�^\w'��v��&gt;���=[xG���Tuh5%~D�$�V�E���P��!F;�Gn�q��[��j1=���F��U�&amp;�3��U2]E3a�K	b���~���T�PK5%���       �       PK-                      xl/_rels/workbook.xml.rels��ͪ1�_�d�tt!"V7�n�� ����LZ�(����r����p����6�JY���U
 ����s����;[�E8D&amp;a��h@-
-��$� Xt�im���F�*&amp;�41���̭M��ؒ]����WL�f�}��9anIH���Qs1���KtO��ll���O���X߬�	�{�ŋ����œ�?o'�&gt; PK�(2�       �      PK-        �q,-  �                   [Content_Types].xmlPK-        ��z��   I               v  _rels/.relsPK-        6n�!�   �                �  docProps/app.xmlPK-        �iX�  �               s  docProps/core.xmlPK-        h���y   �                �  xl/sharedStrings.xmlPK-        ����E  �
-             �  xl/styles.xmlPK-        5%���   �   
-  xl/workbook.xmlPK-        �(2�   �               �  xl/_rels/workbook.xml.relsPK      �  �</code></pre>
+��$� Xt�im���F�*&amp;�41���̭M��ؒ]����WL�f�}��9anIH���Qs1���KtO��ll���O���X߬�	�{�ŋ����œ�?o'�&gt; PK�(2�       �      PK-        �q,-  �                   [Content_Types].xmlPK-        ��z��   I               v  _rels/.relsPK-        6n�!�   �                �  docProps/app.xmlPK-        ��g  �               s  docProps/core.xmlPK-        h���y   �                �  xl/sharedStrings.xmlPK-        ����E  �
+             �  xl/styles.xmlPK-        5%���   �                  xl/workbook.xmlPK-        �(2�   �               �  xl/_rels/workbook.xml.relsPK      �  �</code></pre>
 </div>
 </div>
 </div>
@@ -4334,7 +4423,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 991
+Content-Length: 999
 
 {
   "id" : 1,
@@ -4342,29 +4431,29 @@ Content-Length: 991
   "content" : "공지 사항 내용",
   "hitCount" : 0,
   "fixed" : true,
-  "createdAt" : "2024-11-12T15:04:13.487226",
-  "updatedAt" : "2024-11-12T15:04:13.487226",
+  "createdAt" : "2024-11-19T15:22:34.8606778",
+  "updatedAt" : "2024-11-19T15:22:34.8606778",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-12T15:04:13.487226",
-    "updatedAt" : "2024-11-12T15:04:13.487226"
+    "createdAt" : "2024-11-19T15:22:34.8606778",
+    "updatedAt" : "2024-11-19T15:22:34.8606778"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-12T15:04:13.487226",
-    "updatedAt" : "2024-11-12T15:04:13.487226"
+    "createdAt" : "2024-11-19T15:22:34.8606778",
+    "updatedAt" : "2024-11-19T15:22:34.8606778"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-12T15:04:13.487226",
-    "updatedAt" : "2024-11-12T15:04:13.487226"
+    "createdAt" : "2024-11-19T15:22:34.8606778",
+    "updatedAt" : "2024-11-19T15:22:34.8606778"
   } ]
 }</code></pre>
 </div>
@@ -4546,15 +4635,15 @@ Content-Length: 899
     "title" : "공지 사항 1",
     "hitCount" : 10,
     "fixed" : true,
-    "createdAt" : "2024-11-12T15:04:13.1973292",
-    "updatedAt" : "2024-11-12T15:04:13.1973292"
+    "createdAt" : "2024-11-19T15:22:34.6266992",
+    "updatedAt" : "2024-11-19T15:22:34.6266992"
   }, {
     "id" : 2,
     "title" : "공지 사항 2",
     "hitCount" : 10,
     "fixed" : false,
-    "createdAt" : "2024-11-12T15:04:13.1973292",
-    "updatedAt" : "2024-11-12T15:04:13.1973292"
+    "createdAt" : "2024-11-19T15:22:34.6266992",
+    "updatedAt" : "2024-11-19T15:22:34.6266992"
   } ],
   "number" : 0,
   "sort" : {
@@ -4562,9 +4651,9 @@ Content-Length: 899
     "sorted" : false,
     "unsorted" : true
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -4574,8 +4663,8 @@ Content-Length: 899
       "unsorted" : true
     },
     "offset" : 0,
-    "paged" : true,
-    "unpaged" : false
+    "unpaged" : false,
+    "paged" : true
   },
   "empty" : false
 }</code></pre>
@@ -4815,29 +4904,29 @@ Content-Length: 987
   "content" : "content",
   "hitCount" : 10,
   "fixed" : true,
-  "createdAt" : "2024-11-12T15:04:13.4262238",
-  "updatedAt" : "2024-11-12T15:04:13.4262238",
+  "createdAt" : "2024-11-19T15:22:34.8150949",
+  "updatedAt" : "2024-11-19T15:22:34.8150949",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-12T15:04:13.4262238",
-    "updatedAt" : "2024-11-12T15:04:13.4262238"
+    "createdAt" : "2024-11-19T15:22:34.8150949",
+    "updatedAt" : "2024-11-19T15:22:34.8150949"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-12T15:04:13.4262238",
-    "updatedAt" : "2024-11-12T15:04:13.4262238"
+    "createdAt" : "2024-11-19T15:22:34.8150949",
+    "updatedAt" : "2024-11-19T15:22:34.8150949"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-12T15:04:13.4262238",
-    "updatedAt" : "2024-11-12T15:04:13.4262238"
+    "createdAt" : "2024-11-19T15:22:34.8150949",
+    "updatedAt" : "2024-11-19T15:22:34.8150949"
   } ]
 }</code></pre>
 </div>
@@ -5060,28 +5149,28 @@ Content-Length: 989
   "hitCount" : 10,
   "fixed" : false,
   "createdAt" : "2024-01-01T12:00:00",
-  "updatedAt" : "2024-11-12T15:04:13.2794322",
+  "updatedAt" : "2024-11-19T15:22:34.6974643",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-12T15:04:13.2794322"
+    "updatedAt" : "2024-11-19T15:22:34.6974643"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-12T15:04:13.2794322"
+    "updatedAt" : "2024-11-19T15:22:34.6974643"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-12T15:04:13.2794322"
+    "updatedAt" : "2024-11-19T15:22:34.6974643"
   } ]
 }</code></pre>
 </div>
@@ -5338,29 +5427,29 @@ Content-Length: 1019
   "content" : "이벤트 공지 사항 내용",
   "hitCount" : 0,
   "fixed" : true,
-  "createdAt" : "2024-11-12T15:04:03.7121108",
-  "updatedAt" : "2024-11-12T15:04:03.7121108",
+  "createdAt" : "2024-11-19T15:22:26.3472166",
+  "updatedAt" : "2024-11-19T15:22:26.3472166",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-12T15:04:03.7121108",
-    "updatedAt" : "2024-11-12T15:04:03.7121108"
+    "createdAt" : "2024-11-19T15:22:26.3472166",
+    "updatedAt" : "2024-11-19T15:22:26.3472166"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-12T15:04:03.7121108",
-    "updatedAt" : "2024-11-12T15:04:03.7121108"
+    "createdAt" : "2024-11-19T15:22:26.3472166",
+    "updatedAt" : "2024-11-19T15:22:26.3472166"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-12T15:04:03.7121108",
-    "updatedAt" : "2024-11-12T15:04:03.7121108"
+    "createdAt" : "2024-11-19T15:22:26.3472166",
+    "updatedAt" : "2024-11-19T15:22:26.3472166"
   } ]
 }</code></pre>
 </div>
@@ -5542,15 +5631,15 @@ Content-Length: 919
     "title" : "이벤트 공지 사항 1",
     "hitCount" : 10,
     "fixed" : true,
-    "createdAt" : "2024-11-12T15:04:03.7949335",
-    "updatedAt" : "2024-11-12T15:04:03.7949335"
+    "createdAt" : "2024-11-19T15:22:26.4193293",
+    "updatedAt" : "2024-11-19T15:22:26.4193293"
   }, {
     "id" : 2,
     "title" : "이벤트 공지 사항 2",
     "hitCount" : 10,
     "fixed" : false,
-    "createdAt" : "2024-11-12T15:04:03.7949335",
-    "updatedAt" : "2024-11-12T15:04:03.7949335"
+    "createdAt" : "2024-11-19T15:22:26.4193293",
+    "updatedAt" : "2024-11-19T15:22:26.4193293"
   } ],
   "number" : 0,
   "sort" : {
@@ -5558,9 +5647,9 @@ Content-Length: 919
     "sorted" : false,
     "unsorted" : true
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -5570,8 +5659,8 @@ Content-Length: 919
       "unsorted" : true
     },
     "offset" : 0,
-    "paged" : true,
-    "unpaged" : false
+    "unpaged" : false,
+    "paged" : true
   },
   "empty" : false
 }</code></pre>
@@ -5803,7 +5892,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 997
+Content-Length: 989
 
 {
   "id" : 1,
@@ -5811,29 +5900,29 @@ Content-Length: 997
   "content" : "content",
   "hitCount" : 10,
   "fixed" : true,
-  "createdAt" : "2024-11-12T15:04:03.5238303",
-  "updatedAt" : "2024-11-12T15:04:03.5238303",
+  "createdAt" : "2024-11-19T15:22:26.227972",
+  "updatedAt" : "2024-11-19T15:22:26.227972",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-12T15:04:03.5238303",
-    "updatedAt" : "2024-11-12T15:04:03.5238303"
+    "createdAt" : "2024-11-19T15:22:26.227972",
+    "updatedAt" : "2024-11-19T15:22:26.227972"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-12T15:04:03.5238303",
-    "updatedAt" : "2024-11-12T15:04:03.5238303"
+    "createdAt" : "2024-11-19T15:22:26.227972",
+    "updatedAt" : "2024-11-19T15:22:26.227972"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-12T15:04:03.5238303",
-    "updatedAt" : "2024-11-12T15:04:03.5238303"
+    "createdAt" : "2024-11-19T15:22:26.227972",
+    "updatedAt" : "2024-11-19T15:22:26.227972"
   } ]
 }</code></pre>
 </div>
@@ -6056,28 +6145,28 @@ Content-Length: 1009
   "hitCount" : 10,
   "fixed" : false,
   "createdAt" : "2024-01-01T12:00:00",
-  "updatedAt" : "2024-11-12T15:04:03.3264144",
+  "updatedAt" : "2024-11-19T15:22:26.1261877",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-12T15:04:03.3264144"
+    "updatedAt" : "2024-11-19T15:22:26.1251854"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-12T15:04:03.3264144"
+    "updatedAt" : "2024-11-19T15:22:26.1261877"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-12T15:04:03.3264144"
+    "updatedAt" : "2024-11-19T15:22:26.1261877"
   } ]
 }</code></pre>
 </div>
@@ -6265,8 +6354,8 @@ Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
 {
-  "start" : "2024-11-12T15:04:04.8161421",
-  "end" : "2024-11-22T15:04:04.8161421"
+  "start" : "2024-11-19T15:22:27.3296176",
+  "end" : "2024-11-29T15:22:27.3296176"
 }</code></pre>
 </div>
 </div>
@@ -6318,10 +6407,10 @@ Content-Length: 216
 {
   "id" : 1,
   "year" : 2024,
-  "start" : "2024-11-12T15:04:04.8161421",
-  "end" : "2024-11-22T15:04:04.8161421",
-  "createdAt" : "2024-11-12T15:04:04.8161421",
-  "updatedAt" : "2024-11-12T15:04:04.8161421"
+  "start" : "2024-11-19T15:22:27.3296176",
+  "end" : "2024-11-29T15:22:27.3296176",
+  "createdAt" : "2024-11-19T15:22:27.3296176",
+  "updatedAt" : "2024-11-19T15:22:27.3296176"
 }</code></pre>
 </div>
 </div>
@@ -6410,15 +6499,15 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 208
+Content-Length: 216
 
 {
   "id" : 1,
   "year" : 2024,
-  "start" : "2024-11-12T15:04:04.77104",
-  "end" : "2024-11-22T15:04:04.77104",
-  "createdAt" : "2024-11-12T15:04:04.77104",
-  "updatedAt" : "2024-11-12T15:04:04.77104"
+  "start" : "2024-11-19T15:22:27.2850492",
+  "end" : "2024-11-29T15:22:27.2850492",
+  "createdAt" : "2024-11-19T15:22:27.2850492",
+  "updatedAt" : "2024-11-19T15:22:27.2850492"
 }</code></pre>
 </div>
 </div>
@@ -6507,22 +6596,22 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 432
+Content-Length: 438
 
 [ {
   "id" : 1,
   "year" : 2024,
-  "start" : "2024-11-12T15:04:04.896861",
-  "end" : "2024-11-22T15:04:04.896861",
-  "createdAt" : "2024-11-12T15:04:04.896861",
-  "updatedAt" : "2024-11-12T15:04:04.896861"
+  "start" : "2024-11-19T15:22:27.3867137",
+  "end" : "2024-11-29T15:22:27.3867137",
+  "createdAt" : "2024-11-19T15:22:27.3867137",
+  "updatedAt" : "2024-11-19T15:22:27.3867137"
 }, {
   "id" : 2,
   "year" : 2025,
-  "start" : "2024-11-12T15:04:04.896861",
-  "end" : "2024-11-22T15:04:04.896861",
-  "createdAt" : "2024-11-12T15:04:04.8978643",
-  "updatedAt" : "2024-11-12T15:04:04.8978643"
+  "start" : "2024-11-19T15:22:27.3867137",
+  "end" : "2024-11-29T15:22:27.3867137",
+  "createdAt" : "2024-11-19T15:22:27.3867137",
+  "updatedAt" : "2024-11-19T15:22:27.3867137"
 } ]</code></pre>
 </div>
 </div>
@@ -6598,13 +6687,13 @@ Content-Length: 432
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PUT /eventPeriod HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 87
+Content-Length: 89
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
 {
-  "start" : "2024-11-12T15:04:04.688568",
-  "end" : "2024-11-22T15:04:04.688568"
+  "start" : "2024-11-19T15:22:27.2169363",
+  "end" : "2024-11-29T15:22:27.2169363"
 }</code></pre>
 </div>
 </div>
@@ -6651,15 +6740,15 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 212
+Content-Length: 216
 
 {
   "id" : 1,
   "year" : 2024,
-  "start" : "2024-11-12T15:04:04.688568",
-  "end" : "2024-11-22T15:04:04.688568",
-  "createdAt" : "2024-11-12T15:04:04.688568",
-  "updatedAt" : "2024-11-12T15:04:04.688568"
+  "start" : "2024-11-19T15:22:27.2169363",
+  "end" : "2024-11-29T15:22:27.2169363",
+  "createdAt" : "2024-11-19T15:22:27.2169363",
+  "updatedAt" : "2024-11-19T15:22:27.2169363"
 }</code></pre>
 </div>
 </div>
@@ -6816,29 +6905,29 @@ Content-Length: 929
   "year" : 2024,
   "month" : 4,
   "hitCount" : 1,
-  "createdAt" : "2024-11-12T15:04:09.3618421",
-  "updatedAt" : "2024-11-12T15:04:09.3618421",
+  "createdAt" : "2024-11-19T15:22:31.1031748",
+  "updatedAt" : "2024-11-19T15:22:31.1031748",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "사진1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-12T15:04:09.3618421",
-    "updatedAt" : "2024-11-12T15:04:09.3618421"
+    "createdAt" : "2024-11-19T15:22:31.1031748",
+    "updatedAt" : "2024-11-19T15:22:31.1031748"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "사진2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-12T15:04:09.3618421",
-    "updatedAt" : "2024-11-12T15:04:09.3618421"
+    "createdAt" : "2024-11-19T15:22:31.1031748",
+    "updatedAt" : "2024-11-19T15:22:31.1031748"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "사진3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-12T15:04:09.3618421",
-    "updatedAt" : "2024-11-12T15:04:09.3618421"
+    "createdAt" : "2024-11-19T15:22:31.1031748",
+    "updatedAt" : "2024-11-19T15:22:31.1031748"
   } ]
 }</code></pre>
 </div>
@@ -7026,29 +7115,29 @@ Content-Length: 1289
     "year" : 2024,
     "month" : 4,
     "hitCount" : 0,
-    "createdAt" : "2024-11-12T15:04:09.1602347",
-    "updatedAt" : "2024-11-12T15:04:09.1602347",
+    "createdAt" : "2024-11-19T15:22:30.9431053",
+    "updatedAt" : "2024-11-19T15:22:30.9431053",
     "files" : [ {
       "id" : 1,
       "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
       "name" : "사진1.jpg",
       "mimeType" : "image/jpeg",
-      "createdAt" : "2024-11-12T15:04:09.1602347",
-      "updatedAt" : "2024-11-12T15:04:09.1602347"
+      "createdAt" : "2024-11-19T15:22:30.9431053",
+      "updatedAt" : "2024-11-19T15:22:30.9431053"
     }, {
       "id" : 2,
       "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
       "name" : "사진2.jpg",
       "mimeType" : "image/jpeg",
-      "createdAt" : "2024-11-12T15:04:09.1602347",
-      "updatedAt" : "2024-11-12T15:04:09.1602347"
+      "createdAt" : "2024-11-19T15:22:30.9431053",
+      "updatedAt" : "2024-11-19T15:22:30.9431053"
     }, {
       "id" : 3,
       "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
       "name" : "사진3.jpg",
       "mimeType" : "image/jpeg",
-      "createdAt" : "2024-11-12T15:04:09.1602347",
-      "updatedAt" : "2024-11-12T15:04:09.1602347"
+      "createdAt" : "2024-11-19T15:22:30.9431053",
+      "updatedAt" : "2024-11-19T15:22:30.9431053"
     } ]
   } ],
   "number" : 0,
@@ -7057,9 +7146,9 @@ Content-Length: 1289
     "sorted" : false,
     "unsorted" : true
   },
+  "numberOfElements" : 1,
   "first" : true,
   "last" : true,
-  "numberOfElements" : 1,
   "pageable" : "INSTANCE",
   "empty" : false
 }</code></pre>
@@ -7299,29 +7388,29 @@ Content-Length: 929
   "year" : 2024,
   "month" : 4,
   "hitCount" : 1,
-  "createdAt" : "2024-11-12T15:04:09.2727084",
-  "updatedAt" : "2024-11-12T15:04:09.2727084",
+  "createdAt" : "2024-11-19T15:22:31.0302695",
+  "updatedAt" : "2024-11-19T15:22:31.0302695",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "사진1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-12T15:04:09.2727084",
-    "updatedAt" : "2024-11-12T15:04:09.2727084"
+    "createdAt" : "2024-11-19T15:22:31.0292633",
+    "updatedAt" : "2024-11-19T15:22:31.0292633"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "사진2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-12T15:04:09.2727084",
-    "updatedAt" : "2024-11-12T15:04:09.2727084"
+    "createdAt" : "2024-11-19T15:22:31.0302695",
+    "updatedAt" : "2024-11-19T15:22:31.0302695"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "사진3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-12T15:04:09.2727084",
-    "updatedAt" : "2024-11-12T15:04:09.2727084"
+    "createdAt" : "2024-11-19T15:22:31.0302695",
+    "updatedAt" : "2024-11-19T15:22:31.0302695"
   } ]
 }</code></pre>
 </div>
@@ -7583,29 +7672,29 @@ Content-Length: 926
   "year" : 2024,
   "month" : 5,
   "hitCount" : 1,
-  "createdAt" : "2024-11-12T15:04:08.9705233",
-  "updatedAt" : "2024-11-12T15:04:08.9705233",
+  "createdAt" : "2024-11-19T15:22:30.7510164",
+  "updatedAt" : "2024-11-19T15:22:30.7510164",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "사진1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-12T15:04:08.9695134",
-    "updatedAt" : "2024-11-12T15:04:08.9695134"
+    "createdAt" : "2024-11-19T15:22:30.7510164",
+    "updatedAt" : "2024-11-19T15:22:30.7510164"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "사진2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-12T15:04:08.9695134",
-    "updatedAt" : "2024-11-12T15:04:08.9695134"
+    "createdAt" : "2024-11-19T15:22:30.7510164",
+    "updatedAt" : "2024-11-19T15:22:30.7510164"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "사진3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-12T15:04:08.9695134",
-    "updatedAt" : "2024-11-12T15:04:08.9695134"
+    "createdAt" : "2024-11-19T15:22:30.7510164",
+    "updatedAt" : "2024-11-19T15:22:30.7510164"
   } ]
 }</code></pre>
 </div>
@@ -7790,24 +7879,24 @@ Content-Length: 1235
     "division" : "배민",
     "position" : null,
     "userType" : "INACTIVE_COMPANY",
-    "createdAt" : "2024-11-12T15:04:16.8961349",
-    "updatedAt" : "2024-11-12T15:04:16.8961349"
+    "createdAt" : "2024-11-19T15:22:39.2981008",
+    "updatedAt" : "2024-11-19T15:22:39.2981008"
   }, {
     "id" : 2,
     "name" : "김교수",
     "division" : "솦융대",
     "position" : "교수",
     "userType" : "INACTIVE_PROFESSOR",
-    "createdAt" : "2024-11-12T15:04:16.8961349",
-    "updatedAt" : "2024-11-12T15:04:16.8961349"
+    "createdAt" : "2024-11-19T15:22:39.2981008",
+    "updatedAt" : "2024-11-19T15:22:39.2981008"
   }, {
     "id" : 3,
     "name" : "박교수",
     "division" : "정통대",
     "position" : "교수",
     "userType" : "INACTIVE_PROFESSOR",
-    "createdAt" : "2024-11-12T15:04:16.8961349",
-    "updatedAt" : "2024-11-12T15:04:16.8961349"
+    "createdAt" : "2024-11-19T15:22:39.2981008",
+    "updatedAt" : "2024-11-19T15:22:39.2981008"
   } ],
   "number" : 0,
   "sort" : {
@@ -7815,9 +7904,9 @@ Content-Length: 1235
     "sorted" : false,
     "unsorted" : true
   },
+  "numberOfElements" : 3,
   "first" : true,
   "last" : true,
-  "numberOfElements" : 3,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -7827,8 +7916,8 @@ Content-Length: 1235
       "unsorted" : true
     },
     "offset" : 0,
-    "paged" : true,
-    "unpaged" : false
+    "unpaged" : false,
+    "paged" : true
   },
   "empty" : false
 }</code></pre>
@@ -8067,7 +8156,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 284
+Content-Length: 282
 
 {
   "id" : 1,
@@ -8077,8 +8166,8 @@ Content-Length: 284
   "division" : "배민",
   "position" : "CEO",
   "userType" : "INACTIVE_COMPANY",
-  "createdAt" : "2024-11-12T15:04:17.0431853",
-  "updatedAt" : "2024-11-12T15:04:17.0431853"
+  "createdAt" : "2024-11-19T15:22:39.580926",
+  "updatedAt" : "2024-11-19T15:22:39.580926"
 }</code></pre>
 </div>
 </div>
@@ -8217,8 +8306,8 @@ Content-Length: 275
   "division" : "배민",
   "position" : "CEO",
   "userType" : "COMPANY",
-  "createdAt" : "2024-11-12T15:04:16.9965445",
-  "updatedAt" : "2024-11-12T15:04:16.9965445"
+  "createdAt" : "2024-11-19T15:22:39.5095509",
+  "updatedAt" : "2024-11-19T15:22:39.5095509"
 }</code></pre>
 </div>
 </div>
@@ -8422,7 +8511,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 295
+Content-Length: 317
 
 {
   "id" : 1,
@@ -8431,8 +8520,9 @@ Content-Length: 295
   "projectName" : "프로젝트 이름",
   "title" : "문의 사항 제목",
   "content" : "문의 사항 내용",
-  "createdAt" : "2024-11-12T15:04:10.7105352",
-  "updatedAt" : "2024-11-12T15:04:10.7105352"
+  "replied" : false,
+  "createdAt" : "2024-11-19T15:22:32.5296142",
+  "updatedAt" : "2024-11-19T15:22:32.5296142"
 }</code></pre>
 </div>
 </div>
@@ -8490,6 +8580,12 @@ Content-Length: 295
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>replied</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 등록 여부</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>createdAt</code></p></td>
@@ -8579,12 +8675,12 @@ Content-Length: 862
     "id" : 1,
     "authorName" : "프로젝트 문의 사항 제목",
     "title" : "프로젝트 문의 사항 내용",
-    "createdAt" : "2024-11-12T15:04:10.5253675"
+    "createdAt" : "2024-11-19T15:22:32.3920816"
   }, {
     "id" : 2,
     "authorName" : "프로젝트 문의 사항 제목",
     "title" : "프로젝트 문의 사항 내용",
-    "createdAt" : "2024-11-12T15:04:10.5253675"
+    "createdAt" : "2024-11-19T15:22:32.3920816"
   } ],
   "number" : 0,
   "sort" : {
@@ -8592,9 +8688,9 @@ Content-Length: 862
     "sorted" : false,
     "unsorted" : true
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -8604,8 +8700,8 @@ Content-Length: 862
       "unsorted" : true
     },
     "offset" : 0,
-    "paged" : true,
-    "unpaged" : false
+    "unpaged" : false,
+    "paged" : true
   },
   "empty" : false
 }</code></pre>
@@ -8822,7 +8918,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 295
+Content-Length: 317
 
 {
   "id" : 1,
@@ -8831,8 +8927,9 @@ Content-Length: 295
   "projectName" : "프로젝트 이름",
   "title" : "문의 사항 제목",
   "content" : "문의 사항 내용",
-  "createdAt" : "2024-11-12T15:04:10.6368772",
-  "updatedAt" : "2024-11-12T15:04:10.6368772"
+  "replied" : false,
+  "createdAt" : "2024-11-19T15:22:32.4745261",
+  "updatedAt" : "2024-11-19T15:22:32.4745261"
 }</code></pre>
 </div>
 </div>
@@ -8890,6 +8987,12 @@ Content-Length: 295
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>replied</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 등록 여부</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>createdAt</code></p></td>
@@ -8996,7 +9099,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 315
+Content-Length: 337
 
 {
   "id" : 1,
@@ -9005,8 +9108,9 @@ Content-Length: 315
   "projectName" : "프로젝트 이름",
   "title" : "수정된 문의 사항 제목",
   "content" : "수정된 문의 사항 내용",
-  "createdAt" : "2024-11-12T15:04:10.8368332",
-  "updatedAt" : "2024-11-12T15:04:10.8368332"
+  "replied" : false,
+  "createdAt" : "2024-11-19T15:22:32.6501995",
+  "updatedAt" : "2024-11-19T15:22:32.6501995"
 }</code></pre>
 </div>
 </div>
@@ -9064,6 +9168,12 @@ Content-Length: 315
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">수정된 문의 사항 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>replied</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 등록 여부</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>createdAt</code></p></td>
@@ -9575,12 +9685,10 @@ Vary: Access-Control-Request-Headers</code></pre>
 <hr>
 <div class="sect2">
 <h3 id="_프로젝트_조회_get_projects">프로젝트 조회 (GET /projects)</h3>
-<div class="sect3">
-<h4 id="_200_ok">200 OK</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /projects HTTP/1.1
@@ -9591,8 +9699,8 @@ Cookie: refresh-token=refresh_token</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -9655,9 +9763,9 @@ Content-Length: 1828
     "sorted" : false,
     "unsorted" : true
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -9667,16 +9775,16 @@ Content-Length: 1828
       "unsorted" : true
     },
     "offset" : 0,
-    "paged" : true,
-    "unpaged" : false
+    "unpaged" : false,
+    "paged" : true
   },
   "empty" : false
 }</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_query_parameters">Query parameters</h5>
+<div class="sect3">
+<h4 id="_query_parameters">Query parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -9729,8 +9837,8 @@ Content-Length: 1828
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_response_fields">Response fields</h5>
+<div class="sect3">
+<h4 id="_response_fields">Response fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -9987,15 +10095,12 @@ Content-Length: 1828
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="_프로젝트_생성_post_projects">프로젝트 생성 (POST /projects)</h3>
-<div class="sect3">
-<h4 id="_201_created">201 Created</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /projects HTTP/1.1
@@ -10031,8 +10136,8 @@ Cookie: refresh-token=refresh_token
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
@@ -10040,7 +10145,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1534
+Content-Length: 1540
 
 {
   "id" : 1,
@@ -10074,24 +10179,24 @@ Content-Length: 1534
     "userName" : "유저 이름",
     "isAnonymous" : true,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-12T15:04:15.753282",
-    "updatedAt" : "2024-11-12T15:04:15.753282"
+    "createdAt" : "2024-11-19T15:22:36.8727225",
+    "updatedAt" : "2024-11-19T15:22:36.8727225"
   }, {
     "id" : 2,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-12T15:04:15.753282",
-    "updatedAt" : "2024-11-12T15:04:15.753282"
+    "createdAt" : "2024-11-19T15:22:36.8727225",
+    "updatedAt" : "2024-11-19T15:22:36.8727225"
   }, {
     "id" : 3,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-12T15:04:15.753282",
-    "updatedAt" : "2024-11-12T15:04:15.753282"
+    "createdAt" : "2024-11-19T15:22:36.8727225",
+    "updatedAt" : "2024-11-19T15:22:36.8727225"
   } ],
   "url" : "프로젝트 URL",
   "description" : "프로젝트 설명"
@@ -10099,8 +10204,8 @@ Content-Length: 1534
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_request_fields">Request fields</h5>
+<div class="sect3">
+<h4 id="_request_fields">Request fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -10204,8 +10309,8 @@ Content-Length: 1534
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_response_fields">Response fields</h5>
+<div class="sect3">
+<h4 id="_response_fields">Response fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -10426,15 +10531,121 @@ Content-Length: 1534
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_프로젝트_엑셀_일괄등록_post_projectsexcel">프로젝트 엑셀 일괄등록 (POST /projects/excel)</h3>
+<div class="exampleblock">
+<div class="content">
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /projects/excel HTTP/1.1
+Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Authorization: admin_access_token
+Host: localhost:8080
+Cookie: refresh-token=refresh_token
+
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=excel; filename=project_upload_form.xlsx
+Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+
+[BINARY DATA]
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=thumbnails; filename=thumbnails.json
+Content-Type: application/json
+
+[{"id":1,"uuid":"099ee9f5-7028-4230-bbeb-59854a2462cc","name":"썸네일1.png","mimeType":"image/png","createdAt":"2024-11-19T15:22:37.9534527","updatedAt":"2024-11-19T15:22:37.9534527"},{"id":1,"uuid":"75b2b11a-5648-4296-be50-d3665dc9ede4","name":"썸네일2.png","mimeType":"image/png","createdAt":"2024-11-19T15:22:37.9534527","updatedAt":"2024-11-19T15:22:37.9534527"}]
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=posters; filename=thumbnails.json
+Content-Type: application/json
+
+[{"id":1,"uuid":"5ece1858-c541-4075-8099-5c360accafab","name":"포스터1.png","mimeType":"image/png","createdAt":"2024-11-19T15:22:37.9534527","updatedAt":"2024-11-19T15:22:37.9534527"},{"id":1,"uuid":"ee152b69-effc-4e8c-9b38-9c8459e7ff52","name":"포스터2.png","mimeType":"image/png","createdAt":"2024-11-19T15:22:37.9534527","updatedAt":"2024-11-19T15:22:37.9534527"}]
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_request_parts">Request parts</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Part</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>excel</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">업로드할 Excel 파일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>thumbnails</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">썸네일 등록 응답 JSON 파일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>posters</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">포스터 등록 응답 JSON 파일</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+Content-Length: 26
+
+{
+  "successCount" : 2
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_response_fields">Response fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>successCount</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">생성에 성공한 프로젝트 개수</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_프로젝트_조회_get_projectsprojectid">프로젝트 조회 (GET /projects/{projectId})</h3>
-<div class="sect3">
-<h4 id="_200_ok_2">200 OK</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /projects/1 HTTP/1.1
@@ -10445,8 +10656,8 @@ Cookie: refresh-token=refresh_token</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -10488,24 +10699,24 @@ Content-Length: 1540
     "userName" : "유저 이름",
     "isAnonymous" : true,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-12T15:04:15.2894177",
-    "updatedAt" : "2024-11-12T15:04:15.2894177"
+    "createdAt" : "2024-11-19T15:22:36.6653757",
+    "updatedAt" : "2024-11-19T15:22:36.6653757"
   }, {
     "id" : 2,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-12T15:04:15.2904206",
-    "updatedAt" : "2024-11-12T15:04:15.2904206"
+    "createdAt" : "2024-11-19T15:22:36.6653757",
+    "updatedAt" : "2024-11-19T15:22:36.6653757"
   }, {
     "id" : 3,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-12T15:04:15.2904206",
-    "updatedAt" : "2024-11-12T15:04:15.2904206"
+    "createdAt" : "2024-11-19T15:22:36.6653757",
+    "updatedAt" : "2024-11-19T15:22:36.6653757"
   } ],
   "url" : "프로젝트 URL",
   "description" : "프로젝트 설명"
@@ -10513,8 +10724,8 @@ Content-Length: 1540
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_path_parameters">Path parameters</h5>
+<div class="sect3">
+<h4 id="_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /projects/{projectId}</caption>
 <colgroup>
@@ -10535,8 +10746,8 @@ Content-Length: 1540
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_response_fields">Response fields</h5>
+<div class="sect3">
+<h4 id="_response_fields">Response fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -10757,15 +10968,12 @@ Content-Length: 1540
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="_프로젝트_수정_put_projectsprojectid">프로젝트 수정 (PUT /projects/{projectId})</h3>
-<div class="sect3">
-<h4 id="_200_ok_3">200 OK</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PUT /projects/1 HTTP/1.1
@@ -10801,8 +11009,8 @@ Cookie: refresh-token=refresh_token
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -10844,24 +11052,24 @@ Content-Length: 1536
     "userName" : "유저 이름",
     "isAnonymous" : true,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-12T15:04:14.4181762",
-    "updatedAt" : "2024-11-12T15:04:14.4191755"
+    "createdAt" : "2024-11-19T15:22:35.8996673",
+    "updatedAt" : "2024-11-19T15:22:35.8996673"
   }, {
     "id" : 2,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-12T15:04:14.4191755",
-    "updatedAt" : "2024-11-12T15:04:14.4191755"
+    "createdAt" : "2024-11-19T15:22:35.8996673",
+    "updatedAt" : "2024-11-19T15:22:35.8996673"
   }, {
     "id" : 3,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-12T15:04:14.4191755",
-    "updatedAt" : "2024-11-12T15:04:14.4191755"
+    "createdAt" : "2024-11-19T15:22:35.8996673",
+    "updatedAt" : "2024-11-19T15:22:35.8996673"
   } ],
   "url" : "프로젝트 URL",
   "description" : "프로젝트 설명"
@@ -10869,8 +11077,8 @@ Content-Length: 1536
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_path_parameters">Path parameters</h5>
+<div class="sect3">
+<h4 id="_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /projects/{projectId}</caption>
 <colgroup>
@@ -10891,8 +11099,8 @@ Content-Length: 1536
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_request_fields">Request fields</h5>
+<div class="sect3">
+<h4 id="_request_fields">Request fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -10996,8 +11204,8 @@ Content-Length: 1536
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_response_fields">Response fields</h5>
+<div class="sect3">
+<h4 id="_response_fields">Response fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -11218,15 +11426,12 @@ Content-Length: 1536
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="_프로젝트_삭제_delete_projectsprojectid">프로젝트 삭제 (DELETE /projects/{projectId})</h3>
-<div class="sect3">
-<h4 id="_204_no_content">204 No Content</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /projects/1 HTTP/1.1
@@ -11237,8 +11442,8 @@ Cookie: refresh-token=refresh_token</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content
@@ -11248,8 +11453,8 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_path_parameters">Path parameters</h5>
+<div class="sect3">
+<h4 id="_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /projects/{projectId}</caption>
 <colgroup>
@@ -11273,15 +11478,12 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="_관심_프로젝트_등록_post_projectsprojectidfavorite">관심 프로젝트 등록 (POST /projects/{projectId}/favorite)</h3>
-<div class="sect3">
-<h4 id="_201_created_2">201 Created</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /projects/1/favorite HTTP/1.1
@@ -11292,8 +11494,8 @@ Cookie: refresh-token=refresh_token</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
@@ -11303,8 +11505,8 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_path_parameters">Path parameters</h5>
+<div class="sect3">
+<h4 id="_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /projects/{projectId}/favorite</caption>
 <colgroup>
@@ -11328,15 +11530,12 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="_관심_프로젝트_삭제_delete_projectsprojectidfavorite">관심 프로젝트 삭제 (DELETE /projects/{projectId}/favorite)</h3>
-<div class="sect3">
-<h4 id="_204_no_content_2">204 No Content</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /projects/1/favorite HTTP/1.1
@@ -11347,8 +11546,8 @@ Cookie: refresh-token=refresh_token</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content
@@ -11358,8 +11557,8 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_path_parameters">Path parameters</h5>
+<div class="sect3">
+<h4 id="_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /projects/{projectId}/favorite</caption>
 <colgroup>
@@ -11383,15 +11582,12 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="_프로젝트_좋아요_등록_post_projectsprojectidlike">프로젝트 좋아요 등록 (POST /projects/{projectId}/like)</h3>
-<div class="sect3">
-<h4 id="_201_created_3">201 Created</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /projects/1/like HTTP/1.1
@@ -11402,8 +11598,8 @@ Cookie: refresh-token=refresh_token</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
@@ -11413,8 +11609,8 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_path_parameters">Path parameters</h5>
+<div class="sect3">
+<h4 id="_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /projects/{projectId}/like</caption>
 <colgroup>
@@ -11438,15 +11634,12 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="_프로젝트_좋아요_삭제_delete_projectsprojectidlike">프로젝트 좋아요 삭제 (DELETE /projects/{projectId}/like)</h3>
-<div class="sect3">
-<h4 id="_204_no_content_3">204 No Content</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /projects/1/like HTTP/1.1
@@ -11457,8 +11650,8 @@ Cookie: refresh-token=refresh_token</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content
@@ -11468,8 +11661,8 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_path_parameters">Path parameters</h5>
+<div class="sect3">
+<h4 id="_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /projects/{projectId}/like</caption>
 <colgroup>
@@ -11493,15 +11686,12 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="_프로젝트_댓글_등록_post_projectsprojectidcomment">프로젝트 댓글 등록 (POST /projects/{projectId}/comment)</h3>
-<div class="sect3">
-<h4 id="_201_created_4">201 Created</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /projects/1/comment HTTP/1.1
@@ -11518,8 +11708,8 @@ Cookie: refresh-token=refresh_token
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
@@ -11535,14 +11725,14 @@ Content-Length: 222
   "userName" : "유저 이름",
   "isAnonymous" : true,
   "content" : "댓글 내용",
-  "createdAt" : "2024-11-12T15:04:15.0928796",
-  "updatedAt" : "2024-11-12T15:04:15.0928796"
+  "createdAt" : "2024-11-19T15:22:36.5762487",
+  "updatedAt" : "2024-11-19T15:22:36.5762487"
 }</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_path_parameters">Path parameters</h5>
+<div class="sect3">
+<h4 id="_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /projects/{projectId}/comment</caption>
 <colgroup>
@@ -11563,8 +11753,8 @@ Content-Length: 222
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_request_fields">Request fields</h5>
+<div class="sect3">
+<h4 id="_request_fields">Request fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -11596,8 +11786,8 @@ Content-Length: 222
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_response_fields">Response fields</h5>
+<div class="sect3">
+<h4 id="_response_fields">Response fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -11662,15 +11852,12 @@ Content-Length: 222
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="_프로젝트_댓글_삭제_delete_projectsprojectidcomment">프로젝트 댓글 삭제 (DELETE /projects/{projectId}/comment)</h3>
-<div class="sect3">
-<h4 id="_204_no_content_4">204 No Content</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /projects/1/comment/1 HTTP/1.1
@@ -11681,8 +11868,8 @@ Cookie: refresh-token=refresh_token</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content
@@ -11692,8 +11879,8 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_path_parameters">Path parameters</h5>
+<div class="sect3">
+<h4 id="_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /projects/{projectId}/comment/{commentId}</caption>
 <colgroup>
@@ -11721,15 +11908,12 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="_수상_프로젝트_조회_get_projectsawardyearyear">수상 프로젝트 조회 (GET /projects/award?year={year})</h3>
-<div class="sect3">
-<h4 id="_200_no_content">200 No Content</h4>
 <div class="exampleblock">
 <div class="content">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /projects/award?year=2024 HTTP/1.1
@@ -11740,8 +11924,8 @@ Cookie: refresh-token=refresh_token</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -11804,9 +11988,9 @@ Content-Length: 1828
     "sorted" : false,
     "unsorted" : true
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -11816,16 +12000,16 @@ Content-Length: 1828
       "unsorted" : true
     },
     "offset" : 0,
-    "paged" : true,
-    "unpaged" : false
+    "unpaged" : false,
+    "paged" : true
   },
   "empty" : false
 }</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_query_parameters">Query parameters</h5>
+<div class="sect3">
+<h4 id="_query_parameters">Query parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -11863,8 +12047,8 @@ Content-Length: 1828
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_response_fields">Response fields</h5>
+<div class="sect3">
+<h4 id="_response_fields">Response fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -12117,7 +12301,6 @@ Content-Length: 1828
 </tr>
 </tbody>
 </table>
-</div>
 </div>
 </div>
 </div>
@@ -12282,9 +12465,9 @@ Content-Length: 1270
     "sorted" : false,
     "unsorted" : true
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -12294,8 +12477,8 @@ Content-Length: 1270
       "unsorted" : true
     },
     "offset" : 0,
-    "paged" : true,
-    "unpaged" : false
+    "unpaged" : false,
+    "paged" : true
   },
   "empty" : false
 }</code></pre>
@@ -12660,9 +12843,9 @@ Content-Length: 1266
     "sorted" : false,
     "unsorted" : true
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -12672,8 +12855,8 @@ Content-Length: 1266
       "unsorted" : true
     },
     "offset" : 0,
-    "paged" : true,
-    "unpaged" : false
+    "unpaged" : false,
+    "paged" : true
   },
   "empty" : false
 }</code></pre>
@@ -13048,9 +13231,9 @@ Content-Length: 1348
     "sorted" : false,
     "unsorted" : true
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -13060,8 +13243,8 @@ Content-Length: 1348
       "unsorted" : true
     },
     "offset" : 0,
-    "paged" : true,
-    "unpaged" : false
+    "unpaged" : false,
+    "paged" : true
   },
   "empty" : false
 }</code></pre>
@@ -13314,7 +13497,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 331
+Content-Length: 337
 
 {
   "id" : 1,
@@ -13326,8 +13509,8 @@ Content-Length: 331
   "position" : null,
   "studentNumber" : "2000123456",
   "departmentName" : "학과",
-  "createdAt" : "2024-11-12T15:04:18.6308",
-  "updatedAt" : "2024-11-12T15:04:18.6308"
+  "createdAt" : "2024-11-19T15:22:41.8644006",
+  "updatedAt" : "2024-11-19T15:22:41.8644006"
 }</code></pre>
 </div>
 </div>
@@ -13521,7 +13704,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 335
+Content-Length: 337
 
 {
   "id" : 1,
@@ -13533,8 +13716,8 @@ Content-Length: 335
   "position" : null,
   "studentNumber" : "2000123456",
   "departmentName" : "학과",
-  "createdAt" : "2024-11-12T15:04:18.837977",
-  "updatedAt" : "2024-11-12T15:04:18.837977"
+  "createdAt" : "2024-11-19T15:22:42.0783323",
+  "updatedAt" : "2024-11-19T15:22:42.0783323"
 }</code></pre>
 </div>
 </div>
@@ -13659,43 +13842,19 @@ Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_유저_관심_리스트_조회_get_usersfavorites">유저 관심 리스트 조회 (GET /users/favorites)</h3>
+<h3 id="_유저_관심_프로젝트_리스트_조회_get_usersfavoritesprojects">유저 관심 프로젝트 리스트 조회 (GET /users/favorites/projects)</h3>
 <div class="exampleblock">
 <div class="content">
 <div class="sect3">
 <h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /users/favorites?type=TALK HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /users/favorites/projects HTTP/1.1
 Authorization: user_access_token
 Host: localhost:8080
 Cookie: refresh-token=refresh_token</code></pre>
 </div>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_query_parameters">Query parameters</h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">관심 항목의 타입 (PROJECT, TALK, JOBINTERVIEW)</p></td>
-</tr>
-</tbody>
-</table>
 </div>
 <div class="sect3">
 <h4 id="_http_response">HTTP response</h4>
@@ -13706,16 +13865,50 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 150
+Content-Length: 1246
 
 [ {
   "id" : 1,
-  "title" : "Project 1",
-  "youtubeId" : "youtube 1"
+  "thumbnailInfo" : {
+    "id" : 1,
+    "uuid" : "썸네일 uuid 1",
+    "name" : "썸네일 파일 이름 1",
+    "mimeType" : "썸네일 mime 타입 1"
+  },
+  "projectName" : "프로젝트 이름 1",
+  "teamName" : "팀 이름 1",
+  "studentNames" : [ "학생 이름 1", "학생 이름 2" ],
+  "professorNames" : [ "교수 이름 1" ],
+  "projectType" : "STARTUP",
+  "projectCategory" : "BIG_DATA_ANALYSIS",
+  "awardStatus" : "FIRST",
+  "year" : 2023,
+  "likeCount" : 100,
+  "like" : false,
+  "bookMark" : false,
+  "url" : "프로젝트 URL",
+  "description" : "프로젝트 설명"
 }, {
   "id" : 2,
-  "title" : "Project 2",
-  "youtubeId" : "youtube 2"
+  "thumbnailInfo" : {
+    "id" : 2,
+    "uuid" : "썸네일 uuid 2",
+    "name" : "썸네일 파일 이름 2",
+    "mimeType" : "썸네일 mime 타입 2"
+  },
+  "projectName" : "프로젝트 이름 2",
+  "teamName" : "팀 이름 2",
+  "studentNames" : [ "학생 이름 3", "학생 이름 4" ],
+  "professorNames" : [ "교수 이름 2" ],
+  "projectType" : "LAB",
+  "projectCategory" : "AI_MACHINE_LEARNING",
+  "awardStatus" : "SECOND",
+  "year" : 2023,
+  "likeCount" : 100,
+  "like" : false,
+  "bookMark" : true,
+  "url" : "프로젝트 URL",
+  "description" : "프로젝트 설명"
 } ]</code></pre>
 </div>
 </div>
@@ -13742,19 +13935,421 @@ Content-Length: 150
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].thumbnailInfo</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">썸네일 정보</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].thumbnailInfo.id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">썸네일 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].thumbnailInfo.uuid</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">썸네일 UUID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].thumbnailInfo.name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">썸네일 파일 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].thumbnailInfo.mimeType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">썸네일 MIME 타입</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].projectName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].teamName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">팀 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].studentNames[]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">학생 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].professorNames[]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">교수 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].projectType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 타입: RESEARCH_AND_BUSINESS_FOUNDATION, LAB, STARTUP, CLUB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].projectCategory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 카테고리: COMPUTER_VISION, SYSTEM_NETWORK, WEB_APPLICATION, SECURITY_SOFTWARE_ENGINEERING, NATURAL_LANGUAGE_PROCESSING, BIG_DATA_ANALYSIS, AI_MACHINE_LEARNING, INTERACTION_AUGMENTED_REALITY</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].awardStatus</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수상 여부: NONE, FIRST, SECOND, THIRD, FOURTH, FIFTH</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].year</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 년도</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].likeCount</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">좋아요 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].like</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">좋아요 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].bookMark</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">북마크 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 URL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 설명</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_유저_관심_대담영상_리스트_조회_get_usersfavoritestalks">유저 관심 대담영상 리스트 조회 (GET /users/favorites/talks)</h3>
+<div class="exampleblock">
+<div class="content">
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /users/favorites/talks HTTP/1.1
+Authorization: user_access_token
+Host: localhost:8080
+Cookie: refresh-token=refresh_token</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+Content-Length: 1026
+
+[ {
+  "id" : 1,
+  "title" : "제목1",
+  "youtubeId" : "유튜브 고유ID",
+  "year" : 2024,
+  "talkerBelonging" : "대담자 소속1",
+  "talkerName" : "대담자 성명1",
+  "favorite" : true,
+  "quiz" : [ {
+    "question" : "질문1",
+    "answer" : 0,
+    "options" : [ "선지1", "선지2" ]
+  }, {
+    "question" : "질문2",
+    "answer" : 0,
+    "options" : [ "선지1", "선지2" ]
+  } ],
+  "createdAt" : "2024-11-19T15:22:41.7524031",
+  "updatedAt" : "2024-11-19T15:22:41.7524031"
+}, {
+  "id" : 2,
+  "title" : "제목2",
+  "youtubeId" : "유튜브 고유ID",
+  "year" : 2024,
+  "talkerBelonging" : "대담자 소속2",
+  "talkerName" : "대담자 성명2",
+  "favorite" : true,
+  "quiz" : [ {
+    "question" : "질문1",
+    "answer" : 0,
+    "options" : [ "선지1", "선지2" ]
+  }, {
+    "question" : "질문2",
+    "answer" : 0,
+    "options" : [ "선지1", "선지2" ]
+  } ],
+  "createdAt" : "2024-11-19T15:22:41.7524031",
+  "updatedAt" : "2024-11-19T15:22:41.7524031"
+} ]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_response_fields">Response fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 ID</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].title</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 제목</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].youtubeId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">유튜브 ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">유튜브 영상의 고유 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].year</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 연도</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].talkerBelonging</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">대담자의 소속된 직장/단체</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].talkerName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">대담자의 성명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].favorite</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">관심한 대담영상의 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].quiz</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 데이터, 없는경우 null</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].quiz[].question</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 질문</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].quiz[].answer</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 인덱스</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].quiz[].options</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 1개의 정답선지 리스트</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].createdAt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 생성일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].updatedAt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">대담 영상 수정일</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_유저_관심_잡페어인터뷰영상_리스트_조회_get_usersfavoritesjobinterviews">유저 관심 잡페어인터뷰영상 리스트 조회 (GET /users/favorites/jobInterviews)</h3>
+<div class="exampleblock">
+<div class="content">
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /users/favorites/jobInterviews HTTP/1.1
+Authorization: user_access_token
+Host: localhost:8080
+Cookie: refresh-token=refresh_token</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+Content-Length: 717
+
+[ {
+  "id" : 1,
+  "title" : "잡페어 인터뷰의 제목1",
+  "youtubeId" : "유튜브 고유 ID1",
+  "year" : 2023,
+  "talkerBelonging" : "대담자의 소속1",
+  "talkerName" : "대담자의 성명1",
+  "favorite" : false,
+  "category" : "INTERN",
+  "createdAt" : "2024-11-19T15:22:41.6917669",
+  "updatedAt" : "2024-11-19T15:22:41.6917669"
+}, {
+  "id" : 2,
+  "title" : "잡페어 인터뷰의 제목2",
+  "youtubeId" : "유튜브 고유 ID2",
+  "year" : 2024,
+  "talkerBelonging" : "대담자의 소속2",
+  "talkerName" : "대담자의 성명2",
+  "favorite" : true,
+  "category" : "INTERN",
+  "createdAt" : "2024-11-19T15:22:41.6917669",
+  "updatedAt" : "2024-11-19T15:22:41.6917669"
+} ]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_response_fields">Response fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">잡페어 인터뷰 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">잡페어 인터뷰 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].youtubeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">유튜브 영상의 고유 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].year</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">잡페어 인터뷰 연도</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].talkerBelonging</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">잡페어 인터뷰 대담자의 소속</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].talkerName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">잡페어 인터뷰 대담자의 성명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].favorite</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">관심에 추가한 잡페어 인터뷰 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].category</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">잡페어 인터뷰 카테고리: SENIOR, INTERN</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].createdAt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">잡페어 인터뷰 생성일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].updatedAt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">잡페어 인터뷰 수정일</p></td>
 </tr>
 </tbody>
 </table>
@@ -13792,13 +14387,13 @@ Content-Length: 271
   "id" : 1,
   "title" : "Title 1",
   "projectId" : 1,
-  "createdDate" : "2024-11-12T15:04:18.5841819",
+  "createdDate" : "2024-11-19T15:22:41.8208397",
   "hasReply" : true
 }, {
   "id" : 2,
   "title" : "Title 2",
   "projectId" : 2,
-  "createdDate" : "2024-11-12T15:04:18.5841819",
+  "createdDate" : "2024-11-19T15:22:41.8208397",
   "hasReply" : false
 } ]</code></pre>
 </div>
@@ -13887,12 +14482,12 @@ Content-Length: 231
 [ {
   "id" : 1,
   "title" : "Title 1",
-  "createdDate" : "2024-11-12T15:04:18.7046253",
+  "createdDate" : "2024-11-19T15:22:41.9120201",
   "hasReply" : true
 }, {
   "id" : 2,
   "title" : "Title 2",
-  "createdDate" : "2024-11-12T15:04:18.7046253",
+  "createdDate" : "2024-11-19T15:22:41.9120201",
   "hasReply" : false
 } ]</code></pre>
 </div>
@@ -14029,7 +14624,7 @@ Content-Length: 98
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-11-07 18:32:41 +0900
+Last updated 2024-11-19 14:49:44 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

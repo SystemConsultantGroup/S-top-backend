@@ -504,18 +504,18 @@ Content-Length: 464
 
 [ {
   "id" : 1,
-  "uuid" : "6759ebde-c9ff-45d7-9d74-e32a43dc3cf2",
+  "uuid" : "93c1cbe0-8c44-4432-9ac2-906feb256ba9",
   "name" : "첨부파일1.png",
   "mimeType" : "image/png",
-  "createdAt" : "2024-11-12T15:04:07.8310858",
-  "updatedAt" : "2024-11-12T15:04:07.8310858"
+  "createdAt" : "2024-11-19T15:22:29.6605669",
+  "updatedAt" : "2024-11-19T15:22:29.6605669"
 }, {
   "id" : 2,
-  "uuid" : "cebc684a-eb66-4bf5-b420-40a6303271f3",
+  "uuid" : "99547005-27d9-4c62-b6a2-134f9a8d669e",
   "name" : "첨부파일2.pdf",
   "mimeType" : "application/pdf",
-  "createdAt" : "2024-11-12T15:04:07.8310858",
-  "updatedAt" : "2024-11-12T15:04:07.8310858"
+  "createdAt" : "2024-11-19T15:22:29.6605669",
+  "updatedAt" : "2024-11-19T15:22:29.6605669"
 } ]</code></pre>
 </div>
 </div>
@@ -633,13 +633,47 @@ Content-Length: 33
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_프로젝트_일괄_등록_양식_다운로드_get_filesformprojects">프로젝트 일괄 등록 양식 다운로드 (GET /files/form/projects)</h3>
+<div class="exampleblock">
+<div class="content">
+<div class="sect3">
+<h4 id="_http_request">HTTP request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /files/form/projects HTTP/1.1
+Authorization: admin_access_token
+Host: localhost:8080
+Cookie: refresh-token=refresh_token</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_http_response">HTTP response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Disposition: form-data; name="attachment"; filename="project_upload_form.xlsx"
+Content-Type: application/octet-stream;charset=UTF-8
+Content-Length: 19
+
+project_upload_form</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-11-05 17:03:18 +0900
+Last updated 2024-11-19 15:09:54 +0900
 </div>
 </div>
 </body>

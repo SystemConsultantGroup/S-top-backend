@@ -12,4 +12,9 @@ public class BadRequestException extends RuntimeException {
         this.code = exceptionCode.getCode();
         this.message = exceptionCode.getMessage();
     }
+
+    public BadRequestException(final ExceptionCode exceptionCode, final String customMessage) {
+        this.code = exceptionCode.getCode();
+        this.message = customMessage;
+    }
 }

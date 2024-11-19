@@ -2,9 +2,6 @@ package com.scg.stop.project.dto.request;
 
 import com.scg.stop.file.domain.File;
 import com.scg.stop.project.domain.*;
-import com.scg.stop.global.exception.BadRequestException;
-import com.scg.stop.global.exception.ExceptionCode;
-import com.scg.stop.project.domain.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -82,7 +79,7 @@ public class ProjectRequest {
     }
 
     public Project toEntity(Long id, File thumbnail, File poster) {
-        Project project =  new Project(
+        Project project = new Project(
                 id,
                 projectName,
                 projectType,

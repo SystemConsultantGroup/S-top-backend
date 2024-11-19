@@ -508,7 +508,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 295
+Content-Length: 317
 
 {
   "id" : 1,
@@ -517,8 +517,9 @@ Content-Length: 295
   "projectName" : "프로젝트 이름",
   "title" : "문의 사항 제목",
   "content" : "문의 사항 내용",
-  "createdAt" : "2024-11-12T15:04:10.7105352",
-  "updatedAt" : "2024-11-12T15:04:10.7105352"
+  "replied" : false,
+  "createdAt" : "2024-11-19T15:22:32.5296142",
+  "updatedAt" : "2024-11-19T15:22:32.5296142"
 }</code></pre>
 </div>
 </div>
@@ -576,6 +577,12 @@ Content-Length: 295
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>replied</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 등록 여부</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>createdAt</code></p></td>
@@ -665,12 +672,12 @@ Content-Length: 862
     "id" : 1,
     "authorName" : "프로젝트 문의 사항 제목",
     "title" : "프로젝트 문의 사항 내용",
-    "createdAt" : "2024-11-12T15:04:10.5253675"
+    "createdAt" : "2024-11-19T15:22:32.3920816"
   }, {
     "id" : 2,
     "authorName" : "프로젝트 문의 사항 제목",
     "title" : "프로젝트 문의 사항 내용",
-    "createdAt" : "2024-11-12T15:04:10.5253675"
+    "createdAt" : "2024-11-19T15:22:32.3920816"
   } ],
   "number" : 0,
   "sort" : {
@@ -678,9 +685,9 @@ Content-Length: 862
     "sorted" : false,
     "unsorted" : true
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -690,8 +697,8 @@ Content-Length: 862
       "unsorted" : true
     },
     "offset" : 0,
-    "paged" : true,
-    "unpaged" : false
+    "unpaged" : false,
+    "paged" : true
   },
   "empty" : false
 }</code></pre>
@@ -908,7 +915,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 295
+Content-Length: 317
 
 {
   "id" : 1,
@@ -917,8 +924,9 @@ Content-Length: 295
   "projectName" : "프로젝트 이름",
   "title" : "문의 사항 제목",
   "content" : "문의 사항 내용",
-  "createdAt" : "2024-11-12T15:04:10.6368772",
-  "updatedAt" : "2024-11-12T15:04:10.6368772"
+  "replied" : false,
+  "createdAt" : "2024-11-19T15:22:32.4745261",
+  "updatedAt" : "2024-11-19T15:22:32.4745261"
 }</code></pre>
 </div>
 </div>
@@ -976,6 +984,12 @@ Content-Length: 295
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">문의 사항 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>replied</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 등록 여부</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>createdAt</code></p></td>
@@ -1082,7 +1096,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 315
+Content-Length: 337
 
 {
   "id" : 1,
@@ -1091,8 +1105,9 @@ Content-Length: 315
   "projectName" : "프로젝트 이름",
   "title" : "수정된 문의 사항 제목",
   "content" : "수정된 문의 사항 내용",
-  "createdAt" : "2024-11-12T15:04:10.8368332",
-  "updatedAt" : "2024-11-12T15:04:10.8368332"
+  "replied" : false,
+  "createdAt" : "2024-11-19T15:22:32.6501995",
+  "updatedAt" : "2024-11-19T15:22:32.6501995"
 }</code></pre>
 </div>
 </div>
@@ -1150,6 +1165,12 @@ Content-Length: 315
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">수정된 문의 사항 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>replied</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">답변 등록 여부</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>createdAt</code></p></td>
@@ -1659,7 +1680,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-11-05 17:03:18 +0900
+Last updated 2024-11-19 10:10:59 +0900
 </div>
 </div>
 </body>

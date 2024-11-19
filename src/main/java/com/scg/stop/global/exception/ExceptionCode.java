@@ -18,9 +18,9 @@ public enum ExceptionCode {
     UNABLE_TO_GET_USER_INFO(2001, "소셜 로그인 공급자로부터 유저 정보를 받아올 수 없습니다."),
     UNABLE_TO_GET_ACCESS_TOKEN(2002, "소셜 로그인 공급자로부터 인증 토큰을 받아올 수 없습니다."),
     UNAUTHORIZED_ACCESS(3000, "접근할 수 없는 리소스입니다."),
-    INVALID_REFRESH_TOKEN(3001,"유효하지 않은 Refresh Token 입니다."),
-    FAILED_TO_VALIDATE_TOKEN(3002,"토큰 검증에 실패했습니다."),
-    INVALID_ACCESS_TOKEN(3003,"유효하지 않은 Access Token 입니다."),
+    INVALID_REFRESH_TOKEN(3001, "유효하지 않은 Refresh Token 입니다."),
+    FAILED_TO_VALIDATE_TOKEN(3002, "토큰 검증에 실패했습니다."),
+    INVALID_ACCESS_TOKEN(3003, "유효하지 않은 Access Token 입니다."),
 
     // notion domain
     FAILED_TO_FETCH_NOTION_DATA(13000, "Notion 데이터를 가져오는데 실패했습니다."),
@@ -51,11 +51,26 @@ public enum ExceptionCode {
     NOT_FOUND_COMMENT(77010, "댓글을 찾을 수 없습니다"),
     NOT_MATCH_USER(77011, "유저 정보가 일치하지 않습니다"),
 
+    // project excel
+    INVALID_FILE_SIZE(78000, "엑셀 행의 개수와 업로드한 이미지의 개수가 일치해야합니다."),
+    INVALID_THUMBNAIL_NAME(78001, "썸네일 이미지 이름을 찾을 수 없습니다."),
+    INVALID_POSTER_NAME(78002, "포스터 이미지 이름을 찾을 수 없습니다."),
+    INVALID_AWARD_STATUS_KOREAN_NAME(78003, "수상 내역의 한글 이름이 올바르지 않습니다."),
+    INVALID_PROJECT_TYPE_KOREAN_NAME(78004, "프로젝트 종류의 한글 이름이 올바르지 않습니다."),
+    INVALID_PROJECT_CATEGORY_KOREAN_NAME(78005, "프로젝트 분야의 한글 이름이 올바르지 않습니다."),
+    EMPTY_CELL(78006, "모든 셀은 값이 있어야 합니다."),
+    INVALID_EXCEL_FORMAT(78007, "엑셀 형식이 올바르지 않습니다."),
+    DUPLICATE_THUMBNAIL_ID(78008, "중복된 썸네일 이미지 이름이 존재합니다."),
+    DUPLICATE_POSTER_ID(78009, "중복된 포스터 이미지 이름이 존재합니다."),
+    INVALID_YEAR_FORMAT(780010, "프로젝트 년도는 숫자만 입력해야 합니다."),
+    INVALID_EXCEL(780011, "엑셀 파일을 열 수 없습니다."),
+
     // file domain
     FAILED_TO_UPLOAD_FILE(5000, "파일 업로드를 실패했습니다."),
     FAILED_TO_GET_FILE(5001, "파일 가져오기를 실패했습니다."),
     FILE_NOT_FOUND(5002, "요청한 ID에 해당하는 파일이 존재하지 않습니다."),
     NOT_FOUND_FILE_ID(5002, "요청한 ID에 해당하는 파일이 존재하지 않습니다."),
+    INVALID_FILE_PATH(5004, "파일을 찾을 수 없습니다."),
 
     // notice domain
     NOTICE_NOT_FOUND(10000, "요청한 ID에 해당하는 공지사항이 존재하지 않습니다."),
@@ -68,7 +83,7 @@ public enum ExceptionCode {
     UNAUTHORIZED_USER(8003, "해당 문의에 대한 권한이 없습니다."),
 
     // video domain
-    ID_NOT_FOUND(8200,"해당 ID에 해당하는 잡페어 인터뷰가 없습니다."),
+    ID_NOT_FOUND(8200, "해당 ID에 해당하는 잡페어 인터뷰가 없습니다."),
     TALK_ID_NOT_FOUND(8400, "해당 ID에 해당하는 대담 영상이 없습니다."),
     NO_QUIZ(8401, "퀴즈 데이터가 존재하지 않습니다."),
     NOT_FOUND_USER_QUIZ(8402, "퀴즈 제출 데이터가 존재하지 않습니다."),
