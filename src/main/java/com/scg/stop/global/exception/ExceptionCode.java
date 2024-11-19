@@ -35,6 +35,8 @@ public enum ExceptionCode {
     INVALID_USERTYPE(4005, "회원 가입 이용이 불가능한 회원 유형입니다."),
     NOT_FOUND_APPLICATION_ID(4010, "ID에 해당하는 인증 신청 정보가 존재하지 않습니다."),
     ALREADY_VERIFIED_USER(4011, "이미 인증 된 회원입니다."),
+    UNABLE_TO_EDIT_USER_TYPE(4100, "회원 유형은 수정할 수 없습니다."),
+    DIVISION_OR_POSITION_REQUIRED(4101, "소속 또는 직책의 형식이 잘못되었습니다."),
 
     // project domain
     NOT_FOUND_PROJECT(77000, "프로젝트를 찾을 수 없습니다."),

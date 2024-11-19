@@ -29,4 +29,8 @@ public class Department extends BaseTimeEntity {
 
     @OneToMany(fetch = LAZY, mappedBy = "department")
     private List<Student> students = new ArrayList<>();
+
+    public void updateName(String newName) {
+        this.name = newName;
+    }
 }

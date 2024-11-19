@@ -54,5 +54,9 @@ public class Proposal extends BaseTimeEntity {
     private User user;
 
     @OneToOne(fetch = LAZY, mappedBy = "proposal")
-    private ProposalResponse proposalResponse;
+    private ProposalReply reply;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

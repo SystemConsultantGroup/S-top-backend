@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-public class ProposalResponse extends BaseTimeEntity {
+public class ProposalReply extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
