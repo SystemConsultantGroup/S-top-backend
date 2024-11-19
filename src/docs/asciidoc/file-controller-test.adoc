@@ -4,11 +4,19 @@
 ---
 
 === 다중 파일 업로드 (POST /files)
+
 ====
 operation::file-controller-test/upload-files[snippets="http-request,request-parts,http-response,response-fields"]
 ====
 
 === 파일 조회 (GET /files/{fileId})
+
 ====
 operation::file-controller-test/get-file[snippets="http-request,path-parameters,http-response"]
+====
+
+=== 프로젝트 일괄 등록 양식 다운로드 (GET /files/form/projects)
+
+====
+operation::file-controller-test/get-project-excel-form[snippets="http-request,http-response"]
 ====

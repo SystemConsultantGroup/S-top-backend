@@ -1,15 +1,15 @@
 package com.scg.stop.file.controller;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.description;
 import static org.mockito.Mockito.when;
+import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
+import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.multipart;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseBody;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.partWithName;
@@ -22,6 +22,7 @@ import com.scg.stop.configuration.AbstractControllerTest;
 import com.scg.stop.file.domain.File;
 import com.scg.stop.file.dto.response.FileResponse;
 import com.scg.stop.file.service.FileService;
+import jakarta.servlet.http.Cookie;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -33,13 +34,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.web.multipart.MultipartFile;
 
 @WebMvcTest(FileController.class)
 @MockBean(JpaMetamodelMappingContext.class)
@@ -48,6 +50,9 @@ class FileControllerTest extends AbstractControllerTest {
 
     @MockBean
     private FileService fileService;
+
+    private static final String ACCESS_TOKEN = "admin_access_token";
+    private static final String REFRESH_TOKEN = "refresh_token";
 
     @Test
     @DisplayName("여러개의 파일을 업로드할 수 있다.")
@@ -139,6 +144,39 @@ class FileControllerTest extends AbstractControllerTest {
                         ),
                         responseHeaders(
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("파일의 MIME 타입")
+                        )
+                ));
+    }
+
+    @Test
+    @DisplayName("프로젝트 일괄등록 양식을 가져올 수 있다.")
+    void getProjectExcelForm() throws Exception {
+        // given
+        String directoryPath = "form/";
+        String fileName = "project_upload_form.xlsx";
+        byte[] content = "project_upload_form".getBytes(StandardCharsets.UTF_8);
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(content);
+        Resource mockResource = new InputStreamResource(inputStream);
+        when(fileService.getLocalFile(directoryPath, fileName)).thenReturn(mockResource);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                get("/files/form/projects")
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN)
+                        .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
+        );
+
+        // then
+        result.andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_OCTET_STREAM))
+                .andDo(restDocs.document(
+                        requestCookies(
+                                cookieWithName("refresh-token")
+                                        .description("갱신 토큰")
+                        ),
+                        requestHeaders(
+                                headerWithName("Authorization")
+                                        .description("access token")
                         )
                 ));
     }

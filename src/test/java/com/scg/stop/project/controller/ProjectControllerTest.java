@@ -1,23 +1,7 @@
 package com.scg.stop.project.controller;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
-import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
-import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.*;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
-
-import com.scg.stop.project.controller.ProjectController;
 import com.scg.stop.project.domain.AwardStatus;
 import com.scg.stop.project.domain.ProjectCategory;
 import com.scg.stop.project.domain.ProjectType;
@@ -48,6 +32,18 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
+import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ProjectController.class)
 @MockBean(JpaMetamodelMappingContext.class)
@@ -673,7 +669,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
         // given
         CommentRequest commentRequest = new CommentRequest("댓글 내용", true);
 
-        CommentResponse commentResponse = new CommentResponse(1L,1L, "유저 이름", true,"댓글 내용" , LocalDateTime.now(), LocalDateTime.now());
+        CommentResponse commentResponse = new CommentResponse(1L, 1L, "유저 이름", true, "댓글 내용", LocalDateTime.now(), LocalDateTime.now());
 
         when(projectService.createProjectComment(anyLong(), any(User.class), any(CommentRequest.class))).thenReturn(commentResponse);
 
