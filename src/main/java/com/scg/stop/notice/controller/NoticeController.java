@@ -35,11 +35,19 @@ public class NoticeController {
     // Get a list of notices
     @GetMapping
     public ResponseEntity<Page<NoticeListElementResponse>> getNoticeList(
-            @RequestParam(value = "title", required = false) String title,
+            @RequestParam(value = "searchTerm", required = false) String searchTerm,
+            @RequestParam(value = "searchScope", defaultValue = "both") String searchScope,
             @PageableDefault(page = 0, size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<NoticeListElementResponse> noticeList = noticeService.getNoticeList(title, pageable);
+
+        // Enforce that searchScope is ignored if searchTerm is null
+        if (searchTerm == null || searchTerm.isEmpty()) {
+            searchScope = null; // Ignore search scope
+        }
+
+        Page<NoticeListElementResponse> noticeList = noticeService.getNoticeList(searchTerm, searchScope, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(noticeList);
     }
+
 
     // Get a corresponding notice
     @GetMapping("/{noticeId}")
