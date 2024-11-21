@@ -78,7 +78,6 @@ public class ProposalController {
     public ResponseEntity<ProposalReplyResponse> createProposalReply(@AuthUser(accessType = {AccessType.ADMIN}) User user,
                                                                      @PathVariable("proposalId") Long proposalId,
                                                                      @RequestBody @Valid ProposalReplyRequest proposalReplyCreateRequest) {
-        if (user.getUserType() != UserType.ADMIN) throw new BadRequestException(ExceptionCode.NOT_AUTHORIZED);
         ProposalReplyResponse proposalReplyResponse = proposalService.createProposalReply(proposalId, proposalReplyCreateRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(proposalReplyResponse);
     }
@@ -89,14 +88,12 @@ public class ProposalController {
                                                                      @PathVariable("proposalReplyId") Long proposalReplyId,
                                                                      @RequestBody @Valid ProposalReplyRequest proposalReplyUpdateRequest) {
 
-        if (user.getUserType() != UserType.ADMIN) throw new BadRequestException(ExceptionCode.NOT_AUTHORIZED);
         ProposalReplyResponse proposalReplyResponse = proposalService.updateProposalReply(proposalReplyId, proposalReplyUpdateRequest);
         return ResponseEntity.status(HttpStatus.OK).body(proposalReplyResponse);
     }
     @DeleteMapping("/{proposalId}/reply/{proposalReplyId}")
     public ResponseEntity<Void> deleteProposalReply(@AuthUser(accessType = {AccessType.ADMIN}) User user,
                                            @PathVariable("proposalId") Long proposalId, @PathVariable("proposalReplyId") Long proposalReplyId) {
-        if (user.getUserType() != UserType.ADMIN) throw new BadRequestException(ExceptionCode.NOT_AUTHORIZED);
         proposalService.deleteProposalReply(proposalReplyId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
