@@ -46,7 +46,8 @@ public class NoticeService {
     /**
      * Get a list of notices with sorting
      *
-     * @param title    Title of the notice (optional)
+     * @param searchTerm Search term to filter notices (optional)
+     * @param searchScope Search scope to filter notices (optional)
      * @param pageable Pageable containing sorting information
      * @return List of notices
      */
