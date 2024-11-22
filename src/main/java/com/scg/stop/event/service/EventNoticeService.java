@@ -46,23 +46,29 @@ public class EventNoticeService {
     /**
      * Get a list of event notices.
      *
-     * @param title    Title of the event notice (optional)
+     * @param searchTerm Search term to filter notices (optional)
+     * @param searchScope Search scope to filter notices (optional)
      * @param pageable Pageable
      * @return Paginated list of event notices
      */
     @Transactional(readOnly = true)
-    public Page<EventNoticeListElementResponse> getEventNoticeList(String title, Pageable pageable) {
+    public Page<EventNoticeListElementResponse> getEventNoticeList(String searchTerm, String searchScope, Pageable pageable) {
+
+        // If no searchTerm is provided, set searchScope to null
+        if (searchTerm == null || searchTerm.isEmpty()) {
+            searchScope = null;
+        }
 
         // Retrieve the sorting from the pageable
         Sort sort = pageable.getSort();
 
         // Find fixed notices with title and sorting
-        List<EventNoticeListElementResponse> fixedEventNotices = eventNoticeRepository.findFixedEventNotices(title, sort);
+        List<EventNoticeListElementResponse> fixedEventNotices = eventNoticeRepository.findFixedEventNotices(searchTerm, searchScope, sort);
 
         // Find non-fixed notices with title and sorting
         int nonFixedEventNoticesSize = pageable.getPageSize() - fixedEventNotices.size();
         Pageable adjustedPageable = PageRequest.of(pageable.getPageNumber(), Math.max(nonFixedEventNoticesSize, 0), sort);
-        Page<EventNoticeListElementResponse> nonFixedEventNotices = eventNoticeRepository.findNonFixedEventNotices(title, adjustedPageable);
+        Page<EventNoticeListElementResponse> nonFixedEventNotices = eventNoticeRepository.findNonFixedEventNotices(searchTerm, searchScope, adjustedPageable);
 
         // Combine fixed and non-fixed notices
         List<EventNoticeListElementResponse> combinedEventNotices = new ArrayList<>(fixedEventNotices);

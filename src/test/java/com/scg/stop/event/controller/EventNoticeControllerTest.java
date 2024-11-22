@@ -17,6 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.restdocs.payload.JsonFieldType;
@@ -118,15 +119,19 @@ class EventNoticeControllerTest extends AbstractControllerTest {
     void getEventNoticeList() throws Exception {
 
         // given
-        EventNoticeListElementResponse eventNotice1 = new EventNoticeListElementResponse(1L, "이벤트 공지 사항 1", 10, true, LocalDateTime.now(), LocalDateTime.now());
-        EventNoticeListElementResponse eventNotice2 = new EventNoticeListElementResponse(2L, "이벤트 공지 사항 2", 10, false, LocalDateTime.now(), LocalDateTime.now());
+        EventNoticeListElementResponse eventNotice1 = new EventNoticeListElementResponse(1L, "event notice 1", 10, true, LocalDateTime.now(), LocalDateTime.now());
+        EventNoticeListElementResponse eventNotice2 = new EventNoticeListElementResponse(2L, "event notice 2", 10, false, LocalDateTime.now(), LocalDateTime.now());
         Page<EventNoticeListElementResponse> page = new PageImpl<>(List.of(eventNotice1, eventNotice2), PageRequest.of(0, 10), 2);
 
-        when(eventNoticeService.getEventNoticeList(any(), any())).thenReturn(page);
+        when(eventNoticeService.getEventNoticeList(any(String.class), any(String.class), any(Pageable.class))).thenReturn(page);
 
         // when
         ResultActions result = mockMvc.perform(
                 get("/eventNotices")
+                        .param("terms", "notice")
+                        .param("scope", "title")
+                        .param("page", "0")
+                        .param("size", "10")
                         .contentType(APPLICATION_JSON)
         );
 
@@ -134,7 +139,8 @@ class EventNoticeControllerTest extends AbstractControllerTest {
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
                         queryParameters(
-                                parameterWithName("title").description("찾고자 하는 이벤트 공지 사항 제목").optional(),
+                                parameterWithName("terms").description("검색어 (optional)").optional(),
+                                parameterWithName("scope").description("검색 범위 (title, content, both) [default: both, searchTerm=null 이면 null로 초기화]").optional(),
                                 parameterWithName("page").description("페이지 번호 [default: 0]").optional(),
                                 parameterWithName("size").description("페이지 크기 [default: 10]").optional()
                         ),
