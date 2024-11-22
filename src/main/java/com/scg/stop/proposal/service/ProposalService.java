@@ -3,6 +3,9 @@ package com.scg.stop.proposal.service;
 import static com.scg.stop.proposal.domain.Proposal.convertProjectTypesToString;
 import static com.scg.stop.proposal.domain.Proposal.convertStringToProjectTypes;
 
+import com.scg.stop.file.domain.File;
+import com.scg.stop.file.dto.response.FileResponse;
+import com.scg.stop.file.repository.FileRepository;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.global.infrastructure.EmailService;
@@ -16,7 +19,8 @@ import com.scg.stop.proposal.domain.response.ProposalResponse;
 import com.scg.stop.proposal.repository.ProposalReplyRepository;
 import com.scg.stop.proposal.repository.ProposalRepository;
 import com.scg.stop.user.domain.User;
-import com.scg.stop.user.domain.UserType;
+import java.util.Collection;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +34,7 @@ public class ProposalService {
     private final ProposalRepository proposalRepository;
     private final ProposalReplyRepository proposalReplyRepository;
     private final EmailService emailService;
+    private final FileRepository fileRepository;
     @Transactional(readOnly = true)
     public Page<ProposalResponse> getProposalList(String title, Pageable pageable, User requestUser) {
         Page<Proposal> proposals = proposalRepository.findProposals(title, pageable);
@@ -57,25 +62,43 @@ public class ProposalService {
                 proposal.getTitle(),
                 convertStringToProjectTypes(proposal.getProjectTypes()),
                 proposal.getContent(),
-                proposal.getProposalReply() != null
+                proposal.getProposalReply() != null,
+                proposal.getFiles().stream()
+                        .map(FileResponse::from)
+                        .toList()
         );
     }
 
     @Transactional
     public ProposalDetailResponse createProposal(User user, CreateProposalRequest proposalCreateRequest) {
-        Proposal proposal = Proposal.createProposal(user,
+        List<File> files = fileRepository.findByIdIn(proposalCreateRequest.getFileIds());
+        Proposal proposal = Proposal.createProposal(
+                user,
                 proposalCreateRequest.getTitle(),
                 convertProjectTypesToString(proposalCreateRequest.getProjectTypes()),
                 proposalCreateRequest.getEmail(),
                 proposalCreateRequest.getWebSite(),
                 proposalCreateRequest.getContent(),
                 proposalCreateRequest.getIsVisible(),
-                proposalCreateRequest.getIsAnonymous());
+                proposalCreateRequest.getIsAnonymous(),
+                files
+        );
         proposalRepository.save(proposal);
         //TODO: 이메일 형식 정하기  & 과제 제안메일은 어드민 이메일로만 보내면 되는지?
         emailService.sendEmail(proposal.getEmail(), proposal.getTitle(), proposal.getContent());
-        return ProposalDetailResponse.of(proposal.getId(), proposal.getUser().getName(), proposal.getEmail(), proposal.getWebSite(),
-                proposal.getTitle(), convertStringToProjectTypes(proposal.getProjectTypes()), proposal.getContent(), proposal.getProposalReply() != null);
+        return ProposalDetailResponse.of(
+                proposal.getId(),
+                proposal.getUser().getName(),
+                proposal.getEmail(),
+                proposal.getWebSite(),
+                proposal.getTitle(),
+                convertStringToProjectTypes(proposal.getProjectTypes()),
+                proposal.getContent(),
+                proposal.getProposalReply() != null,
+                proposal.getFiles().stream()
+                        .map(FileResponse::from)
+                        .toList()
+                );
     }
 
     @Transactional
@@ -83,6 +106,9 @@ public class ProposalService {
         Proposal proposal = proposalRepository.findById(proposalId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROPOSAL));
         if (!proposal.isAuthorized(requestUser)) throw new BadRequestException(ExceptionCode.NOT_AUTHORIZED);
+
+        List<File> files = fileRepository.findByIdIn(proposalUpdateRequest.getFileIds());
+
         proposal.update(
                 proposalUpdateRequest.getTitle(),
                 convertProjectTypesToString(proposalUpdateRequest.getProjectTypes()),
@@ -90,11 +116,23 @@ public class ProposalService {
                 proposalUpdateRequest.getWebSite(),
                 proposalUpdateRequest.getContent(),
                 proposalUpdateRequest.getIsVisible(),
-                proposalUpdateRequest.getIsAnonymous()
+                proposalUpdateRequest.getIsAnonymous(),
+                files
         );
 //        emailService.sendEmail();
-        return ProposalDetailResponse.of(proposal.getId(), proposal.getUser().getName(), proposal.getEmail(), proposal.getWebSite(),
-                proposal.getTitle(), convertStringToProjectTypes(proposal.getProjectTypes()), proposal.getContent(), proposal.getProposalReply() != null);
+        return ProposalDetailResponse.of(
+                proposal.getId(),
+                proposal.getUser().getName(),
+                proposal.getEmail(),
+                proposal.getWebSite(),
+                proposal.getTitle(),
+                convertStringToProjectTypes(proposal.getProjectTypes()),
+                proposal.getContent(),
+                proposal.getProposalReply() != null,
+                proposal.getFiles().stream().
+                        map(FileResponse::from)
+                        .toList()
+        );
     }
 
     @Transactional

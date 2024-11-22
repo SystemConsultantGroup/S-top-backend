@@ -23,7 +23,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
-import com.scg.stop.domain.project.domain.ProjectType;
+import com.scg.stop.file.domain.File;
+import com.scg.stop.file.dto.response.FileResponse;
+import com.scg.stop.project.domain.ProjectType;
 import com.scg.stop.proposal.domain.request.CreateProposalRequest;
 import com.scg.stop.proposal.domain.request.ProposalReplyRequest;
 import com.scg.stop.proposal.domain.response.ProposalDetailResponse;
@@ -34,7 +36,10 @@ import com.scg.stop.user.domain.User;
 import com.scg.stop.user.domain.UserType;
 import jakarta.servlet.http.Cookie;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import net.bytebuddy.asm.Advice.Local;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -142,6 +147,12 @@ public class ProposalControllerTest extends AbstractControllerTest {
     @DisplayName("과제 제안의 상세 페이지를 조회할 수 있다.")
     void getProposalDetail() throws Exception {
         //given
+        List<FileResponse> fileResponses = Arrays.asList(
+                new FileResponse(1L, "uuid1", "과제제안서 이름1.pdf", "application/pdf", LocalDateTime.now(), LocalDateTime.now()),
+                new FileResponse(2L, "uuid2", "과제제안서 이름2.pdf", "application/pdf", LocalDateTime.now(), LocalDateTime.now()),
+                new FileResponse(3L, "uuid3", "과제제안서 이름3.pdf", "application/pdf", LocalDateTime.now(), LocalDateTime.now())
+        );
+
         ProposalDetailResponse proposalDetailResponse = new ProposalDetailResponse(1L,
                 "작성자",
                 "작성자@email.com",
@@ -149,7 +160,9 @@ public class ProposalControllerTest extends AbstractControllerTest {
                 "과제 제안 제목",
                 List.of(ProjectType.LAB, ProjectType.CLUB, ProjectType.STARTUP, ProjectType.RESEARCH_AND_BUSINESS_FOUNDATION),
                 "과제제안 내용",
-                false);
+                false,
+                fileResponses
+        );
 
         when(proposalService.getProposalDetail(any(), any())).thenReturn(proposalDetailResponse);
 
@@ -187,8 +200,14 @@ public class ProposalControllerTest extends AbstractControllerTest {
                 "이메일@email.com",
                 List.of(ProjectType.LAB, ProjectType.CLUB),
                 "과제제안내용",
-                "true", "true");
-
+                "true", "true",
+                List.of(1L, 2L, 3L)
+        );
+        List<FileResponse> fileResponses = Arrays.asList(
+                new FileResponse(1L, "uuid1", "과제제안서 이름1.pdf", "application/pdf", LocalDateTime.now(), LocalDateTime.now()),
+                new FileResponse(2L, "uuid2", "과제제안서 이름2.pdf", "application/pdf", LocalDateTime.now(), LocalDateTime.now()),
+                new FileResponse(3L, "uuid3", "과제제안서 이름3.pdf", "application/pdf", LocalDateTime.now(), LocalDateTime.now())
+        );
         ProposalDetailResponse proposalDetailResponse = new ProposalDetailResponse(
                 1L,
                 "작성자",
@@ -197,7 +216,9 @@ public class ProposalControllerTest extends AbstractControllerTest {
                 "과제제안제목",
                 List.of(ProjectType.LAB, ProjectType.CLUB),
                 "과제제안내용",
-                false);
+                false,
+                fileResponses
+        );
         when(proposalService.createProposal(any(), any())).thenReturn(proposalDetailResponse);
 
         ResultActions result = mockMvc.perform(post("/proposals")
@@ -252,8 +273,14 @@ public class ProposalControllerTest extends AbstractControllerTest {
                  List.of(ProjectType.LAB, ProjectType.CLUB),
                 "과제제안내용",
                 "true",
-                "true");
-
+                "true",
+                List.of(1L,2L,3L)
+        );
+        List<FileResponse> fileResponses = Arrays.asList(
+                new FileResponse(1L, "uuid1", "과제제안서 이름1.pdf", "application/pdf", LocalDateTime.now(), LocalDateTime.now()),
+                new FileResponse(2L, "uuid2", "과제제안서 이름2.pdf", "application/pdf", LocalDateTime.now(), LocalDateTime.now()),
+                new FileResponse(3L, "uuid3", "과제제안서 이름3.pdf", "application/pdf", LocalDateTime.now(), LocalDateTime.now())
+        );
         ProposalDetailResponse proposalDetailResponse = new ProposalDetailResponse(
                 1L,
                 "작성자",
@@ -262,7 +289,9 @@ public class ProposalControllerTest extends AbstractControllerTest {
                 "과제제안제목",
                 List.of(ProjectType.LAB, ProjectType.CLUB),
                 "과제제안내용",
-                false);
+                false,
+                fileResponses
+        );
         when(proposalService.updateProposal(any(), any(), any())).thenReturn(proposalDetailResponse);
 
         ResultActions result = mockMvc.perform(put("/proposals/{proposalId}", 1L)
