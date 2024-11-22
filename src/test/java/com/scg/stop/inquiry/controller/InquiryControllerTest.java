@@ -123,14 +123,18 @@ public class InquiryControllerTest extends AbstractControllerTest {
     void getInquiries() throws Exception {
 
         // given
-        InquiryResponse response1 = InquiryResponse.of(1L, "프로젝트 문의 사항 제목", "프로젝트 문의 사항 내용", LocalDateTime.now());
-        InquiryResponse response2 = InquiryResponse.of(2L, "프로젝트 문의 사항 제목", "프로젝트 문의 사항 내용", LocalDateTime.now());
+        InquiryResponse response1 = InquiryResponse.of(1L, "프로젝트 inquiry (문의) 제목 1", "프로젝트 문의 사항 내용", LocalDateTime.now());
+        InquiryResponse response2 = InquiryResponse.of(2L, "프로젝트 inquiry (문의) 제목 2", "프로젝트 문의 사항 내용", LocalDateTime.now());
         Page<InquiryResponse> page = new PageImpl<>(List.of(response1, response2), PageRequest.of(0, 10), 2);
 
-        when(inquiryService.getInquiryList(any(), any(Pageable.class))).thenReturn(page);
+        when(inquiryService.getInquiryList(any(String.class),any(String.class), any(Pageable.class))).thenReturn(page);
         // when
         ResultActions result = mockMvc.perform(
                 get("/inquiries")
+                        .param("terms", "inquiry")
+                        .param("scope", "title")
+                        .param("page", "0")
+                        .param("size", "10")
                         .contentType(APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, COMPANY_ACCESS_TOKEN)
                         .cookie(new Cookie("refresh-token", REFRESH_TOKEN))
@@ -148,7 +152,8 @@ public class InquiryControllerTest extends AbstractControllerTest {
                                         .description("access token")
                         ),
                         queryParameters(
-                                parameterWithName("title").description("찾고자 하는 공지 사항 제목").optional(),
+                                parameterWithName("terms").description("검색어").optional(),
+                                parameterWithName("scope").description("검색 범위 (title, content, both, author) [default: both, searchTerm=null 이면 null로 초기화]").optional(),
                                 parameterWithName("page").description("페이지 번호 [default: 0]").optional(),
                                 parameterWithName("size").description("페이지 크기 [default: 10]").optional()
                         ),
