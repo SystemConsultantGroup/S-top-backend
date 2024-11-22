@@ -35,8 +35,8 @@ public class NoticeController {
     // Get a list of notices
     @GetMapping
     public ResponseEntity<Page<NoticeListElementResponse>> getNoticeList(
-            @RequestParam(value = "searchTerm", required = false) String searchTerm,
-            @RequestParam(value = "searchScope", defaultValue = "both") String searchScope,
+            @RequestParam(value = "terms", required = false) String searchTerm,
+            @RequestParam(value = "scope", defaultValue = "both") String searchScope,
             @PageableDefault(page = 0, size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
 
         // Enforce that searchScope is ignored if searchTerm is null

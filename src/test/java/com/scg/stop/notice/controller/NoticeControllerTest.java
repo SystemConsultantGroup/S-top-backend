@@ -129,8 +129,8 @@ class NoticeControllerTest extends AbstractControllerTest {
         // when
         ResultActions result = mockMvc.perform(
                 get("/notices")
-                        .param("searchTerm", "notice")
-                        .param("searchScope", "title")
+                        .param("terms", "notice")
+                        .param("scope", "title")
                         .param("page", "0")
                         .param("size", "10")
                         .contentType(APPLICATION_JSON)
@@ -140,8 +140,8 @@ class NoticeControllerTest extends AbstractControllerTest {
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
                         queryParameters(
-                                parameterWithName("searchTerm").description("검색어 (optional)").optional(),
-                                parameterWithName("searchScope").description("검색 범위 (title, content, both) [default: both, searchTerm=null 이면 null로 초기화]").optional(),
+                                parameterWithName("terms").description("검색어 (optional)").optional(),
+                                parameterWithName("scope").description("검색 범위 (title, content, both) [default: both, searchTerm=null 이면 null로 초기화]").optional(),
                                 parameterWithName("page").description("페이지 번호 [default: 0]").optional(),
                                 parameterWithName("size").description("페이지 크기 [default: 10]").optional()
                         ),
