@@ -17,7 +17,6 @@ public enum ExceptionCode {
     // auth domain
     UNABLE_TO_GET_USER_INFO(2001, "소셜 로그인 공급자로부터 유저 정보를 받아올 수 없습니다."),
     UNABLE_TO_GET_ACCESS_TOKEN(2002, "소셜 로그인 공급자로부터 인증 토큰을 받아올 수 없습니다."),
-
     UNAUTHORIZED_ACCESS(3000, "접근할 수 없는 리소스입니다."),
     INVALID_REFRESH_TOKEN(3001, "유효하지 않은 Refresh Token 입니다."),
     FAILED_TO_VALIDATE_TOKEN(3002, "토큰 검증에 실패했습니다."),
@@ -33,19 +32,11 @@ public enum ExceptionCode {
     NOT_AUTHORIZED(4002, "유저 권한이 존재하지 않습니다."),
     NOT_FOUND_DEPARTMENT(4003, "학과가 존재하지 않습니다."),
     INVALID_STUDENTINFO(4004, "학과/학번 정보가 존재하지 않습니다."),
-
-    NOTICE_NOT_FOUND(10000, "요청한 ID에 해당하는 공지사항이 존재하지 않습니다."),
-    EVENT_NOTICE_NOT_FOUND(11000, "요청한 ID에 해당하는 이벤트가 존재하지 않습니다."),
-    FILE_NOT_FOUND(12000, "요청한 ID에 해당하는 파일이 존재하지 않습니다."),
-
-    ID_NOT_FOUND(8200,"해당 ID에 해당하는 잡페어 인터뷰가 없습니다."),
-    TALK_ID_NOT_FOUND(8400, "해당 ID에 해당하는 대담 영상이 없습니다."),
-    NO_QUIZ(8401, "퀴즈 데이터가 존재하지 않습니다."),
-
-    NOT_FOUND_PROPOSAL(9000, "제안 id에 해당하는 제안서가 없습니다." ),
-    NOT_FOUND_PROPOSALREPLY(9001, "제안 답변 ID에 해당하는 답변이 없습니다."),
-    INVALID_PROJECT_TYPE(9002, "쉼표와 띄어쓰기로 프로젝트 타입을 구분해주세요."),
-
+    INVALID_USERTYPE(4005, "회원 가입 이용이 불가능한 회원 유형입니다."),
+    NOT_FOUND_APPLICATION_ID(4010, "ID에 해당하는 인증 신청 정보가 존재하지 않습니다."),
+    ALREADY_VERIFIED_USER(4011, "이미 인증 된 회원입니다."),
+    UNABLE_TO_EDIT_USER_TYPE(4100, "회원 유형은 수정할 수 없습니다."),
+    DIVISION_OR_POSITION_REQUIRED(4101, "소속 또는 직책의 형식이 잘못되었습니다."),
 
     // project domain
     NOT_FOUND_PROJECT(77000, "프로젝트를 찾을 수 없습니다."),
@@ -81,6 +72,10 @@ public enum ExceptionCode {
     NOT_FOUND_FILE_ID(5002, "요청한 ID에 해당하는 파일이 존재하지 않습니다."),
     INVALID_FILE_PATH(5004, "파일을 찾을 수 없습니다."),
 
+    // notice domain
+    NOTICE_NOT_FOUND(10000, "요청한 ID에 해당하는 공지사항이 존재하지 않습니다."),
+    EVENT_NOTICE_NOT_FOUND(11000, "요청한 ID에 해당하는 이벤트가 존재하지 않습니다."),
+
     // inquiry domain
     NOT_FOUND_INQUIRY(8000, "요청한 ID에 해당하는 문의가 존재하지 않습니다."),
     NOT_FOUND_INQUIRY_REPLY(8001, "요청한 ID에 해당하는 문의 답변이 존재하지 않습니다."),
@@ -103,7 +98,11 @@ public enum ExceptionCode {
     NOT_COMPATIBLE_EXCEL(71001, "엑셀 파일이 주어진 클래스와 호환되지 않습니다."),
 
     // gallery domain
-    NOT_FOUND_GALLERY_ID(9001, "요청한 ID에 해당하는 갤러리가 존재하지 않습니다.");
+    NOT_FOUND_GALLERY_ID(9001, "요청한 ID에 해당하는 갤러리가 존재하지 않습니다."),
+
+    // proposal domain
+    NOT_FOUND_PROPOSAL(6000, "요청한 ID에 해당하는 과제제안이 존재하지 않습니다."),
+    NOT_FOUND_PROPOSALREPLY(6001, "요청한 ID에 해당하는 과제제안 답변이 존재하지 않습니다.");
 
     private final int code;
     private final String message;

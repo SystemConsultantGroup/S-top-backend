@@ -4,7 +4,8 @@ import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
-import com.scg.stop.domain.project.domain.ProjectType;
+import com.scg.stop.project.domain.ProjectType;
+import com.scg.stop.file.domain.File;
 import com.scg.stop.user.domain.User;
 import com.scg.stop.global.domain.BaseTimeEntity;
 import com.scg.stop.user.domain.UserType;
@@ -15,6 +16,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,6 +59,9 @@ public class Proposal extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(fetch = LAZY, mappedBy = "proposal", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<File> files = new ArrayList<>();
+
     @OneToOne(fetch = LAZY, mappedBy = "proposal", cascade = CascadeType.ALL, orphanRemoval = true)
     private ProposalReply proposalReply;
 
@@ -69,7 +74,7 @@ public class Proposal extends BaseTimeEntity {
 
 
     private Proposal(User user, String title, String projectTypes, String email, String website, String content,
-                     Boolean isVisible, Boolean isAnonymous) {
+                     Boolean isVisible, Boolean isAnonymous, List<File> files) {
         this.title = title;
         this.projectTypes= projectTypes;
         this.email = email;
@@ -78,15 +83,33 @@ public class Proposal extends BaseTimeEntity {
         this.isAnonymous = isAnonymous;
         this.isVisible = isVisible;
         this.user = user;
+        this.files = files;
     }
 
     public static Proposal createProposal(User user, String title, String projectTypes, String email, String website,
-                                           String content, Boolean isVisible, Boolean isAnonymous) {
-        return new Proposal(user, title, projectTypes, email, website, content, isVisible, isAnonymous);
+                                           String content, Boolean isVisible, Boolean isAnonymous, List<File> files) {
+        return new Proposal(
+                user,
+                title,
+                projectTypes,
+                email,
+                website,
+                content,
+                isVisible,
+                isAnonymous,
+                files
+        );
     }
 
-    public void update(String title, String projectTypes, String email, String website, String content,
-                       Boolean isVisible, Boolean isAnonymous) {
+    public void update(String title,
+                       String projectTypes,
+                       String email,
+                       String website,
+                       String content,
+                       Boolean isVisible,
+                       Boolean isAnonymous,
+                       List<File> files
+    ) {
         this.title = title;
         this.projectTypes = projectTypes;
         this.email = email;
@@ -94,6 +117,7 @@ public class Proposal extends BaseTimeEntity {
         this.content = content;
         this.isAnonymous = isAnonymous;
         this.isVisible = isVisible;
+        this.files = files;
     }
 
     public static String convertProjectTypesToString(List<ProjectType> proposalTypes) {
