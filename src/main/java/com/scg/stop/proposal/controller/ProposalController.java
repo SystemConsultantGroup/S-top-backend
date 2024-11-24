@@ -1,8 +1,6 @@
 package com.scg.stop.proposal.controller;
 
 import com.scg.stop.auth.annotation.AuthUser;
-import com.scg.stop.global.exception.BadRequestException;
-import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.proposal.domain.request.CreateProposalRequest;
 import com.scg.stop.proposal.domain.request.ProposalReplyRequest;
 import com.scg.stop.proposal.domain.response.ProposalDetailResponse;
@@ -11,7 +9,6 @@ import com.scg.stop.proposal.domain.response.ProposalResponse;
 import com.scg.stop.proposal.service.ProposalService;
 import com.scg.stop.user.domain.AccessType;
 import com.scg.stop.user.domain.User;
-import com.scg.stop.user.domain.UserType;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -39,7 +36,7 @@ public class ProposalController {
     @GetMapping()
     public ResponseEntity<Page<ProposalResponse>> getProposals(@AuthUser(accessType = {AccessType.COMPANY, AccessType.ADMIN}) User user,
                                                                @RequestParam(value = "scope", required = false) String scope,
-                                                               @RequestParam(value = "term", required = false) String term,
+                                                               @RequestParam(value = "terms", required = false) String term,
                                                                @PageableDefault(page = 0, size = 10) Pageable pageable) {
         Page<ProposalResponse> proposalResponse = proposalService.getProposalList(scope, term, pageable, user);
         return ResponseEntity.status(HttpStatus.OK).body(proposalResponse);
