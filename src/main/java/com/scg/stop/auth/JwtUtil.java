@@ -3,9 +3,11 @@ package com.scg.stop.auth;
 import com.scg.stop.auth.domain.UserToken;
 import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.global.exception.SocialLoginException;
+import com.scg.stop.user.domain.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -34,24 +36,27 @@ public class JwtUtil {
     }
 
     // 토큰 생성 //
-    public UserToken createLoginToken(String subject) {
-        String refreshToken = createToken("",refreshTokenExpiry);
-        String accessToken = createToken(subject, accessTokenExpiry);
+    public UserToken createLoginToken(String subject, User user) {
+        String refreshToken = createToken("",refreshTokenExpiry, null);
+        String accessToken = createToken(subject, accessTokenExpiry, user);
         return new UserToken(accessToken, refreshToken);
     }
-    public String createToken(String subject, Long expiredMs) {
+    public String createToken(String subject, Long expiredMs, User user) {
         final Date now = new Date();
         final Date expiredDate = new Date(now.getTime() + expiredMs);
-        return Jwts.builder()
+        JwtBuilder jwtBuilder = Jwts.builder()
                 .setSubject(subject)
                 .setIssuedAt(now)
                 .setExpiration(expiredDate)
-                .signWith(secretKey)
-                .compact();
+                .signWith(secretKey);
+        if (user != null) {
+            jwtBuilder.claim("userType", user.getUserType());
+        }
+        return jwtBuilder.compact();
     }
 
-    public String reissueAccessToken(String subject) {
-        return createToken(subject, accessTokenExpiry);
+    public String reissueAccessToken(String subject, User user) {
+        return createToken(subject, accessTokenExpiry, user);
     }
 
     // 토근 정보 추출 //
