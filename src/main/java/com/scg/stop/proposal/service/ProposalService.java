@@ -36,8 +36,8 @@ public class ProposalService {
     private final EmailService emailService;
     private final FileRepository fileRepository;
     @Transactional(readOnly = true)
-    public Page<ProposalResponse> getProposalList(String title, Pageable pageable, User requestUser) {
-        Page<Proposal> proposals = proposalRepository.findProposals(title, pageable);
+    public Page<ProposalResponse> getProposalList(String scope, String term, Pageable pageable, User requestUser) {
+        Page<Proposal> proposals = proposalRepository.filterProposals(scope, term, pageable);
         return proposals
                 .map(proposal ->
                         ProposalResponse.of(

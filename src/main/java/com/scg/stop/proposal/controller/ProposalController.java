@@ -38,9 +38,10 @@ public class ProposalController {
 
     @GetMapping()
     public ResponseEntity<Page<ProposalResponse>> getProposals(@AuthUser(accessType = {AccessType.COMPANY, AccessType.ADMIN}) User user,
-                                                               @RequestParam(value = "title", required = false) String title,
+                                                               @RequestParam(value = "scope", required = false) String scope,
+                                                               @RequestParam(value = "term", required = false) String term,
                                                                @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        Page<ProposalResponse> proposalResponse = proposalService.getProposalList(title, pageable, user);
+        Page<ProposalResponse> proposalResponse = proposalService.getProposalList(scope, term, pageable, user);
         return ResponseEntity.status(HttpStatus.OK).body(proposalResponse);
     }
 

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface ProposalRepository extends JpaRepository<Proposal, Long> {
+public interface ProposalRepository extends JpaRepository<Proposal, Long>, ProposalRepositoryCustom {
 
     //TODO: cursor 기반 pagination 과 성능 비교 + nativeQuery
     @Query("SELECT p FROM Proposal p WHERE :title IS NULL OR p.title LIKE %:title%")

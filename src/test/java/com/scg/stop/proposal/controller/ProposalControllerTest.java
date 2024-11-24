@@ -23,7 +23,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scg.stop.configuration.AbstractControllerTest;
-import com.scg.stop.file.domain.File;
 import com.scg.stop.file.dto.response.FileResponse;
 import com.scg.stop.project.domain.ProjectType;
 import com.scg.stop.proposal.domain.request.CreateProposalRequest;
@@ -37,9 +36,7 @@ import com.scg.stop.user.domain.UserType;
 import jakarta.servlet.http.Cookie;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import net.bytebuddy.asm.Advice.Local;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -98,7 +95,7 @@ public class ProposalControllerTest extends AbstractControllerTest {
                 List.of(proposal1, proposal2),
                 PageRequest.of(0, 10), 2
         );
-        when(proposalService.getProposalList(any(), any(), any())).thenReturn(proposalPage);
+        when(proposalService.getProposalList(any(), any(), any(), any())).thenReturn(proposalPage);
 
         //when
         ResultActions result = mockMvc.perform(get(
@@ -110,7 +107,8 @@ public class ProposalControllerTest extends AbstractControllerTest {
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
                         queryParameters(
-                                parameterWithName("title").description("찾고자 하는 과제제안 제목").optional(),
+                                parameterWithName("scope").description("필터 조건 (title,content,both,author)").optional(),
+                                parameterWithName("term").description("필터 키워드").optional(),
                                 parameterWithName("page").description("페이지 번호 [default = 0]").optional(),
                                 parameterWithName("size").description("페이지 크기 [default = 10]").optional()
                         ),
@@ -186,7 +184,14 @@ public class ProposalControllerTest extends AbstractControllerTest {
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("과제 제안 제목"),
                                 fieldWithPath("projectTypes").type(JsonFieldType.ARRAY).description("과제 제안 프로젝트 유형들"),
                                 fieldWithPath("content").type(JsonFieldType.STRING).description("과제 제안 내용"),
-                                fieldWithPath("replied").type(JsonFieldType.BOOLEAN).description("과제 제안 답변 유무")
+                                fieldWithPath("replied").type(JsonFieldType.BOOLEAN).description("과제 제안 답변 유무"),
+                                fieldWithPath("files").type(JsonFieldType.ARRAY).description("파일 목록"),
+                                fieldWithPath("files[].id").type(JsonFieldType.NUMBER).description("파일 ID"),
+                                fieldWithPath("files[].uuid").type(JsonFieldType.STRING).description("파일 UUID"),
+                                fieldWithPath("files[].name").type(JsonFieldType.STRING).description("파일 이름"),
+                                fieldWithPath("files[].mimeType").type(JsonFieldType.STRING).description("파일 MIME 타입"),
+                                fieldWithPath("files[].createdAt").type(JsonFieldType.STRING).description("파일 생성일"),
+                                fieldWithPath("files[].updatedAt").type(JsonFieldType.STRING).description("파일 수정일")
                         )
                 ));
     }
@@ -247,7 +252,8 @@ public class ProposalControllerTest extends AbstractControllerTest {
                                         + "RESEARCH_AND_BUSINESS_FOUNDATION, LAB, STARTUP, CLUB"),
                                 fieldWithPath("email").type(JsonFieldType.STRING).description("과제제안 이메일"),
                                 fieldWithPath("isVisible").type(JsonFieldType.BOOLEAN).description("공개 여부"),
-                                fieldWithPath("isAnonymous").type(JsonFieldType.BOOLEAN).description("익명 여부")
+                                fieldWithPath("isAnonymous").type(JsonFieldType.BOOLEAN).description("익명 여부"),
+                                fieldWithPath("fileIds").type(JsonFieldType.ARRAY).description("파일 id 리스트")
 
                         ),
                         responseFields(
@@ -258,7 +264,13 @@ public class ProposalControllerTest extends AbstractControllerTest {
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("과제 제안 제목"),
                                 fieldWithPath("projectTypes").type(JsonFieldType.ARRAY).description("과제 제안 프로젝트 유형들"),
                                 fieldWithPath("content").type(JsonFieldType.STRING).description("과제 제안 내용"),
-                                fieldWithPath("replied").type(JsonFieldType.BOOLEAN).description("과제 제안 답변 유무")
+                                fieldWithPath("replied").type(JsonFieldType.BOOLEAN).description("과제 제안 답변 유무"),fieldWithPath("files").type(JsonFieldType.ARRAY).description("파일 목록"),
+                                fieldWithPath("files[].id").type(JsonFieldType.NUMBER).description("파일 ID"),
+                                fieldWithPath("files[].uuid").type(JsonFieldType.STRING).description("파일 UUID"),
+                                fieldWithPath("files[].name").type(JsonFieldType.STRING).description("파일 이름"),
+                                fieldWithPath("files[].mimeType").type(JsonFieldType.STRING).description("파일 MIME 타입"),
+                                fieldWithPath("files[].createdAt").type(JsonFieldType.STRING).description("파일 생성일"),
+                                fieldWithPath("files[].updatedAt").type(JsonFieldType.STRING).description("파일 수정일")
                         )
                 ));
     }
@@ -322,8 +334,8 @@ public class ProposalControllerTest extends AbstractControllerTest {
                                 fieldWithPath("projectTypes").type(JsonFieldType.ARRAY).description("과제제안 프로젝트 유형:" + "RESEARCH_AND_BUSINESS_FOUNDATION, LAB, STARTUP, CLUB"),
                                 fieldWithPath("email").type(JsonFieldType.STRING).description("과제제안 이메일"),
                                 fieldWithPath("isVisible").type(JsonFieldType.BOOLEAN).description("공개 여부"),
-                                fieldWithPath("isAnonymous").type(JsonFieldType.BOOLEAN).description("익명 여부")
-
+                                fieldWithPath("isAnonymous").type(JsonFieldType.BOOLEAN).description("익명 여부"),
+                                fieldWithPath("fileIds").type(JsonFieldType.ARRAY).description("파일 id 리스트")
                         ),
                         responseFields(
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("과제 제안 ID"),
@@ -333,7 +345,14 @@ public class ProposalControllerTest extends AbstractControllerTest {
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("과제 제안 제목"),
                                 fieldWithPath("projectTypes").type(JsonFieldType.ARRAY).description("과제 제안 프로젝트 유형들"),
                                 fieldWithPath("content").type(JsonFieldType.STRING).description("과제 제안 내용"),
-                                fieldWithPath("replied").type(JsonFieldType.BOOLEAN).description("과제 제안 답변 유무")
+                                fieldWithPath("replied").type(JsonFieldType.BOOLEAN).description("과제 제안 답변 유무"),
+                                fieldWithPath("files").type(JsonFieldType.ARRAY).description("파일 목록"),
+                                fieldWithPath("files[].id").type(JsonFieldType.NUMBER).description("파일 ID"),
+                                fieldWithPath("files[].uuid").type(JsonFieldType.STRING).description("파일 UUID"),
+                                fieldWithPath("files[].name").type(JsonFieldType.STRING).description("파일 이름"),
+                                fieldWithPath("files[].mimeType").type(JsonFieldType.STRING).description("파일 MIME 타입"),
+                                fieldWithPath("files[].createdAt").type(JsonFieldType.STRING).description("파일 생성일"),
+                                fieldWithPath("files[].updatedAt").type(JsonFieldType.STRING).description("파일 수정일")
                         )
                 ));
     }
