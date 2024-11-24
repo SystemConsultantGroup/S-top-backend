@@ -46,13 +46,16 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
         AccessType[] allowedTypes = Objects.requireNonNull(parameter.getParameterAnnotation(AuthUser.class)).accessType();
         List<AccessType> accessTypeList = Arrays.asList(allowedTypes);
 
-        if(accessTypeList.contains(AccessType.OPTIONAL) && !hasAccessToken(request)) {
+        String accessToken = extractAccessToken(request);
+        final String notLoginAccessToken = "null";
+        if(accessTypeList.contains(AccessType.OPTIONAL) &&
+                (!hasAccessToken(request) || accessToken.equalsIgnoreCase(notLoginAccessToken))
+        ) {
             return null;
         }
 
         String contextPath = request.getRequestURI();
         String refreshToken = extractRefreshToken(request);
-        String accessToken = extractAccessToken(request);
 
         //검증
         if (jwtUtil.isAccessTokenValid(accessToken)) {
