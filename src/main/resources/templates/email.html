@@ -1,11 +1,94 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S-TOP 안내 이메일</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 30px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+        .email-header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px 15px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .email-body {
+            padding: 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+        .email-body h2 {
+            color: #4CAF50;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .email-body p {
+            margin: 10px 0;
+        }
+        .highlight {
+            background-color: #eafaf1;
+            padding: 10px;
+            border-left: 4px solid #4CAF50;
+            margin: 15px 0;
+            font-style: italic;
+        }
+        .email-footer {
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 15px 10px;
+            font-size: 12px;
+            color: #888;
+            border-top: 1px solid #ddd;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 20px 0;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
 <body>
-<div style="margin:100px;">
-    <h1>Today's Overview on NESS</h1>
-    <br>
-    <p th:text="|${date}의 할일 목록입니다.|">오늘의 할일 목록입니다.</p>
+<div class="email-container">
+    <div class="email-header">
+        새로운 제안이 등록되었습니다.
+    </div>
+    <div class="email-body">
+        <h2>Dear {{recipient}},</h2>
+        <p>A new project proposal has been submitted to the system and requires your review.</p>
+        <div class="highlight">
+            Subject: {{subject}}
+        </div>
+        <p>{{body}}</p>
+
+    </div>
+    <div class="email-footer">
+        This is an automated message. Please do not reply.<br>
+        If you have any questions, contact the support team.
+    </div>
 </div>
 </body>
 </html>
