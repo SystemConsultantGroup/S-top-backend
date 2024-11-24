@@ -31,8 +31,14 @@ public class InquiryService {
 
     // 문의 목록 조회
     @Transactional(readOnly = true)
-    public Page<InquiryResponse> getInquiryList(String title, Pageable pageable) {
-        Page<Inquiry> inquiries = inquiryRepository.findInquiries(title, pageable);
+    public Page<InquiryResponse> getInquiryList(String searchTerm, String searchScope, Pageable pageable) {
+
+        // If no searchTerm is provided, set searchScope to null
+        if (searchTerm == null || searchTerm.isEmpty()) {
+            searchScope = null;
+        }
+
+        Page<Inquiry> inquiries = inquiryRepository.findInquiries(searchTerm, searchScope, pageable);
         return inquiries.map(inquiry ->
                 InquiryResponse.of(
                         inquiry.getId(),

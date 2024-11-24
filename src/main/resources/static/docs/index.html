@@ -932,8 +932,8 @@ Host: localhost:8080</code></pre>
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Set-Cookie: refresh-token=refresh_token; Path=/; Max-Age=604800; Expires=Tue, 26 Nov 2024 06:22:25 GMT; Secure; HttpOnly; SameSite=None
-Set-Cookie: access-token=access_token; Path=/; Max-Age=604800; Expires=Tue, 26 Nov 2024 06:22:25 GMT; Secure; SameSite=None
+Set-Cookie: refresh-token=refresh_token; Path=/; Max-Age=604800; Expires=Sun, 1 Dec 2024 11:21:56 GMT; Secure; HttpOnly; SameSite=None
+Set-Cookie: access-token=access_token; Path=/; Max-Age=604800; Expires=Sun, 1 Dec 2024 11:21:56 GMT; Secure; SameSite=None
 Location: https://localhost:3000/login/kakao</code></pre>
 </div>
 </div>
@@ -958,7 +958,7 @@ Location: https://localhost:3000/login/kakao</code></pre>
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /auth/register HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: access_token
-Content-Length: 301
+Content-Length: 289
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -1104,7 +1104,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 90
+Content-Length: 86
 
 {
   "name" : "stop-user",
@@ -1181,7 +1181,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 47
+Content-Length: 45
 
 {
   "accessToken" : "reissued_access_token"
@@ -1284,22 +1284,22 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 464
+Content-Length: 446
 
 [ {
   "id" : 1,
-  "uuid" : "93c1cbe0-8c44-4432-9ac2-906feb256ba9",
+  "uuid" : "76ff1432-a29b-4f98-b7d9-b61104fd55fa",
   "name" : "첨부파일1.png",
   "mimeType" : "image/png",
-  "createdAt" : "2024-11-19T15:22:29.6605669",
-  "updatedAt" : "2024-11-19T15:22:29.6605669"
+  "createdAt" : "2024-11-24T20:21:57.365102",
+  "updatedAt" : "2024-11-24T20:21:57.365108"
 }, {
   "id" : 2,
-  "uuid" : "99547005-27d9-4c62-b6a2-134f9a8d669e",
+  "uuid" : "cd220b84-63fe-43ad-8fd7-273d82df55a6",
   "name" : "첨부파일2.pdf",
   "mimeType" : "application/pdf",
-  "createdAt" : "2024-11-19T15:22:29.6605669",
-  "updatedAt" : "2024-11-19T15:22:29.6605669"
+  "createdAt" : "2024-11-24T20:21:57.365136",
+  "updatedAt" : "2024-11-24T20:21:57.365138"
 } ]</code></pre>
 </div>
 </div>
@@ -1468,7 +1468,7 @@ project_upload_form</code></pre>
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /jobInterviews HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 220
+Content-Length: 213
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -1549,7 +1549,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 329
+Content-Length: 317
 
 {
   "id" : 1,
@@ -1559,8 +1559,8 @@ Content-Length: 329
   "talkerBelonging" : "대담자의 소속",
   "talkerName" : "대담자의 성명",
   "category" : "INTERN",
-  "createdAt" : "2024-11-19T15:22:43.6470123",
-  "updatedAt" : "2024-11-19T15:22:43.6470123"
+  "createdAt" : "2024-11-24T20:21:59.725896",
+  "updatedAt" : "2024-11-24T20:21:59.725899"
 }</code></pre>
 </div>
 </div>
@@ -1712,11 +1712,13 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1255
+Content-Length: 1205
 
 {
   "totalElements" : 2,
   "totalPages" : 1,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
@@ -1727,8 +1729,8 @@ Content-Length: 1255
     "talkerName" : "대담자의 성명1",
     "favorite" : false,
     "category" : "INTERN",
-    "createdAt" : "2024-11-19T15:22:43.500491",
-    "updatedAt" : "2024-11-19T15:22:43.500491"
+    "createdAt" : "2024-11-24T20:21:59.707659",
+    "updatedAt" : "2024-11-24T20:21:59.70766"
   }, {
     "id" : 2,
     "title" : "잡페어 인터뷰의 제목2",
@@ -1738,8 +1740,8 @@ Content-Length: 1255
     "talkerName" : "대담자의 성명2",
     "favorite" : true,
     "category" : "INTERN",
-    "createdAt" : "2024-11-19T15:22:43.500491",
-    "updatedAt" : "2024-11-19T15:22:43.500491"
+    "createdAt" : "2024-11-24T20:21:59.707665",
+    "updatedAt" : "2024-11-24T20:21:59.707665"
   } ],
   "number" : 0,
   "sort" : {
@@ -1748,8 +1750,6 @@ Content-Length: 1255
     "unsorted" : true
   },
   "numberOfElements" : 2,
-  "first" : true,
-  "last" : true,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -1759,8 +1759,8 @@ Content-Length: 1255
       "unsorted" : true
     },
     "offset" : 0,
-    "unpaged" : false,
-    "paged" : true
+    "paged" : true,
+    "unpaged" : false
   },
   "empty" : false
 }</code></pre>
@@ -2018,7 +2018,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 352
+Content-Length: 338
 
 {
   "id" : 1,
@@ -2029,8 +2029,8 @@ Content-Length: 352
   "talkerName" : "대담자의 성명",
   "favorite" : false,
   "category" : "INTERN",
-  "createdAt" : "2024-11-19T15:22:43.5889318",
-  "updatedAt" : "2024-11-19T15:22:43.5889318"
+  "createdAt" : "2024-11-24T20:21:59.71839",
+  "updatedAt" : "2024-11-24T20:21:59.718391"
 }</code></pre>
 </div>
 </div>
@@ -2130,7 +2130,7 @@ Content-Length: 352
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PUT /jobInterviews/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 224
+Content-Length: 217
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -2233,7 +2233,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 325
+Content-Length: 314
 
 {
   "id" : 1,
@@ -2244,7 +2244,7 @@ Content-Length: 325
   "talkerName" : "수정된 대담자 성명",
   "category" : "INTERN",
   "createdAt" : "2021-01-01T12:00:00",
-  "updatedAt" : "2024-11-19T15:22:43.3501083"
+  "updatedAt" : "2024-11-24T20:21:59.687034"
 }</code></pre>
 </div>
 </div>
@@ -2500,7 +2500,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /talks HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 376
+Content-Length: 361
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -2607,7 +2607,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 485
+Content-Length: 465
 
 {
   "id" : 1,
@@ -2625,8 +2625,8 @@ Content-Length: 485
     "answer" : 0,
     "options" : [ "선지1", "선지2" ]
   } ],
-  "createdAt" : "2024-11-19T15:22:47.8125417",
-  "updatedAt" : "2024-11-19T15:22:47.8125417"
+  "createdAt" : "2024-11-24T20:22:00.349932",
+  "updatedAt" : "2024-11-24T20:22:00.349934"
 }</code></pre>
 </div>
 </div>
@@ -2791,11 +2791,13 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1047
+Content-Length: 999
 
 {
   "totalElements" : 1,
   "totalPages" : 1,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
@@ -2814,8 +2816,8 @@ Content-Length: 1047
       "answer" : 0,
       "options" : [ "선지1", "선지2" ]
     } ],
-    "createdAt" : "2024-11-19T15:22:47.8752375",
-    "updatedAt" : "2024-11-19T15:22:47.8752375"
+    "createdAt" : "2024-11-24T20:22:00.362435",
+    "updatedAt" : "2024-11-24T20:22:00.362436"
   } ],
   "number" : 0,
   "sort" : {
@@ -2824,8 +2826,6 @@ Content-Length: 1047
     "unsorted" : true
   },
   "numberOfElements" : 1,
-  "first" : true,
-  "last" : true,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -2835,8 +2835,8 @@ Content-Length: 1047
       "unsorted" : true
     },
     "offset" : 0,
-    "unpaged" : false,
-    "paged" : true
+    "paged" : true,
+    "unpaged" : false
   },
   "empty" : false
 }</code></pre>
@@ -3112,7 +3112,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 507
+Content-Length: 486
 
 {
   "id" : 1,
@@ -3131,8 +3131,8 @@ Content-Length: 507
     "answer" : 0,
     "options" : [ "선지1", "선지2" ]
   } ],
-  "createdAt" : "2024-11-19T15:22:47.7544993",
-  "updatedAt" : "2024-11-19T15:22:47.7544993"
+  "createdAt" : "2024-11-24T20:22:00.317517",
+  "updatedAt" : "2024-11-24T20:22:00.317518"
 }</code></pre>
 </div>
 </div>
@@ -3250,7 +3250,7 @@ Content-Length: 507
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PUT /talks/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 476
+Content-Length: 461
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -3379,7 +3379,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 585
+Content-Length: 565
 
 {
   "id" : 1,
@@ -3397,8 +3397,8 @@ Content-Length: 585
     "answer" : 0,
     "options" : [ "수정한 선지1", "수정한 선지2" ]
   } ],
-  "createdAt" : "2024-11-19T15:22:47.5460119",
-  "updatedAt" : "2024-11-19T15:22:47.5460119"
+  "createdAt" : "2024-11-24T20:22:00.285417",
+  "updatedAt" : "2024-11-24T20:22:00.285419"
 }</code></pre>
 </div>
 </div>
@@ -3595,7 +3595,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 215
+Content-Length: 205
 
 {
   "quiz" : [ {
@@ -3670,7 +3670,7 @@ Content-Length: 215
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /talks/1/quiz HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: access_token
-Content-Length: 52
+Content-Length: 47
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -3747,7 +3747,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 43
+Content-Length: 40
 
 {
   "success" : true,
@@ -3943,7 +3943,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 44
+Content-Length: 41
 
 {
   "success" : false,
@@ -4053,11 +4053,13 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 778
+Content-Length: 739
 
 {
   "totalElements" : 2,
   "totalPages" : 1,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "userId" : 1,
@@ -4079,8 +4081,6 @@ Content-Length: 778
     "unsorted" : true
   },
   "numberOfElements" : 2,
-  "first" : true,
-  "last" : true,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -4090,8 +4090,8 @@ Content-Length: 778
       "unsorted" : true
     },
     "offset" : 0,
-    "unpaged" : false,
-    "paged" : true
+    "paged" : true,
+    "unpaged" : false
   },
   "empty" : false
 }</code></pre>
@@ -4322,18 +4322,15 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/octet-stream;charset=UTF-8
 Content-Disposition: attachment; filename=excel.xlsx
-Content-Length: 2829
+Content-Length: 2821
 
 PK-                      [Content_Types].xml�S�n1��U��&amp;����X8�ql�J?�M��y)1��^�RT�S��xfl%��ڻj���q+G� ���k����~U!\؈�t2�o��[CiDO��*�GEƄ��6f�e�T����ht�t��j4�d��-,UO��A�����S�U0G��^Pft[N�m*7L�˚Uv�0Z�:��q�������E�mk5����[$�M�23Y��A�7�,��&lt;c�(���x֢cƳ�E�GӖ�L��;Yz�h&gt;(�c�b��/�s�Ɲ��`�\s|J6�r��y���௶�j�PK�q,-      �      PK-                      _rels/.rels���j�0�_���8�`�Q��2�m��4[ILb��ږ���.[K
 �($}��v?�I�Q.���uӂ�h���x&gt;=��@��p�H"�~�}�	�n����*"�H�׺؁�����8�Z�^'�#��7m{��O�3���G�u�ܓ�'��y|a�����D�	��l_EYȾ� ���vql3�ML�eh���*���\3�Y0���oJ׏�	:��^��}PK��z��       I      PK-                      docProps/app.xmlM��
-�0D��ro�z�4� �'{����MHV�盓z���T��E�1e�����Ɇ�ѳ����:�No7jH!bb�Y��V��������T�)$o���0M��9ؗGb�7�pe��*~�R�&gt;��Y�EB���nW������ PK6n�!�       �       PK-                      docProps/core.xmlm�]K�0��J�}{�n
-m�(Aq`e�]H�m�� �v�{�:+�wI��&lt;���������r��F����c�K�I�גFcE�!ۺ�	�p�Ez�I�hτ�H�e ^t���"�c�b��!^]��W�"y���K8L��.FrRJ�(�f��*���(�������B}�P�8f�j��F��n���^O_H��f�!(�(`���F�����ّ�ȋuJiJ/�|Ê��ϞK�5?	���՗�������-�%����PK��g      �      PK-                      xl/sharedStrings.xml=�A
-�0 �{��D�i�/��tm�&amp;f7�����0Ì�7mꃕc&amp;���B�y��Zx&gt;���~72��X�I��nx�s�["�5����R7�\���u�\*����M��9��"��~PKh���y       �       PK-  
-   xl/styles.xml���n� ��J}���d���&amp;C%W��J]�9ۨpX@"�O_0N�L:�������n4���ye���UA	`c�®���iKw���aҰ����C^�MF�� �Ik�!��c~p �O&amp;�٦(��
-)/�dj&lt;i�	CE�x�Z�*k�^�or:*i���XmQ(aY�m�P�]�B��S3O��,o�0O����%��[��Ii�;Ćf���ֱ K~��(Z�������}�91�8�/&gt;Z'�nߟ%^jhC48��);�t�51�Jt�NȋcI"���iu��{lI���L����_�8ВfL.�����ƒ����hv���PK����E      �      PK-                      xl/workbook.xmlM���0��&amp;�C�wi1ƨ����z/�@mI�_0��83��d��l�@�;	i"���|m\+�^\w'��v��&gt;���=[xG���Tuh5%~D�$�V�E���P��!F;�Gn�q��[��j1=���F��U�&amp;�3��U2]E3a�K	b���~���T�PK5%���       �       PK-                      xl/_rels/workbook.xml.rels��ͪ1�_�d�tt!"V7�n�� ����LZ�(����r����p����6�JY���U
-����s����;[�E8D&amp;a��h@-
-��$� Xt�im���F�*&amp;�41���̭M��ؒ]����WL�f�}��9anIH���Qs1���KtO��ll���O���X߬�	�{�ŋ����œ�?o'�&gt; PK�(2�       �      PK-        �q,-  �                   [Content_Types].xmlPK-        ��z��   I               v  _rels/.relsPK-        6n�!�   �                �  docProps/app.xmlPK-        ��g  �               s  docProps/core.xmlPK-        h���y   �                �  xl/sharedStrings.xmlPK-        ����E  �
-             �  xl/styles.xmlPK-        5%���   �                  xl/workbook.xmlPK-        �(2�   �               �  xl/_rels/workbook.xml.relsPK      �  �</code></pre>
+�0D�~EȽ��ADҔ���A? ��6�lB�J?ߜ���0���ͯ�)�@��׍H6���V&gt;��$;�SC
+;̢(�ra�g�l�&amp;�e��L!y�%��49��`_���4G���F��J��Wg�GS�b����
+~�PK�|wؑ       �       PK-                      docProps/core.xmlm��J�0F_%依������(��+�w!�b�C����u���%��&amp;_�9聼��55eyA	iUoښ&gt;��%!
+��`��X�i*鸴w�:���@��.]M��C-B���뵈��[pB���,�S��Q�$��b�G���ҽ�a(	8�F���������,�!�5�c&gt;�f.m�����~^&gt;���u����j.=���$�.5�&lt;�.��[ڔE������1^2~r�\���I�u���H�tHvw��&lt;W���PK}�G�      �      PK-                      xl/sharedStrings.xml=�A�  ﾂ��.z0Ɣ�`������,�����q2��o�ԇ���N�E��x5�z&gt;�W���(R�K���^4{�����ŀ�5��y�V����y�m�XV�\�.�j����8� PKp��&amp;x       �       PK-                      xl/styles.xml���n� ��&gt;bop2TQ��P)U�RWb�6*�����ӤS�Nw�s���3ߍ֐���t��(l��������ҝx�!N=@$ɀ��}��3c���ʰr`:i��2��w,�
+�d�T��R#�voc �;c�iE��Û��E&lt;|��4Iɣ����F#��n���B�z�F���y�j3y��yҥ�jt&gt;���2��Lژ�!6��2F�OY��4@M�!���G��������1�t��y��p��"	n����u�����a�ΦDi�9�&amp;#��%I��9��}���cK��T��$?������`J������7���o��f��M|PK�1X@C      �      PK-                      xl/workbook.xmlM���0��&gt;E�wi1ƨ����z/�HmI�_j��qf��)ʧٌ��w�L C��ָ��[u��T�b�a��؊;���8�9��G�)��5�|�:�2&lt;8MuK=b�#�	q�V�u����K��H\)�\�&amp;�t͌��%���?��B��T�PK	��       �       PK-                      xl/_rels/workbook.xml.rels��ͪ1�_�d�tt!"V7�n�� ����LZ�(����r����p����6�JY���U����s����;[�E8D&amp;a��h@-��$� Xt�im���F�*&amp;�41���̭M��ؒ]����WL�f�}��9anIH���Qs1���KtO��ll���O���X߬�	�{�ŋ����œ�?o'�&gt; PK�(2�       �      PK-        �q,-  �                   [Content_Types].xmlPK-        ��z��   I               v  _rels/.relsPK-        �|wؑ   �                �  docProps/app.xmlPK-        }�G�  �               q  docProps/core.xmlPK-        p��&amp;x   �                �  xl/sharedStrings.xmlPK-        �1X@C  �                 xl/styles.xmlPK-        	��   �                  xl/workbook.xmlPK-        �(2�   �               �  xl/_rels/workbook.xml.relsPK      �  �</code></pre>
 </div>
 </div>
 </div>
@@ -4356,7 +4353,7 @@ m�(Aq`e�]H�m�� �v�{�:+�wI��&lt;���������
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /notices HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 126
+Content-Length: 121
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -4423,7 +4420,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 999
+Content-Length: 959
 
 {
   "id" : 1,
@@ -4431,29 +4428,29 @@ Content-Length: 999
   "content" : "공지 사항 내용",
   "hitCount" : 0,
   "fixed" : true,
-  "createdAt" : "2024-11-19T15:22:34.8606778",
-  "updatedAt" : "2024-11-19T15:22:34.8606778",
+  "createdAt" : "2024-11-24T20:21:58.474899",
+  "updatedAt" : "2024-11-24T20:21:58.4749",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:34.8606778",
-    "updatedAt" : "2024-11-19T15:22:34.8606778"
+    "createdAt" : "2024-11-24T20:21:58.474889",
+    "updatedAt" : "2024-11-24T20:21:58.474895"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:34.8606778",
-    "updatedAt" : "2024-11-19T15:22:34.8606778"
+    "createdAt" : "2024-11-24T20:21:58.474896",
+    "updatedAt" : "2024-11-24T20:21:58.474896"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:34.8606778",
-    "updatedAt" : "2024-11-19T15:22:34.8606778"
+    "createdAt" : "2024-11-24T20:21:58.474897",
+    "updatedAt" : "2024-11-24T20:21:58.474898"
   } ]
 }</code></pre>
 </div>
@@ -4588,9 +4585,14 @@ Content-Length: 999
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>terms</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">찾고자 하는 공지 사항 제목</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">검색어 (optional)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>scope</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">검색 범위 (title, content, both) [default: both, searchTerm=null 이면 null로 초기화]</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
@@ -4609,7 +4611,7 @@ Content-Length: 999
 <h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /notices HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /notices?terms=notice&amp;scope=title&amp;page=0&amp;size=10 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Host: localhost:8080</code></pre>
 </div>
@@ -4624,26 +4626,28 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 899
+Content-Length: 839
 
 {
   "totalElements" : 2,
   "totalPages" : 1,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
-    "title" : "공지 사항 1",
+    "title" : "notice 1",
     "hitCount" : 10,
     "fixed" : true,
-    "createdAt" : "2024-11-19T15:22:34.6266992",
-    "updatedAt" : "2024-11-19T15:22:34.6266992"
+    "createdAt" : "2024-11-24T20:21:58.432775",
+    "updatedAt" : "2024-11-24T20:21:58.432777"
   }, {
     "id" : 2,
-    "title" : "공지 사항 2",
+    "title" : "notice 2",
     "hitCount" : 10,
     "fixed" : false,
-    "createdAt" : "2024-11-19T15:22:34.6266992",
-    "updatedAt" : "2024-11-19T15:22:34.6266992"
+    "createdAt" : "2024-11-24T20:21:58.432789",
+    "updatedAt" : "2024-11-24T20:21:58.43279"
   } ],
   "number" : 0,
   "sort" : {
@@ -4652,8 +4656,6 @@ Content-Length: 899
     "unsorted" : true
   },
   "numberOfElements" : 2,
-  "first" : true,
-  "last" : true,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -4663,8 +4665,8 @@ Content-Length: 899
       "unsorted" : true
     },
     "offset" : 0,
-    "unpaged" : false,
-    "paged" : true
+    "paged" : true,
+    "unpaged" : false
   },
   "empty" : false
 }</code></pre>
@@ -4896,7 +4898,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 987
+Content-Length: 948
 
 {
   "id" : 1,
@@ -4904,29 +4906,29 @@ Content-Length: 987
   "content" : "content",
   "hitCount" : 10,
   "fixed" : true,
-  "createdAt" : "2024-11-19T15:22:34.8150949",
-  "updatedAt" : "2024-11-19T15:22:34.8150949",
+  "createdAt" : "2024-11-24T20:21:58.467643",
+  "updatedAt" : "2024-11-24T20:21:58.467644",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:34.8150949",
-    "updatedAt" : "2024-11-19T15:22:34.8150949"
+    "createdAt" : "2024-11-24T20:21:58.467632",
+    "updatedAt" : "2024-11-24T20:21:58.467634"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:34.8150949",
-    "updatedAt" : "2024-11-19T15:22:34.8150949"
+    "createdAt" : "2024-11-24T20:21:58.467639",
+    "updatedAt" : "2024-11-24T20:21:58.46764"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:34.8150949",
-    "updatedAt" : "2024-11-19T15:22:34.8150949"
+    "createdAt" : "2024-11-24T20:21:58.467641",
+    "updatedAt" : "2024-11-24T20:21:58.467642"
   } ]
 }</code></pre>
 </div>
@@ -5073,7 +5075,7 @@ Content-Length: 987
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PUT /notices/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 147
+Content-Length: 142
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -5140,7 +5142,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 989
+Content-Length: 955
 
 {
   "id" : 1,
@@ -5149,28 +5151,28 @@ Content-Length: 989
   "hitCount" : 10,
   "fixed" : false,
   "createdAt" : "2024-01-01T12:00:00",
-  "updatedAt" : "2024-11-19T15:22:34.6974643",
+  "updatedAt" : "2024-11-24T20:21:58.448112",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-19T15:22:34.6974643"
+    "updatedAt" : "2024-11-24T20:21:58.448082"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-19T15:22:34.6974643"
+    "updatedAt" : "2024-11-24T20:21:58.448087"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-19T15:22:34.6974643"
+    "updatedAt" : "2024-11-24T20:21:58.448089"
   } ]
 }</code></pre>
 </div>
@@ -5352,7 +5354,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /eventNotices HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 146
+Content-Length: 141
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -5419,7 +5421,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1019
+Content-Length: 980
 
 {
   "id" : 1,
@@ -5427,29 +5429,29 @@ Content-Length: 1019
   "content" : "이벤트 공지 사항 내용",
   "hitCount" : 0,
   "fixed" : true,
-  "createdAt" : "2024-11-19T15:22:26.3472166",
-  "updatedAt" : "2024-11-19T15:22:26.3472166",
+  "createdAt" : "2024-11-24T20:21:56.383727",
+  "updatedAt" : "2024-11-24T20:21:56.383729",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:26.3472166",
-    "updatedAt" : "2024-11-19T15:22:26.3472166"
+    "createdAt" : "2024-11-24T20:21:56.383713",
+    "updatedAt" : "2024-11-24T20:21:56.383718"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:26.3472166",
-    "updatedAt" : "2024-11-19T15:22:26.3472166"
+    "createdAt" : "2024-11-24T20:21:56.38372",
+    "updatedAt" : "2024-11-24T20:21:56.383722"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:26.3472166",
-    "updatedAt" : "2024-11-19T15:22:26.3472166"
+    "createdAt" : "2024-11-24T20:21:56.383723",
+    "updatedAt" : "2024-11-24T20:21:56.383725"
   } ]
 }</code></pre>
 </div>
@@ -5584,9 +5586,14 @@ Content-Length: 1019
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>terms</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">찾고자 하는 이벤트 공지 사항 제목</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">검색어 (optional)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>scope</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">검색 범위 (title, content, both) [default: both, searchTerm=null 이면 null로 초기화]</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
@@ -5605,7 +5612,7 @@ Content-Length: 1019
 <h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /eventNotices HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /eventNotices?terms=notice&amp;scope=title&amp;page=0&amp;size=10 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Host: localhost:8080</code></pre>
 </div>
@@ -5620,26 +5627,28 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 919
+Content-Length: 852
 
 {
   "totalElements" : 2,
   "totalPages" : 1,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
-    "title" : "이벤트 공지 사항 1",
+    "title" : "event notice 1",
     "hitCount" : 10,
     "fixed" : true,
-    "createdAt" : "2024-11-19T15:22:26.4193293",
-    "updatedAt" : "2024-11-19T15:22:26.4193293"
+    "createdAt" : "2024-11-24T20:21:56.397344",
+    "updatedAt" : "2024-11-24T20:21:56.397348"
   }, {
     "id" : 2,
-    "title" : "이벤트 공지 사항 2",
+    "title" : "event notice 2",
     "hitCount" : 10,
     "fixed" : false,
-    "createdAt" : "2024-11-19T15:22:26.4193293",
-    "updatedAt" : "2024-11-19T15:22:26.4193293"
+    "createdAt" : "2024-11-24T20:21:56.397356",
+    "updatedAt" : "2024-11-24T20:21:56.397358"
   } ],
   "number" : 0,
   "sort" : {
@@ -5648,8 +5657,6 @@ Content-Length: 919
     "unsorted" : true
   },
   "numberOfElements" : 2,
-  "first" : true,
-  "last" : true,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -5659,8 +5666,8 @@ Content-Length: 919
       "unsorted" : true
     },
     "offset" : 0,
-    "unpaged" : false,
-    "paged" : true
+    "paged" : true,
+    "unpaged" : false
   },
   "empty" : false
 }</code></pre>
@@ -5892,7 +5899,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 989
+Content-Length: 958
 
 {
   "id" : 1,
@@ -5900,29 +5907,29 @@ Content-Length: 989
   "content" : "content",
   "hitCount" : 10,
   "fixed" : true,
-  "createdAt" : "2024-11-19T15:22:26.227972",
-  "updatedAt" : "2024-11-19T15:22:26.227972",
+  "createdAt" : "2024-11-24T20:21:56.363397",
+  "updatedAt" : "2024-11-24T20:21:56.363399",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:26.227972",
-    "updatedAt" : "2024-11-19T15:22:26.227972"
+    "createdAt" : "2024-11-24T20:21:56.363294",
+    "updatedAt" : "2024-11-24T20:21:56.363299"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:26.227972",
-    "updatedAt" : "2024-11-19T15:22:26.227972"
+    "createdAt" : "2024-11-24T20:21:56.36339",
+    "updatedAt" : "2024-11-24T20:21:56.363392"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:26.227972",
-    "updatedAt" : "2024-11-19T15:22:26.227972"
+    "createdAt" : "2024-11-24T20:21:56.363394",
+    "updatedAt" : "2024-11-24T20:21:56.363395"
   } ]
 }</code></pre>
 </div>
@@ -6069,7 +6076,7 @@ Content-Length: 989
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PUT /eventNotices/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 167
+Content-Length: 162
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -6136,7 +6143,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1009
+Content-Length: 974
 
 {
   "id" : 1,
@@ -6145,28 +6152,28 @@ Content-Length: 1009
   "hitCount" : 10,
   "fixed" : false,
   "createdAt" : "2024-01-01T12:00:00",
-  "updatedAt" : "2024-11-19T15:22:26.1261877",
+  "updatedAt" : "2024-11-24T20:21:56.339669",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-19T15:22:26.1251854"
+    "updatedAt" : "2024-11-24T20:21:56.339625"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-19T15:22:26.1261877"
+    "updatedAt" : "2024-11-24T20:21:56.339636"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-19T15:22:26.1261877"
+    "updatedAt" : "2024-11-24T20:21:56.33964"
   } ]
 }</code></pre>
 </div>
@@ -6349,13 +6356,13 @@ Vary: Access-Control-Request-Headers</code></pre>
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /eventPeriods HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 89
+Content-Length: 83
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
 {
-  "start" : "2024-11-19T15:22:27.3296176",
-  "end" : "2024-11-29T15:22:27.3296176"
+  "start" : "2024-11-24T20:21:56.76922",
+  "end" : "2024-12-04T20:21:56.769224"
 }</code></pre>
 </div>
 </div>
@@ -6402,15 +6409,15 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 216
+Content-Length: 204
 
 {
   "id" : 1,
   "year" : 2024,
-  "start" : "2024-11-19T15:22:27.3296176",
-  "end" : "2024-11-29T15:22:27.3296176",
-  "createdAt" : "2024-11-19T15:22:27.3296176",
-  "updatedAt" : "2024-11-19T15:22:27.3296176"
+  "start" : "2024-11-24T20:21:56.769228",
+  "end" : "2024-12-04T20:21:56.76923",
+  "createdAt" : "2024-11-24T20:21:56.769232",
+  "updatedAt" : "2024-11-24T20:21:56.769233"
 }</code></pre>
 </div>
 </div>
@@ -6499,15 +6506,15 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 216
+Content-Length: 204
 
 {
   "id" : 1,
   "year" : 2024,
-  "start" : "2024-11-19T15:22:27.2850492",
-  "end" : "2024-11-29T15:22:27.2850492",
-  "createdAt" : "2024-11-19T15:22:27.2850492",
-  "updatedAt" : "2024-11-19T15:22:27.2850492"
+  "start" : "2024-11-24T20:21:56.760227",
+  "end" : "2024-12-04T20:21:56.76023",
+  "createdAt" : "2024-11-24T20:21:56.760233",
+  "updatedAt" : "2024-11-24T20:21:56.760234"
 }</code></pre>
 </div>
 </div>
@@ -6596,22 +6603,22 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 438
+Content-Length: 415
 
 [ {
   "id" : 1,
   "year" : 2024,
-  "start" : "2024-11-19T15:22:27.3867137",
-  "end" : "2024-11-29T15:22:27.3867137",
-  "createdAt" : "2024-11-19T15:22:27.3867137",
-  "updatedAt" : "2024-11-19T15:22:27.3867137"
+  "start" : "2024-11-24T20:21:56.782619",
+  "end" : "2024-12-04T20:21:56.782624",
+  "createdAt" : "2024-11-24T20:21:56.782628",
+  "updatedAt" : "2024-11-24T20:21:56.78263"
 }, {
   "id" : 2,
   "year" : 2025,
-  "start" : "2024-11-19T15:22:27.3867137",
-  "end" : "2024-11-29T15:22:27.3867137",
-  "createdAt" : "2024-11-19T15:22:27.3867137",
-  "updatedAt" : "2024-11-19T15:22:27.3867137"
+  "start" : "2024-11-24T20:21:56.782631",
+  "end" : "2024-12-04T20:21:56.782633",
+  "createdAt" : "2024-11-24T20:21:56.782635",
+  "updatedAt" : "2024-11-24T20:21:56.782637"
 } ]</code></pre>
 </div>
 </div>
@@ -6687,13 +6694,13 @@ Content-Length: 438
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PUT /eventPeriod HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 89
+Content-Length: 84
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
 {
-  "start" : "2024-11-19T15:22:27.2169363",
-  "end" : "2024-11-29T15:22:27.2169363"
+  "start" : "2024-11-24T20:21:56.732951",
+  "end" : "2024-12-04T20:21:56.732977"
 }</code></pre>
 </div>
 </div>
@@ -6740,15 +6747,15 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 216
+Content-Length: 203
 
 {
   "id" : 1,
   "year" : 2024,
-  "start" : "2024-11-19T15:22:27.2169363",
-  "end" : "2024-11-29T15:22:27.2169363",
-  "createdAt" : "2024-11-19T15:22:27.2169363",
-  "updatedAt" : "2024-11-19T15:22:27.2169363"
+  "start" : "2024-11-24T20:21:56.733203",
+  "end" : "2024-12-04T20:21:56.73321",
+  "createdAt" : "2024-11-24T20:21:56.733216",
+  "updatedAt" : "2024-11-24T20:21:56.73322"
 }</code></pre>
 </div>
 </div>
@@ -6830,7 +6837,7 @@ Content-Length: 216
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /galleries HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 101
+Content-Length: 96
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -6897,7 +6904,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 929
+Content-Length: 890
 
 {
   "id" : 1,
@@ -6905,29 +6912,29 @@ Content-Length: 929
   "year" : 2024,
   "month" : 4,
   "hitCount" : 1,
-  "createdAt" : "2024-11-19T15:22:31.1031748",
-  "updatedAt" : "2024-11-19T15:22:31.1031748",
+  "createdAt" : "2024-11-24T20:21:57.702609",
+  "updatedAt" : "2024-11-24T20:21:57.70261",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "사진1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:31.1031748",
-    "updatedAt" : "2024-11-19T15:22:31.1031748"
+    "createdAt" : "2024-11-24T20:21:57.702593",
+    "updatedAt" : "2024-11-24T20:21:57.702597"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "사진2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:31.1031748",
-    "updatedAt" : "2024-11-19T15:22:31.1031748"
+    "createdAt" : "2024-11-24T20:21:57.702602",
+    "updatedAt" : "2024-11-24T20:21:57.702604"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "사진3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:31.1031748",
-    "updatedAt" : "2024-11-19T15:22:31.1031748"
+    "createdAt" : "2024-11-24T20:21:57.702605",
+    "updatedAt" : "2024-11-24T20:21:57.702607"
   } ]
 }</code></pre>
 </div>
@@ -7103,11 +7110,13 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1289
+Content-Length: 1235
 
 {
   "totalElements" : 1,
   "totalPages" : 1,
+  "first" : true,
+  "last" : true,
   "size" : 1,
   "content" : [ {
     "id" : 1,
@@ -7115,29 +7124,29 @@ Content-Length: 1289
     "year" : 2024,
     "month" : 4,
     "hitCount" : 0,
-    "createdAt" : "2024-11-19T15:22:30.9431053",
-    "updatedAt" : "2024-11-19T15:22:30.9431053",
+    "createdAt" : "2024-11-24T20:21:57.677104",
+    "updatedAt" : "2024-11-24T20:21:57.677105",
     "files" : [ {
       "id" : 1,
       "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
       "name" : "사진1.jpg",
       "mimeType" : "image/jpeg",
-      "createdAt" : "2024-11-19T15:22:30.9431053",
-      "updatedAt" : "2024-11-19T15:22:30.9431053"
+      "createdAt" : "2024-11-24T20:21:57.677085",
+      "updatedAt" : "2024-11-24T20:21:57.677089"
     }, {
       "id" : 2,
       "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
       "name" : "사진2.jpg",
       "mimeType" : "image/jpeg",
-      "createdAt" : "2024-11-19T15:22:30.9431053",
-      "updatedAt" : "2024-11-19T15:22:30.9431053"
+      "createdAt" : "2024-11-24T20:21:57.677092",
+      "updatedAt" : "2024-11-24T20:21:57.677095"
     }, {
       "id" : 3,
       "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
       "name" : "사진3.jpg",
       "mimeType" : "image/jpeg",
-      "createdAt" : "2024-11-19T15:22:30.9431053",
-      "updatedAt" : "2024-11-19T15:22:30.9431053"
+      "createdAt" : "2024-11-24T20:21:57.677097",
+      "updatedAt" : "2024-11-24T20:21:57.677099"
     } ]
   } ],
   "number" : 0,
@@ -7147,8 +7156,6 @@ Content-Length: 1289
     "unsorted" : true
   },
   "numberOfElements" : 1,
-  "first" : true,
-  "last" : true,
   "pageable" : "INSTANCE",
   "empty" : false
 }</code></pre>
@@ -7380,7 +7387,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 929
+Content-Length: 891
 
 {
   "id" : 1,
@@ -7388,29 +7395,29 @@ Content-Length: 929
   "year" : 2024,
   "month" : 4,
   "hitCount" : 1,
-  "createdAt" : "2024-11-19T15:22:31.0302695",
-  "updatedAt" : "2024-11-19T15:22:31.0302695",
+  "createdAt" : "2024-11-24T20:21:57.692859",
+  "updatedAt" : "2024-11-24T20:21:57.692861",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "사진1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:31.0292633",
-    "updatedAt" : "2024-11-19T15:22:31.0292633"
+    "createdAt" : "2024-11-24T20:21:57.692848",
+    "updatedAt" : "2024-11-24T20:21:57.692851"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "사진2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:31.0302695",
-    "updatedAt" : "2024-11-19T15:22:31.0302695"
+    "createdAt" : "2024-11-24T20:21:57.692854",
+    "updatedAt" : "2024-11-24T20:21:57.692855"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "사진3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:31.0302695",
-    "updatedAt" : "2024-11-19T15:22:31.0302695"
+    "createdAt" : "2024-11-24T20:21:57.692857",
+    "updatedAt" : "2024-11-24T20:21:57.692858"
   } ]
 }</code></pre>
 </div>
@@ -7575,7 +7582,7 @@ Cookie: refresh-token=refresh_token</code></pre>
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PUT /galleries/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 98
+Content-Length: 93
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -7664,7 +7671,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 926
+Content-Length: 887
 
 {
   "id" : 1,
@@ -7672,29 +7679,29 @@ Content-Length: 926
   "year" : 2024,
   "month" : 5,
   "hitCount" : 1,
-  "createdAt" : "2024-11-19T15:22:30.7510164",
-  "updatedAt" : "2024-11-19T15:22:30.7510164",
+  "createdAt" : "2024-11-24T20:21:57.645558",
+  "updatedAt" : "2024-11-24T20:21:57.64556",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "사진1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:30.7510164",
-    "updatedAt" : "2024-11-19T15:22:30.7510164"
+    "createdAt" : "2024-11-24T20:21:57.645492",
+    "updatedAt" : "2024-11-24T20:21:57.645499"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "사진2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:30.7510164",
-    "updatedAt" : "2024-11-19T15:22:30.7510164"
+    "createdAt" : "2024-11-24T20:21:57.645504",
+    "updatedAt" : "2024-11-24T20:21:57.645505"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "사진3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:30.7510164",
-    "updatedAt" : "2024-11-19T15:22:30.7510164"
+    "createdAt" : "2024-11-24T20:21:57.645508",
+    "updatedAt" : "2024-11-24T20:21:57.645509"
   } ]
 }</code></pre>
 </div>
@@ -7867,11 +7874,13 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 1235
+Content-Length: 1178
 
 {
   "totalElements" : 3,
   "totalPages" : 1,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
@@ -7879,24 +7888,24 @@ Content-Length: 1235
     "division" : "배민",
     "position" : null,
     "userType" : "INACTIVE_COMPANY",
-    "createdAt" : "2024-11-19T15:22:39.2981008",
-    "updatedAt" : "2024-11-19T15:22:39.2981008"
+    "createdAt" : "2024-11-24T20:21:59.107242",
+    "updatedAt" : "2024-11-24T20:21:59.107243"
   }, {
     "id" : 2,
     "name" : "김교수",
     "division" : "솦융대",
     "position" : "교수",
     "userType" : "INACTIVE_PROFESSOR",
-    "createdAt" : "2024-11-19T15:22:39.2981008",
-    "updatedAt" : "2024-11-19T15:22:39.2981008"
+    "createdAt" : "2024-11-24T20:21:59.107256",
+    "updatedAt" : "2024-11-24T20:21:59.107257"
   }, {
     "id" : 3,
     "name" : "박교수",
     "division" : "정통대",
     "position" : "교수",
     "userType" : "INACTIVE_PROFESSOR",
-    "createdAt" : "2024-11-19T15:22:39.2981008",
-    "updatedAt" : "2024-11-19T15:22:39.2981008"
+    "createdAt" : "2024-11-24T20:21:59.107259",
+    "updatedAt" : "2024-11-24T20:21:59.107259"
   } ],
   "number" : 0,
   "sort" : {
@@ -7905,8 +7914,6 @@ Content-Length: 1235
     "unsorted" : true
   },
   "numberOfElements" : 3,
-  "first" : true,
-  "last" : true,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -7916,8 +7923,8 @@ Content-Length: 1235
       "unsorted" : true
     },
     "offset" : 0,
-    "unpaged" : false,
-    "paged" : true
+    "paged" : true,
+    "unpaged" : false
   },
   "empty" : false
 }</code></pre>
@@ -8156,7 +8163,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 282
+Content-Length: 271
 
 {
   "id" : 1,
@@ -8166,8 +8173,8 @@ Content-Length: 282
   "division" : "배민",
   "position" : "CEO",
   "userType" : "INACTIVE_COMPANY",
-  "createdAt" : "2024-11-19T15:22:39.580926",
-  "updatedAt" : "2024-11-19T15:22:39.580926"
+  "createdAt" : "2024-11-24T20:21:59.131719",
+  "updatedAt" : "2024-11-24T20:21:59.13172"
 }</code></pre>
 </div>
 </div>
@@ -8296,7 +8303,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 275
+Content-Length: 262
 
 {
   "id" : 1,
@@ -8306,8 +8313,8 @@ Content-Length: 275
   "division" : "배민",
   "position" : "CEO",
   "userType" : "COMPANY",
-  "createdAt" : "2024-11-19T15:22:39.5095509",
-  "updatedAt" : "2024-11-19T15:22:39.5095509"
+  "createdAt" : "2024-11-24T20:21:59.12562",
+  "updatedAt" : "2024-11-24T20:21:59.125621"
 }</code></pre>
 </div>
 </div>
@@ -8458,7 +8465,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /projects/1/inquiry HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: company_access_token
-Content-Length: 105
+Content-Length: 102
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -8511,7 +8518,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 317
+Content-Length: 305
 
 {
   "id" : 1,
@@ -8521,8 +8528,8 @@ Content-Length: 317
   "title" : "문의 사항 제목",
   "content" : "문의 사항 내용",
   "replied" : false,
-  "createdAt" : "2024-11-19T15:22:32.5296142",
-  "updatedAt" : "2024-11-19T15:22:32.5296142"
+  "createdAt" : "2024-11-24T20:21:58.006299",
+  "updatedAt" : "2024-11-24T20:21:58.006302"
 }</code></pre>
 </div>
 </div>
@@ -8614,7 +8621,7 @@ Content-Length: 317
 <h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /inquiries HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /inquiries?terms=inquiry&amp;scope=title&amp;page=0&amp;size=10 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: company_access_token
 Host: localhost:8080
@@ -8639,9 +8646,14 @@ Cookie: refresh-token=refresh_token</code></pre>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>terms</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">찾고자 하는 공지 사항 제목</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">검색어</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>scope</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">검색 범위 (title, content, both, author) [default: both, searchTerm=null 이면 null로 초기화]</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
@@ -8665,22 +8677,24 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 862
+Content-Length: 833
 
 {
   "totalElements" : 2,
   "totalPages" : 1,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
-    "authorName" : "프로젝트 문의 사항 제목",
+    "authorName" : "프로젝트 inquiry (문의) 제목 1",
     "title" : "프로젝트 문의 사항 내용",
-    "createdAt" : "2024-11-19T15:22:32.3920816"
+    "createdAt" : "2024-11-24T20:21:57.977108"
   }, {
     "id" : 2,
-    "authorName" : "프로젝트 문의 사항 제목",
+    "authorName" : "프로젝트 inquiry (문의) 제목 2",
     "title" : "프로젝트 문의 사항 내용",
-    "createdAt" : "2024-11-19T15:22:32.3920816"
+    "createdAt" : "2024-11-24T20:21:57.977138"
   } ],
   "number" : 0,
   "sort" : {
@@ -8689,8 +8703,6 @@ Content-Length: 862
     "unsorted" : true
   },
   "numberOfElements" : 2,
-  "first" : true,
-  "last" : true,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -8700,8 +8712,8 @@ Content-Length: 862
       "unsorted" : true
     },
     "offset" : 0,
-    "unpaged" : false,
-    "paged" : true
+    "paged" : true,
+    "unpaged" : false
   },
   "empty" : false
 }</code></pre>
@@ -8918,7 +8930,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 317
+Content-Length: 305
 
 {
   "id" : 1,
@@ -8928,8 +8940,8 @@ Content-Length: 317
   "title" : "문의 사항 제목",
   "content" : "문의 사항 내용",
   "replied" : false,
-  "createdAt" : "2024-11-19T15:22:32.4745261",
-  "updatedAt" : "2024-11-19T15:22:32.4745261"
+  "createdAt" : "2024-11-24T20:21:57.994408",
+  "updatedAt" : "2024-11-24T20:21:57.994411"
 }</code></pre>
 </div>
 </div>
@@ -9024,7 +9036,7 @@ Content-Length: 317
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PUT /inquiries/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: company_access_token
-Content-Length: 125
+Content-Length: 122
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -9099,7 +9111,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 337
+Content-Length: 325
 
 {
   "id" : 1,
@@ -9109,8 +9121,8 @@ Content-Length: 337
   "title" : "수정된 문의 사항 제목",
   "content" : "수정된 문의 사항 내용",
   "replied" : false,
-  "createdAt" : "2024-11-19T15:22:32.6501995",
-  "updatedAt" : "2024-11-19T15:22:32.6501995"
+  "createdAt" : "2024-11-24T20:21:58.027986",
+  "updatedAt" : "2024-11-24T20:21:58.027989"
 }</code></pre>
 </div>
 </div>
@@ -9258,7 +9270,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /inquiries/1/reply HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 79
+Content-Length: 76
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -9333,7 +9345,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 92
+Content-Length: 88
 
 {
   "id" : 1,
@@ -9433,7 +9445,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 92
+Content-Length: 88
 
 {
   "id" : 1,
@@ -9497,7 +9509,7 @@ Content-Length: 92
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PUT /inquiries/1/reply HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 99
+Content-Length: 96
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -9572,7 +9584,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 112
+Content-Length: 108
 
 {
   "id" : 1,
@@ -9708,11 +9720,13 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1828
+Content-Length: 1759
 
 {
   "totalElements" : 2,
   "totalPages" : 1,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
@@ -9764,8 +9778,6 @@ Content-Length: 1828
     "unsorted" : true
   },
   "numberOfElements" : 2,
-  "first" : true,
-  "last" : true,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -9775,8 +9787,8 @@ Content-Length: 1828
       "unsorted" : true
     },
     "offset" : 0,
-    "unpaged" : false,
-    "paged" : true
+    "paged" : true,
+    "unpaged" : false
   },
   "empty" : false
 }</code></pre>
@@ -10106,7 +10118,7 @@ Content-Length: 1828
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /projects HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 557
+Content-Length: 535
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -10145,7 +10157,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1540
+Content-Length: 1479
 
 {
   "id" : 1,
@@ -10179,24 +10191,24 @@ Content-Length: 1540
     "userName" : "유저 이름",
     "isAnonymous" : true,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-19T15:22:36.8727225",
-    "updatedAt" : "2024-11-19T15:22:36.8727225"
+    "createdAt" : "2024-11-24T20:21:58.769107",
+    "updatedAt" : "2024-11-24T20:21:58.769108"
   }, {
     "id" : 2,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-19T15:22:36.8727225",
-    "updatedAt" : "2024-11-19T15:22:36.8727225"
+    "createdAt" : "2024-11-24T20:21:58.769109",
+    "updatedAt" : "2024-11-24T20:21:58.76911"
   }, {
     "id" : 3,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-19T15:22:36.8727225",
-    "updatedAt" : "2024-11-19T15:22:36.8727225"
+    "createdAt" : "2024-11-24T20:21:58.76911",
+    "updatedAt" : "2024-11-24T20:21:58.769111"
   } ],
   "url" : "프로젝트 URL",
   "description" : "프로젝트 설명"
@@ -10554,12 +10566,12 @@ Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
 Content-Disposition: form-data; name=thumbnails; filename=thumbnails.json
 Content-Type: application/json
 
-[{"id":1,"uuid":"099ee9f5-7028-4230-bbeb-59854a2462cc","name":"썸네일1.png","mimeType":"image/png","createdAt":"2024-11-19T15:22:37.9534527","updatedAt":"2024-11-19T15:22:37.9534527"},{"id":1,"uuid":"75b2b11a-5648-4296-be50-d3665dc9ede4","name":"썸네일2.png","mimeType":"image/png","createdAt":"2024-11-19T15:22:37.9534527","updatedAt":"2024-11-19T15:22:37.9534527"}]
+[{"id":1,"uuid":"87d060e0-4d67-4554-9b41-2ffdba2370d8","name":"썸네일1.png","mimeType":"image/png","createdAt":"2024-11-24T20:21:58.940615","updatedAt":"2024-11-24T20:21:58.940616"},{"id":1,"uuid":"03c8d1ca-97f8-4434-b936-1b18677fd9ce","name":"썸네일2.png","mimeType":"image/png","createdAt":"2024-11-24T20:21:58.940649","updatedAt":"2024-11-24T20:21:58.94065"}]
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=posters; filename=thumbnails.json
 Content-Type: application/json
 
-[{"id":1,"uuid":"5ece1858-c541-4075-8099-5c360accafab","name":"포스터1.png","mimeType":"image/png","createdAt":"2024-11-19T15:22:37.9534527","updatedAt":"2024-11-19T15:22:37.9534527"},{"id":1,"uuid":"ee152b69-effc-4e8c-9b38-9c8459e7ff52","name":"포스터2.png","mimeType":"image/png","createdAt":"2024-11-19T15:22:37.9534527","updatedAt":"2024-11-19T15:22:37.9534527"}]
+[{"id":1,"uuid":"c427a576-a4de-41cf-a637-23a52be498e5","name":"포스터1.png","mimeType":"image/png","createdAt":"2024-11-24T20:21:58.940657","updatedAt":"2024-11-24T20:21:58.940658"},{"id":1,"uuid":"dc9f9d40-74ff-4c3d-9327-e8e4b9e03833","name":"포스터2.png","mimeType":"image/png","createdAt":"2024-11-24T20:21:58.940679","updatedAt":"2024-11-24T20:21:58.94068"}]
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
 </div>
 </div>
@@ -10602,7 +10614,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 26
+Content-Length: 24
 
 {
   "successCount" : 2
@@ -10665,7 +10677,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1540
+Content-Length: 1481
 
 {
   "id" : 1,
@@ -10699,24 +10711,24 @@ Content-Length: 1540
     "userName" : "유저 이름",
     "isAnonymous" : true,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-19T15:22:36.6653757",
-    "updatedAt" : "2024-11-19T15:22:36.6653757"
+    "createdAt" : "2024-11-24T20:21:58.743016",
+    "updatedAt" : "2024-11-24T20:21:58.743018"
   }, {
     "id" : 2,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-19T15:22:36.6653757",
-    "updatedAt" : "2024-11-19T15:22:36.6653757"
+    "createdAt" : "2024-11-24T20:21:58.743021",
+    "updatedAt" : "2024-11-24T20:21:58.743021"
   }, {
     "id" : 3,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-19T15:22:36.6653757",
-    "updatedAt" : "2024-11-19T15:22:36.6653757"
+    "createdAt" : "2024-11-24T20:21:58.743022",
+    "updatedAt" : "2024-11-24T20:21:58.743022"
   } ],
   "url" : "프로젝트 URL",
   "description" : "프로젝트 설명"
@@ -10979,7 +10991,7 @@ Content-Length: 1540
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PUT /projects/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 552
+Content-Length: 530
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -11018,7 +11030,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1536
+Content-Length: 1477
 
 {
   "id" : 1,
@@ -11052,24 +11064,24 @@ Content-Length: 1536
     "userName" : "유저 이름",
     "isAnonymous" : true,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-19T15:22:35.8996673",
-    "updatedAt" : "2024-11-19T15:22:35.8996673"
+    "createdAt" : "2024-11-24T20:21:58.628203",
+    "updatedAt" : "2024-11-24T20:21:58.628205"
   }, {
     "id" : 2,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-19T15:22:35.8996673",
-    "updatedAt" : "2024-11-19T15:22:35.8996673"
+    "createdAt" : "2024-11-24T20:21:58.628208",
+    "updatedAt" : "2024-11-24T20:21:58.628209"
   }, {
     "id" : 3,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-19T15:22:35.8996673",
-    "updatedAt" : "2024-11-19T15:22:35.8996673"
+    "createdAt" : "2024-11-24T20:21:58.628211",
+    "updatedAt" : "2024-11-24T20:21:58.628211"
   } ],
   "url" : "프로젝트 URL",
   "description" : "프로젝트 설명"
@@ -11697,7 +11709,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /projects/1/comment HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: all_access_token
-Content-Length: 60
+Content-Length: 57
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -11717,7 +11729,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 222
+Content-Length: 212
 
 {
   "id" : 1,
@@ -11725,8 +11737,8 @@ Content-Length: 222
   "userName" : "유저 이름",
   "isAnonymous" : true,
   "content" : "댓글 내용",
-  "createdAt" : "2024-11-19T15:22:36.5762487",
-  "updatedAt" : "2024-11-19T15:22:36.5762487"
+  "createdAt" : "2024-11-24T20:21:58.732042",
+  "updatedAt" : "2024-11-24T20:21:58.732044"
 }</code></pre>
 </div>
 </div>
@@ -11933,11 +11945,13 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1828
+Content-Length: 1759
 
 {
   "totalElements" : 2,
   "totalPages" : 1,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
@@ -11989,8 +12003,6 @@ Content-Length: 1828
     "unsorted" : true
   },
   "numberOfElements" : 2,
-  "first" : true,
-  "last" : true,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -12000,8 +12012,8 @@ Content-Length: 1828
       "unsorted" : true
     },
     "offset" : 0,
-    "unpaged" : false,
-    "paged" : true
+    "paged" : true,
+    "unpaged" : false
   },
   "empty" : false
 }</code></pre>
@@ -12407,7 +12419,7 @@ Content-Length: 1828
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /aihub/models HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 206
+Content-Length: 199
 Host: localhost:8080
 
 {
@@ -12430,11 +12442,13 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1270
+Content-Length: 1221
 
 {
   "totalElements" : 2,
   "totalPages" : 1,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "title" : "title",
@@ -12466,8 +12480,6 @@ Content-Length: 1270
     "unsorted" : true
   },
   "numberOfElements" : 2,
-  "first" : true,
-  "last" : true,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -12477,8 +12489,8 @@ Content-Length: 1270
       "unsorted" : true
     },
     "offset" : 0,
-    "unpaged" : false,
-    "paged" : true
+    "paged" : true,
+    "unpaged" : false
   },
   "empty" : false
 }</code></pre>
@@ -12785,7 +12797,7 @@ Content-Length: 1270
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /aihub/datasets HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 204
+Content-Length: 197
 Host: localhost:8080
 
 {
@@ -12808,11 +12820,13 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1266
+Content-Length: 1217
 
 {
   "totalElements" : 2,
   "totalPages" : 1,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "title" : "title",
@@ -12844,8 +12858,6 @@ Content-Length: 1266
     "unsorted" : true
   },
   "numberOfElements" : 2,
-  "first" : true,
-  "last" : true,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -12855,8 +12867,8 @@ Content-Length: 1266
       "unsorted" : true
     },
     "offset" : 0,
-    "unpaged" : false,
-    "paged" : true
+    "paged" : true,
+    "unpaged" : false
   },
   "empty" : false
 }</code></pre>
@@ -13169,7 +13181,7 @@ Content-Length: 1266
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /jobInfos HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 205
+Content-Length: 198
 Host: localhost:8080
 
 {
@@ -13192,11 +13204,13 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1348
+Content-Length: 1295
 
 {
   "totalElements" : 2,
   "totalPages" : 1,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "company" : "기업명 1",
@@ -13232,8 +13246,6 @@ Content-Length: 1348
     "unsorted" : true
   },
   "numberOfElements" : 2,
-  "first" : true,
-  "last" : true,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -13243,8 +13255,8 @@ Content-Length: 1348
       "unsorted" : true
     },
     "offset" : 0,
-    "unpaged" : false,
-    "paged" : true
+    "paged" : true,
+    "unpaged" : false
   },
   "empty" : false
 }</code></pre>
@@ -13497,7 +13509,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 337
+Content-Length: 323
 
 {
   "id" : 1,
@@ -13509,8 +13521,8 @@ Content-Length: 337
   "position" : null,
   "studentNumber" : "2000123456",
   "departmentName" : "학과",
-  "createdAt" : "2024-11-19T15:22:41.8644006",
-  "updatedAt" : "2024-11-19T15:22:41.8644006"
+  "createdAt" : "2024-11-24T20:21:59.444932",
+  "updatedAt" : "2024-11-24T20:21:59.444934"
 }</code></pre>
 </div>
 </div>
@@ -13616,7 +13628,7 @@ Content-Length: 337
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PUT /users/me HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: user_access_token
-Content-Length: 203
+Content-Length: 195
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -13704,7 +13716,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 337
+Content-Length: 323
 
 {
   "id" : 1,
@@ -13716,8 +13728,8 @@ Content-Length: 337
   "position" : null,
   "studentNumber" : "2000123456",
   "departmentName" : "학과",
-  "createdAt" : "2024-11-19T15:22:42.0783323",
-  "updatedAt" : "2024-11-19T15:22:42.0783323"
+  "createdAt" : "2024-11-24T20:21:59.474187",
+  "updatedAt" : "2024-11-24T20:21:59.474188"
 }</code></pre>
 </div>
 </div>
@@ -13865,7 +13877,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 1246
+Content-Length: 1204
 
 [ {
   "id" : 1,
@@ -14075,7 +14087,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 1026
+Content-Length: 982
 
 [ {
   "id" : 1,
@@ -14094,8 +14106,8 @@ Content-Length: 1026
     "answer" : 0,
     "options" : [ "선지1", "선지2" ]
   } ],
-  "createdAt" : "2024-11-19T15:22:41.7524031",
-  "updatedAt" : "2024-11-19T15:22:41.7524031"
+  "createdAt" : "2024-11-24T20:21:59.427093",
+  "updatedAt" : "2024-11-24T20:21:59.427095"
 }, {
   "id" : 2,
   "title" : "제목2",
@@ -14113,8 +14125,8 @@ Content-Length: 1026
     "answer" : 0,
     "options" : [ "선지1", "선지2" ]
   } ],
-  "createdAt" : "2024-11-19T15:22:41.7524031",
-  "updatedAt" : "2024-11-19T15:22:41.7524031"
+  "createdAt" : "2024-11-24T20:21:59.4271",
+  "updatedAt" : "2024-11-24T20:21:59.427101"
 } ]</code></pre>
 </div>
 </div>
@@ -14245,7 +14257,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 717
+Content-Length: 691
 
 [ {
   "id" : 1,
@@ -14256,8 +14268,8 @@ Content-Length: 717
   "talkerName" : "대담자의 성명1",
   "favorite" : false,
   "category" : "INTERN",
-  "createdAt" : "2024-11-19T15:22:41.6917669",
-  "updatedAt" : "2024-11-19T15:22:41.6917669"
+  "createdAt" : "2024-11-24T20:21:59.418237",
+  "updatedAt" : "2024-11-24T20:21:59.418239"
 }, {
   "id" : 2,
   "title" : "잡페어 인터뷰의 제목2",
@@ -14267,8 +14279,8 @@ Content-Length: 717
   "talkerName" : "대담자의 성명2",
   "favorite" : true,
   "category" : "INTERN",
-  "createdAt" : "2024-11-19T15:22:41.6917669",
-  "updatedAt" : "2024-11-19T15:22:41.6917669"
+  "createdAt" : "2024-11-24T20:21:59.418249",
+  "updatedAt" : "2024-11-24T20:21:59.418249"
 } ]</code></pre>
 </div>
 </div>
@@ -14381,19 +14393,19 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 271
+Content-Length: 256
 
 [ {
   "id" : 1,
   "title" : "Title 1",
   "projectId" : 1,
-  "createdDate" : "2024-11-19T15:22:41.8208397",
+  "createdDate" : "2024-11-24T20:21:59.43894",
   "hasReply" : true
 }, {
   "id" : 2,
   "title" : "Title 2",
   "projectId" : 2,
-  "createdDate" : "2024-11-19T15:22:41.8208397",
+  "createdDate" : "2024-11-24T20:21:59.438948",
   "hasReply" : false
 } ]</code></pre>
 </div>
@@ -14477,17 +14489,17 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 231
+Content-Length: 219
 
 [ {
   "id" : 1,
   "title" : "Title 1",
-  "createdDate" : "2024-11-19T15:22:41.9120201",
+  "createdDate" : "2024-11-24T20:21:59.454177",
   "hasReply" : true
 }, {
   "id" : 2,
   "title" : "Title 2",
-  "createdDate" : "2024-11-19T15:22:41.9120201",
+  "createdDate" : "2024-11-24T20:21:59.454184",
   "hasReply" : false
 } ]</code></pre>
 </div>
@@ -14570,7 +14582,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 98
+Content-Length: 92
 
 [ {
   "id" : 1,
@@ -14624,7 +14636,7 @@ Content-Length: 98
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-11-19 14:49:44 +0900
+Last updated 2024-11-21 20:45:59 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

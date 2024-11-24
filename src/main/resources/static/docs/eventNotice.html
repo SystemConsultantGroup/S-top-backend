@@ -454,7 +454,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /eventNotices HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 146
+Content-Length: 141
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -521,7 +521,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1019
+Content-Length: 980
 
 {
   "id" : 1,
@@ -529,29 +529,29 @@ Content-Length: 1019
   "content" : "이벤트 공지 사항 내용",
   "hitCount" : 0,
   "fixed" : true,
-  "createdAt" : "2024-11-19T15:22:26.3472166",
-  "updatedAt" : "2024-11-19T15:22:26.3472166",
+  "createdAt" : "2024-11-24T20:21:56.383727",
+  "updatedAt" : "2024-11-24T20:21:56.383729",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:26.3472166",
-    "updatedAt" : "2024-11-19T15:22:26.3472166"
+    "createdAt" : "2024-11-24T20:21:56.383713",
+    "updatedAt" : "2024-11-24T20:21:56.383718"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:26.3472166",
-    "updatedAt" : "2024-11-19T15:22:26.3472166"
+    "createdAt" : "2024-11-24T20:21:56.38372",
+    "updatedAt" : "2024-11-24T20:21:56.383722"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:26.3472166",
-    "updatedAt" : "2024-11-19T15:22:26.3472166"
+    "createdAt" : "2024-11-24T20:21:56.383723",
+    "updatedAt" : "2024-11-24T20:21:56.383725"
   } ]
 }</code></pre>
 </div>
@@ -686,9 +686,14 @@ Content-Length: 1019
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>terms</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">찾고자 하는 이벤트 공지 사항 제목</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">검색어 (optional)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>scope</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">검색 범위 (title, content, both) [default: both, searchTerm=null 이면 null로 초기화]</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
@@ -707,7 +712,7 @@ Content-Length: 1019
 <h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /eventNotices HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /eventNotices?terms=notice&amp;scope=title&amp;page=0&amp;size=10 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Host: localhost:8080</code></pre>
 </div>
@@ -722,26 +727,28 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 919
+Content-Length: 852
 
 {
   "totalElements" : 2,
   "totalPages" : 1,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
-    "title" : "이벤트 공지 사항 1",
+    "title" : "event notice 1",
     "hitCount" : 10,
     "fixed" : true,
-    "createdAt" : "2024-11-19T15:22:26.4193293",
-    "updatedAt" : "2024-11-19T15:22:26.4193293"
+    "createdAt" : "2024-11-24T20:21:56.397344",
+    "updatedAt" : "2024-11-24T20:21:56.397348"
   }, {
     "id" : 2,
-    "title" : "이벤트 공지 사항 2",
+    "title" : "event notice 2",
     "hitCount" : 10,
     "fixed" : false,
-    "createdAt" : "2024-11-19T15:22:26.4193293",
-    "updatedAt" : "2024-11-19T15:22:26.4193293"
+    "createdAt" : "2024-11-24T20:21:56.397356",
+    "updatedAt" : "2024-11-24T20:21:56.397358"
   } ],
   "number" : 0,
   "sort" : {
@@ -750,8 +757,6 @@ Content-Length: 919
     "unsorted" : true
   },
   "numberOfElements" : 2,
-  "first" : true,
-  "last" : true,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -761,8 +766,8 @@ Content-Length: 919
       "unsorted" : true
     },
     "offset" : 0,
-    "unpaged" : false,
-    "paged" : true
+    "paged" : true,
+    "unpaged" : false
   },
   "empty" : false
 }</code></pre>
@@ -994,7 +999,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 989
+Content-Length: 958
 
 {
   "id" : 1,
@@ -1002,29 +1007,29 @@ Content-Length: 989
   "content" : "content",
   "hitCount" : 10,
   "fixed" : true,
-  "createdAt" : "2024-11-19T15:22:26.227972",
-  "updatedAt" : "2024-11-19T15:22:26.227972",
+  "createdAt" : "2024-11-24T20:21:56.363397",
+  "updatedAt" : "2024-11-24T20:21:56.363399",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:26.227972",
-    "updatedAt" : "2024-11-19T15:22:26.227972"
+    "createdAt" : "2024-11-24T20:21:56.363294",
+    "updatedAt" : "2024-11-24T20:21:56.363299"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:26.227972",
-    "updatedAt" : "2024-11-19T15:22:26.227972"
+    "createdAt" : "2024-11-24T20:21:56.36339",
+    "updatedAt" : "2024-11-24T20:21:56.363392"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-19T15:22:26.227972",
-    "updatedAt" : "2024-11-19T15:22:26.227972"
+    "createdAt" : "2024-11-24T20:21:56.363394",
+    "updatedAt" : "2024-11-24T20:21:56.363395"
   } ]
 }</code></pre>
 </div>
@@ -1171,7 +1176,7 @@ Content-Length: 989
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /eventNotices/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 167
+Content-Length: 162
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -1238,7 +1243,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1009
+Content-Length: 974
 
 {
   "id" : 1,
@@ -1247,28 +1252,28 @@ Content-Length: 1009
   "hitCount" : 10,
   "fixed" : false,
   "createdAt" : "2024-01-01T12:00:00",
-  "updatedAt" : "2024-11-19T15:22:26.1261877",
+  "updatedAt" : "2024-11-24T20:21:56.339669",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-19T15:22:26.1251854"
+    "updatedAt" : "2024-11-24T20:21:56.339625"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-19T15:22:26.1261877"
+    "updatedAt" : "2024-11-24T20:21:56.339636"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-19T15:22:26.1261877"
+    "updatedAt" : "2024-11-24T20:21:56.33964"
   } ]
 }</code></pre>
 </div>
@@ -1440,7 +1445,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-11-19 10:10:59 +0900
+Last updated 2024-10-28 21:44:55 +0900
 </div>
 </div>
 </body>

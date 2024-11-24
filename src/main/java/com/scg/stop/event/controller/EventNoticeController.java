@@ -36,9 +36,16 @@ public class EventNoticeController {
     // Get a list of eventNotices
     @GetMapping
     public ResponseEntity<Page<EventNoticeListElementResponse>> getEventNoticeList(
-            @RequestParam(value = "title", required = false) String title,
+            @RequestParam(value = "terms", required = false) String searchTerm,
+            @RequestParam(value = "scope", defaultValue = "both") String searchScope,
             @PageableDefault(page = 0, size = 10, sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable) {
-        Page<EventNoticeListElementResponse> eventNoticeList = eventNoticeService.getEventNoticeList(title, pageable);
+
+        // Enforce that searchScope is ignored if searchTerm is null
+        if (searchTerm == null || searchTerm.isEmpty()) {
+            searchScope = null; // Ignore search scope
+        }
+
+        Page<EventNoticeListElementResponse> eventNoticeList = eventNoticeService.getEventNoticeList(searchTerm, searchScope, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(eventNoticeList);
     }
 
