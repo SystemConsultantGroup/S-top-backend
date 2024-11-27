@@ -472,8 +472,10 @@ Content-Type: application/json;charset=UTF-8
 Content-Length: 1828
 
 {
-  "totalPages" : 1,
   "totalElements" : 2,
+  "totalPages" : 1,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
@@ -524,9 +526,6 @@ Content-Length: 1828
     "sorted" : false,
     "unsorted" : true
   },
-  "numberOfElements" : 2,
-  "first" : true,
-  "last" : true,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -536,9 +535,10 @@ Content-Length: 1828
       "unsorted" : true
     },
     "offset" : 0,
-    "unpaged" : false,
-    "paged" : true
+    "paged" : true,
+    "unpaged" : false
   },
+  "numberOfElements" : 2,
   "empty" : false
 }</code></pre>
 </div>
@@ -940,24 +940,24 @@ Content-Length: 1540
     "userName" : "유저 이름",
     "isAnonymous" : true,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-24T19:59:41.1737562",
-    "updatedAt" : "2024-11-24T19:59:41.1737562"
+    "createdAt" : "2024-11-28T00:14:27.0168641",
+    "updatedAt" : "2024-11-28T00:14:27.0168641"
   }, {
     "id" : 2,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-24T19:59:41.1737562",
-    "updatedAt" : "2024-11-24T19:59:41.1737562"
+    "createdAt" : "2024-11-28T00:14:27.0168641",
+    "updatedAt" : "2024-11-28T00:14:27.0168641"
   }, {
     "id" : 3,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-24T19:59:41.1737562",
-    "updatedAt" : "2024-11-24T19:59:41.1737562"
+    "createdAt" : "2024-11-28T00:14:27.0168641",
+    "updatedAt" : "2024-11-28T00:14:27.0168641"
   } ],
   "url" : "프로젝트 URL",
   "description" : "프로젝트 설명"
@@ -1315,12 +1315,12 @@ Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
 Content-Disposition: form-data; name=thumbnails; filename=thumbnails.json
 Content-Type: application/json
 
-[{"id":1,"uuid":"b11cea8c-399f-4481-8c29-80b26580f6b0","name":"썸네일1.png","mimeType":"image/png","createdAt":"2024-11-24T19:59:41.6741127","updatedAt":"2024-11-24T19:59:41.6741127"},{"id":1,"uuid":"c823fbdc-4982-457f-8986-9dcd4c553f12","name":"썸네일2.png","mimeType":"image/png","createdAt":"2024-11-24T19:59:41.6741127","updatedAt":"2024-11-24T19:59:41.6741127"}]
+[{"id":1,"uuid":"50475f00-4661-4219-ba8a-6c234894e4cb","name":"썸네일1.png","mimeType":"image/png","createdAt":"2024-11-28T00:14:27.5760837","updatedAt":"2024-11-28T00:14:27.5760837"},{"id":1,"uuid":"b0b1a60c-0230-4a9e-a9e8-b52e48562d96","name":"썸네일2.png","mimeType":"image/png","createdAt":"2024-11-28T00:14:27.5760837","updatedAt":"2024-11-28T00:14:27.5760837"}]
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=posters; filename=thumbnails.json
 Content-Type: application/json
 
-[{"id":1,"uuid":"51c9e601-5602-4efe-bb51-5123f32223e6","name":"포스터1.png","mimeType":"image/png","createdAt":"2024-11-24T19:59:41.6751191","updatedAt":"2024-11-24T19:59:41.6751191"},{"id":1,"uuid":"1e22bce9-e35a-43ca-8a7c-6269403f66f2","name":"포스터2.png","mimeType":"image/png","createdAt":"2024-11-24T19:59:41.6751191","updatedAt":"2024-11-24T19:59:41.6751191"}]
+[{"id":1,"uuid":"9f11953e-4a5c-4883-a36f-7cb6ef162565","name":"포스터1.png","mimeType":"image/png","createdAt":"2024-11-28T00:14:27.5760837","updatedAt":"2024-11-28T00:14:27.5760837"},{"id":1,"uuid":"b1c60768-f774-4892-ba99-6a4ca1771c9f","name":"포스터2.png","mimeType":"image/png","createdAt":"2024-11-28T00:14:27.5760837","updatedAt":"2024-11-28T00:14:27.5760837"}]
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
 </div>
 </div>
@@ -1426,7 +1426,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1540
+Content-Length: 1534
 
 {
   "id" : 1,
@@ -1460,24 +1460,24 @@ Content-Length: 1540
     "userName" : "유저 이름",
     "isAnonymous" : true,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-24T19:59:41.0597344",
-    "updatedAt" : "2024-11-24T19:59:41.0597344"
+    "createdAt" : "2024-11-28T00:14:26.863727",
+    "updatedAt" : "2024-11-28T00:14:26.863727"
   }, {
     "id" : 2,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-24T19:59:41.0597344",
-    "updatedAt" : "2024-11-24T19:59:41.0597344"
+    "createdAt" : "2024-11-28T00:14:26.863727",
+    "updatedAt" : "2024-11-28T00:14:26.863727"
   }, {
     "id" : 3,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-24T19:59:41.0597344",
-    "updatedAt" : "2024-11-24T19:59:41.0597344"
+    "createdAt" : "2024-11-28T00:14:26.863727",
+    "updatedAt" : "2024-11-28T00:14:26.863727"
   } ],
   "url" : "프로젝트 URL",
   "description" : "프로젝트 설명"
@@ -1813,24 +1813,24 @@ Content-Length: 1536
     "userName" : "유저 이름",
     "isAnonymous" : true,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-24T19:59:40.7227467",
-    "updatedAt" : "2024-11-24T19:59:40.7227467"
+    "createdAt" : "2024-11-28T00:14:26.5257953",
+    "updatedAt" : "2024-11-28T00:14:26.5257953"
   }, {
     "id" : 2,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-24T19:59:40.7227467",
-    "updatedAt" : "2024-11-24T19:59:40.7227467"
+    "createdAt" : "2024-11-28T00:14:26.5257953",
+    "updatedAt" : "2024-11-28T00:14:26.5257953"
   }, {
     "id" : 3,
     "projectId" : 1,
     "userName" : "유저 이름",
     "isAnonymous" : false,
     "content" : "댓글 내용",
-    "createdAt" : "2024-11-24T19:59:40.7227467",
-    "updatedAt" : "2024-11-24T19:59:40.7227467"
+    "createdAt" : "2024-11-28T00:14:26.5257953",
+    "updatedAt" : "2024-11-28T00:14:26.5257953"
   } ],
   "url" : "프로젝트 URL",
   "description" : "프로젝트 설명"
@@ -2486,8 +2486,8 @@ Content-Length: 222
   "userName" : "유저 이름",
   "isAnonymous" : true,
   "content" : "댓글 내용",
-  "createdAt" : "2024-11-24T19:59:41.0198023",
-  "updatedAt" : "2024-11-24T19:59:41.0198023"
+  "createdAt" : "2024-11-28T00:14:26.8222077",
+  "updatedAt" : "2024-11-28T00:14:26.8222077"
 }</code></pre>
 </div>
 </div>
@@ -2697,8 +2697,10 @@ Content-Type: application/json;charset=UTF-8
 Content-Length: 1828
 
 {
-  "totalPages" : 1,
   "totalElements" : 2,
+  "totalPages" : 1,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
@@ -2749,9 +2751,6 @@ Content-Length: 1828
     "sorted" : false,
     "unsorted" : true
   },
-  "numberOfElements" : 2,
-  "first" : true,
-  "last" : true,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -2761,9 +2760,10 @@ Content-Length: 1828
       "unsorted" : true
     },
     "offset" : 0,
-    "unpaged" : false,
-    "paged" : true
+    "paged" : true,
+    "unpaged" : false
   },
+  "numberOfElements" : 2,
   "empty" : false
 }</code></pre>
 </div>
