@@ -51,7 +51,7 @@ public class ProposalService {
 
     @Transactional(readOnly = true)
     public ProposalDetailResponse getProposalDetail(Long proposalId, User requestUser) {
-        Proposal proposal = proposalRepository.findById(proposalId)
+        Proposal proposal = proposalRepository.findByIdWithFiles(proposalId)
                 .orElseThrow(()-> new BadRequestException(ExceptionCode.NOT_FOUND_PROPOSAL));
         if (!proposal.isAuthorized(requestUser)) throw new BadRequestException(ExceptionCode.NOT_AUTHORIZED);
         return ProposalDetailResponse.of(

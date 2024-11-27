@@ -2,6 +2,7 @@ package com.scg.stop.proposal.repository;
 
 import com.scg.stop.proposal.domain.Proposal;
 import com.scg.stop.proposal.domain.response.ProposalResponse;
+import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +15,6 @@ public interface ProposalRepository extends JpaRepository<Proposal, Long>, Propo
     @Query("SELECT p FROM Proposal p WHERE :title IS NULL OR p.title LIKE %:title%")
     Page<Proposal> findProposals(@Param("title") String title, Pageable pageable);
 
+    @Query("SELECT p from Proposal p LEFT JOIN fetch p.files WHERE p.id = :id")
+    Optional<Proposal> findByIdWithFiles(@Param("id") Long id);
 }
