@@ -455,7 +455,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /talks HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 376
+Content-Length: 361
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -562,7 +562,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 485
+Content-Length: 465
 
 {
   "id" : 1,
@@ -580,8 +580,8 @@ Content-Length: 485
     "answer" : 0,
     "options" : [ "선지1", "선지2" ]
   } ],
-  "createdAt" : "2024-11-19T15:22:47.8125417",
-  "updatedAt" : "2024-11-19T15:22:47.8125417"
+  "createdAt" : "2024-11-28T19:49:22.817542",
+  "updatedAt" : "2024-11-28T19:49:22.817543"
 }</code></pre>
 </div>
 </div>
@@ -746,11 +746,13 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1047
+Content-Length: 999
 
 {
-  "totalElements" : 1,
   "totalPages" : 1,
+  "totalElements" : 1,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
@@ -769,8 +771,8 @@ Content-Length: 1047
       "answer" : 0,
       "options" : [ "선지1", "선지2" ]
     } ],
-    "createdAt" : "2024-11-19T15:22:47.8752375",
-    "updatedAt" : "2024-11-19T15:22:47.8752375"
+    "createdAt" : "2024-11-28T19:49:22.824681",
+    "updatedAt" : "2024-11-28T19:49:22.824682"
   } ],
   "number" : 0,
   "sort" : {
@@ -779,8 +781,6 @@ Content-Length: 1047
     "unsorted" : true
   },
   "numberOfElements" : 1,
-  "first" : true,
-  "last" : true,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -790,8 +790,8 @@ Content-Length: 1047
       "unsorted" : true
     },
     "offset" : 0,
-    "unpaged" : false,
-    "paged" : true
+    "paged" : true,
+    "unpaged" : false
   },
   "empty" : false
 }</code></pre>
@@ -1067,7 +1067,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 507
+Content-Length: 486
 
 {
   "id" : 1,
@@ -1086,8 +1086,8 @@ Content-Length: 507
     "answer" : 0,
     "options" : [ "선지1", "선지2" ]
   } ],
-  "createdAt" : "2024-11-19T15:22:47.7544993",
-  "updatedAt" : "2024-11-19T15:22:47.7544993"
+  "createdAt" : "2024-11-28T19:49:22.809931",
+  "updatedAt" : "2024-11-28T19:49:22.809933"
 }</code></pre>
 </div>
 </div>
@@ -1205,7 +1205,7 @@ Content-Length: 507
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /talks/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 476
+Content-Length: 461
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -1334,7 +1334,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 585
+Content-Length: 565
 
 {
   "id" : 1,
@@ -1352,8 +1352,8 @@ Content-Length: 585
     "answer" : 0,
     "options" : [ "수정한 선지1", "수정한 선지2" ]
   } ],
-  "createdAt" : "2024-11-19T15:22:47.5460119",
-  "updatedAt" : "2024-11-19T15:22:47.5460119"
+  "createdAt" : "2024-11-28T19:49:22.777287",
+  "updatedAt" : "2024-11-28T19:49:22.777288"
 }</code></pre>
 </div>
 </div>
@@ -1550,7 +1550,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 215
+Content-Length: 205
 
 {
   "quiz" : [ {
@@ -1625,7 +1625,7 @@ Content-Length: 215
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /talks/1/quiz HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: access_token
-Content-Length: 52
+Content-Length: 47
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -1702,7 +1702,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 43
+Content-Length: 40
 
 {
   "success" : true,
@@ -1898,7 +1898,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 44
+Content-Length: 41
 
 {
   "success" : false,
@@ -1949,7 +1949,7 @@ Content-Length: 44
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-11-19 10:10:59 +0900
+Last updated 2024-10-29 22:56:22 +0900
 </div>
 </div>
 </body>

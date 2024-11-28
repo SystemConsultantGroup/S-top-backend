@@ -497,11 +497,13 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 1235
+Content-Length: 1178
 
 {
-  "totalElements" : 3,
   "totalPages" : 1,
+  "totalElements" : 3,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
@@ -509,24 +511,24 @@ Content-Length: 1235
     "division" : "배민",
     "position" : null,
     "userType" : "INACTIVE_COMPANY",
-    "createdAt" : "2024-11-19T15:22:39.2981008",
-    "updatedAt" : "2024-11-19T15:22:39.2981008"
+    "createdAt" : "2024-11-28T19:49:21.620883",
+    "updatedAt" : "2024-11-28T19:49:21.620885"
   }, {
     "id" : 2,
     "name" : "김교수",
     "division" : "솦융대",
     "position" : "교수",
     "userType" : "INACTIVE_PROFESSOR",
-    "createdAt" : "2024-11-19T15:22:39.2981008",
-    "updatedAt" : "2024-11-19T15:22:39.2981008"
+    "createdAt" : "2024-11-28T19:49:21.620894",
+    "updatedAt" : "2024-11-28T19:49:21.620895"
   }, {
     "id" : 3,
     "name" : "박교수",
     "division" : "정통대",
     "position" : "교수",
     "userType" : "INACTIVE_PROFESSOR",
-    "createdAt" : "2024-11-19T15:22:39.2981008",
-    "updatedAt" : "2024-11-19T15:22:39.2981008"
+    "createdAt" : "2024-11-28T19:49:21.620897",
+    "updatedAt" : "2024-11-28T19:49:21.620897"
   } ],
   "number" : 0,
   "sort" : {
@@ -535,8 +537,6 @@ Content-Length: 1235
     "unsorted" : true
   },
   "numberOfElements" : 3,
-  "first" : true,
-  "last" : true,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -546,8 +546,8 @@ Content-Length: 1235
       "unsorted" : true
     },
     "offset" : 0,
-    "unpaged" : false,
-    "paged" : true
+    "paged" : true,
+    "unpaged" : false
   },
   "empty" : false
 }</code></pre>
@@ -786,7 +786,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 282
+Content-Length: 272
 
 {
   "id" : 1,
@@ -796,8 +796,8 @@ Content-Length: 282
   "division" : "배민",
   "position" : "CEO",
   "userType" : "INACTIVE_COMPANY",
-  "createdAt" : "2024-11-19T15:22:39.580926",
-  "updatedAt" : "2024-11-19T15:22:39.580926"
+  "createdAt" : "2024-11-28T19:49:21.643274",
+  "updatedAt" : "2024-11-28T19:49:21.643275"
 }</code></pre>
 </div>
 </div>
@@ -926,7 +926,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 275
+Content-Length: 262
 
 {
   "id" : 1,
@@ -936,8 +936,8 @@ Content-Length: 275
   "division" : "배민",
   "position" : "CEO",
   "userType" : "COMPANY",
-  "createdAt" : "2024-11-19T15:22:39.5095509",
-  "updatedAt" : "2024-11-19T15:22:39.5095509"
+  "createdAt" : "2024-11-28T19:49:21.637588",
+  "updatedAt" : "2024-11-28T19:49:21.63759"
 }</code></pre>
 </div>
 </div>
@@ -1077,7 +1077,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-11-19 10:10:59 +0900
+Last updated 2024-10-28 21:44:55 +0900
 </div>
 </div>
 </body>

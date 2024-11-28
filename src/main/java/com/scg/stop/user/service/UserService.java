@@ -1,27 +1,29 @@
 package com.scg.stop.user.service;
 
+import com.scg.stop.global.exception.BadRequestException;
+import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.project.domain.Inquiry;
 import com.scg.stop.project.domain.Project;
 import com.scg.stop.project.dto.response.ProjectResponse;
 import com.scg.stop.project.repository.FavoriteProjectRepository;
 import com.scg.stop.project.repository.InquiryRepository;
-import com.scg.stop.domain.proposal.domain.Proposal;
-import com.scg.stop.domain.proposal.repository.ProposalRepository;
-import com.scg.stop.video.domain.JobInterview;
-import com.scg.stop.video.domain.Talk;
-import com.scg.stop.video.dto.response.JobInterviewUserResponse;
-import com.scg.stop.video.dto.response.TalkUserResponse;
-import com.scg.stop.video.repository.FavoriteVideoRepository;
-import com.scg.stop.global.exception.BadRequestException;
-import com.scg.stop.global.exception.ExceptionCode;
-import com.scg.stop.user.domain.*;
+import com.scg.stop.proposal.domain.Proposal;
+import com.scg.stop.proposal.repository.ProposalRepository;
+import com.scg.stop.user.domain.Department;
+import com.scg.stop.user.domain.Student;
+import com.scg.stop.user.domain.User;
+import com.scg.stop.user.domain.UserType;
 import com.scg.stop.user.dto.request.UserUpdateRequest;
-import com.scg.stop.user.dto.response.FavoriteResponse;
 import com.scg.stop.user.dto.response.UserInquiryResponse;
 import com.scg.stop.user.dto.response.UserProposalResponse;
 import com.scg.stop.user.dto.response.UserResponse;
 import com.scg.stop.user.repository.DepartmentRepository;
 import com.scg.stop.user.repository.UserRepository;
+import com.scg.stop.video.domain.JobInterview;
+import com.scg.stop.video.domain.Talk;
+import com.scg.stop.video.dto.response.JobInterviewUserResponse;
+import com.scg.stop.video.dto.response.TalkUserResponse;
+import com.scg.stop.video.repository.FavoriteVideoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -92,10 +94,9 @@ public class UserService {
 
             user.getStudentInfo().updateStudentNumber(request.getStudentNumber());
             user.getStudentInfo().updateDepartment(department);
-        }
-        else if (Arrays.asList(UserType.INACTIVE_PROFESSOR, UserType.COMPANY, UserType.INACTIVE_COMPANY, UserType.PROFESSOR).contains(user.getUserType())) {
+        } else if (Arrays.asList(UserType.INACTIVE_PROFESSOR, UserType.COMPANY, UserType.INACTIVE_COMPANY, UserType.PROFESSOR).contains(user.getUserType())) {
             if (!isNull(request.getDivision()) && isBlank(request.getDivision()) ||
-                !isNull(request.getPosition()) && isBlank(request.getPosition())) {
+                    !isNull(request.getPosition()) && isBlank(request.getPosition())) {
 
                 throw new BadRequestException(ExceptionCode.DIVISION_OR_POSITION_REQUIRED);
             }
