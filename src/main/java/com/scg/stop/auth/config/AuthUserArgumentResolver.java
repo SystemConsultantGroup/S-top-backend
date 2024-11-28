@@ -46,13 +46,14 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
         AccessType[] allowedTypes = Objects.requireNonNull(parameter.getParameterAnnotation(AuthUser.class)).accessType();
         List<AccessType> accessTypeList = Arrays.asList(allowedTypes);
 
-        if(accessTypeList.contains(AccessType.OPTIONAL) && !hasAccessToken(request)) {
+        if(accessTypeList.contains(AccessType.OPTIONAL) && !hasAccessToken(request))
+        {
             return null;
         }
 
         String contextPath = request.getRequestURI();
-        String refreshToken = extractRefreshToken(request);
         String accessToken = extractAccessToken(request);
+        String refreshToken = extractRefreshToken(request);
 
         //검증
         if (jwtUtil.isAccessTokenValid(accessToken)) {
@@ -129,7 +130,8 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
 
     private boolean hasAccessToken(HttpServletRequest request) {
         final String BEARER = "Bearer ";
+        final String BEARER_NULL = "Bearer null";
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        return authHeader != null && authHeader.startsWith(BEARER);
+        return authHeader != null && authHeader.startsWith(BEARER) && !authHeader.equalsIgnoreCase(BEARER_NULL);
     }
 }

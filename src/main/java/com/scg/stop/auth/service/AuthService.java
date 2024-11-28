@@ -43,7 +43,7 @@ public class AuthService {
 
         User user = findOrCreateUser(userInfo.getSocialLoginId());
 
-        UserToken userToken = jwtUtil.createLoginToken(user.getId().toString());
+        UserToken userToken = jwtUtil.createLoginToken(user.getId().toString(), user);
         RefreshToken refreshToken = new RefreshToken(userToken.getRefreshToken(), user.getId());
         refreshTokenRepository.save(refreshToken);
         return userToken;
@@ -65,12 +65,14 @@ public class AuthService {
                     user
                     , department);
             studentRepository.save(student);
+            user.updateStudentInfo(student);
         }
         else if (Arrays.asList(UserType.INACTIVE_PROFESSOR, UserType.INACTIVE_COMPANY)
                 .contains(registerRequest.getUserType())) {
             Application application = new Application(registerRequest.getDivision(), registerRequest.getPosition(),
                     user);
             applicationRepository.save(application);
+            user.updateApplication(application);
         }
         user.register(registerRequest.getName(),
                 registerRequest.getEmail(),
@@ -104,7 +106,9 @@ public class AuthService {
         if (jwtUtil.isAccessTokenExpired(accessToken)) {
             RefreshToken foundRefreshToken = refreshTokenRepository.findById(refreshToken)
                     .orElseThrow(() -> new InvalidJwtException(ExceptionCode.INVALID_REFRESH_TOKEN));
-            return jwtUtil.reissueAccessToken(foundRefreshToken.getUserId().toString());
+            User user = userRepository.findById(foundRefreshToken.getUserId())
+                    .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_USER_ID));
+            return jwtUtil.reissueAccessToken(foundRefreshToken.getUserId().toString(), user);
         }
         throw new InvalidJwtException(ExceptionCode.FAILED_TO_VALIDATE_TOKEN);
     }
