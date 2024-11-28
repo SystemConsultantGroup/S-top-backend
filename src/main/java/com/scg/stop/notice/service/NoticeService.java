@@ -46,23 +46,29 @@ public class NoticeService {
     /**
      * Get a list of notices with sorting
      *
-     * @param title    Title of the notice (optional)
+     * @param searchTerm Search term to filter notices (optional)
+     * @param searchScope Search scope to filter notices (optional)
      * @param pageable Pageable containing sorting information
      * @return List of notices
      */
     @Transactional(readOnly = true)
-    public Page<NoticeListElementResponse> getNoticeList(String title, Pageable pageable) {
+    public Page<NoticeListElementResponse> getNoticeList(String searchTerm, String searchScope, Pageable pageable) {
+
+        // If no searchTerm is provided, set searchScope to null
+        if (searchTerm == null || searchTerm.isEmpty()) {
+            searchScope = null;
+        }
 
         // Retrieve the sorting from the pageable
         Sort sort = pageable.getSort();
 
-        // Find fixed notices with title and sorting
-        List<NoticeListElementResponse> fixedNotices = noticeRepository.findFixedNotices(title, sort);
+        // Find fixed notices based on the search criteria
+        List<NoticeListElementResponse> fixedNotices = noticeRepository.findFixedNotices(searchTerm, searchScope, sort);
 
-        // Find non-fixed notices with title and sorting
+        // Find non-fixed notices based on the search criteria
         int nonFixedNoticesSize = pageable.getPageSize() - fixedNotices.size();
         Pageable adjustedPageable = PageRequest.of(pageable.getPageNumber(), Math.max(nonFixedNoticesSize, 0), sort);
-        Page<NoticeListElementResponse> nonFixedNotices = noticeRepository.findNonFixedNotices(title, adjustedPageable);
+        Page<NoticeListElementResponse> nonFixedNotices = noticeRepository.findNonFixedNotices(searchTerm, searchScope, adjustedPageable);
 
         // Combine fixed and non-fixed notices
         List<NoticeListElementResponse> combinedNotices = new ArrayList<>();

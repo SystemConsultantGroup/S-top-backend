@@ -521,7 +521,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 978
+Content-Length: 980
 
 {
   "id" : 1,
@@ -529,29 +529,29 @@ Content-Length: 978
   "content" : "이벤트 공지 사항 내용",
   "hitCount" : 0,
   "fixed" : true,
-  "createdAt" : "2024-11-28T19:20:40.161014",
-  "updatedAt" : "2024-11-28T19:20:40.161016",
+  "createdAt" : "2024-11-28T19:49:19.013422",
+  "updatedAt" : "2024-11-28T19:49:19.013423",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-28T19:20:40.160992",
-    "updatedAt" : "2024-11-28T19:20:40.161"
+    "createdAt" : "2024-11-28T19:49:19.013406",
+    "updatedAt" : "2024-11-28T19:49:19.013412"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-28T19:20:40.161004",
-    "updatedAt" : "2024-11-28T19:20:40.161007"
+    "createdAt" : "2024-11-28T19:49:19.013414",
+    "updatedAt" : "2024-11-28T19:49:19.013416"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-28T19:20:40.161009",
-    "updatedAt" : "2024-11-28T19:20:40.161011"
+    "createdAt" : "2024-11-28T19:49:19.013418",
+    "updatedAt" : "2024-11-28T19:49:19.01342"
   } ]
 }</code></pre>
 </div>
@@ -686,9 +686,14 @@ Content-Length: 978
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>terms</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">찾고자 하는 이벤트 공지 사항 제목</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">검색어 (optional)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>scope</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">검색 범위 (title, content, both) [default: both, searchTerm=null 이면 null로 초기화]</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
@@ -707,7 +712,7 @@ Content-Length: 978
 <h4 id="_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /eventNotices HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /eventNotices?terms=notice&amp;scope=title&amp;page=0&amp;size=10 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Host: localhost:8080</code></pre>
 </div>
@@ -722,26 +727,28 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 874
+Content-Length: 852
 
 {
   "totalPages" : 1,
   "totalElements" : 2,
+  "first" : true,
+  "last" : true,
   "size" : 10,
   "content" : [ {
     "id" : 1,
-    "title" : "이벤트 공지 사항 1",
+    "title" : "event notice 1",
     "hitCount" : 10,
     "fixed" : true,
-    "createdAt" : "2024-11-28T19:20:40.209067",
-    "updatedAt" : "2024-11-28T19:20:40.209076"
+    "createdAt" : "2024-11-28T19:49:19.026853",
+    "updatedAt" : "2024-11-28T19:49:19.026858"
   }, {
     "id" : 2,
-    "title" : "이벤트 공지 사항 2",
+    "title" : "event notice 2",
     "hitCount" : 10,
     "fixed" : false,
-    "createdAt" : "2024-11-28T19:20:40.209104",
-    "updatedAt" : "2024-11-28T19:20:40.209106"
+    "createdAt" : "2024-11-28T19:49:19.026866",
+    "updatedAt" : "2024-11-28T19:49:19.026867"
   } ],
   "number" : 0,
   "sort" : {
@@ -762,8 +769,6 @@ Content-Length: 874
     "paged" : true,
     "unpaged" : false
   },
-  "first" : true,
-  "last" : true,
   "empty" : false
 }</code></pre>
 </div>
@@ -1002,29 +1007,29 @@ Content-Length: 958
   "content" : "content",
   "hitCount" : 10,
   "fixed" : true,
-  "createdAt" : "2024-11-28T19:20:40.098713",
-  "updatedAt" : "2024-11-28T19:20:40.098715",
+  "createdAt" : "2024-11-28T19:49:18.99268",
+  "updatedAt" : "2024-11-28T19:49:18.992682",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-28T19:20:40.098689",
-    "updatedAt" : "2024-11-28T19:20:40.098699"
+    "createdAt" : "2024-11-28T19:49:18.992663",
+    "updatedAt" : "2024-11-28T19:49:18.992668"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-28T19:20:40.098703",
-    "updatedAt" : "2024-11-28T19:20:40.098706"
+    "createdAt" : "2024-11-28T19:49:18.992671",
+    "updatedAt" : "2024-11-28T19:49:18.992673"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2024-11-28T19:20:40.098708",
-    "updatedAt" : "2024-11-28T19:20:40.09871"
+    "createdAt" : "2024-11-28T19:49:18.992674",
+    "updatedAt" : "2024-11-28T19:49:18.992677"
   } ]
 }</code></pre>
 </div>
@@ -1247,28 +1252,28 @@ Content-Length: 975
   "hitCount" : 10,
   "fixed" : false,
   "createdAt" : "2024-01-01T12:00:00",
-  "updatedAt" : "2024-11-28T19:20:39.998576",
+  "updatedAt" : "2024-11-28T19:49:18.969893",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "예시 첨부 파일 1.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-28T19:20:39.998495"
+    "updatedAt" : "2024-11-28T19:49:18.969851"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "예시 첨부 파일 2.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-28T19:20:39.998515"
+    "updatedAt" : "2024-11-28T19:49:18.969863"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "예시 첨부 파일 3.jpg",
     "mimeType" : "image/jpeg",
     "createdAt" : "2024-01-01T12:00:00",
-    "updatedAt" : "2024-11-28T19:20:39.998527"
+    "updatedAt" : "2024-11-28T19:49:18.969868"
   } ]
 }</code></pre>
 </div>
@@ -1440,7 +1445,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-10-12 22:26:54 +0900
+Last updated 2024-10-28 21:44:55 +0900
 </div>
 </div>
 </body>
