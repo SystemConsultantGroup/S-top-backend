@@ -1,29 +1,22 @@
 package com.scg.stop.proposal.domain;
 
-import static jakarta.persistence.FetchType.LAZY;
-import static jakarta.persistence.GenerationType.IDENTITY;
-import static lombok.AccessLevel.PROTECTED;
-
-import com.scg.stop.project.domain.ProjectType;
 import com.scg.stop.file.domain.File;
-import com.scg.stop.user.domain.User;
 import com.scg.stop.global.domain.BaseTimeEntity;
+import com.scg.stop.project.domain.ProjectType;
+import com.scg.stop.user.domain.User;
 import com.scg.stop.user.domain.UserType;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
@@ -76,7 +69,7 @@ public class Proposal extends BaseTimeEntity {
     private Proposal(User user, String title, String projectTypes, String email, String website, String content,
                      Boolean isVisible, Boolean isAnonymous, List<File> files) {
         this.title = title;
-        this.projectTypes= projectTypes;
+        this.projectTypes = projectTypes;
         this.email = email;
         this.webSite = website;
         this.content = content;
@@ -87,7 +80,7 @@ public class Proposal extends BaseTimeEntity {
     }
 
     public static Proposal createProposal(User user, String title, String projectTypes, String email, String website,
-                                           String content, Boolean isVisible, Boolean isAnonymous, List<File> files) {
+                                          String content, Boolean isVisible, Boolean isAnonymous, List<File> files) {
         return new Proposal(
                 user,
                 title,
@@ -118,6 +111,10 @@ public class Proposal extends BaseTimeEntity {
         this.isAnonymous = isAnonymous;
         this.isVisible = isVisible;
         this.files = files;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public static String convertProjectTypesToString(List<ProjectType> proposalTypes) {

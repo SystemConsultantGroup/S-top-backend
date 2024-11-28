@@ -1,6 +1,6 @@
 package com.scg.stop.user.dto.response;
 
-import com.scg.stop.domain.proposal.domain.Proposal;
+import com.scg.stop.proposal.domain.Proposal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -20,7 +20,7 @@ public class UserProposalResponse {
                 proposal.getId(),
                 proposal.getTitle(),
                 proposal.getCreatedAt(),
-                proposal.getReply() != null
+                proposal.getProposalReply() != null
         );
     }
 }
