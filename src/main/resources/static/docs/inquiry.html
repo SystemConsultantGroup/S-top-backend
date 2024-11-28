@@ -455,7 +455,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /projects/1/inquiry HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: company_access_token
-Content-Length: 105
+Content-Length: 102
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -508,7 +508,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 317
+Content-Length: 305
 
 {
   "id" : 1,
@@ -518,8 +518,8 @@ Content-Length: 317
   "title" : "문의 사항 제목",
   "content" : "문의 사항 내용",
   "replied" : false,
-  "createdAt" : "2024-11-19T15:22:32.5296142",
-  "updatedAt" : "2024-11-19T15:22:32.5296142"
+  "createdAt" : "2024-11-28T19:20:43.651615",
+  "updatedAt" : "2024-11-28T19:20:43.651621"
 }</code></pre>
 </div>
 </div>
@@ -662,22 +662,22 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 862
+Content-Length: 823
 
 {
-  "totalElements" : 2,
   "totalPages" : 1,
+  "totalElements" : 2,
   "size" : 10,
   "content" : [ {
     "id" : 1,
     "authorName" : "프로젝트 문의 사항 제목",
     "title" : "프로젝트 문의 사항 내용",
-    "createdAt" : "2024-11-19T15:22:32.3920816"
+    "createdAt" : "2024-11-28T19:20:43.543143"
   }, {
     "id" : 2,
     "authorName" : "프로젝트 문의 사항 제목",
     "title" : "프로젝트 문의 사항 내용",
-    "createdAt" : "2024-11-19T15:22:32.3920816"
+    "createdAt" : "2024-11-28T19:20:43.543202"
   } ],
   "number" : 0,
   "sort" : {
@@ -686,8 +686,6 @@ Content-Length: 862
     "unsorted" : true
   },
   "numberOfElements" : 2,
-  "first" : true,
-  "last" : true,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -697,9 +695,11 @@ Content-Length: 862
       "unsorted" : true
     },
     "offset" : 0,
-    "unpaged" : false,
-    "paged" : true
+    "paged" : true,
+    "unpaged" : false
   },
+  "first" : true,
+  "last" : true,
   "empty" : false
 }</code></pre>
 </div>
@@ -915,7 +915,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 317
+Content-Length: 305
 
 {
   "id" : 1,
@@ -925,8 +925,8 @@ Content-Length: 317
   "title" : "문의 사항 제목",
   "content" : "문의 사항 내용",
   "replied" : false,
-  "createdAt" : "2024-11-19T15:22:32.4745261",
-  "updatedAt" : "2024-11-19T15:22:32.4745261"
+  "createdAt" : "2024-11-28T19:20:43.607921",
+  "updatedAt" : "2024-11-28T19:20:43.607926"
 }</code></pre>
 </div>
 </div>
@@ -1021,7 +1021,7 @@ Content-Length: 317
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /inquiries/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: company_access_token
-Content-Length: 125
+Content-Length: 122
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -1096,7 +1096,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 337
+Content-Length: 325
 
 {
   "id" : 1,
@@ -1106,8 +1106,8 @@ Content-Length: 337
   "title" : "수정된 문의 사항 제목",
   "content" : "수정된 문의 사항 내용",
   "replied" : false,
-  "createdAt" : "2024-11-19T15:22:32.6501995",
-  "updatedAt" : "2024-11-19T15:22:32.6501995"
+  "createdAt" : "2024-11-28T19:20:43.732308",
+  "updatedAt" : "2024-11-28T19:20:43.732313"
 }</code></pre>
 </div>
 </div>
@@ -1255,7 +1255,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /inquiries/1/reply HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 79
+Content-Length: 76
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -1330,7 +1330,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 92
+Content-Length: 88
 
 {
   "id" : 1,
@@ -1430,7 +1430,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 92
+Content-Length: 88
 
 {
   "id" : 1,
@@ -1494,7 +1494,7 @@ Content-Length: 92
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /inquiries/1/reply HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 99
+Content-Length: 96
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -1569,7 +1569,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 112
+Content-Length: 108
 
 {
   "id" : 1,
@@ -1680,7 +1680,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-11-19 10:10:59 +0900
+Last updated 2024-11-17 02:43:03 +0900
 </div>
 </div>
 </body>
