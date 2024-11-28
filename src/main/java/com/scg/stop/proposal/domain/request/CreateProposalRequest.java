@@ -1,11 +1,12 @@
 package com.scg.stop.proposal.domain.request;
 
-import com.scg.stop.domain.project.domain.ProjectType;
+import com.scg.stop.project.domain.ProjectType;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.util.List;
 import lombok.Getter;
 
@@ -32,7 +33,10 @@ public class CreateProposalRequest {
 
     @NotNull(message = "과제의 익명여부를 입력해주세요.")
     private Boolean isAnonymous;
-//    private String fileUuid;
+
+    @Size(min = 1, message = "1개 이상의 파일을 첨부해야 합니다.")
+    @NotNull(message = "파일을 첨부해주세요.")
+    private List<Long> fileIds;
 
     public CreateProposalRequest(
             String webSite,
@@ -41,7 +45,8 @@ public class CreateProposalRequest {
             List<ProjectType> projectTypes,
             String content,
             String isVisible,
-            String isAnonymous
+            String isAnonymous,
+            List<Long> fileIds
     ) {
         validateAndCastBoolean(isVisible, isAnonymous);
         this.webSite = webSite;
@@ -49,6 +54,7 @@ public class CreateProposalRequest {
         this.title = title;
         this.content = content;
         this.projectTypes = projectTypes;
+        this.fileIds = fileIds;
     }
 
     private void validateAndCastBoolean(String isVisible, String isAnonymous) {

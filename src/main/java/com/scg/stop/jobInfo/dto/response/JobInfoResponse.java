@@ -50,7 +50,7 @@ public class JobInfoResponse {
             this.position = extractTextFromProperty(properties, "채용 포지션", "rich_text");
             this.logo = extractLogoUrl(properties, "logo");
             this.salary = extractTextFromProperty(properties, "연봉", "rich_text");
-            this.website = extractTextFromProperty(properties, "웹사이트", "url");
+            this.website = extractUrl(properties, "웹사이트");
             this.state = extractMultiSelect(properties, "채용 상태");
             this.hiringTime = extractTextFromProperty(properties, "채용 시점", "rich_text");
         }
@@ -99,10 +99,34 @@ public class JobInfoResponse {
         if (properties.has(fieldName)) {
             JsonNode filesNode = properties.get(fieldName).get("files");
             if (filesNode.isArray() && filesNode.size() > 0) {
-                JsonNode firstFileNode = filesNode.get(0).get("file");
-                if (firstFileNode != null && firstFileNode.has("url")) {
-                    return firstFileNode.get("url").asText();
+                JsonNode firstFileNode = filesNode.get(0);
+
+                // Handle internal file type
+                if (firstFileNode.has("file")) {
+                    JsonNode fileNode = firstFileNode.get("file");
+                    if (fileNode != null && fileNode.has("url")) {
+                        return fileNode.get("url").asText();
+                    }
                 }
+
+                // Handle external file type
+                if (firstFileNode.has("external")) {
+                    JsonNode externalNode = firstFileNode.get("external");
+                    if (externalNode != null && externalNode.has("url")) {
+                        return externalNode.get("url").asText();
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    // Extract url from website property
+    private String extractUrl(JsonNode properties, String fieldName) {
+        if (properties.has(fieldName)) {
+            JsonNode urlNode = properties.get(fieldName).get("url");
+            if (urlNode != null && !urlNode.isNull()) {
+                return urlNode.asText();
             }
         }
         return null;

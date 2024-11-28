@@ -8,6 +8,7 @@ import com.scg.stop.gallery.domain.Gallery;
 import com.scg.stop.notice.domain.Notice;
 import com.scg.stop.event.domain.EventNotice;
 import com.scg.stop.global.domain.BaseTimeEntity;
+import com.scg.stop.proposal.domain.Proposal;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -47,6 +48,9 @@ public class File extends BaseTimeEntity {
     @JoinColumn(name = "gallery_id")
     private Gallery gallery;
 
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "proposal_id")
+    private Proposal proposal;
     static public File of(String uuid, String name, String mimeType) {
         File file = new File();
         file.uuid = uuid;

@@ -52,4 +52,12 @@ public class Application extends BaseTimeEntity {
     public void reject() {
         status = ApplicationStatus.REJECTED;
     }
+
+    public void updateDivision(String newDivision) {
+        this.division = newDivision;
+    }
+
+    public void updatePosition(String newPosition) {
+        this.position = newPosition;
+    }
 }

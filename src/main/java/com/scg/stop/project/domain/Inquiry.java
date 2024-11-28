@@ -33,7 +33,7 @@ public class Inquiry extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne(fetch = LAZY, mappedBy = "inquiry", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(fetch = LAZY, mappedBy = "inquiry")
     private InquiryReply reply;
 
     private Inquiry(String title, String content, Project project, User user) {
@@ -54,5 +54,9 @@ public class Inquiry extends BaseTimeEntity {
 
     public void deleteReply() {
         this.reply = null;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

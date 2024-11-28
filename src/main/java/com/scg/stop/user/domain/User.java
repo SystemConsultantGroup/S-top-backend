@@ -9,7 +9,7 @@ import com.scg.stop.project.domain.Comment;
 import com.scg.stop.project.domain.FavoriteProject;
 import com.scg.stop.project.domain.Inquiry;
 import com.scg.stop.project.domain.Likes;
-import com.scg.stop.domain.proposal.domain.Proposal;
+import com.scg.stop.proposal.domain.Proposal;
 import com.scg.stop.video.domain.FavoriteVideo;
 import com.scg.stop.video.domain.UserQuiz;
 import com.scg.stop.global.domain.BaseTimeEntity;
@@ -47,10 +47,10 @@ public class User extends BaseTimeEntity {
 
     private String signupSource;
 
-    @OneToOne(fetch = LAZY, mappedBy = "user")
+    @OneToOne(fetch = LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Application application;
 
-    @OneToOne(fetch = LAZY, mappedBy = "user")
+    @OneToOne(fetch = LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Student studentInfo;
 
     @OneToMany(fetch = LAZY, mappedBy = "user")
@@ -62,10 +62,10 @@ public class User extends BaseTimeEntity {
     @OneToMany(fetch = LAZY, mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<FavoriteVideo> favoriteVideos = new ArrayList<>();
 
-    @OneToMany(fetch = LAZY, mappedBy = "user")
+    @OneToMany(fetch = LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Likes> likes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(fetch = LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FavoriteProject> favoriteProjects = new ArrayList<>();
 
     @OneToMany(fetch = LAZY, mappedBy = "user")
@@ -111,4 +111,32 @@ public class User extends BaseTimeEntity {
     public void removeFavoriteProject(FavoriteProject favoriteProject) {
         this.favoriteProjects.remove(favoriteProject);
     }
+
+    public void updateStudentInfo(Student studentInfo) {
+        this.studentInfo = studentInfo;
+    }
+
+    public void updateApplication(Application application) {
+        this.application = application;
+    }
+
+    @PreRemove
+    private void preRemove() {
+        proposals.forEach(proposal -> proposal.setUser(null));
+        comments.forEach(comment -> comment.setUser(null));
+        inquiries.forEach(inquiry -> inquiry.setUser(null));
+    }
+
+    public void updateName(String newName) {
+        this.name = newName;
+    }
+
+    public void updatePhone(String newPhone) {
+        this.phone = newPhone;
+    }
+
+    public void updateEmail(String newEmail) {
+        this.email = newEmail;
+    }
+
 }
