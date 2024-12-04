@@ -11,10 +11,7 @@ import com.scg.stop.project.dto.request.ProjectRequest;
 import com.scg.stop.project.dto.response.CommentResponse;
 import com.scg.stop.project.dto.response.ProjectDetailResponse;
 import com.scg.stop.project.dto.response.ProjectResponse;
-import com.scg.stop.project.repository.CommentRepository;
-import com.scg.stop.project.repository.FavoriteProjectRepository;
-import com.scg.stop.project.repository.LikeRepository;
-import com.scg.stop.project.repository.ProjectRepository;
+import com.scg.stop.project.repository.*;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.global.infrastructure.EmailService;
@@ -22,12 +19,10 @@ import com.scg.stop.project.domain.Inquiry;
 import com.scg.stop.project.domain.Project;
 import com.scg.stop.project.dto.request.InquiryRequest;
 import com.scg.stop.project.dto.response.InquiryDetailResponse;
-import com.scg.stop.project.repository.InquiryRepository;
 import com.scg.stop.project.repository.ProjectRepository;
 import com.scg.stop.user.domain.User;
 import com.scg.stop.user.repository.UserRepository;
 import jakarta.persistence.EntityManager;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,6 +49,7 @@ public class ProjectService {
     private final EventPeriodRepository eventPeriodRepository;
     private final UserRepository userRepository;
     private final InquiryRepository inquiryRepository;
+    private final MemberRepository memberRepository;
     private final EmailService emailService;
 
     @Value("${spring.mail.adminEmail}")
@@ -98,6 +94,8 @@ public class ProjectService {
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_PROJECT_POSTER));
 
         Project newProject = projectRequest.toEntity(projectId, thumbnail, poster);
+
+        memberRepository.deleteAll(project.getMembers());
         project.update(newProject);
 
         return ProjectDetailResponse.of(user, project);
