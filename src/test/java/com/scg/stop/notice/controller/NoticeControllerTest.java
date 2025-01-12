@@ -120,15 +120,19 @@ class NoticeControllerTest extends AbstractControllerTest {
     void getNoticeList() throws Exception {
 
         // given
-        NoticeListElementResponse notice1 = new NoticeListElementResponse(1L, "공지 사항 1", 10, true, LocalDateTime.now(), LocalDateTime.now());
-        NoticeListElementResponse notice2 = new NoticeListElementResponse(2L, "공지 사항 2", 10, false, LocalDateTime.now(), LocalDateTime.now());
+        NoticeListElementResponse notice1 = new NoticeListElementResponse(1L, "notice 1", 10, true, LocalDateTime.now(), LocalDateTime.now());
+        NoticeListElementResponse notice2 = new NoticeListElementResponse(2L, "notice 2", 10, false, LocalDateTime.now(), LocalDateTime.now());
         Page<NoticeListElementResponse> page = new PageImpl<>(List.of(notice1, notice2), PageRequest.of(0, 10), 2);
 
-        when(noticeService.getNoticeList(any(), any(Pageable.class))).thenReturn(page);
+        when(noticeService.getNoticeList(any(String.class), any(String.class), any(Pageable.class))).thenReturn(page);
 
         // when
         ResultActions result = mockMvc.perform(
                 get("/notices")
+                        .param("terms", "notice")
+                        .param("scope", "title")
+                        .param("page", "0")
+                        .param("size", "10")
                         .contentType(APPLICATION_JSON)
         );
 
@@ -136,7 +140,8 @@ class NoticeControllerTest extends AbstractControllerTest {
         result.andExpect(status().isOk())
                 .andDo(restDocs.document(
                         queryParameters(
-                                parameterWithName("title").description("찾고자 하는 공지 사항 제목").optional(),
+                                parameterWithName("terms").description("검색어 (optional)").optional(),
+                                parameterWithName("scope").description("검색 범위 (title, content, both) [default: both, searchTerm=null 이면 null로 초기화]").optional(),
                                 parameterWithName("page").description("페이지 번호 [default: 0]").optional(),
                                 parameterWithName("size").description("페이지 크기 [default: 10]").optional()
                         ),
@@ -170,6 +175,7 @@ class NoticeControllerTest extends AbstractControllerTest {
                         )
                 ));
     }
+
 
     @DisplayName("공지 사항을 조회할 수 있다.")
     @Test

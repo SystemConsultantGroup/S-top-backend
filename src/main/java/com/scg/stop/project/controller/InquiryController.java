@@ -29,10 +29,16 @@ public class InquiryController {
     @GetMapping()
     public ResponseEntity<Page<InquiryResponse>> getInquiries(
             @AuthUser(accessType = {AccessType.COMPANY, AccessType.ADMIN}) User user,
-            @RequestParam(value = "title", required = false) String title,
+            @RequestParam(value = "terms", required = false) String searchTerm,
+            @RequestParam(value = "scope", defaultValue = "both") String searchScope,
             @PageableDefault(page = 0, size = 10) Pageable pageable) {
 
-        Page<InquiryResponse> inquiryList = inquiryService.getInquiryList(title, pageable);
+        // Enforce that searchScope is ignored if searchTerm is null
+        if (searchTerm == null || searchTerm.isEmpty()) {
+            searchScope = null; // Ignore search scope
+        }
+
+        Page<InquiryResponse> inquiryList = inquiryService.getInquiryList(searchTerm, searchScope, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(inquiryList);
     }
 

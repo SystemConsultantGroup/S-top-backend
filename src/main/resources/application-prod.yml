@@ -11,8 +11,6 @@ spring:
     properties:
       hibernate:
         default_batch_fetch_size: 15
-
-
 ---
 spring:
   mail:
@@ -44,9 +42,9 @@ spring:
     secretKey: ${NOTION_SECRET}
     version: 2022-06-28
     databaseId:
-      model: ddb99b6c5cc342f28dc6b8659e1b3e75
-      dataset: 18cdf27cfdd84f36b28d53ebe0d88852
-      jobInfo: c4f8d9c49a14422ebe4df9a9da39d826
+      model: ${NOTION_DB_MODEL}
+      dataset: ${NOTION_DB_DATASET}
+      jobInfo: ${NOTION_DB_JOBINFO}
 ---
 spring:
   security:

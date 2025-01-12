@@ -1,6 +1,6 @@
 package com.scg.stop.gallery.service;
 
-import static com.scg.stop.global.exception.ExceptionCode.NOT_FOUND_FILE_ID;
+import static com.scg.stop.global.exception.ExceptionCode.FILE_NOT_FOUND;
 import static com.scg.stop.global.exception.ExceptionCode.NOT_FOUND_GALLERY_ID;
 
 import com.scg.stop.file.domain.File;
@@ -29,7 +29,7 @@ public class GalleryService {
     public GalleryResponse createGallery(GalleryRequest request) {
         List<File> files = fileRepository.findByIdIn(request.getFileIds());
         if (files.size() != request.getFileIds().size()) {
-            throw new BadRequestException(NOT_FOUND_FILE_ID);
+            throw new BadRequestException(FILE_NOT_FOUND);
         }
 
         Gallery gallery = Gallery.of(request.getTitle(), request.getYear(), request.getMonth(), files);
@@ -59,7 +59,7 @@ public class GalleryService {
 
         List<File> files = fileRepository.findByIdIn(request.getFileIds());
         if (files.size() != request.getFileIds().size()) {
-            throw new BadRequestException(NOT_FOUND_FILE_ID);
+            throw new BadRequestException(FILE_NOT_FOUND);
         }
 
         gallery.update(request.getTitle(), request.getYear(), request.getMonth(), files);

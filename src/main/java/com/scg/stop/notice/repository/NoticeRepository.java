@@ -14,12 +14,24 @@ import java.util.List;
 public interface NoticeRepository extends JpaRepository<Notice, Long> {
 
     @Query("SELECT n FROM Notice n " +
-            "WHERE (:title IS NULL OR n.title LIKE %:title%) AND  n.fixed = false")
-    Page<NoticeListElementResponse> findNonFixedNotices(@Param("title") String title, Pageable pageable);
-
+            "WHERE (:searchScope IS NULL OR " +
+            "(:searchScope = 'content' AND (:searchTerm IS NULL OR n.content LIKE %:searchTerm%)) " +
+            "OR (:searchScope = 'title' AND (:searchTerm IS NULL OR n.title LIKE %:searchTerm%)) " +
+            "OR (:searchScope = 'both' AND (:searchTerm IS NULL OR n.title LIKE %:searchTerm% OR n.content LIKE %:searchTerm%))) " +
+            "AND n.fixed = false")
+    Page<NoticeListElementResponse> findNonFixedNotices(
+            @Param("searchTerm") String searchTerm,
+            @Param("searchScope") String searchScope,
+            Pageable pageable);
 
     @Query("SELECT n FROM Notice n " +
-            "WHERE (:title IS NULL OR n.title LIKE %:title%) AND  n.fixed = true")
-    List<NoticeListElementResponse> findFixedNotices(@Param("title") String title, Sort sort);
-
+            "WHERE (:searchScope IS NULL OR " +
+            "(:searchScope = 'content' AND (:searchTerm IS NULL OR n.content LIKE %:searchTerm%)) " +
+            "OR (:searchScope = 'title' AND (:searchTerm IS NULL OR n.title LIKE %:searchTerm%)) " +
+            "OR (:searchScope = 'both' AND (:searchTerm IS NULL OR n.title LIKE %:searchTerm% OR n.content LIKE %:searchTerm%))) " +
+            "AND n.fixed = true")
+    List<NoticeListElementResponse> findFixedNotices(
+            @Param("searchTerm") String searchTerm,
+            @Param("searchScope") String searchScope,
+            Sort sort);
 }
