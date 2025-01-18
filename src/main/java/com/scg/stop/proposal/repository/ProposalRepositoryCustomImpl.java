@@ -24,7 +24,7 @@ public class ProposalRepositoryCustomImpl implements ProposalRepositoryCustom {
             predicate = switch (scope) {
                 case "author" -> proposal.user.name.contains(term);
                 case "title" -> proposal.title.contains(term);
-                case "both" -> proposal.title.contains(term).or(proposal.content.contains(term));
+                case "both" -> proposal.title.contains(term).or(proposal.content.contains(term)).or(proposal.user.name.contains(term));
                 case "content" -> proposal.content.contains(term);
                 default -> throw new IllegalArgumentException("Invalid scope");
             };
