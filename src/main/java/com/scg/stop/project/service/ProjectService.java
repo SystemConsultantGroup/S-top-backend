@@ -130,7 +130,7 @@ public class ProjectService {
 
         favoriteProjectRepository.delete(favoriteProject);
         project.removeFavoriteProject(favoriteProject);
-        userRepository.save(user);
+        //userRepository.save(user);
     }
 
     public void createProjectLike(Long projectId, User user){
@@ -167,7 +167,7 @@ public class ProjectService {
 
         likeRepository.delete(like);
         project.removeLikes(like);
-        userRepository.save(user);
+        //userRepository.save(user);
     }
 
     public CommentResponse createProjectComment(Long projectId, User user, CommentRequest commentRequest){
