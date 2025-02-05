@@ -12,7 +12,8 @@ public interface TalkRepository extends JpaRepository<Talk, Long> {
 
     @Query("SELECT t from Talk t "+
             "WHERE (:year IS NULL OR t.year = :year) " +
-            "AND (:title IS NULL OR t.title LIKE %:title%)")
+            "AND (:title IS NULL OR t.title LIKE %:title%)" +
+            "ORDER BY t.year DESC")
     Page<Talk> findPages(
             @Param("title") String title,
             @Param("year") Integer year,
