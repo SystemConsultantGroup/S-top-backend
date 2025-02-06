@@ -1,0 +1,10 @@
+== JOB INFO API
+:source-highlighter: highlightjs
+
+---
+
+=== JOB INFO 리스트 조회 (POST /jobInfos)
+
+====
+operation::job-info-controller-test/get-job-infos[snippets="query-parameters,request-fields,http-request,http-response,response-fields"]
+====

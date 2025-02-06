@@ -1,11 +1,11 @@
-name: ❗ SCG Project Bug report
-description: Report bug to SCG Project
-title: "[BUG] "
-labels: ['bug', 'pending']
+name: 🐞 Bug Report
+description: Report bug to S-TOP backend
+title: "🐞 [BUG] "
+labels: ['🐞 Bug']
 body:
   - type: textarea
     attributes:
-      label: Description 📖
+      label: 📖 Description
       id: bug-description
       description: |
         발생한 버그에 대해 상세하게 설명해주세요
@@ -13,7 +13,7 @@ body:
       required: true
   - type: textarea
     attributes:
-      label: Reproduction 🏗️
+      label: 🏗 Reproduction
       id: bug-reproduction
       description: |
         버그 reproduction 방법을 자세히 설명해주세요
@@ -26,23 +26,25 @@ body:
       required: true
   - type: textarea
     attributes:
-      label: Logs 🪵
+      label: 🪵 Logs
       id: bug-log
       description: |
         버그가 발생했을 때의 Log를 남겨주시면 더욱 더 해결하는 데 도움이 됩니다!🙇
       render: shell
   - type: textarea
     attributes:
-      label: Environment 🖥️
+      label: 🖥 Environment ️
       id: bug-environment
       description: |
         버그가 발생한 환경에 대해 설명해주세요 (브라우저, OS, 하드웨어 등)
   - type: checkboxes
     id: bug-checkboxes
     attributes:
-      label: CheckList ✔️
+      label: ✔️CheckList
       description: |
         Issue 올리기 전에 한 번 확인해주세요! 👍
       options:
         - label: 관련 Issue 가 이미 존재하는 지 확인해보셨나요?
           required: true
+        - label: Assignees 설정
+        - label: Labels 설정

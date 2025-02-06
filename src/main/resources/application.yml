@@ -1,7 +1,7 @@
 spring:
-    profiles:
-        default: local
-        group:
-            local: common
-            prod: common
-
+  profiles:
+    default: local
+    group:
+      local: common, oauth, minio, notion, email
+      prod: common
+      dev: common, oauth, minio, notion, email

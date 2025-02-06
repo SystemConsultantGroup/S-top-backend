@@ -1,0 +1,56 @@
+== 과제 제안 API
+:source-highlighter: highlightjs
+
+=== 과제 제안 생성 (POST /proposals)
+
+====
+operation::proposal-controller-test/create-proposal[snippets="http-request,request-fields,http-response,response-fields"]
+====
+
+=== 과제 제안 리스트 조회 (GET /proposals)
+
+====
+operation::proposal-controller-test/get-proposals[snippets="query-parameters,http-request,http-response,response-fields"]
+====
+
+=== 과제 제안 상세 조회 (GET /proposals/{proposalId})
+
+====
+operation::proposal-controller-test/get-proposal-detail[snippets="path-parameters,http-request,http-response,response-fields"]
+====
+
+=== 과제 제안 수정 (PUT /proposals/{proposalId})
+
+====
+operation::proposal-controller-test/update-proposal[snippets="path-parameters,http-request,request-fields,http-response,response-fields"]
+====
+
+=== 과제 제안 삭제 (DELETE /proposals/{proposalId})
+
+====
+operation::proposal-controller-test/delete-proposal[snippets="path-parameters,http-request,http-response"]
+====
+
+=== 과제 제안 답변 조회 (GET /proposals/{proposalId}/reply)
+
+====
+operation::proposal-controller-test/get-proposal-replies[snippets="query-parameters,http-request,http-response,response-fields"]
+====
+
+=== 과제 제안 답변 생성 (PUT /proposals/{proposalId}/reply/)
+
+====
+operation::proposal-controller-test/create-proposal-reply[snippets="path-parameters,http-request,request-fields,http-response,response-fields"]
+====
+
+=== 과제 제안 답변 수정 (PUT /proposals/{proposalId}/reply/{replyId})
+
+====
+operation::proposal-controller-test/update-proposal-reply[snippets="path-parameters,http-request,request-fields,http-response,response-fields"]
+====
+
+=== 과제 제안 답변 삭제 (DELETE /proposals/{proposalId}/reply/{replyId})
+
+====
+operation::proposal-controller-test/delete-proposal-reply[snippets="path-parameters,http-request,http-response"]
+====

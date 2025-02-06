@@ -2,10 +2,10 @@ name: CD
 
 on:
   push:
-    branches: ["main"]
+    branches: ["develop"]
 env:
   dockerimage_tag: ${{ github.sha }}
-  dockerimage_name: jcy0308/stop
+  dockerimage_name: jcy0308/stop-be-qa
 
 jobs:
   build:
@@ -82,7 +82,7 @@ jobs:
         uses: imranismail/setup-kustomize@v2.0.0
       - name: Config Repo 이미지 값 업데이트 (Kustomize)
         run: |
-          cd S-TOP-config/overlays/prod/be/
+          cd S-TOP-config/overlays/qa/be/
           kustomize edit set image ${{ env.dockerimage_name }}:${{ env.dockerimage_tag }}
           cat kustomization.yaml
       - name: Config Repo 변경사항 푸시

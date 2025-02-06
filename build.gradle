@@ -35,11 +35,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-aop'
+	implementation 'io.hypersistence:hypersistence-utils-hibernate-60:3.8.1'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
 	//auth
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
@@ -54,8 +56,32 @@ dependencies {
 	//metrics
 	implementation 'io.micrometer:micrometer-registry-prometheus'
 
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    //email
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    //thymeleaf(for email service)
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// apache.poi for excel
+	implementation 'org.apache.poi:poi-ooxml:5.2.2'
+	implementation 'org.apache.poi:poi:5.2.2'
+
+	// minIO
+	implementation "io.minio:minio:8.5.11"
+
+	// queryDSL
+	implementation 'com.querydsl:querydsl-core'
+	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	annotationProcessor("com.querydsl:querydsl-apt:5.0.0:jakarta") // querydsl JPAAnnotationProcessor 사용 지정
+	annotationProcessor("jakarta.persistence:jakarta.persistence-api") // java.lang.NoClassDefFoundError(javax.annotation.Entity) 발생 대응
+	annotationProcessor("jakarta.annotation:jakarta.annotation-api") // java.lang.NoClassDefFoundError (javax.annotation.Generated) 발생 대응
 }
+
+
 
 tasks.named('test') {
 	outputs.dir snippetsDir
@@ -87,8 +113,13 @@ tasks.named('asciidoctor') {
 build {
 	dependsOn copyDocument
 }
+
 allprojects {
 	repositories {
 		maven { url 'https://jitpack.io'}
 	}
 }
+
+
+def querydslDir = "build/generated/querydsl"
+

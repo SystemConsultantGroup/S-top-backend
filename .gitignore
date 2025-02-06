@@ -35,3 +35,11 @@ out/
 
 ### VS Code ###
 .vscode/
+
+/src/main/resources/application-oauth.yml
+/src/main/resources/application-minio.yml
+/src/main/resources/application-dev.yml
+/src/main/resources/application-email.yml
+/src/main/resources/application-notion.yml
+
+.DS_Store

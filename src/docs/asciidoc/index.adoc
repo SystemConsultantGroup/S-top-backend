@@ -1,0 +1,27 @@
+= S-TOP Rest Docs
+:doctype: book
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:seclinks:
+
+=== 커스텀 예외 코드
+include::{snippets}/exception-code-controller-test/get-exception-codes/exception-response-fields.adoc[]
+
+include::auth-controller-test.adoc[]
+include::file-controller-test.adoc[]
+include::user.adoc[]
+include::department.adoc[]
+include::application.adoc[]
+include::jobInterview.adoc[]
+include::talk.adoc[]
+include::quiz.adoc[]
+include::notice.adoc[]
+include::eventNotice.adoc[]
+include::eventPeriod.adoc[]
+include::gallery.adoc[]
+include::project.adoc[]
+include::inquiry.adoc[]
+include::proposal.adoc[]
+include::aihub-controller-test.adoc[]
+include::jobInfo-controller-test.adoc[]
