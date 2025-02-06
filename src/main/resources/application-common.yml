@@ -10,4 +10,4 @@ spring:
     init:
       mode: always
 server.port: 8000
-spring.redirectUri: "https://stop.scg.skku.ac.kr/login/kakao"
+spring.redirectUri: "https://s-top.cs.skku.edu/login/kakao"
