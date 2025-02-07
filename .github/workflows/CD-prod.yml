@@ -1,8 +1,9 @@
-name: CD
+name: CD-PROD
 
 on:
   push:
     branches: ["main"]
+  workflow_dispatch:
 env:
   dockerimage_tag: ${{ github.sha }}
   dockerimage_name: jcy0308/stop-be-prod
