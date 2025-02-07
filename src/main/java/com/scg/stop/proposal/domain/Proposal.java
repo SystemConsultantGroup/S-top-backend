@@ -76,7 +76,7 @@ public class Proposal extends BaseTimeEntity {
         this.isAnonymous = isAnonymous;
         this.isVisible = isVisible;
         this.user = user;
-        this.files = files;
+        changeFileMapping(files);
     }
 
     public static Proposal createProposal(User user, String title, String projectTypes, String email, String website,
@@ -110,7 +110,7 @@ public class Proposal extends BaseTimeEntity {
         this.content = content;
         this.isAnonymous = isAnonymous;
         this.isVisible = isVisible;
-        this.files = files;
+        changeFileMapping(files);
     }
 
     public void setUser(User user) {
@@ -162,5 +162,12 @@ public class Proposal extends BaseTimeEntity {
     public boolean isAuthorized(User requestUser) {
         if (user.getId() == null) return false;
         return requestUser.getUserType() == UserType.ADMIN || this.user.getId().equals(requestUser.getId());
+    }
+
+    private void changeFileMapping(List<File> files) {
+        for(File file: files) {
+            file.connectProposal(this);
+        }
+        this.files.addAll(files);
     }
 }

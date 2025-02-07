@@ -70,4 +70,8 @@ public class File extends BaseTimeEntity {
     public void setGallery(Gallery gallery) {
         this.gallery = gallery;
     }
+
+    public void connectProposal(Proposal proposal) {
+        this.proposal = proposal;
+    }
 }

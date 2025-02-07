@@ -51,6 +51,7 @@ public class JwtUtil {
                 .signWith(secretKey);
         if (user != null) {
             jwtBuilder.claim("userType", user.getUserType());
+            jwtBuilder.claim("userId", user.getId());
         }
         return jwtBuilder.compact();
     }
@@ -66,9 +67,9 @@ public class JwtUtil {
                 .build()
                 .parseClaimsJws(token);
     }
-    public String getSubject(String token) {
+    public Claims getSubject(String token) {
         return parseToken(token)
-                .getBody().getSubject();
+                .getBody();
     }
 
     // 유효성 검사 //
