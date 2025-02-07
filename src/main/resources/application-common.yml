@@ -11,3 +11,8 @@ spring:
       mode: always
 server.port: 8000
 spring.redirectUri: ${WEB_REDIRECT_URI}
+spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 300MB
