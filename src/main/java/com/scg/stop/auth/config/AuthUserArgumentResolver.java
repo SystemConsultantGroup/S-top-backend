@@ -122,7 +122,7 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
     }
 
     private User extractUser(String accessToken) {
-        Long userId = Long.valueOf(jwtUtil.getSubject(accessToken));
+        Long userId = Long.valueOf(jwtUtil.getSubject(accessToken).get("userId", String.class));
 
         return userRepository.findById(userId)
                 .orElseThrow(() -> new BadRequestException(ExceptionCode.NOT_FOUND_USER_ID));
