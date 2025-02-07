@@ -8,5 +8,6 @@ public enum UserType {
     ADMIN,
     INACTIVE_PROFESSOR,
     INACTIVE_COMPANY,
-    OTHERS
+    OTHERS,
+    EXTERNAL
 }

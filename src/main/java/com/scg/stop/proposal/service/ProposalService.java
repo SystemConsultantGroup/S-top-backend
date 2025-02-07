@@ -72,6 +72,7 @@ public class ProposalService {
     @Transactional
     public ProposalDetailResponse createProposal(User user, CreateProposalRequest proposalCreateRequest) {
         List<File> files = fileRepository.findByIdIn(proposalCreateRequest.getFileIds());
+        System.out.println(files.get(0).getId());
         Proposal proposal = Proposal.createProposal(
                 user,
                 proposalCreateRequest.getTitle(),
@@ -83,6 +84,7 @@ public class ProposalService {
                 proposalCreateRequest.getIsAnonymous(),
                 files
         );
+        System.out.println(proposal.getFiles().get(0).getId());
         proposalRepository.save(proposal);
         //TODO: 이메일 형식 정하기  & 과제 제안메일은 어드민 이메일로만 보내면 되는지?
         emailService.sendEmail(proposal.getEmail(), proposal.getTitle(), proposal.getContent());
