@@ -32,6 +32,7 @@ public class ProjectController {
     private final ProjectService projectService;
 
     @GetMapping
+    // changed
     public ResponseEntity<Page<ProjectResponse>> getProjects(
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "year", required = false) List<Integer> year,
