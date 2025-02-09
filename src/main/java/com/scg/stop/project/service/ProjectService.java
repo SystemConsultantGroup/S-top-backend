@@ -60,12 +60,7 @@ public class ProjectService {
 
     @Transactional(readOnly = true)
     public Page<ProjectResponse> getProjects(String title, List<Integer> year, List<ProjectCategory> category, List<ProjectType> type, Pageable pageable, User user){
-        boolean isEvent = year != null && year.size() == 1 && year.get(0) == LocalDateTime.now().getYear();
-        Integer seed = (int) Math.floor(LocalDateTime.now().getHour() / 1.0);
-        Page<Project> projects = isEvent
-                ? projectRepository.findEventProjects(title, year, category, type, seed, pageable)
-                : projectRepository.findProjects(title, year, category, type, pageable);
-
+        Page<Project> projects = projectRepository.findProjects(title, year, category, type, pageable);
         Page<ProjectResponse> projectResponses = projects.map(project -> ProjectResponse.of(user, project));
         return projectResponses;
     }
