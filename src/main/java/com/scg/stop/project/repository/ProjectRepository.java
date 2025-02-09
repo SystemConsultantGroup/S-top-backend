@@ -27,18 +27,18 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
             Pageable pageable
     );
 
-    @Query(value = "SELECT p.* FROM project p " +
+    @Query("SELECT p FROM Project p " +
             "WHERE (:title IS NULL OR p.name LIKE %:title%) " +
             "AND (:year IS NULL OR p.year IN :year) " +
             "AND (:category IS NULL OR p.category IN :category) " +
             "AND (:type IS NULL OR p.type IN :type) " +
-            "ORDER BY MOD(UNIX_TIMESTAMP(NOW()) DIV 3600, p.id)",
-            nativeQuery = true)
+            "ORDER BY FUNCTION('RAND', :seed)")
     Page<Project> findEventProjects(
             @Param("title") String title,
             @Param("year") List<Integer> year,
             @Param("category") List<ProjectCategory> category,
             @Param("type") List<ProjectType> type,
+            @Param("seed") Integer seed,
             Pageable pageable
     );
 
