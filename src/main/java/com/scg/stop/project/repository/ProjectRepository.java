@@ -32,7 +32,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
             "AND (:year IS NULL OR p.year IN :year) " +
             "AND (:category IS NULL OR p.category IN :category) " +
             "AND (:type IS NULL OR p.type IN :type) " +
-            "ORDER BY FUNCTION('RAND', :seed)")
+            "ORDER BY FUNCTION('RAND', COALESCE(:seed, 1))")
     Page<Project> findEventProjects(
             @Param("title") String title,
             @Param("year") List<Integer> year,
