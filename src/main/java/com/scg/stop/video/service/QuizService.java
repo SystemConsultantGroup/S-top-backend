@@ -43,6 +43,8 @@ public class QuizService {
 
     private final ExcelUtil excelUtil;
 
+    private static final int MAX_QUIZ_TRY_COUNT = 5;
+
     @Transactional(readOnly = true)
     public QuizResponse getQuiz(Long talkId) {
         Talk talk = talkRepository.findById(talkId).orElseThrow(
@@ -83,7 +85,7 @@ public class QuizService {
             userQuiz = userQuizRepository.save(UserQuiz.from(user, quiz, isSuccess));
             userRepository.save(user);
         } else {
-            if(userQuiz.getTryCount() >= 3) {
+            if(userQuiz.getTryCount() >= MAX_QUIZ_TRY_COUNT) {
                 throw new BadRequestException(ExceptionCode.TOO_MANY_TRY_QUIZ);
             }
             if(!userQuiz.isSuccess())
