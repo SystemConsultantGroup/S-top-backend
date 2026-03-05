@@ -5,5 +5,5 @@ public enum JobInterviewCategory {
     SENIOR,
     INTERN,
     ENTREPRENEURSHIP,
-    KEY_SPEECH
+    KEYNOTE_SPEECH
 }
