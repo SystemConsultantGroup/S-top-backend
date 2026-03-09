@@ -30,8 +30,8 @@ public class TalkService {
     private final FavoriteVideoRepository favoriteVideoRepository;
 
     @Transactional(readOnly = true)
-    public Page<TalkUserResponse> getTalks(User user, String title, Integer year, Pageable pageable) {
-        Page<Talk> talks = talkRepository.findPages(title, year, pageable);
+    public Page<TalkUserResponse> getTalks(User user, String title, Integer year, Boolean isKeynoteSpeech, Pageable pageable) {
+        Page<Talk> talks = talkRepository.findPages(title, year, isKeynoteSpeech, pageable);
         if(user == null) return talks.map(TalkUserResponse::from);
         List<TalkUserResponse> content = talks.stream().map(talk ->
                 TalkUserResponse.from(talk, favoriteVideoRepository.existsByTalkAndUser(talk, user))
@@ -54,7 +54,8 @@ public class TalkService {
                 talkRequest.getYoutubeId(),
                 talkRequest.getYear(),
                 talkRequest.getTalkerBelonging(),
-                talkRequest.getTalkerName()
+                talkRequest.getTalkerName(),
+                talkRequest.isKeynoteSpeech()
         ));
         if(talkRequest.getQuiz().getQuiz() != null) {
             Quiz quiz = quizRepository.save(Quiz.from(talkRequest.getQuiz().toQuizInfoMap()));
@@ -84,7 +85,8 @@ public class TalkService {
                 talkRequest.getYoutubeId(),
                 talkRequest.getYear(),
                 talkRequest.getTalkerBelonging(),
-                talkRequest.getTalkerName()
+                talkRequest.getTalkerName(),
+                talkRequest.isKeynoteSpeech()
         );
         return TalkResponse.from(talk);
     }

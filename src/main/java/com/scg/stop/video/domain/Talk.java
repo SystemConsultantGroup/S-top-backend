@@ -36,33 +36,47 @@ public class Talk extends BaseTimeEntity {
     @Column(nullable = false)
     private String talkerName;
 
+    @Column(name = "is_keynote_speech", nullable = false)
+    private boolean isKeynoteSpeech = false;
+
     @OneToOne(fetch = LAZY, mappedBy = "talk", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Quiz quiz;
 
     @OneToMany(fetch = LAZY, mappedBy = "talk", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<FavoriteVideo> favoriteVideos;
 
-    public Talk(String title, String youtubeId, Integer year, String talkerBelonging, String talkerName) {
+    public Talk(
+            String title,
+            String youtubeId,
+            Integer year,
+            String talkerBelonging,
+            String talkerName,
+            boolean isKeynoteSpeech
+    ) {
         this.title = title;
         this.youtubeId = youtubeId;
         this.year = year;
         this.talkerBelonging = talkerBelonging;
         this.talkerName = talkerName;
+        this.isKeynoteSpeech = isKeynoteSpeech;
         this.favoriteVideos = new ArrayList<>();
     }
+
     public static Talk from(
             String title,
             String youtubeId,
             Integer year,
             String talkerBelonging,
-            String talkerName
+            String talkerName,
+            boolean isKeynoteSpeech
     ) {
         return new Talk(
                 title,
                 youtubeId,
                 year,
                 talkerBelonging,
-                talkerName
+                talkerName,
+                isKeynoteSpeech
         );
     }
 
@@ -71,13 +85,15 @@ public class Talk extends BaseTimeEntity {
             String youtubeId,
             Integer year,
             String talkerBelonging,
-            String talkerName
+            String talkerName,
+            boolean isKeynoteSpeech
     ) {
         this.title= title;
         this.youtubeId = youtubeId;
         this.year = year;
         this.talkerBelonging = talkerBelonging;
         this.talkerName = talkerName;
+        this.isKeynoteSpeech = isKeynoteSpeech;
     }
 
     public void setQuiz(Quiz quiz) {
