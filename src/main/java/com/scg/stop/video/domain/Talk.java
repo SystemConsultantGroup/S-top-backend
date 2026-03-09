@@ -37,7 +37,7 @@ public class Talk extends BaseTimeEntity {
     private String talkerName;
 
     @Column(name = "is_keynote_speech", nullable = true)
-    private Boolean isKeynoteSpeech = false;
+    private Boolean keynoteSpeech = false;
 
     @OneToOne(fetch = LAZY, mappedBy = "talk", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Quiz quiz;
@@ -51,14 +51,14 @@ public class Talk extends BaseTimeEntity {
             Integer year,
             String talkerBelonging,
             String talkerName,
-            boolean isKeynoteSpeech
+            boolean keynoteSpeech
     ) {
         this.title = title;
         this.youtubeId = youtubeId;
         this.year = year;
         this.talkerBelonging = talkerBelonging;
         this.talkerName = talkerName;
-        this.isKeynoteSpeech = isKeynoteSpeech;
+        this.keynoteSpeech = keynoteSpeech;
         this.favoriteVideos = new ArrayList<>();
     }
 
@@ -68,7 +68,7 @@ public class Talk extends BaseTimeEntity {
             Integer year,
             String talkerBelonging,
             String talkerName,
-            boolean isKeynoteSpeech
+            boolean keynoteSpeech
     ) {
         return new Talk(
                 title,
@@ -76,7 +76,7 @@ public class Talk extends BaseTimeEntity {
                 year,
                 talkerBelonging,
                 talkerName,
-                isKeynoteSpeech
+                keynoteSpeech
         );
     }
 
@@ -86,14 +86,14 @@ public class Talk extends BaseTimeEntity {
             Integer year,
             String talkerBelonging,
             String talkerName,
-            boolean isKeynoteSpeech
+            boolean keynoteSpeech
     ) {
         this.title= title;
         this.youtubeId = youtubeId;
         this.year = year;
         this.talkerBelonging = talkerBelonging;
         this.talkerName = talkerName;
-        this.isKeynoteSpeech = isKeynoteSpeech;
+        this.keynoteSpeech = keynoteSpeech;
     }
 
     public void setQuiz(Quiz quiz) {
