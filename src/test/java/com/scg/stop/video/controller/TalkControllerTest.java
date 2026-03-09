@@ -88,7 +88,7 @@ public class TalkControllerTest extends AbstractControllerTest {
                 )
         );
         TalkRequest request= new TalkRequest("제목","유튜브 고유ID", 2024, "대담자 소속", "대담자 성명", false, quizRequest);
-        TalkResponse response = new TalkResponse(1L, "제목", "유튜브 고유ID", 2024,  "대담자 소속","대담자 성명", false, quizResponse,LocalDateTime.now(), LocalDateTime.now());
+        TalkResponse response = new TalkResponse(1L, "제목", "유튜브 고유ID", 2024,  "대담자 소속","대담자 성명", false, quizResponse,FIXED_DATE_TIME, FIXED_DATE_TIME);
 
         when(talkService.createTalk(any())).thenReturn(response);
 
@@ -152,7 +152,7 @@ public class TalkControllerTest extends AbstractControllerTest {
                         new QuizInfo("질문2", 0, List.of("선지1","선지2"))
                 )
         );
-        TalkUserResponse response = new TalkUserResponse(1L, "제목", "유튜브 고유ID", 2024,  "대담자 소속","대담자 성명", false, true,quizResponse,LocalDateTime.now(), LocalDateTime.now());
+        TalkUserResponse response = new TalkUserResponse(1L, "제목", "유튜브 고유ID", 2024,  "대담자 소속","대담자 성명", false, true,quizResponse,FIXED_DATE_TIME, FIXED_DATE_TIME);
         Page<TalkUserResponse> page = new PageImpl<>(List.of(response), PageRequest.of(0,10),1);
 
         when(talkService.getTalks(any(), any(), any(), any(), any())).thenReturn(page);
@@ -235,7 +235,7 @@ public class TalkControllerTest extends AbstractControllerTest {
                         new QuizInfo("질문2", 0, List.of("선지1","선지2"))
                 )
         );
-        TalkUserResponse response = new TalkUserResponse(id, "제목", "유튜브 고유ID", 2024, "대담자 소속","대담자 성명", false, true,quizResponse,LocalDateTime.now(), LocalDateTime.now());
+        TalkUserResponse response = new TalkUserResponse(id, "제목", "유튜브 고유ID", 2024, "대담자 소속","대담자 성명", false, true,quizResponse,FIXED_DATE_TIME, FIXED_DATE_TIME);
         when(talkService.getTalkById(anyLong(), any())).thenReturn(response);
 
         //when
@@ -296,7 +296,7 @@ public class TalkControllerTest extends AbstractControllerTest {
                 )
         );
         TalkRequest request= new TalkRequest("수정한 제목","수정한 유튜브 고유ID", 2024, "수정한 대담자 소속", "수정한 대담자 성명", true, quizRequest);
-        TalkResponse response = new TalkResponse(id, "수정한 제목", "수정한 유튜브 고유ID", 2024, "수정한 대담자 소속","수정한 대담자 성명", true, quizResponse,LocalDateTime.now(), LocalDateTime.now());
+        TalkResponse response = new TalkResponse(id, "수정한 제목", "수정한 유튜브 고유ID", 2024, "수정한 대담자 소속","수정한 대담자 성명", true, quizResponse,FIXED_DATE_TIME, FIXED_DATE_TIME);
         when(talkService.updateTalk(anyLong(), any(TalkRequest.class))).thenReturn(response);
 
         //when

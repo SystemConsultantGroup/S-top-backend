@@ -75,16 +75,16 @@ class FileControllerTest extends AbstractControllerTest {
                 UUID.randomUUID().toString(),
                 "첨부파일1.png",
                 "image/png",
-                LocalDateTime.now(),
-                LocalDateTime.now()
+                FIXED_DATE_TIME,
+                FIXED_DATE_TIME
         );
         FileResponse response2 = new FileResponse(
                 2L,
                 UUID.randomUUID().toString(),
                 "첨부파일2.pdf",
                 "application/pdf",
-                LocalDateTime.now(),
-                LocalDateTime.now()
+                FIXED_DATE_TIME,
+                FIXED_DATE_TIME
         );
         List<FileResponse> responses = List.of(response1, response2);
 

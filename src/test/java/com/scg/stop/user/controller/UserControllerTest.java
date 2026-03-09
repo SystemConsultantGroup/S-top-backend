@@ -83,8 +83,8 @@ class UserControllerTest extends AbstractControllerTest {
                 null,
                 "2000123456",
                 "학과",
-                LocalDateTime.now(),
-                LocalDateTime.now()
+                FIXED_DATE_TIME,
+                FIXED_DATE_TIME
         );
         when(userService.getMe(any(User.class))).thenReturn(response);
 
@@ -145,8 +145,8 @@ class UserControllerTest extends AbstractControllerTest {
                 null,
                 "2000123456",
                 "학과",
-                LocalDateTime.now(),
-                LocalDateTime.now()
+                FIXED_DATE_TIME,
+                FIXED_DATE_TIME
         );
 
         when(userService.updateMe(any(User.class), any(UserUpdateRequest.class))).thenReturn(response);
@@ -228,8 +228,8 @@ class UserControllerTest extends AbstractControllerTest {
     void getUserInquiries() throws Exception {
         // given
         List<UserInquiryResponse> inquiryResponses = Arrays.asList(
-                new UserInquiryResponse(1L, "Title 1", 1L, LocalDateTime.now(), true),
-                new UserInquiryResponse(2L, "Title 2", 2L, LocalDateTime.now(), false)
+                new UserInquiryResponse(1L, "Title 1", 1L, FIXED_DATE_TIME, true),
+                new UserInquiryResponse(2L, "Title 2", 2L, FIXED_DATE_TIME, false)
         );
         when(userService.getUserInquiries(any(User.class))).thenReturn(inquiryResponses);
 
@@ -265,8 +265,8 @@ class UserControllerTest extends AbstractControllerTest {
     void getUserProposals() throws Exception {
         // given
         List<UserProposalResponse> proposalResponses = Arrays.asList(
-                new UserProposalResponse(1L, "Title 1", LocalDateTime.now(), true),
-                new UserProposalResponse(2L, "Title 2", LocalDateTime.now(), false)
+                new UserProposalResponse(1L, "Title 1", FIXED_DATE_TIME, true),
+                new UserProposalResponse(2L, "Title 2", FIXED_DATE_TIME, false)
         );
         when(userService.getUserProposals(any(User.class))).thenReturn(proposalResponses);
 
@@ -399,8 +399,8 @@ class UserControllerTest extends AbstractControllerTest {
                 )
         );
         List<TalkUserResponse> responses = Arrays.asList(
-                new TalkUserResponse(1L, "제목1", "유튜브 고유ID", 2024,  "대담자 소속1","대담자 성명1", false, true, quizResponse,LocalDateTime.now(), LocalDateTime.now()),
-                new TalkUserResponse(2L, "제목2", "유튜브 고유ID", 2024,  "대담자 소속2","대담자 성명2", true, true, quizResponse,LocalDateTime.now(), LocalDateTime.now())
+                new TalkUserResponse(1L, "제목1", "유튜브 고유ID", 2024,  "대담자 소속1","대담자 성명1", false, true, quizResponse,FIXED_DATE_TIME, FIXED_DATE_TIME),
+                new TalkUserResponse(2L, "제목2", "유튜브 고유ID", 2024,  "대담자 소속2","대담자 성명2", true, true, quizResponse,FIXED_DATE_TIME, FIXED_DATE_TIME)
         );
         when(userService.getUserFavoriteTalks(any(User.class))).thenReturn(responses);
 
@@ -444,8 +444,8 @@ class UserControllerTest extends AbstractControllerTest {
     void getUserFavoriteInterviews() throws Exception {
         // given
         List<JobInterviewUserResponse> responses = Arrays.asList(
-                new JobInterviewUserResponse(1L,"잡페어 인터뷰의 제목1", "유튜브 고유 ID1", 2023,"대담자의 소속1", "대담자의 성명1", false,  JobInterviewCategory.INTERN, LocalDateTime.now(), LocalDateTime.now()),
-                new JobInterviewUserResponse(2L, "잡페어 인터뷰의 제목2", "유튜브 고유 ID2", 2024,"대담자의 소속2", "대담자의 성명2", true,  JobInterviewCategory.INTERN, LocalDateTime.now(), LocalDateTime.now())
+                new JobInterviewUserResponse(1L,"잡페어 인터뷰의 제목1", "유튜브 고유 ID1", 2023,"대담자의 소속1", "대담자의 성명1", false,  JobInterviewCategory.INTERN, FIXED_DATE_TIME, FIXED_DATE_TIME),
+                new JobInterviewUserResponse(2L, "잡페어 인터뷰의 제목2", "유튜브 고유 ID2", 2024,"대담자의 소속2", "대담자의 성명2", true,  JobInterviewCategory.INTERN, FIXED_DATE_TIME, FIXED_DATE_TIME)
         );
         when(userService.getUserFavoriteInterviews(any(User.class))).thenReturn(responses);
 

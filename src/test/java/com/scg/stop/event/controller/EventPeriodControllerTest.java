@@ -56,9 +56,9 @@ class EventPeriodControllerTest extends AbstractControllerTest {
     @DisplayName("이벤트 기간을 생성할 수 있다.")
     void createEventPeriod() throws Exception {
         // given
-        EventPeriodRequest request = new EventPeriodRequest(LocalDateTime.now(), LocalDateTime.now().plusDays(10));
-        EventPeriodResponse response = new EventPeriodResponse(1L, 2024, LocalDateTime.now(),
-                LocalDateTime.now().plusDays(10), LocalDateTime.now(), LocalDateTime.now());
+        EventPeriodRequest request = new EventPeriodRequest(FIXED_DATE_TIME, FIXED_DATE_TIME.plusDays(10));
+        EventPeriodResponse response = new EventPeriodResponse(1L, 2024, FIXED_DATE_TIME,
+                FIXED_DATE_TIME.plusDays(10), FIXED_DATE_TIME, FIXED_DATE_TIME);
 
         when(eventPeriodService.createEventPeriod(any(EventPeriodRequest.class))).thenReturn(response);
 
@@ -93,9 +93,9 @@ class EventPeriodControllerTest extends AbstractControllerTest {
     @DisplayName("올해의 이벤트 기간 설정을 조회할 수 있다.")
     void getEventPeriod() throws Exception {
         // given
-        EventPeriodResponse response = new EventPeriodResponse(1L, LocalDateTime.now().getYear(),
-                LocalDateTime.now(), LocalDateTime.now().plusDays(10),
-                LocalDateTime.now(), LocalDateTime.now());
+        EventPeriodResponse response = new EventPeriodResponse(1L, FIXED_DATE_TIME.getYear(),
+                FIXED_DATE_TIME, FIXED_DATE_TIME.plusDays(10),
+                FIXED_DATE_TIME, FIXED_DATE_TIME);
         when(eventPeriodService.getEventPeriod()).thenReturn(response);
 
         // when
@@ -123,10 +123,10 @@ class EventPeriodControllerTest extends AbstractControllerTest {
     void getEventPeriods() throws Exception {
         // given
         List<EventPeriodResponse> responses = Arrays.asList(
-                new EventPeriodResponse(1L, 2024, LocalDateTime.now(), LocalDateTime.now().plusDays(10),
-                        LocalDateTime.now(), LocalDateTime.now()),
-                new EventPeriodResponse(2L, 2025, LocalDateTime.now(), LocalDateTime.now().plusDays(10),
-                        LocalDateTime.now(), LocalDateTime.now())
+                new EventPeriodResponse(1L, 2024, FIXED_DATE_TIME, FIXED_DATE_TIME.plusDays(10),
+                        FIXED_DATE_TIME, FIXED_DATE_TIME),
+                new EventPeriodResponse(2L, 2025, FIXED_DATE_TIME, FIXED_DATE_TIME.plusDays(10),
+                        FIXED_DATE_TIME, FIXED_DATE_TIME)
         );
         when(eventPeriodService.getEventPeriods()).thenReturn(responses);
 
@@ -154,10 +154,10 @@ class EventPeriodControllerTest extends AbstractControllerTest {
     @DisplayName("이벤트 기간을 수정할 수 있다.")
     void updateEventPeriod() throws Exception {
         // given
-        EventPeriodRequest request = new EventPeriodRequest(LocalDateTime.now(), LocalDateTime.now().plusDays(10));
-        EventPeriodResponse response = new EventPeriodResponse(1L, LocalDateTime.now().getYear(),
-                LocalDateTime.now(), LocalDateTime.now().plusDays(10),
-                LocalDateTime.now(), LocalDateTime.now());
+        EventPeriodRequest request = new EventPeriodRequest(FIXED_DATE_TIME, FIXED_DATE_TIME.plusDays(10));
+        EventPeriodResponse response = new EventPeriodResponse(1L, FIXED_DATE_TIME.getYear(),
+                FIXED_DATE_TIME, FIXED_DATE_TIME.plusDays(10),
+                FIXED_DATE_TIME, FIXED_DATE_TIME);
 
         when(eventPeriodService.updateEventPeriod(any(EventPeriodRequest.class))).thenReturn(response);
 

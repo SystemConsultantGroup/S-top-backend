@@ -70,7 +70,7 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
 
         // given
         JobInterviewRequest request = new JobInterviewRequest("잡페어 인터뷰의 제목", "유튜브 고유 ID", 2024, "대담자의 소속", "대담자의 성명", JobInterviewCategory.INTERN);
-        JobInterviewResponse response = new JobInterviewResponse(1L, "잡페어 인터뷰의 제목", "유튜브 고유 ID", 2024,"대담자의 소속", "대담자의 성명",  JobInterviewCategory.INTERN, LocalDateTime.now(), LocalDateTime.now());
+        JobInterviewResponse response = new JobInterviewResponse(1L, "잡페어 인터뷰의 제목", "유튜브 고유 ID", 2024,"대담자의 소속", "대담자의 성명",  JobInterviewCategory.INTERN, FIXED_DATE_TIME, FIXED_DATE_TIME);
 
         when(jobInterviewService.createJobInterview(any())).thenReturn(response);
         // when
@@ -121,8 +121,8 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
     @DisplayName("잡페어 인터뷰 리스트를 조회할 수 있다.")
     void getJobInterviewList() throws Exception {
         //given
-        JobInterviewUserResponse interview1 = new JobInterviewUserResponse(1L,"잡페어 인터뷰의 제목1", "유튜브 고유 ID1", 2023,"대담자의 소속1", "대담자의 성명1", false,  JobInterviewCategory.INTERN, LocalDateTime.now(), LocalDateTime.now());
-        JobInterviewUserResponse interview2 = new JobInterviewUserResponse(2L, "잡페어 인터뷰의 제목2", "유튜브 고유 ID2", 2024,"대담자의 소속2", "대담자의 성명2", true,  JobInterviewCategory.INTERN, LocalDateTime.now(), LocalDateTime.now());
+        JobInterviewUserResponse interview1 = new JobInterviewUserResponse(1L,"잡페어 인터뷰의 제목1", "유튜브 고유 ID1", 2023,"대담자의 소속1", "대담자의 성명1", false,  JobInterviewCategory.INTERN, FIXED_DATE_TIME, FIXED_DATE_TIME);
+        JobInterviewUserResponse interview2 = new JobInterviewUserResponse(2L, "잡페어 인터뷰의 제목2", "유튜브 고유 ID2", 2024,"대담자의 소속2", "대담자의 성명2", true,  JobInterviewCategory.INTERN, FIXED_DATE_TIME, FIXED_DATE_TIME);
         Page<JobInterviewUserResponse> page = new PageImpl<>(List.of(interview1, interview2), PageRequest.of(0,10),2);
 
         when(jobInterviewService.getJobInterviews(any(), any(), any(), any(), any())).thenReturn(page);
@@ -194,7 +194,7 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
     @DisplayName("잡페어 인터뷰 1개를 조회할 수 있다.")
     void getJobInterview() throws Exception {
         //given
-        JobInterviewUserResponse response = new JobInterviewUserResponse(1L, "잡페어 인터뷰의 제목", "유튜브 고유 ID", 2024,"대담자의 소속", "대담자의 성명", false, JobInterviewCategory.INTERN, LocalDateTime.now(), LocalDateTime.now());
+        JobInterviewUserResponse response = new JobInterviewUserResponse(1L, "잡페어 인터뷰의 제목", "유튜브 고유 ID", 2024,"대담자의 소속", "대담자의 성명", false, JobInterviewCategory.INTERN, FIXED_DATE_TIME, FIXED_DATE_TIME);
 
         when(jobInterviewService.getJobInterview(any(), any())).thenReturn(response);
 
@@ -241,7 +241,7 @@ public class JobInterviewControllerTest extends AbstractControllerTest {
     void updateJobInterview() throws Exception {
         //given
         JobInterviewRequest request = new JobInterviewRequest("수정된 제목", "수정된 유튜브 ID", 2024, "수정된 대담자 소속", "수정된 대담자 성명", JobInterviewCategory.INTERN);
-        JobInterviewResponse response = new JobInterviewResponse(1L, "수정된 제목", "수정된 유튜브 ID", 2024,"수정된 대담자 소속", "수정된 대담자 성명", JobInterviewCategory.INTERN, LocalDateTime.of(2021,1,1,12,0), LocalDateTime.now());
+        JobInterviewResponse response = new JobInterviewResponse(1L, "수정된 제목", "수정된 유튜브 ID", 2024,"수정된 대담자 소속", "수정된 대담자 성명", JobInterviewCategory.INTERN, LocalDateTime.of(2021,1,1,12,0), FIXED_DATE_TIME);
 
         when(jobInterviewService.updateJobInterview(any(), any(JobInterviewRequest.class))).thenReturn(response);
 

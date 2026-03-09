@@ -61,11 +61,11 @@ class NoticeControllerTest extends AbstractControllerTest {
         NoticeRequest request = new NoticeRequest("공지 사항 제목", "공지 사항 내용", true, List.of(1L, 2L, 3L));
 
         List<FileResponse> files = Arrays.asList(
-                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "예시 첨부 파일 1.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "예시 첨부 파일 2.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "예시 첨부 파일 3.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now())
+                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "예시 첨부 파일 1.jpg", "image/jpeg", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "예시 첨부 파일 2.jpg", "image/jpeg", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "예시 첨부 파일 3.jpg", "image/jpeg", FIXED_DATE_TIME, FIXED_DATE_TIME)
         );
-        NoticeResponse response = new NoticeResponse(1L, "공지 사항 제목", "공지 사항 내용", 0, true, LocalDateTime.now(), LocalDateTime.now(), files);
+        NoticeResponse response = new NoticeResponse(1L, "공지 사항 제목", "공지 사항 내용", 0, true, FIXED_DATE_TIME, FIXED_DATE_TIME, files);
 
         when(noticeService.createNotice(any(NoticeRequest.class))).thenReturn(response);
 
@@ -120,8 +120,8 @@ class NoticeControllerTest extends AbstractControllerTest {
     void getNoticeList() throws Exception {
 
         // given
-        NoticeListElementResponse notice1 = new NoticeListElementResponse(1L, "notice 1", 10, true, LocalDateTime.now(), LocalDateTime.now());
-        NoticeListElementResponse notice2 = new NoticeListElementResponse(2L, "notice 2", 10, false, LocalDateTime.now(), LocalDateTime.now());
+        NoticeListElementResponse notice1 = new NoticeListElementResponse(1L, "notice 1", 10, true, FIXED_DATE_TIME, FIXED_DATE_TIME);
+        NoticeListElementResponse notice2 = new NoticeListElementResponse(2L, "notice 2", 10, false, FIXED_DATE_TIME, FIXED_DATE_TIME);
         Page<NoticeListElementResponse> page = new PageImpl<>(List.of(notice1, notice2), PageRequest.of(0, 10), 2);
 
         when(noticeService.getNoticeList(any(String.class), any(String.class), any(Pageable.class))).thenReturn(page);
@@ -183,11 +183,11 @@ class NoticeControllerTest extends AbstractControllerTest {
 
         // given
         List<FileResponse> files = Arrays.asList(
-                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "예시 첨부 파일 1.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "예시 첨부 파일 2.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "예시 첨부 파일 3.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now())
+                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "예시 첨부 파일 1.jpg", "image/jpeg", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "예시 첨부 파일 2.jpg", "image/jpeg", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "예시 첨부 파일 3.jpg", "image/jpeg", FIXED_DATE_TIME, FIXED_DATE_TIME)
         );
-        NoticeResponse response = new NoticeResponse(1L, "공지 사항 제목", "content", 10, true, LocalDateTime.now(), LocalDateTime.now(), files);
+        NoticeResponse response = new NoticeResponse(1L, "공지 사항 제목", "content", 10, true, FIXED_DATE_TIME, FIXED_DATE_TIME, files);
 
         when(noticeService.getNotice(anyLong())).thenReturn(response);
 
@@ -230,11 +230,11 @@ class NoticeControllerTest extends AbstractControllerTest {
         // given
         NoticeRequest request = new NoticeRequest("수정된 공지 사항 제목", "수정된 공지 사항 내용", false, List.of(1L, 2L, 3L));
         List<FileResponse> files = Arrays.asList(
-                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "예시 첨부 파일 1.jpg", "image/jpeg", LocalDateTime.of(2024, 1, 1, 12, 0), LocalDateTime.now()),
-                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "예시 첨부 파일 2.jpg", "image/jpeg", LocalDateTime.of(2024, 1, 1, 12, 0), LocalDateTime.now()),
-                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "예시 첨부 파일 3.jpg", "image/jpeg", LocalDateTime.of(2024, 1, 1, 12, 0), LocalDateTime.now())
+                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "예시 첨부 파일 1.jpg", "image/jpeg", LocalDateTime.of(2024, 1, 1, 12, 0), FIXED_DATE_TIME),
+                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "예시 첨부 파일 2.jpg", "image/jpeg", LocalDateTime.of(2024, 1, 1, 12, 0), FIXED_DATE_TIME),
+                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "예시 첨부 파일 3.jpg", "image/jpeg", LocalDateTime.of(2024, 1, 1, 12, 0), FIXED_DATE_TIME)
         );
-        NoticeResponse response = new NoticeResponse(1L, "수정된 공지 사항 제목", "수정된 공지 사항 내용", 10, false, LocalDateTime.of(2024, 1, 1, 12, 0), LocalDateTime.now(), files);
+        NoticeResponse response = new NoticeResponse(1L, "수정된 공지 사항 제목", "수정된 공지 사항 내용", 10, false, LocalDateTime.of(2024, 1, 1, 12, 0), FIXED_DATE_TIME, files);
 
         when(noticeService.updateNotice(anyLong(), any(NoticeRequest.class))).thenReturn(response);
 

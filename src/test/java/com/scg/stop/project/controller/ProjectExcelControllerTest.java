@@ -106,7 +106,7 @@ class ProjectExcelControllerTest extends AbstractControllerTest {
                 UUID.randomUUID().toString(),
                 fileName,
                 "image/png",
-                LocalDateTime.now(),
-                LocalDateTime.now());
+                FIXED_DATE_TIME,
+                FIXED_DATE_TIME);
     }
 }

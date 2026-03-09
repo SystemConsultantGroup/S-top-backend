@@ -522,7 +522,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 913
+Content-Length: 835
 
 {
   "id" : 1,
@@ -530,29 +530,29 @@ Content-Length: 913
   "year" : 2024,
   "month" : 4,
   "hitCount" : 1,
-  "createdAt" : "2026-03-09T14:45:46.380061212",
-  "updatedAt" : "2026-03-09T14:45:46.380064189",
+  "createdAt" : "2024-01-01T00:00:00",
+  "updatedAt" : "2024-01-01T00:00:00",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "사진1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2026-03-09T14:45:46.379974705",
-    "updatedAt" : "2026-03-09T14:45:46.380036332"
+    "createdAt" : "2024-01-01T00:00:00",
+    "updatedAt" : "2024-01-01T00:00:00"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "사진2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2026-03-09T14:45:46.380044009",
-    "updatedAt" : "2026-03-09T14:45:46.38004786"
+    "createdAt" : "2024-01-01T00:00:00",
+    "updatedAt" : "2024-01-01T00:00:00"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "사진3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2026-03-09T14:45:46.38005228",
-    "updatedAt" : "2026-03-09T14:45:46.380055318"
+    "createdAt" : "2024-01-01T00:00:00",
+    "updatedAt" : "2024-01-01T00:00:00"
   } ]
 }</code></pre>
 </div>
@@ -707,6 +707,11 @@ Host: localhost:8080</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">월</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제목 검색어 (최대 100자)</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">페이지 번호 [default: 0]</p></td>
@@ -728,11 +733,11 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1258
+Content-Length: 1179
 
 {
-  "totalElements" : 1,
   "totalPages" : 1,
+  "totalElements" : 1,
   "size" : 1,
   "content" : [ {
     "id" : 1,
@@ -740,29 +745,29 @@ Content-Length: 1258
     "year" : 2024,
     "month" : 4,
     "hitCount" : 0,
-    "createdAt" : "2026-03-09T14:45:46.286905385",
-    "updatedAt" : "2026-03-09T14:45:46.286910147",
+    "createdAt" : "2024-01-01T00:00:00",
+    "updatedAt" : "2024-01-01T00:00:00",
     "files" : [ {
       "id" : 1,
       "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
       "name" : "사진1.jpg",
       "mimeType" : "image/jpeg",
-      "createdAt" : "2026-03-09T14:45:46.286804041",
-      "updatedAt" : "2026-03-09T14:45:46.28682465"
+      "createdAt" : "2024-01-01T00:00:00",
+      "updatedAt" : "2024-01-01T00:00:00"
     }, {
       "id" : 2,
       "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
       "name" : "사진2.jpg",
       "mimeType" : "image/jpeg",
-      "createdAt" : "2026-03-09T14:45:46.286867564",
-      "updatedAt" : "2026-03-09T14:45:46.286878397"
+      "createdAt" : "2024-01-01T00:00:00",
+      "updatedAt" : "2024-01-01T00:00:00"
     }, {
       "id" : 3,
       "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
       "name" : "사진3.jpg",
       "mimeType" : "image/jpeg",
-      "createdAt" : "2026-03-09T14:45:46.286883734",
-      "updatedAt" : "2026-03-09T14:45:46.286887841"
+      "createdAt" : "2024-01-01T00:00:00",
+      "updatedAt" : "2024-01-01T00:00:00"
     } ]
   } ],
   "number" : 0,
@@ -771,10 +776,10 @@ Content-Length: 1258
     "sorted" : false,
     "unsorted" : true
   },
-  "first" : true,
-  "last" : true,
   "numberOfElements" : 1,
   "pageable" : "INSTANCE",
+  "first" : true,
+  "last" : true,
   "empty" : false
 }</code></pre>
 </div>
@@ -1005,7 +1010,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 915
+Content-Length: 835
 
 {
   "id" : 1,
@@ -1013,29 +1018,29 @@ Content-Length: 915
   "year" : 2024,
   "month" : 4,
   "hitCount" : 1,
-  "createdAt" : "2026-03-09T14:45:46.325225266",
-  "updatedAt" : "2026-03-09T14:45:46.325227485",
+  "createdAt" : "2024-01-01T00:00:00",
+  "updatedAt" : "2024-01-01T00:00:00",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "사진1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2026-03-09T14:45:46.325147457",
-    "updatedAt" : "2026-03-09T14:45:46.325202149"
+    "createdAt" : "2024-01-01T00:00:00",
+    "updatedAt" : "2024-01-01T00:00:00"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "사진2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2026-03-09T14:45:46.325211559",
-    "updatedAt" : "2026-03-09T14:45:46.325215849"
+    "createdAt" : "2024-01-01T00:00:00",
+    "updatedAt" : "2024-01-01T00:00:00"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "사진3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2026-03-09T14:45:46.325219416",
-    "updatedAt" : "2026-03-09T14:45:46.325221826"
+    "createdAt" : "2024-01-01T00:00:00",
+    "updatedAt" : "2024-01-01T00:00:00"
   } ]
 }</code></pre>
 </div>
@@ -1289,7 +1294,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 911
+Content-Length: 832
 
 {
   "id" : 1,
@@ -1297,29 +1302,29 @@ Content-Length: 911
   "year" : 2024,
   "month" : 5,
   "hitCount" : 1,
-  "createdAt" : "2026-03-09T14:45:46.194204357",
-  "updatedAt" : "2026-03-09T14:45:46.194211631",
+  "createdAt" : "2024-01-01T00:00:00",
+  "updatedAt" : "2024-01-01T00:00:00",
   "files" : [ {
     "id" : 1,
     "uuid" : "014eb8a0-d4a6-11ee-adac-117d766aca1d",
     "name" : "사진1.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2026-03-09T14:45:46.193996417",
-    "updatedAt" : "2026-03-09T14:45:46.194017802"
+    "createdAt" : "2024-01-01T00:00:00",
+    "updatedAt" : "2024-01-01T00:00:00"
   }, {
     "id" : 2,
     "uuid" : "11a480c0-13fa-11ef-9047-570191b390ea",
     "name" : "사진2.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2026-03-09T14:45:46.194032499",
-    "updatedAt" : "2026-03-09T14:45:46.194037057"
+    "createdAt" : "2024-01-01T00:00:00",
+    "updatedAt" : "2024-01-01T00:00:00"
   }, {
     "id" : 3,
     "uuid" : "1883fc70-cfb4-11ee-a387-e754bd392d45",
     "name" : "사진3.jpg",
     "mimeType" : "image/jpeg",
-    "createdAt" : "2026-03-09T14:45:46.19404353",
-    "updatedAt" : "2026-03-09T14:45:46.194047356"
+    "createdAt" : "2024-01-01T00:00:00",
+    "updatedAt" : "2024-01-01T00:00:00"
   } ]
 }</code></pre>
 </div>
@@ -1439,7 +1444,7 @@ Content-Length: 911
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2026-03-09 14:08:49 +0900
+Last updated 2026-03-09 22:08:40 +0900
 </div>
 </div>
 </body>
