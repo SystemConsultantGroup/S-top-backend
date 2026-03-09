@@ -36,33 +36,47 @@ public class Talk extends BaseTimeEntity {
     @Column(nullable = false)
     private String talkerName;
 
+    @Column(name = "is_keynote_speech", nullable = true)
+    private Boolean keynoteSpeech = false;
+
     @OneToOne(fetch = LAZY, mappedBy = "talk", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Quiz quiz;
 
     @OneToMany(fetch = LAZY, mappedBy = "talk", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<FavoriteVideo> favoriteVideos;
 
-    public Talk(String title, String youtubeId, Integer year, String talkerBelonging, String talkerName) {
+    public Talk(
+            String title,
+            String youtubeId,
+            Integer year,
+            String talkerBelonging,
+            String talkerName,
+            Boolean keynoteSpeech
+    ) {
         this.title = title;
         this.youtubeId = youtubeId;
         this.year = year;
         this.talkerBelonging = talkerBelonging;
         this.talkerName = talkerName;
+        this.keynoteSpeech = keynoteSpeech != null ? keynoteSpeech : false;
         this.favoriteVideos = new ArrayList<>();
     }
+
     public static Talk from(
             String title,
             String youtubeId,
             Integer year,
             String talkerBelonging,
-            String talkerName
+            String talkerName,
+            Boolean keynoteSpeech
     ) {
         return new Talk(
                 title,
                 youtubeId,
                 year,
                 talkerBelonging,
-                talkerName
+                talkerName,
+                keynoteSpeech
         );
     }
 
@@ -71,13 +85,19 @@ public class Talk extends BaseTimeEntity {
             String youtubeId,
             Integer year,
             String talkerBelonging,
-            String talkerName
+            String talkerName,
+            Boolean keynoteSpeech
     ) {
         this.title= title;
         this.youtubeId = youtubeId;
         this.year = year;
         this.talkerBelonging = talkerBelonging;
         this.talkerName = talkerName;
+        this.keynoteSpeech = keynoteSpeech != null ? keynoteSpeech : false;
+    }
+
+    public boolean isKeynoteSpeech() {
+        return Boolean.TRUE.equals(keynoteSpeech);
     }
 
     public void setQuiz(Quiz quiz) {

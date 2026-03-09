@@ -455,7 +455,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /talks HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 361
+Content-Length: 390
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -473,7 +473,8 @@ Cookie: refresh-token=refresh_token
     "question" : "질문2",
     "answer" : 0,
     "options" : [ "선지1", "선지2" ]
-  } ]
+  } ],
+  "isKeynoteSpeech" : false
 }</code></pre>
 </div>
 </div>
@@ -527,6 +528,12 @@ Cookie: refresh-token=refresh_token
 <td class="tableblock halign-left valign-top"><p class="tableblock">대담자의 성명</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>isKeynoteSpeech</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">키노트 스피치 여부</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
@@ -562,7 +569,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 465
+Content-Length: 500
 
 {
   "id" : 1,
@@ -580,8 +587,9 @@ Content-Length: 465
     "answer" : 0,
     "options" : [ "선지1", "선지2" ]
   } ],
-  "createdAt" : "2024-11-28T19:49:22.817542",
-  "updatedAt" : "2024-11-28T19:49:22.817543"
+  "createdAt" : "2026-03-09T14:45:55.926450823",
+  "updatedAt" : "2026-03-09T14:45:55.926456689",
+  "isKeynoteSpeech" : false
 }</code></pre>
 </div>
 </div>
@@ -639,6 +647,12 @@ Content-Length: 465
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">대담자의 성명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>isKeynoteSpeech</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">키노트 스피치 여부</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz</code></p></td>
@@ -725,6 +739,11 @@ Cookie: refresh-token=refresh_token</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">찾고자 하는 대담 영상의 제목 일부</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>isKeynoteSpeech</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">키노트 스피치 여부. 없으면 `false`인 대담 영상만 조회</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">페이지 번호 [default: 0]</p></td>
@@ -746,13 +765,11 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 999
+Content-Length: 1035
 
 {
-  "totalPages" : 1,
   "totalElements" : 1,
-  "first" : true,
-  "last" : true,
+  "totalPages" : 1,
   "size" : 10,
   "content" : [ {
     "id" : 1,
@@ -771,8 +788,9 @@ Content-Length: 999
       "answer" : 0,
       "options" : [ "선지1", "선지2" ]
     } ],
-    "createdAt" : "2024-11-28T19:49:22.824681",
-    "updatedAt" : "2024-11-28T19:49:22.824682"
+    "createdAt" : "2026-03-09T14:45:55.968161881",
+    "updatedAt" : "2026-03-09T14:45:55.96816887",
+    "isKeynoteSpeech" : false
   } ],
   "number" : 0,
   "sort" : {
@@ -780,6 +798,8 @@ Content-Length: 999
     "sorted" : false,
     "unsorted" : true
   },
+  "first" : true,
+  "last" : true,
   "numberOfElements" : 1,
   "pageable" : {
     "pageNumber" : 0,
@@ -973,6 +993,12 @@ Content-Length: 999
 <td class="tableblock halign-left valign-top"><p class="tableblock">대담자의 성명</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].isKeynoteSpeech</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">키노트 스피치 여부</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].favorite</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
@@ -1067,7 +1093,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 486
+Content-Length: 520
 
 {
   "id" : 1,
@@ -1086,8 +1112,9 @@ Content-Length: 486
     "answer" : 0,
     "options" : [ "선지1", "선지2" ]
   } ],
-  "createdAt" : "2024-11-28T19:49:22.809931",
-  "updatedAt" : "2024-11-28T19:49:22.809933"
+  "createdAt" : "2026-03-09T14:45:55.89011697",
+  "updatedAt" : "2026-03-09T14:45:55.890124575",
+  "isKeynoteSpeech" : false
 }</code></pre>
 </div>
 </div>
@@ -1145,6 +1172,12 @@ Content-Length: 486
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">대담자의 성명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>isKeynoteSpeech</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">키노트 스피치 여부</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>favorite</code></p></td>
@@ -1205,7 +1238,7 @@ Content-Length: 486
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /talks/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 461
+Content-Length: 489
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -1223,7 +1256,8 @@ Cookie: refresh-token=refresh_token
     "question" : "수정한 질문2",
     "answer" : 0,
     "options" : [ "수정한 선지1", "수정한 선지2" ]
-  } ]
+  } ],
+  "isKeynoteSpeech" : true
 }</code></pre>
 </div>
 </div>
@@ -1299,6 +1333,12 @@ Cookie: refresh-token=refresh_token
 <td class="tableblock halign-left valign-top"><p class="tableblock">대담자의 성명</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>isKeynoteSpeech</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">키노트 스피치 여부</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
@@ -1334,7 +1374,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 565
+Content-Length: 599
 
 {
   "id" : 1,
@@ -1352,8 +1392,9 @@ Content-Length: 565
     "answer" : 0,
     "options" : [ "수정한 선지1", "수정한 선지2" ]
   } ],
-  "createdAt" : "2024-11-28T19:49:22.777287",
-  "updatedAt" : "2024-11-28T19:49:22.777288"
+  "createdAt" : "2026-03-09T14:45:55.763053661",
+  "updatedAt" : "2026-03-09T14:45:55.763063882",
+  "isKeynoteSpeech" : true
 }</code></pre>
 </div>
 </div>
@@ -1411,6 +1452,12 @@ Content-Length: 565
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">대담자의 성명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>isKeynoteSpeech</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">키노트 스피치 여부</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>quiz</code></p></td>
@@ -1949,7 +1996,7 @@ Content-Length: 41
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-10-29 22:56:22 +0900
+Last updated 2026-03-09 14:08:49 +0900
 </div>
 </div>
 </body>

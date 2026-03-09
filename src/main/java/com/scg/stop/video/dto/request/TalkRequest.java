@@ -1,6 +1,7 @@
 package com.scg.stop.video.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.scg.stop.video.domain.Talk;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
@@ -29,11 +30,14 @@ public class TalkRequest {
     @NotBlank(message = "대담자의 성명을 입력해주세요.")
     public String talkerName;
 
+    @JsonProperty("isKeynoteSpeech")
+    private Boolean keynoteSpeech;
+
     @JsonUnwrapped
     @Valid
     public QuizRequest quiz;
 
     public Talk toEntity() {return Talk.from(
-            title, youtubeId, year, talkerBelonging, talkerName
+            title, youtubeId, year, talkerBelonging, talkerName, keynoteSpeech
     ); }
 }

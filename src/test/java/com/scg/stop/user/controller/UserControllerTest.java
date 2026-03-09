@@ -399,8 +399,8 @@ class UserControllerTest extends AbstractControllerTest {
                 )
         );
         List<TalkUserResponse> responses = Arrays.asList(
-                new TalkUserResponse(1L, "제목1", "유튜브 고유ID", 2024,  "대담자 소속1","대담자 성명1" ,true, quizResponse,LocalDateTime.now(), LocalDateTime.now()),
-                new TalkUserResponse(2L, "제목2", "유튜브 고유ID", 2024,  "대담자 소속2","대담자 성명2" ,true, quizResponse,LocalDateTime.now(), LocalDateTime.now())
+                new TalkUserResponse(1L, "제목1", "유튜브 고유ID", 2024,  "대담자 소속1","대담자 성명1", false, true, quizResponse,LocalDateTime.now(), LocalDateTime.now()),
+                new TalkUserResponse(2L, "제목2", "유튜브 고유ID", 2024,  "대담자 소속2","대담자 성명2", true, true, quizResponse,LocalDateTime.now(), LocalDateTime.now())
         );
         when(userService.getUserFavoriteTalks(any(User.class))).thenReturn(responses);
 
@@ -427,6 +427,7 @@ class UserControllerTest extends AbstractControllerTest {
                                 fieldWithPath("[].year").type(JsonFieldType.NUMBER).description("대담 영상 연도"),
                                 fieldWithPath("[].talkerBelonging").type(JsonFieldType.STRING).description("대담자의 소속된 직장/단체"),
                                 fieldWithPath("[].talkerName").type(JsonFieldType.STRING).description("대담자의 성명"),
+                                fieldWithPath("[].isKeynoteSpeech").type(JsonFieldType.BOOLEAN).description("키노트 스피치 여부"),
                                 fieldWithPath("[].favorite").type(JsonFieldType.BOOLEAN).description("관심한 대담영상의 여부"),
                                 fieldWithPath("[].quiz").type(JsonFieldType.ARRAY).description("퀴즈 데이터, 없는경우 null").optional(),
                                 fieldWithPath("[].quiz[].question").type(JsonFieldType.STRING).description("퀴즈 1개의 질문").optional(),

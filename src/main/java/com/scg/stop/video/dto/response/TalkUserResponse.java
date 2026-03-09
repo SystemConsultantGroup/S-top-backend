@@ -1,6 +1,7 @@
 package com.scg.stop.video.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.scg.stop.video.domain.Talk;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +17,8 @@ public class TalkUserResponse {
     public Integer year;
     public String talkerBelonging;
     public String talkerName;
+    @JsonProperty("isKeynoteSpeech")
+    private Boolean keynoteSpeech;
     public boolean favorite;
 
     @JsonUnwrapped
@@ -32,6 +35,7 @@ public class TalkUserResponse {
                 talk.getYear(),
                 talk.getTalkerBelonging(),
                 talk.getTalkerName(),
+                talk.getKeynoteSpeech(),
                 false,
                 (talk.getQuiz() != null)? QuizResponse.from(talk.getQuiz()) : new QuizResponse(),
                 talk.getCreatedAt(),
@@ -47,6 +51,7 @@ public class TalkUserResponse {
                 talk.getYear(),
                 talk.getTalkerBelonging(),
                 talk.getTalkerName(),
+                talk.getKeynoteSpeech(),
                 favorite,
                 (talk.getQuiz() != null)? QuizResponse.from(talk.getQuiz()) : new QuizResponse(),
                 talk.getCreatedAt(),

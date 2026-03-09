@@ -87,8 +87,8 @@ public class TalkControllerTest extends AbstractControllerTest {
                         new QuizInfo("질문2", 0, List.of("선지1","선지2"))
                 )
         );
-        TalkRequest request= new TalkRequest("제목","유튜브 고유ID", 2024, "대담자 소속", "대담자 성명",quizRequest);
-        TalkResponse response = new TalkResponse(1L, "제목", "유튜브 고유ID", 2024,  "대담자 소속","대담자 성명" ,quizResponse,LocalDateTime.now(), LocalDateTime.now());
+        TalkRequest request= new TalkRequest("제목","유튜브 고유ID", 2024, "대담자 소속", "대담자 성명", false, quizRequest);
+        TalkResponse response = new TalkResponse(1L, "제목", "유튜브 고유ID", 2024,  "대담자 소속","대담자 성명", false, quizResponse,LocalDateTime.now(), LocalDateTime.now());
 
         when(talkService.createTalk(any())).thenReturn(response);
 
@@ -118,6 +118,7 @@ public class TalkControllerTest extends AbstractControllerTest {
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("대담 영상 연도"),
                                 fieldWithPath("talkerBelonging").type(JsonFieldType.STRING).description("대담자의 소속된 직장/단체"),
                                 fieldWithPath("talkerName").type(JsonFieldType.STRING).description("대담자의 성명"),
+                                fieldWithPath("isKeynoteSpeech").type(JsonFieldType.BOOLEAN).description("키노트 스피치 여부"),
                                 fieldWithPath("quiz").type(JsonFieldType.ARRAY).description("퀴즈 데이터, 없는경우 null").optional(),
                                 fieldWithPath("quiz[].question").type(JsonFieldType.STRING).description("퀴즈 1개의 질문").optional(),
                                 fieldWithPath("quiz[].answer").type(JsonFieldType.NUMBER).description("퀴즈 1개의 정답선지 인덱스").optional(),
@@ -130,6 +131,7 @@ public class TalkControllerTest extends AbstractControllerTest {
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("대담 영상 연도"),
                                 fieldWithPath("talkerBelonging").type(JsonFieldType.STRING).description("대담자의 소속된 직장/단체"),
                                 fieldWithPath("talkerName").type(JsonFieldType.STRING).description("대담자의 성명"),
+                                fieldWithPath("isKeynoteSpeech").type(JsonFieldType.BOOLEAN).description("키노트 스피치 여부"),
                                 fieldWithPath("quiz").type(JsonFieldType.ARRAY).description("퀴즈 데이터, 없는경우 null").optional(),
                                 fieldWithPath("quiz[].question").type(JsonFieldType.STRING).description("퀴즈 1개의 질문").optional(),
                                 fieldWithPath("quiz[].answer").type(JsonFieldType.NUMBER).description("퀴즈 1개의 정답선지 인덱스").optional(),
@@ -150,10 +152,10 @@ public class TalkControllerTest extends AbstractControllerTest {
                         new QuizInfo("질문2", 0, List.of("선지1","선지2"))
                 )
         );
-        TalkUserResponse response = new TalkUserResponse(1L, "제목", "유튜브 고유ID", 2024,  "대담자 소속","대담자 성명" ,true,quizResponse,LocalDateTime.now(), LocalDateTime.now());
+        TalkUserResponse response = new TalkUserResponse(1L, "제목", "유튜브 고유ID", 2024,  "대담자 소속","대담자 성명", false, true,quizResponse,LocalDateTime.now(), LocalDateTime.now());
         Page<TalkUserResponse> page = new PageImpl<>(List.of(response), PageRequest.of(0,10),1);
 
-        when(talkService.getTalks(any(), any(), any(), any())).thenReturn(page);
+        when(talkService.getTalks(any(), any(), any(), any(), any())).thenReturn(page);
 
         //when
         ResultActions result = mockMvc.perform(
@@ -177,6 +179,7 @@ public class TalkControllerTest extends AbstractControllerTest {
                         queryParameters(
                                 parameterWithName("year").description("찾고자 하는 대담 영상의 연도").optional(),
                                 parameterWithName("title").description("찾고자 하는 대담 영상의 제목 일부").optional(),
+                                parameterWithName("isKeynoteSpeech").description("키노트 스피치 여부. 없으면 `false`인 대담 영상만 조회").optional(),
                                 parameterWithName("page").description("페이지 번호 [default: 0]").optional(),
                                 parameterWithName("size").description("페이지 크기 [default: 10]").optional()
                         ),
@@ -209,6 +212,7 @@ public class TalkControllerTest extends AbstractControllerTest {
                                 fieldWithPath("content[].year").type(JsonFieldType.NUMBER).description("대담 영상 연도"),
                                 fieldWithPath("content[].talkerBelonging").type(JsonFieldType.STRING).description("대담자의 소속된 직장/단체"),
                                 fieldWithPath("content[].talkerName").type(JsonFieldType.STRING).description("대담자의 성명"),
+                                fieldWithPath("content[].isKeynoteSpeech").type(JsonFieldType.BOOLEAN).description("키노트 스피치 여부"),
                                 fieldWithPath("content[].favorite").type(JsonFieldType.BOOLEAN).description("관심한 대담영상의 여부"),
                                 fieldWithPath("content[].quiz").type(JsonFieldType.ARRAY).description("퀴즈 데이터, 없는경우 null").optional(),
                                 fieldWithPath("content[].quiz[].question").type(JsonFieldType.STRING).description("퀴즈 1개의 질문").optional(),
@@ -231,7 +235,7 @@ public class TalkControllerTest extends AbstractControllerTest {
                         new QuizInfo("질문2", 0, List.of("선지1","선지2"))
                 )
         );
-        TalkUserResponse response = new TalkUserResponse(id, "제목", "유튜브 고유ID", 2024, "대담자 소속","대담자 성명" ,true,quizResponse,LocalDateTime.now(), LocalDateTime.now());
+        TalkUserResponse response = new TalkUserResponse(id, "제목", "유튜브 고유ID", 2024, "대담자 소속","대담자 성명", false, true,quizResponse,LocalDateTime.now(), LocalDateTime.now());
         when(talkService.getTalkById(anyLong(), any())).thenReturn(response);
 
         //when
@@ -263,6 +267,7 @@ public class TalkControllerTest extends AbstractControllerTest {
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("대담 영상 연도"),
                                 fieldWithPath("talkerBelonging").type(JsonFieldType.STRING).description("대담자의 소속된 직장/단체"),
                                 fieldWithPath("talkerName").type(JsonFieldType.STRING).description("대담자의 성명"),
+                                fieldWithPath("isKeynoteSpeech").type(JsonFieldType.BOOLEAN).description("키노트 스피치 여부"),
                                 fieldWithPath("favorite").type(JsonFieldType.BOOLEAN).description("관심한 대담영상의 여부"),
                                 fieldWithPath("quiz").type(JsonFieldType.ARRAY).description("퀴즈 데이터, 없는경우 null").optional(),
                                 fieldWithPath("quiz[].question").type(JsonFieldType.STRING).description("퀴즈 1개의 질문").optional(),
@@ -290,8 +295,8 @@ public class TalkControllerTest extends AbstractControllerTest {
                         new QuizInfo("수정한 질문2", 0, List.of("수정한 선지1","수정한 선지2"))
                 )
         );
-        TalkRequest request= new TalkRequest("수정한 제목","수정한 유튜브 고유ID", 2024, "수정한 대담자 소속", "수정한 대담자 성명",quizRequest);
-        TalkResponse response = new TalkResponse(id, "수정한 제목", "수정한 유튜브 고유ID", 2024, "수정한 대담자 소속","수정한 대담자 성명" ,quizResponse,LocalDateTime.now(), LocalDateTime.now());
+        TalkRequest request= new TalkRequest("수정한 제목","수정한 유튜브 고유ID", 2024, "수정한 대담자 소속", "수정한 대담자 성명", true, quizRequest);
+        TalkResponse response = new TalkResponse(id, "수정한 제목", "수정한 유튜브 고유ID", 2024, "수정한 대담자 소속","수정한 대담자 성명", true, quizResponse,LocalDateTime.now(), LocalDateTime.now());
         when(talkService.updateTalk(anyLong(), any(TalkRequest.class))).thenReturn(response);
 
         //when
@@ -323,6 +328,7 @@ public class TalkControllerTest extends AbstractControllerTest {
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("대담 영상 연도"),
                                 fieldWithPath("talkerBelonging").type(JsonFieldType.STRING).description("대담자의 소속된 직장/단체"),
                                 fieldWithPath("talkerName").type(JsonFieldType.STRING).description("대담자의 성명"),
+                                fieldWithPath("isKeynoteSpeech").type(JsonFieldType.BOOLEAN).description("키노트 스피치 여부"),
                                 fieldWithPath("quiz").type(JsonFieldType.ARRAY).description("퀴즈 데이터, 없는경우 null").optional(),
                                 fieldWithPath("quiz[].question").type(JsonFieldType.STRING).description("퀴즈 1개의 질문").optional(),
                                 fieldWithPath("quiz[].answer").type(JsonFieldType.NUMBER).description("퀴즈 1개의 정답선지 인덱스").optional(),
@@ -335,6 +341,7 @@ public class TalkControllerTest extends AbstractControllerTest {
                                 fieldWithPath("year").type(JsonFieldType.NUMBER).description("대담 영상 연도"),
                                 fieldWithPath("talkerBelonging").type(JsonFieldType.STRING).description("대담자의 소속된 직장/단체"),
                                 fieldWithPath("talkerName").type(JsonFieldType.STRING).description("대담자의 성명"),
+                                fieldWithPath("isKeynoteSpeech").type(JsonFieldType.BOOLEAN).description("키노트 스피치 여부"),
                                 fieldWithPath("quiz").type(JsonFieldType.ARRAY).description("퀴즈 데이터, 없는경우 null").optional(),
                                 fieldWithPath("quiz[].question").type(JsonFieldType.STRING).description("퀴즈 1개의 질문").optional(),
                                 fieldWithPath("quiz[].answer").type(JsonFieldType.NUMBER).description("퀴즈 1개의 정답선지 인덱스").optional(),
