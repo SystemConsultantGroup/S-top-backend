@@ -72,7 +72,7 @@ public class InquiryControllerTest extends AbstractControllerTest {
     void createInquiry() throws Exception {
         // given
         InquiryRequest request = new InquiryRequest("프로젝트 문의 사항 제목", "프로젝트 문의 사항 내용");
-        InquiryDetailResponse response = InquiryDetailResponse.of(1L, "문의 작성자 이름", 1L, "프로젝트 이름", "문의 사항 제목", "문의 사항 내용", false, LocalDateTime.now(), LocalDateTime.now());
+        InquiryDetailResponse response = InquiryDetailResponse.of(1L, "문의 작성자 이름", 1L, "프로젝트 이름", "문의 사항 제목", "문의 사항 내용", false, FIXED_DATE_TIME, FIXED_DATE_TIME);
 
         when(projectService.createProjectInquiry(anyLong(), any(User.class), any(InquiryRequest.class))).thenReturn(response);
 
@@ -123,8 +123,8 @@ public class InquiryControllerTest extends AbstractControllerTest {
     void getInquiries() throws Exception {
 
         // given
-        InquiryResponse response1 = InquiryResponse.of(1L, "프로젝트 inquiry (문의) 제목 1", "프로젝트 문의 사항 내용", LocalDateTime.now());
-        InquiryResponse response2 = InquiryResponse.of(2L, "프로젝트 inquiry (문의) 제목 2", "프로젝트 문의 사항 내용", LocalDateTime.now());
+        InquiryResponse response1 = InquiryResponse.of(1L, "프로젝트 inquiry (문의) 제목 1", "프로젝트 문의 사항 내용", FIXED_DATE_TIME);
+        InquiryResponse response2 = InquiryResponse.of(2L, "프로젝트 inquiry (문의) 제목 2", "프로젝트 문의 사항 내용", FIXED_DATE_TIME);
         Page<InquiryResponse> page = new PageImpl<>(List.of(response1, response2), PageRequest.of(0, 10), 2);
 
         when(inquiryService.getInquiryList(any(String.class),any(String.class), any(Pageable.class))).thenReturn(page);
@@ -190,7 +190,7 @@ public class InquiryControllerTest extends AbstractControllerTest {
     void getInquiry() throws Exception {
 
         // given
-        InquiryDetailResponse response = InquiryDetailResponse.of(1L, "문의 작성자 이름", 1L, "프로젝트 이름", "문의 사항 제목", "문의 사항 내용", false, LocalDateTime.now(), LocalDateTime.now());
+        InquiryDetailResponse response = InquiryDetailResponse.of(1L, "문의 작성자 이름", 1L, "프로젝트 이름", "문의 사항 제목", "문의 사항 내용", false, FIXED_DATE_TIME, FIXED_DATE_TIME);
 
         when(inquiryService.getInquiry(anyLong(), any(User.class))).thenReturn(response);
 
@@ -237,7 +237,7 @@ public class InquiryControllerTest extends AbstractControllerTest {
 
         // given
         InquiryRequest request = new InquiryRequest("수정된 프로젝트 문의 사항 제목", "수정된 프로젝트 문의 사항 내용");
-        InquiryDetailResponse response = InquiryDetailResponse.of(1L, "문의 작성자 이름", 1L, "프로젝트 이름", "수정된 문의 사항 제목", "수정된 문의 사항 내용", false ,LocalDateTime.now(), LocalDateTime.now());
+        InquiryDetailResponse response = InquiryDetailResponse.of(1L, "문의 작성자 이름", 1L, "프로젝트 이름", "수정된 문의 사항 제목", "수정된 문의 사항 내용", false ,FIXED_DATE_TIME, FIXED_DATE_TIME);
 
         when(inquiryService.updateInquiry(anyLong(), any(User.class), any(InquiryRequest.class))).thenReturn(response);
 

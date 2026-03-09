@@ -216,9 +216,9 @@ public class ProjectControllerTest extends AbstractControllerTest {
                 false,
                 false,
                 List.of(
-                        new CommentResponse(1L, 1L, "유저 이름", true, "댓글 내용", LocalDateTime.now(), LocalDateTime.now()),
-                        new CommentResponse(2L, 1L, "유저 이름", false, "댓글 내용", LocalDateTime.now(), LocalDateTime.now()),
-                        new CommentResponse(3L, 1L, "유저 이름", false, "댓글 내용", LocalDateTime.now(), LocalDateTime.now())
+                        new CommentResponse(1L, 1L, "유저 이름", true, "댓글 내용", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                        new CommentResponse(2L, 1L, "유저 이름", false, "댓글 내용", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                        new CommentResponse(3L, 1L, "유저 이름", false, "댓글 내용", FIXED_DATE_TIME, FIXED_DATE_TIME)
                 ),
                 "프로젝트 URL",
                 "프로젝트 설명"
@@ -323,9 +323,9 @@ public class ProjectControllerTest extends AbstractControllerTest {
                 false,
                 false,
                 List.of(
-                        new CommentResponse(1L, 1L, "유저 이름", true, "댓글 내용", LocalDateTime.now(), LocalDateTime.now()),
-                        new CommentResponse(2L, 1L, "유저 이름", false, "댓글 내용", LocalDateTime.now(), LocalDateTime.now()),
-                        new CommentResponse(3L, 1L, "유저 이름", false, "댓글 내용", LocalDateTime.now(), LocalDateTime.now())
+                        new CommentResponse(1L, 1L, "유저 이름", true, "댓글 내용", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                        new CommentResponse(2L, 1L, "유저 이름", false, "댓글 내용", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                        new CommentResponse(3L, 1L, "유저 이름", false, "댓글 내용", FIXED_DATE_TIME, FIXED_DATE_TIME)
                 ),
                 "프로젝트 URL",
                 "프로젝트 설명"
@@ -437,9 +437,9 @@ public class ProjectControllerTest extends AbstractControllerTest {
                 false,
                 false,
                 List.of(
-                        new CommentResponse(1L, 1L, "유저 이름", true, "댓글 내용", LocalDateTime.now(), LocalDateTime.now()),
-                        new CommentResponse(2L, 1L, "유저 이름", false, "댓글 내용", LocalDateTime.now(), LocalDateTime.now()),
-                        new CommentResponse(3L, 1L, "유저 이름", false, "댓글 내용", LocalDateTime.now(), LocalDateTime.now())
+                        new CommentResponse(1L, 1L, "유저 이름", true, "댓글 내용", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                        new CommentResponse(2L, 1L, "유저 이름", false, "댓글 내용", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                        new CommentResponse(3L, 1L, "유저 이름", false, "댓글 내용", FIXED_DATE_TIME, FIXED_DATE_TIME)
                 ),
                 "프로젝트 URL",
                 "프로젝트 설명"
@@ -669,7 +669,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
         // given
         CommentRequest commentRequest = new CommentRequest("댓글 내용", true);
 
-        CommentResponse commentResponse = new CommentResponse(1L, 1L, "유저 이름", true, "댓글 내용", LocalDateTime.now(), LocalDateTime.now());
+        CommentResponse commentResponse = new CommentResponse(1L, 1L, "유저 이름", true, "댓글 내용", FIXED_DATE_TIME, FIXED_DATE_TIME);
 
         when(projectService.createProjectComment(anyLong(), any(User.class), any(CommentRequest.class))).thenReturn(commentResponse);
 

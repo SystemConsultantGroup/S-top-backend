@@ -9,10 +9,12 @@ import com.scg.stop.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriUtils;
@@ -20,6 +22,7 @@ import org.springframework.web.util.UriUtils;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,10 +38,20 @@ public class FileController {
     }
 
     @GetMapping("/{fileId}")
-    public ResponseEntity<InputStreamResource> getFile(@PathVariable("fileId") Long fileId) {
-        InputStream stream = fileService.getFile(fileId);
+    public ResponseEntity<InputStreamResource> getFile(
+            @PathVariable("fileId") Long fileId,
+            WebRequest request) {
         File file = fileService.getFileMetadata(fileId);
+        String etag = file.getUuid();
+
+        if (request.checkNotModified(etag)) {
+            return null;
+        }
+
+        InputStream stream = fileService.getFile(fileId);
         return ResponseEntity.ok()
+                .cacheControl(CacheControl.maxAge(365, TimeUnit.DAYS).cachePublic())
+                .eTag(etag)
                 .contentType(MediaType.parseMediaType(file.getMimeType()))
                 .body(new InputStreamResource(stream));
     }

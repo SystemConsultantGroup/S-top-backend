@@ -61,9 +61,9 @@ class GalleryControllerTest extends AbstractControllerTest {
         // given
         List<Long> fileIds = Arrays.asList(1L, 2L, 3L);
         List<FileResponse> fileResponses = Arrays.asList(
-                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "사진1.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "사진2.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "사진3.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now())
+                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "사진1.jpg", "image/jpeg", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "사진2.jpg", "image/jpeg", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "사진3.jpg", "image/jpeg", FIXED_DATE_TIME, FIXED_DATE_TIME)
         );
         GalleryRequest request = new GalleryRequest("새내기 배움터", 2024, 4, fileIds);
         GalleryResponse response = new GalleryResponse(
@@ -72,8 +72,8 @@ class GalleryControllerTest extends AbstractControllerTest {
                 2024,
                 4,
                 1,
-                LocalDateTime.now(),
-                LocalDateTime.now(),
+                FIXED_DATE_TIME,
+                FIXED_DATE_TIME,
                 fileResponses
         );
         when(galleryService.createGallery(any(GalleryRequest.class))).thenReturn(response);
@@ -127,9 +127,9 @@ class GalleryControllerTest extends AbstractControllerTest {
 
         // given
         List<FileResponse> fileResponses = Arrays.asList(
-                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "사진1.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "사진2.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "사진3.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now())
+                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "사진1.jpg", "image/jpeg", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "사진2.jpg", "image/jpeg", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "사진3.jpg", "image/jpeg", FIXED_DATE_TIME, FIXED_DATE_TIME)
         );
         GalleryResponse galleryResponse = new GalleryResponse(
                 1L,
@@ -137,12 +137,12 @@ class GalleryControllerTest extends AbstractControllerTest {
                 2024,
                 4,
                 0, // getGalleries 에선 조회수를 증가시키지 않음
-                LocalDateTime.now(),
-                LocalDateTime.now(),
+                FIXED_DATE_TIME,
+                FIXED_DATE_TIME,
                 fileResponses
         );
         PageImpl<GalleryResponse> galleryResponses = new PageImpl<>(Collections.singletonList(galleryResponse));
-        when(galleryService.getGalleries(anyInt(), anyInt(), any(Pageable.class))).thenReturn(galleryResponses);
+        when(galleryService.getGalleries(anyInt(), anyInt(), nullable(String.class), any(Pageable.class))).thenReturn(galleryResponses);
 
         // when
         ResultActions result = mockMvc.perform(
@@ -158,6 +158,7 @@ class GalleryControllerTest extends AbstractControllerTest {
                         queryParameters(
                                 parameterWithName("year").optional().description("연도"),
                                 parameterWithName("month").optional().description("월"),
+                                parameterWithName("title").optional().description("제목 검색어 (최대 100자)"),
                                 parameterWithName("page").optional().description("페이지 번호 [default: 0]"),
                                 parameterWithName("size").optional().description("페이지 크기 [default: 10]")
                         ),
@@ -199,9 +200,9 @@ class GalleryControllerTest extends AbstractControllerTest {
 
         // given
         List<FileResponse> fileResponses = Arrays.asList(
-                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "사진1.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "사진2.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "사진3.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now())
+                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "사진1.jpg", "image/jpeg", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "사진2.jpg", "image/jpeg", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "사진3.jpg", "image/jpeg", FIXED_DATE_TIME, FIXED_DATE_TIME)
         );
         GalleryResponse galleryResponse = new GalleryResponse(
                 1L,
@@ -209,8 +210,8 @@ class GalleryControllerTest extends AbstractControllerTest {
                 2024,
                 4,
                 1,
-                LocalDateTime.now(),
-                LocalDateTime.now(),
+                FIXED_DATE_TIME,
+                FIXED_DATE_TIME,
                 fileResponses
         );
         when(galleryService.getGallery(1L)).thenReturn(galleryResponse);
@@ -253,9 +254,9 @@ class GalleryControllerTest extends AbstractControllerTest {
         // given
         List<Long> fileIds = Arrays.asList(1L, 2L, 3L);
         List<FileResponse> fileResponses = Arrays.asList(
-                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "사진1.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "사진2.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "사진3.jpg", "image/jpeg", LocalDateTime.now(), LocalDateTime.now())
+                new FileResponse(1L, "014eb8a0-d4a6-11ee-adac-117d766aca1d", "사진1.jpg", "image/jpeg", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                new FileResponse(2L, "11a480c0-13fa-11ef-9047-570191b390ea", "사진2.jpg", "image/jpeg", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                new FileResponse(3L, "1883fc70-cfb4-11ee-a387-e754bd392d45", "사진3.jpg", "image/jpeg", FIXED_DATE_TIME, FIXED_DATE_TIME)
         );
         GalleryRequest request = new GalleryRequest("수정된 제목", 2024, 5, fileIds);
         GalleryResponse response = new GalleryResponse(
@@ -264,8 +265,8 @@ class GalleryControllerTest extends AbstractControllerTest {
                 2024,
                 5,
                 1,
-                LocalDateTime.now(),
-                LocalDateTime.now(),
+                FIXED_DATE_TIME,
+                FIXED_DATE_TIME,
                 fileResponses
         );
         when(galleryService.updateGallery(anyLong(), any(GalleryRequest.class))).thenReturn(response);
