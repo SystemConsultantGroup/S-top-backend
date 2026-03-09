@@ -18,7 +18,7 @@ public class TalkResponse {
     public String talkerBelonging;
     public String talkerName;
     @JsonProperty("isKeynoteSpeech")
-    private boolean keynoteSpeech;
+    private Boolean keynoteSpeech;
 
     @JsonUnwrapped
     public QuizResponse quiz;
@@ -35,7 +35,7 @@ public class TalkResponse {
                 talk.getYear(),
                 talk.getTalkerBelonging(),
                 talk.getTalkerName(),
-                talk.isKeynoteSpeech(),
+                talk.getKeynoteSpeech(),
                 (talk.getQuiz() != null)? QuizResponse.from(talk.getQuiz()) : new QuizResponse(),
                 talk.getCreatedAt(),
                 talk.getUpdatedAt()

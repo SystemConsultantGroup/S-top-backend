@@ -31,7 +31,7 @@ public class TalkRequest {
     public String talkerName;
 
     @JsonProperty("isKeynoteSpeech")
-    private boolean keynoteSpeech;
+    private Boolean keynoteSpeech;
 
     @JsonUnwrapped
     @Valid

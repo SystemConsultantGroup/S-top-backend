@@ -55,7 +55,7 @@ public class TalkService {
                 talkRequest.getYear(),
                 talkRequest.getTalkerBelonging(),
                 talkRequest.getTalkerName(),
-                talkRequest.isKeynoteSpeech()
+                talkRequest.getKeynoteSpeech()
         ));
         if(talkRequest.getQuiz().getQuiz() != null) {
             Quiz quiz = quizRepository.save(Quiz.from(talkRequest.getQuiz().toQuizInfoMap()));
@@ -86,7 +86,7 @@ public class TalkService {
                 talkRequest.getYear(),
                 talkRequest.getTalkerBelonging(),
                 talkRequest.getTalkerName(),
-                talkRequest.isKeynoteSpeech()
+                talkRequest.getKeynoteSpeech()
         );
         return TalkResponse.from(talk);
     }

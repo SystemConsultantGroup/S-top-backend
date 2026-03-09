@@ -51,14 +51,14 @@ public class Talk extends BaseTimeEntity {
             Integer year,
             String talkerBelonging,
             String talkerName,
-            boolean keynoteSpeech
+            Boolean keynoteSpeech
     ) {
         this.title = title;
         this.youtubeId = youtubeId;
         this.year = year;
         this.talkerBelonging = talkerBelonging;
         this.talkerName = talkerName;
-        this.keynoteSpeech = keynoteSpeech;
+        this.keynoteSpeech = keynoteSpeech != null ? keynoteSpeech : false;
         this.favoriteVideos = new ArrayList<>();
     }
 
@@ -68,7 +68,7 @@ public class Talk extends BaseTimeEntity {
             Integer year,
             String talkerBelonging,
             String talkerName,
-            boolean keynoteSpeech
+            Boolean keynoteSpeech
     ) {
         return new Talk(
                 title,
@@ -86,14 +86,18 @@ public class Talk extends BaseTimeEntity {
             Integer year,
             String talkerBelonging,
             String talkerName,
-            boolean keynoteSpeech
+            Boolean keynoteSpeech
     ) {
         this.title= title;
         this.youtubeId = youtubeId;
         this.year = year;
         this.talkerBelonging = talkerBelonging;
         this.talkerName = talkerName;
-        this.keynoteSpeech = keynoteSpeech;
+        this.keynoteSpeech = keynoteSpeech != null ? keynoteSpeech : false;
+    }
+
+    public boolean isKeynoteSpeech() {
+        return Boolean.TRUE.equals(keynoteSpeech);
     }
 
     public void setQuiz(Quiz quiz) {
