@@ -13,11 +13,13 @@ public interface GalleryRepository extends JpaRepository<Gallery, Long> {
 
     @Query("SELECT g FROM Gallery g " +
             "WHERE (:year IS NULL OR g.year = :year) " +
-            "AND (:month IS NULL OR g.month = :month)" +
+            "AND (:month IS NULL OR g.month = :month) " +
+            "AND (:title IS NULL OR g.title LIKE %:title%) " +
             "ORDER BY g.year DESC, g.month DESC")
     Page<Gallery> findGalleries(
             @Param("year") Integer year,
             @Param("month") Integer month,
+            @Param("title") String title,
             Pageable pageable
     );
 }

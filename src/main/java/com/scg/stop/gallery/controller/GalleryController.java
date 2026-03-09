@@ -7,12 +7,14 @@ import com.scg.stop.gallery.service.GalleryService;
 import com.scg.stop.user.domain.AccessType;
 import com.scg.stop.user.domain.User;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -35,8 +37,9 @@ public class GalleryController {
     public ResponseEntity<Page<GalleryResponse>> getGalleries(
             @RequestParam(value = "year", required = false) Integer year,
             @RequestParam(value = "month", required = false) Integer month,
+            @Validated @RequestParam(value = "title", required = false) @Size(max = 100) String title,
             @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        Page<GalleryResponse> galleries = galleryService.getGalleries(year, month, pageable);
+        Page<GalleryResponse> galleries = galleryService.getGalleries(year, month, title, pageable);
         return ResponseEntity.ok(galleries);
     }
 
