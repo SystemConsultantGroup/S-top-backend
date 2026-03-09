@@ -43,10 +43,11 @@ public class TalkController {
     public ResponseEntity<Page<TalkUserResponse>> getAllTalks(
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "year", required = false) Integer year,
+            @RequestParam(value = "isKeynoteSpeech", required = false) Boolean isKeynoteSpeech,
             @AuthUser(accessType = {AccessType.OPTIONAL}) User user,
             @PageableDefault(page = 0, size = 10) Pageable pageable
     ) {
-        Page<TalkUserResponse> talks = talkService.getTalks(user, title, year, pageable);
+        Page<TalkUserResponse> talks = talkService.getTalks(user, title, year, isKeynoteSpeech, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(talks);
     }
 
