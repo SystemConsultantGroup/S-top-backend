@@ -36,8 +36,8 @@ public class Talk extends BaseTimeEntity {
     @Column(nullable = false)
     private String talkerName;
 
-    @Column(name = "is_keynote_speech", nullable = false)
-    private boolean isKeynoteSpeech = false;
+    @Column(name = "is_keynote_speech", nullable = true)
+    private Boolean isKeynoteSpeech = false;
 
     @OneToOne(fetch = LAZY, mappedBy = "talk", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Quiz quiz;
