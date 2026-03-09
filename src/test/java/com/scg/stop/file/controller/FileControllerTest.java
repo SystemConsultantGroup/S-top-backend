@@ -1,6 +1,8 @@
 package com.scg.stop.file.controller;
 
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
 import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
@@ -16,6 +18,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.partWith
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParts;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.scg.stop.configuration.AbstractControllerTest;
@@ -75,16 +78,16 @@ class FileControllerTest extends AbstractControllerTest {
                 UUID.randomUUID().toString(),
                 "첨부파일1.png",
                 "image/png",
-                LocalDateTime.now(),
-                LocalDateTime.now()
+                FIXED_DATE_TIME,
+                FIXED_DATE_TIME
         );
         FileResponse response2 = new FileResponse(
                 2L,
                 UUID.randomUUID().toString(),
                 "첨부파일2.pdf",
                 "application/pdf",
-                LocalDateTime.now(),
-                LocalDateTime.now()
+                FIXED_DATE_TIME,
+                FIXED_DATE_TIME
         );
         List<FileResponse> responses = List.of(response1, response2);
 
@@ -138,14 +141,51 @@ class FileControllerTest extends AbstractControllerTest {
         // then
         result.andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.parseMediaType(file.getMimeType())))
+                .andExpect(header().exists(HttpHeaders.ETAG))
+                .andExpect(header().string(HttpHeaders.CACHE_CONTROL, "max-age=31536000, public"))
                 .andDo(restDocs.document(
                         pathParameters(
                                 parameterWithName("fileId").description("파일 ID")
                         ),
                         responseHeaders(
-                                headerWithName(HttpHeaders.CONTENT_TYPE).description("파일의 MIME 타입")
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("파일의 MIME 타입"),
+                                headerWithName(HttpHeaders.ETAG).description("파일의 UUID (캐시 검증용)"),
+                                headerWithName(HttpHeaders.CACHE_CONTROL).description("캐시 제어 헤더")
                         )
                 ));
+    }
+
+    @Test
+    @DisplayName("If-None-Match 헤더가 일치하면 304 Not Modified를 반환한다.")
+    void getFile_NotModified() throws Exception {
+        // given
+        Long fileId = 1L;
+        String fileName = "s-top 로고.png";
+        String mimeType = "image/png";
+        String uuid = UUID.randomUUID().toString();
+
+        File file = File.of(uuid, fileName, mimeType);
+
+        when(fileService.getFileMetadata(fileId)).thenReturn(file);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                get("/files/{fileId}", fileId)
+                        .header(HttpHeaders.IF_NONE_MATCH, "\"" + uuid + "\"")
+        );
+
+        // then
+        result.andExpect(status().isNotModified());
+        verify(fileService, never()).getFile(fileId);
+
+        result.andDo(restDocs.document(
+                pathParameters(
+                        parameterWithName("fileId").description("파일 ID")
+                ),
+                requestHeaders(
+                        headerWithName(HttpHeaders.IF_NONE_MATCH).description("이전에 받은 ETag 값")
+                )
+        ));
     }
 
     @Test

@@ -3,6 +3,7 @@ package com.scg.stop.configuration;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 
 import com.scg.stop.auth.config.AuthUserArgumentResolver;
+import java.time.LocalDateTime;
 import com.scg.stop.auth.repository.RefreshTokenRepository;
 import com.scg.stop.user.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +24,8 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 @Import(RestDocsConfiguration.class)
 @ExtendWith(RestDocumentationExtension.class)
 public abstract class AbstractControllerTest {
+
+    protected static final LocalDateTime FIXED_DATE_TIME = LocalDateTime.of(2024, 1, 1, 0, 0, 0);
 
     @Autowired
     protected RestDocumentationResultHandler restDocs;

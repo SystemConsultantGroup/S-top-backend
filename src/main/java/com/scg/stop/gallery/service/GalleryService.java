@@ -39,8 +39,8 @@ public class GalleryService {
     }
 
     @Transactional(readOnly = true)
-    public Page<GalleryResponse> getGalleries(Integer year, Integer month, Pageable pageable) {
-        Page<Gallery> galleries = galleryRepository.findGalleries(year, month, pageable);
+    public Page<GalleryResponse> getGalleries(Integer year, Integer month, String title, Pageable pageable) {
+        Page<Gallery> galleries = galleryRepository.findGalleries(year, month, title, pageable);
         return galleries.map(GalleryResponse::from);
     }
 

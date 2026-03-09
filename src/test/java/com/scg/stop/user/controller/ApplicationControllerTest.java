@@ -61,12 +61,12 @@ class ApplicationControllerTest extends AbstractControllerTest {
     void getApplications() throws Exception  {
 
         // given
-        ApplicationListResponse response1 = new ApplicationListResponse(1L, "김영한", "배민", null, UserType.INACTIVE_COMPANY, LocalDateTime.now(),
-                LocalDateTime.now());
-        ApplicationListResponse response2 = new ApplicationListResponse(2L, "김교수", "솦융대", "교수", UserType.INACTIVE_PROFESSOR, LocalDateTime.now(),
-                LocalDateTime.now());
-        ApplicationListResponse response3 = new ApplicationListResponse(3L, "박교수", "정통대", "교수", UserType.INACTIVE_PROFESSOR, LocalDateTime.now(),
-                LocalDateTime.now());
+        ApplicationListResponse response1 = new ApplicationListResponse(1L, "김영한", "배민", null, UserType.INACTIVE_COMPANY, FIXED_DATE_TIME,
+                FIXED_DATE_TIME);
+        ApplicationListResponse response2 = new ApplicationListResponse(2L, "김교수", "솦융대", "교수", UserType.INACTIVE_PROFESSOR, FIXED_DATE_TIME,
+                FIXED_DATE_TIME);
+        ApplicationListResponse response3 = new ApplicationListResponse(3L, "박교수", "정통대", "교수", UserType.INACTIVE_PROFESSOR, FIXED_DATE_TIME,
+                FIXED_DATE_TIME);
         Page<ApplicationListResponse> page = new PageImpl<>(List.of(response1, response2, response3), PageRequest.of(0, 10), 3);
 
         when(applicationService.getApplications(any())).thenReturn(page);
@@ -126,7 +126,7 @@ class ApplicationControllerTest extends AbstractControllerTest {
         // given
         Long applicationId = 1L;
         ApplicationDetailResponse response = new ApplicationDetailResponse(
-                applicationId, "김영한", "010-1111-2222", "email@gmail.com", "배민", "CEO", UserType.INACTIVE_COMPANY, LocalDateTime.now(), LocalDateTime.now()
+                applicationId, "김영한", "010-1111-2222", "email@gmail.com", "배민", "CEO", UserType.INACTIVE_COMPANY, FIXED_DATE_TIME, FIXED_DATE_TIME
         );
 
         when(applicationService.getApplication(applicationId)).thenReturn(response);
@@ -164,7 +164,7 @@ class ApplicationControllerTest extends AbstractControllerTest {
         // given
         Long applicationId = 1L;
         ApplicationDetailResponse response = new ApplicationDetailResponse(
-                applicationId, "김영한", "010-1111-2222", "email@gmail.com", "배민", "CEO", UserType.COMPANY, LocalDateTime.now(), LocalDateTime.now()
+                applicationId, "김영한", "010-1111-2222", "email@gmail.com", "배민", "CEO", UserType.COMPANY, FIXED_DATE_TIME, FIXED_DATE_TIME
         );
 
         when(applicationService.approveApplication(applicationId)).thenReturn(response);

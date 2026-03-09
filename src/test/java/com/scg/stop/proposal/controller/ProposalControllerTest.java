@@ -88,8 +88,8 @@ public class ProposalControllerTest extends AbstractControllerTest {
     @DisplayName("과제제안 리스트를 조회할 수 있다")
     void getProposals() throws Exception {
         //given
-        ProposalResponse proposal1 = ProposalResponse.of(1L, "과제 제안1", "이름", LocalDateTime.now());
-        ProposalResponse proposal2 = ProposalResponse.of(2L, "과제 제안2", "이름", LocalDateTime.now());
+        ProposalResponse proposal1 = ProposalResponse.of(1L, "과제 제안1", "이름", FIXED_DATE_TIME);
+        ProposalResponse proposal2 = ProposalResponse.of(2L, "과제 제안2", "이름", FIXED_DATE_TIME);
 
         Page<ProposalResponse> proposalPage = new PageImpl<>(
                 List.of(proposal1, proposal2),
@@ -146,9 +146,9 @@ public class ProposalControllerTest extends AbstractControllerTest {
     void getProposalDetail() throws Exception {
         //given
         List<FileResponse> fileResponses = Arrays.asList(
-                new FileResponse(1L, "uuid1", "과제제안서 이름1.pdf", "application/pdf", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(2L, "uuid2", "과제제안서 이름2.pdf", "application/pdf", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(3L, "uuid3", "과제제안서 이름3.pdf", "application/pdf", LocalDateTime.now(), LocalDateTime.now())
+                new FileResponse(1L, "uuid1", "과제제안서 이름1.pdf", "application/pdf", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                new FileResponse(2L, "uuid2", "과제제안서 이름2.pdf", "application/pdf", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                new FileResponse(3L, "uuid3", "과제제안서 이름3.pdf", "application/pdf", FIXED_DATE_TIME, FIXED_DATE_TIME)
         );
 
         ProposalDetailResponse proposalDetailResponse = new ProposalDetailResponse(1L,
@@ -209,9 +209,9 @@ public class ProposalControllerTest extends AbstractControllerTest {
                 List.of(1L, 2L, 3L)
         );
         List<FileResponse> fileResponses = Arrays.asList(
-                new FileResponse(1L, "uuid1", "과제제안서 이름1.pdf", "application/pdf", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(2L, "uuid2", "과제제안서 이름2.pdf", "application/pdf", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(3L, "uuid3", "과제제안서 이름3.pdf", "application/pdf", LocalDateTime.now(), LocalDateTime.now())
+                new FileResponse(1L, "uuid1", "과제제안서 이름1.pdf", "application/pdf", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                new FileResponse(2L, "uuid2", "과제제안서 이름2.pdf", "application/pdf", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                new FileResponse(3L, "uuid3", "과제제안서 이름3.pdf", "application/pdf", FIXED_DATE_TIME, FIXED_DATE_TIME)
         );
         ProposalDetailResponse proposalDetailResponse = new ProposalDetailResponse(
                 1L,
@@ -289,9 +289,9 @@ public class ProposalControllerTest extends AbstractControllerTest {
                 List.of(1L,2L,3L)
         );
         List<FileResponse> fileResponses = Arrays.asList(
-                new FileResponse(1L, "uuid1", "과제제안서 이름1.pdf", "application/pdf", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(2L, "uuid2", "과제제안서 이름2.pdf", "application/pdf", LocalDateTime.now(), LocalDateTime.now()),
-                new FileResponse(3L, "uuid3", "과제제안서 이름3.pdf", "application/pdf", LocalDateTime.now(), LocalDateTime.now())
+                new FileResponse(1L, "uuid1", "과제제안서 이름1.pdf", "application/pdf", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                new FileResponse(2L, "uuid2", "과제제안서 이름2.pdf", "application/pdf", FIXED_DATE_TIME, FIXED_DATE_TIME),
+                new FileResponse(3L, "uuid3", "과제제안서 이름3.pdf", "application/pdf", FIXED_DATE_TIME, FIXED_DATE_TIME)
         );
         ProposalDetailResponse proposalDetailResponse = new ProposalDetailResponse(
                 1L,
