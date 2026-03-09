@@ -142,7 +142,7 @@ class GalleryControllerTest extends AbstractControllerTest {
                 fileResponses
         );
         PageImpl<GalleryResponse> galleryResponses = new PageImpl<>(Collections.singletonList(galleryResponse));
-        when(galleryService.getGalleries(anyInt(), anyInt(), any(Pageable.class))).thenReturn(galleryResponses);
+        when(galleryService.getGalleries(anyInt(), anyInt(), anyString(), any(Pageable.class))).thenReturn(galleryResponses);
 
         // when
         ResultActions result = mockMvc.perform(
@@ -158,6 +158,7 @@ class GalleryControllerTest extends AbstractControllerTest {
                         queryParameters(
                                 parameterWithName("year").optional().description("연도"),
                                 parameterWithName("month").optional().description("월"),
+                                parameterWithName("title").optional().description("제목 검색어 (최대 100자)"),
                                 parameterWithName("page").optional().description("페이지 번호 [default: 0]"),
                                 parameterWithName("size").optional().description("페이지 크기 [default: 10]")
                         ),
