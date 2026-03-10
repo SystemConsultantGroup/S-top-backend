@@ -7,6 +7,7 @@ import com.scg.stop.global.excel.ExcelUtil;
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.ExceptionCode;
 import com.scg.stop.user.domain.User;
+import com.scg.stop.user.domain.UserType;
 import com.scg.stop.user.repository.UserRepository;
 import com.scg.stop.video.domain.Quiz;
 import com.scg.stop.video.domain.QuizInfo;
@@ -44,12 +45,13 @@ public class QuizService {
     private final ExcelUtil excelUtil;
 
     @Transactional(readOnly = true)
-    public QuizResponse getQuiz(Long talkId) {
+    public QuizResponse getQuiz(Long talkId, User user) {
         Talk talk = talkRepository.findById(talkId).orElseThrow(
                 () -> new BadRequestException(ExceptionCode.TALK_ID_NOT_FOUND)
         );
         if(talk.getQuiz() == null) throw new BadRequestException(ExceptionCode.NO_QUIZ);
-        return QuizResponse.from(talk.getQuiz());
+        boolean revealAnswer = user != null && user.getUserType() == UserType.ADMIN;
+        return QuizResponse.from(talk.getQuiz(), revealAnswer);
     }
 
     public QuizSubmitResponse submitQuiz(Long talkId, QuizSubmitRequest submitRequest, User user) {
