@@ -16,12 +16,22 @@ import java.util.Map;
 @NoArgsConstructor
 public class QuizResponse {
     public List<QuizInfo> quiz;
+
     public static QuizResponse from(Quiz quiz) {
+        return from(quiz, true);
+    }
+
+    public static QuizResponse from(Quiz quiz, boolean revealAnswer) {
         List<String> keys = new ArrayList<>(quiz.getQuiz().keySet());
         Collections.sort(keys);
         List<QuizInfo> tmp = new ArrayList<>();
         for(String key : keys) {
-            tmp.add(quiz.getQuiz().get(key));
+            QuizInfo quizInfo = quiz.getQuiz().get(key);
+            tmp.add(new QuizInfo(
+                    quizInfo.getQuestion(),
+                    revealAnswer ? quizInfo.getAnswer() : -1,
+                    quizInfo.getOptions()
+            ));
         }
         return new QuizResponse(tmp);
     }

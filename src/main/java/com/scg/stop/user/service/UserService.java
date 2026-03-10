@@ -147,8 +147,9 @@ public class UserService {
     @Transactional(readOnly = true)
     public List<TalkUserResponse> getUserFavoriteTalks(User user) {
         List<Talk> talks = favoriteVideoRepository.findTalksByUser(user);
+        boolean revealAnswer = user.getUserType().equals(UserType.ADMIN);
         return talks.stream()
-                .map(talk -> TalkUserResponse.from(talk, true))
+                .map(talk -> TalkUserResponse.from(talk, true, revealAnswer))
                 .collect(Collectors.toList());
     }
 
