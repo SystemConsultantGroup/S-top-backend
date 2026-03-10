@@ -18,7 +18,8 @@ public class QuizResponse {
     public List<QuizInfo> quiz;
 
     public static QuizResponse from(Quiz quiz) {
-        return from(quiz, true);
+        // Default to hiding answers; callers must explicitly opt in to revealing them.
+        return from(quiz, false);
     }
 
     public static QuizResponse from(Quiz quiz, boolean revealAnswer) {
