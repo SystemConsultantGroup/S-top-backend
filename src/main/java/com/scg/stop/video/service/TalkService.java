@@ -1,6 +1,7 @@
 package com.scg.stop.video.service;
 
 import com.scg.stop.user.domain.User;
+import com.scg.stop.user.domain.UserType;
 import com.scg.stop.video.domain.FavoriteVideo;
 import com.scg.stop.video.domain.Quiz;
 import com.scg.stop.video.domain.Talk;
@@ -32,9 +33,10 @@ public class TalkService {
     @Transactional(readOnly = true)
     public Page<TalkUserResponse> getTalks(User user, String title, Integer year, Boolean isKeynoteSpeech, Pageable pageable) {
         Page<Talk> talks = talkRepository.findPages(title, year, isKeynoteSpeech, pageable);
-        if(user == null) return talks.map(TalkUserResponse::from);
+        boolean revealAnswer = isAdmin(user);
+        if(user == null) return talks.map(talk -> TalkUserResponse.from(talk, false, revealAnswer));
         List<TalkUserResponse> content = talks.stream().map(talk ->
-                TalkUserResponse.from(talk, favoriteVideoRepository.existsByTalkAndUser(talk, user))
+                TalkUserResponse.from(talk, favoriteVideoRepository.existsByTalkAndUser(talk, user), revealAnswer)
         ).toList();
         return new PageImpl<>(content, pageable, talks.getTotalElements());
     }
@@ -44,8 +46,9 @@ public class TalkService {
         Talk talk = talkRepository.findById(id).orElseThrow(
                 () -> new BadRequestException(ExceptionCode.TALK_ID_NOT_FOUND)
         );
-        if(user == null) return TalkUserResponse.from(talk);
-        return TalkUserResponse.from(talk, favoriteVideoRepository.existsByTalkAndUser(talk, user));
+        boolean revealAnswer = isAdmin(user);
+        if(user == null) return TalkUserResponse.from(talk, false, revealAnswer);
+        return TalkUserResponse.from(talk, favoriteVideoRepository.existsByTalkAndUser(talk, user), revealAnswer);
     }
 
     public TalkResponse createTalk(TalkRequest talkRequest) {
@@ -96,6 +99,10 @@ public class TalkService {
                 () -> new BadRequestException(ExceptionCode.TALK_ID_NOT_FOUND)
         );
         talkRepository.delete(talk);
+    }
+
+    private boolean isAdmin(User user) {
+        return user != null && user.getUserType() == UserType.ADMIN;
     }
 
 }

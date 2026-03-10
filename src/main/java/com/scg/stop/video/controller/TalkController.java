@@ -80,8 +80,11 @@ public class TalkController {
     }
 
     @GetMapping("/{talkId}/quiz")
-    public ResponseEntity<QuizResponse> getQuiz(@PathVariable("talkId") Long talkId) {
-        QuizResponse quizResponse = quizService.getQuiz(talkId);
+    public ResponseEntity<QuizResponse> getQuiz(
+            @PathVariable("talkId") Long talkId,
+            @AuthUser(accessType = {AccessType.OPTIONAL}) User user
+    ) {
+        QuizResponse quizResponse = quizService.getQuiz(talkId, user);
         return ResponseEntity.status(HttpStatus.OK).body(quizResponse);
     }
 

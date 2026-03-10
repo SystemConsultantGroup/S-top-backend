@@ -28,22 +28,10 @@ public class TalkUserResponse {
     public LocalDateTime updatedAt;
 
     public static TalkUserResponse from(Talk talk) {
-        return new TalkUserResponse(
-                talk.getId(),
-                talk.getTitle(),
-                talk.getYoutubeId(),
-                talk.getYear(),
-                talk.getTalkerBelonging(),
-                talk.getTalkerName(),
-                talk.getKeynoteSpeech(),
-                false,
-                (talk.getQuiz() != null)? QuizResponse.from(talk.getQuiz()) : new QuizResponse(),
-                talk.getCreatedAt(),
-                talk.getUpdatedAt()
-        );
+        return from(talk, false, false);
     }
 
-    public static TalkUserResponse from(Talk talk, boolean favorite) {
+    public static TalkUserResponse from(Talk talk, boolean favorite, boolean revealAnswer) {
         return new TalkUserResponse(
                 talk.getId(),
                 talk.getTitle(),
@@ -53,9 +41,13 @@ public class TalkUserResponse {
                 talk.getTalkerName(),
                 talk.getKeynoteSpeech(),
                 favorite,
-                (talk.getQuiz() != null)? QuizResponse.from(talk.getQuiz()) : new QuizResponse(),
+                (talk.getQuiz() != null)? QuizResponse.from(talk.getQuiz(), revealAnswer) : new QuizResponse(),
                 talk.getCreatedAt(),
                 talk.getUpdatedAt()
         );
+    }
+
+    public static TalkUserResponse from(Talk talk, boolean favorite) {
+        return from(talk, favorite, false);
     }
 }

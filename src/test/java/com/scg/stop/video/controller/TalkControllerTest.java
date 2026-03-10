@@ -393,7 +393,7 @@ public class TalkControllerTest extends AbstractControllerTest {
                         new QuizInfo("질문2", 0, List.of("선지1","선지2"))
                 )
         );
-        when(quizService.getQuiz(anyLong())).thenReturn(quizResponse);
+        when(quizService.getQuiz(anyLong(), any())).thenReturn(quizResponse);
 
         //when
         ResultActions result = mockMvc.perform(
