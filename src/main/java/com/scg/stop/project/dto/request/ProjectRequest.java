@@ -38,7 +38,7 @@ public class ProjectRequest {
     private final Integer year;
 
     @NotNull(message = "수상 여부를 입력해주세요")
-    private final AwardStatus awardStatus;
+    private final List<AwardStatus> awardStatuses;
 
     @Valid
     @NotNull(message = "멤버를 입력해주세요")
@@ -58,7 +58,7 @@ public class ProjectRequest {
             String teamName,
             String youtubeId,
             Integer year,
-            AwardStatus awardStatus,
+            List<AwardStatus> awardStatuses,
             List<MemberRequest> members,
             String url,
             String description
@@ -72,7 +72,7 @@ public class ProjectRequest {
         this.teamName = teamName;
         this.youtubeId = youtubeId;
         this.year = year;
-        this.awardStatus = awardStatus;
+        this.awardStatuses = awardStatuses;
         this.members = members;
         this.url = url;
         this.description = description;
@@ -89,9 +89,9 @@ public class ProjectRequest {
                 year,
                 url,
                 description,
-                awardStatus,
                 thumbnail,
                 poster,
+                new ArrayList<>(),
                 new ArrayList<>(),
                 new ArrayList<>(),
                 new ArrayList<>(),
@@ -104,6 +104,7 @@ public class ProjectRequest {
                 .toList();
 
         project.getMembers().addAll(memberEntities);
+        awardStatuses.forEach(project::addAwardStatus);
 
         return project;
     }

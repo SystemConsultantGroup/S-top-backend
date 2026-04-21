@@ -103,7 +103,12 @@ public class ProjectExcelService {
         // enum 변환
         ProjectType projectType = ProjectType.fromKoreanName(projectTypeStr);
         ProjectCategory projectCategory = ProjectCategory.fromKoreanName(projectCategoryStr);
-        AwardStatus awardStatus = AwardStatus.fromKoreanName(awardStatusStr);
+        List<AwardStatus> awardStatuses = Arrays.stream(awardStatusStr.split(","))
+                .map(String::strip)
+                .filter(value -> !value.isEmpty())
+                .map(AwardStatus::fromKoreanName)
+                .distinct()
+                .toList();
 
         // 교수 이름, 학생 이름 -> List<Member>
         List<MemberRequest> members = new ArrayList<>();
@@ -119,7 +124,7 @@ public class ProjectExcelService {
                 teamName,
                 youtubeId,
                 year,
-                awardStatus,
+                awardStatuses,
                 members,
                 url,
                 description);

@@ -51,10 +51,6 @@ public class Project extends BaseTimeEntity {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    @Column(nullable = false)
-    @Enumerated(value = STRING)
-    private AwardStatus awardStatus = AwardStatus.NONE;
-
     @OneToOne(fetch = LAZY, orphanRemoval = true)
     @JoinColumn(name = "thumbnail_id")
     private File thumbnail;
@@ -65,6 +61,9 @@ public class Project extends BaseTimeEntity {
 
     @OneToMany(fetch = LAZY, mappedBy = "project", cascade = CascadeType.ALL)
     private List<Member> members = new ArrayList<>();
+
+    @OneToMany(fetch = LAZY, mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProjectAwardStatus> awardStatuses = new ArrayList<>();
 
     @OneToMany(fetch = LAZY, mappedBy = "project", cascade = CascadeType.REMOVE)
     private List<Likes> likes = new ArrayList<>();
@@ -87,10 +86,13 @@ public class Project extends BaseTimeEntity {
         this.year = project.getYear();
         this.url = project.getUrl();
         this.description = project.getDescription();
-        this.awardStatus = project.getAwardStatus();
         this.thumbnail = project.getThumbnail();
         this.poster = project.getPoster();
         this.members = project.getMembers();
+        this.awardStatuses.clear();
+        project.getAwardStatuses().stream()
+                .map(ProjectAwardStatus::getAwardStatus)
+                .forEach(this::addAwardStatus);
     }
 
     public void addLikes(Likes likes) {
@@ -107,5 +109,9 @@ public class Project extends BaseTimeEntity {
 
     public void removeFavoriteProject(FavoriteProject favoriteProject) {
         this.favorites.remove(favoriteProject);
+    }
+
+    public void addAwardStatus(AwardStatus awardStatus) {
+        this.awardStatuses.add(ProjectAwardStatus.of(this, awardStatus));
     }
 }

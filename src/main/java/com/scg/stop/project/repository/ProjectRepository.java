@@ -42,9 +42,9 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
             Pageable pageable
     );
 
-    @Query("SELECT p FROM Project p " +
-            "WHERE p.year = :year " +
-            "AND p.awardStatus != com.scg.stop.project.domain.AwardStatus.NONE")
+    @Query("SELECT DISTINCT p FROM Project p " +
+            "JOIN p.awardStatuses pas " +
+            "WHERE p.year = :year")
    Page<Project> findAwardProjects(
            @Param("year") Integer year,
            Pageable pageable

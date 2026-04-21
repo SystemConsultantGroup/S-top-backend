@@ -9,7 +9,6 @@ import static com.scg.stop.global.exception.ExceptionCode.INVALID_AWARD_STATUS_K
 
 public enum AwardStatus {
 
-    NONE("없음"),
     FIRST("대상"),
     SECOND("최우수상"),
     THIRD("우수상"),
@@ -31,7 +30,10 @@ public enum AwardStatus {
 
     public static AwardStatus fromKoreanName(String koreanName) {
         if (!KOREAN_NAME_MAP.containsKey(koreanName)) {
-            throw new BadRequestException(INVALID_AWARD_STATUS_KOREAN_NAME, String.format("수상 내역의 한글 이름이 올바르지 않습니다 : %s", koreanName));
+            throw new BadRequestException(
+                    INVALID_AWARD_STATUS_KOREAN_NAME,
+                    String.format("수상 내역의 한글 이름이 올바르지 않습니다 : %s", koreanName)
+            );
         }
         return KOREAN_NAME_MAP.get(koreanName);
     }
