@@ -455,7 +455,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /projects/1/inquiry HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: company_access_token
-Content-Length: 102
+Content-Length: 105
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -508,7 +508,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 291
+Content-Length: 301
 
 {
   "id" : 1,
@@ -667,11 +667,11 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 819
+Content-Length: 856
 
 {
-  "totalPages" : 1,
   "totalElements" : 2,
+  "totalPages" : 1,
   "size" : 10,
   "content" : [ {
     "id" : 1,
@@ -690,6 +690,8 @@ Content-Length: 819
     "sorted" : false,
     "unsorted" : true
   },
+  "first" : true,
+  "last" : true,
   "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
@@ -700,11 +702,9 @@ Content-Length: 819
       "unsorted" : true
     },
     "offset" : 0,
-    "paged" : true,
-    "unpaged" : false
+    "unpaged" : false,
+    "paged" : true
   },
-  "first" : true,
-  "last" : true,
   "empty" : false
 }</code></pre>
 </div>
@@ -920,7 +920,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 291
+Content-Length: 301
 
 {
   "id" : 1,
@@ -1026,7 +1026,7 @@ Content-Length: 291
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /inquiries/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: company_access_token
-Content-Length: 122
+Content-Length: 125
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -1101,7 +1101,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 311
+Content-Length: 321
 
 {
   "id" : 1,
@@ -1260,7 +1260,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /inquiries/1/reply HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 76
+Content-Length: 79
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -1335,7 +1335,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 88
+Content-Length: 92
 
 {
   "id" : 1,
@@ -1435,7 +1435,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 88
+Content-Length: 92
 
 {
   "id" : 1,
@@ -1499,7 +1499,7 @@ Content-Length: 88
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /inquiries/1/reply HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 96
+Content-Length: 99
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -1574,7 +1574,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 108
+Content-Length: 112
 
 {
   "id" : 1,
@@ -1685,7 +1685,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2026-03-09 22:08:40 +0900
+Last updated 2026-04-21 17:14:42 +0900
 </div>
 </div>
 </body>
