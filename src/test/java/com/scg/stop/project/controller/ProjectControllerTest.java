@@ -184,7 +184,7 @@ public class ProjectControllerTest extends AbstractControllerTest {
                 new MemberRequest("교수 이름 1", Role.PROFESSOR)
         );
 
-        ProjectRequest projectRequest = new ProjectRequest(1L, 2L, "프로젝트 이름", ProjectType.STARTUP, ProjectCategory.BIG_DATA_ANALYSIS, "�� �̸�", "��Ʃ�� ID", 2021, List.of(), memberRequest, "������Ʈ URL", "������Ʈ ����");
+        ProjectRequest projectRequest = new ProjectRequest(1L, 2L, "프로젝트 이름", ProjectType.STARTUP, ProjectCategory.BIG_DATA_ANALYSIS, "팀 이름", "유튜브 ID", 2021, List.of(), memberRequest, "프로젝트 URL", "프로젝트 설명");
 
         ProjectDetailResponse response = new ProjectDetailResponse(
                 1L,
