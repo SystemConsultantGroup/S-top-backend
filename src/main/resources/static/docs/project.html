@@ -469,7 +469,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1840
+Content-Length: 1826
 
 {
   "totalElements" : 2,
@@ -489,7 +489,7 @@ Content-Length: 1840
     "professorNames" : [ "교수 이름 1" ],
     "projectType" : "STARTUP",
     "projectCategory" : "BIG_DATA_ANALYSIS",
-    "awardStatuses" : [ "FIRST" ],
+    "awards" : [ "FIRST" ],
     "year" : 2023,
     "likeCount" : 100,
     "like" : false,
@@ -510,7 +510,7 @@ Content-Length: 1840
     "professorNames" : [ "교수 이름 2" ],
     "projectType" : "LAB",
     "projectCategory" : "AI_MACHINE_LEARNING",
-    "awardStatuses" : [ "SECOND" ],
+    "awards" : [ "SECOND" ],
     "year" : 2023,
     "likeCount" : 100,
     "like" : false,
@@ -524,9 +524,9 @@ Content-Length: 1840
     "sorted" : false,
     "unsorted" : true
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -689,7 +689,7 @@ Content-Length: 1840
 <td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 카테고리: COMPUTER_VISION, SYSTEM_NETWORK, WEB_APPLICATION, SECURITY_SOFTWARE_ENGINEERING, NATURAL_LANGUAGE_PROCESSING, BIG_DATA_ANALYSIS, AI_MACHINE_LEARNING, INTERACTION_AUGMENTED_REALITY</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].awardStatuses</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].awards</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">수상 목록: FIRST, SECOND, THIRD, FOURTH, FIFTH</p></td>
@@ -867,7 +867,7 @@ Content-Length: 1840
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /projects HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 588
+Content-Length: 549
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -877,10 +877,10 @@ Cookie: refresh-token=refresh_token
   "projectName" : "프로젝트 이름",
   "projectType" : "STARTUP",
   "projectCategory" : "BIG_DATA_ANALYSIS",
-  "teamName" : "�� �̸�",
-  "youtubeId" : "��Ʃ�� ID",
+  "teamName" : "팀 이름",
+  "youtubeId" : "유튜브 ID",
   "year" : 2021,
-  "awardStatuses" : [ ],
+  "awards" : [ ],
   "members" : [ {
     "name" : "학생 이름 1",
     "role" : "STUDENT"
@@ -891,8 +891,8 @@ Cookie: refresh-token=refresh_token
     "name" : "교수 이름 1",
     "role" : "PROFESSOR"
   } ],
-  "url" : "������Ʈ URL",
-  "description" : "������Ʈ ����"
+  "url" : "프로젝트 URL",
+  "description" : "프로젝트 설명"
 }</code></pre>
 </div>
 </div>
@@ -906,7 +906,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1498
+Content-Length: 1491
 
 {
   "id" : 1,
@@ -928,7 +928,7 @@ Content-Length: 1498
   "teamName" : "팀 이름",
   "youtubeId" : "유튜브 ID",
   "year" : 2024,
-  "awardStatuses" : [ "FIRST" ],
+  "awards" : [ "FIRST" ],
   "studentNames" : [ "학생 이름 1", "학생 이름 2" ],
   "professorNames" : [ "교수 이름 1" ],
   "likeCount" : 0,
@@ -1032,7 +1032,7 @@ Content-Length: 1498
 <td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 년도</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>awardStatuses</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>awards</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">수상 목록: FIRST, SECOND, THIRD, FOURTH, FIFTH</p></td>
@@ -1191,7 +1191,7 @@ Content-Length: 1498
 <td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 년도</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>awardStatuses</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>awards</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">수상 목록: FIRST, SECOND, THIRD, FOURTH, FIFTH</p></td>
@@ -1315,12 +1315,12 @@ Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
 Content-Disposition: form-data; name=thumbnails; filename=thumbnails.json
 Content-Type: application/json
 
-[{"id":1,"uuid":"da46779e-81df-41ea-a29f-16544a7fc230","name":"썸네일1.png","mimeType":"image/png","createdAt":"2024-01-01T00:00:00","updatedAt":"2024-01-01T00:00:00"},{"id":1,"uuid":"441d9692-5cd1-4150-91f5-1d7d7a4f6f41","name":"썸네일2.png","mimeType":"image/png","createdAt":"2024-01-01T00:00:00","updatedAt":"2024-01-01T00:00:00"}]
+[{"id":1,"uuid":"2aca5e3f-6010-482d-90a9-0bc961af4228","name":"썸네일1.png","mimeType":"image/png","createdAt":"2024-01-01T00:00:00","updatedAt":"2024-01-01T00:00:00"},{"id":1,"uuid":"7f4189d8-2276-43f2-8ccc-a2b839294ac6","name":"썸네일2.png","mimeType":"image/png","createdAt":"2024-01-01T00:00:00","updatedAt":"2024-01-01T00:00:00"}]
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=posters; filename=thumbnails.json
 Content-Type: application/json
 
-[{"id":1,"uuid":"b54e9c13-915e-47c2-af83-72c5d4a6d70e","name":"포스터1.png","mimeType":"image/png","createdAt":"2024-01-01T00:00:00","updatedAt":"2024-01-01T00:00:00"},{"id":1,"uuid":"586bc25d-e829-47df-9d71-aae9c722b22a","name":"포스터2.png","mimeType":"image/png","createdAt":"2024-01-01T00:00:00","updatedAt":"2024-01-01T00:00:00"}]
+[{"id":1,"uuid":"263aacd8-5226-4682-bf76-6a28813692fa","name":"포스터1.png","mimeType":"image/png","createdAt":"2024-01-01T00:00:00","updatedAt":"2024-01-01T00:00:00"},{"id":1,"uuid":"ee01f637-2f25-4d48-bfaa-9978af78a3b0","name":"포스터2.png","mimeType":"image/png","createdAt":"2024-01-01T00:00:00","updatedAt":"2024-01-01T00:00:00"}]
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
 </div>
 </div>
@@ -1426,7 +1426,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1498
+Content-Length: 1491
 
 {
   "id" : 1,
@@ -1448,7 +1448,7 @@ Content-Length: 1498
   "teamName" : "팀 이름",
   "youtubeId" : "유튜브 ID",
   "year" : 2024,
-  "awardStatuses" : [ "FIRST" ],
+  "awards" : [ "FIRST" ],
   "studentNames" : [ "학생 이름 1", "학생 이름 2" ],
   "professorNames" : [ "교수 이름 1" ],
   "likeCount" : 0,
@@ -1628,7 +1628,7 @@ Content-Length: 1498
 <td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 년도</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>awardStatuses</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>awards</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">수상 목록: FIRST, SECOND, THIRD, FOURTH, FIFTH</p></td>
@@ -1740,7 +1740,7 @@ Content-Length: 1498
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /projects/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: admin_access_token
-Content-Length: 558
+Content-Length: 551
 Host: localhost:8080
 Cookie: refresh-token=refresh_token
 
@@ -1753,7 +1753,7 @@ Cookie: refresh-token=refresh_token
   "teamName" : "팀 이름",
   "youtubeId" : "유튜브 ID",
   "year" : 2024,
-  "awardStatuses" : [ "FIRST" ],
+  "awards" : [ "FIRST" ],
   "members" : [ {
     "name" : "학생 이름 3",
     "role" : "STUDENT"
@@ -1779,7 +1779,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1494
+Content-Length: 1487
 
 {
   "id" : 1,
@@ -1801,7 +1801,7 @@ Content-Length: 1494
   "teamName" : "팀 이름",
   "youtubeId" : "유튜브 ID",
   "year" : 2024,
-  "awardStatuses" : [ "FIRST" ],
+  "awards" : [ "FIRST" ],
   "studentNames" : [ "학생 이름 3", "학생 이름 4" ],
   "professorNames" : [ "교수 이름 2" ],
   "likeCount" : 100,
@@ -1927,7 +1927,7 @@ Content-Length: 1494
 <td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 년도</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>awardStatuses</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>awards</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">수상 목록: FIRST, SECOND, THIRD, FOURTH, FIFTH</p></td>
@@ -2086,7 +2086,7 @@ Content-Length: 1494
 <td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 년도</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>awardStatuses</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>awards</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">수상 목록: FIRST, SECOND, THIRD, FOURTH, FIFTH</p></td>
@@ -2694,7 +2694,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1840
+Content-Length: 1826
 
 {
   "totalElements" : 2,
@@ -2714,7 +2714,7 @@ Content-Length: 1840
     "professorNames" : [ "교수 이름 1" ],
     "projectType" : "STARTUP",
     "projectCategory" : "BIG_DATA_ANALYSIS",
-    "awardStatuses" : [ "FIRST" ],
+    "awards" : [ "FIRST" ],
     "year" : 2023,
     "likeCount" : 100,
     "like" : false,
@@ -2735,7 +2735,7 @@ Content-Length: 1840
     "professorNames" : [ "교수 이름 2" ],
     "projectType" : "LAB",
     "projectCategory" : "AI_MACHINE_LEARNING",
-    "awardStatuses" : [ "SECOND" ],
+    "awards" : [ "SECOND" ],
     "year" : 2023,
     "likeCount" : 100,
     "like" : false,
@@ -2749,9 +2749,9 @@ Content-Length: 1840
     "sorted" : false,
     "unsorted" : true
   },
+  "numberOfElements" : 2,
   "first" : true,
   "last" : true,
-  "numberOfElements" : 2,
   "pageable" : {
     "pageNumber" : 0,
     "pageSize" : 10,
@@ -2899,7 +2899,7 @@ Content-Length: 1840
 <td class="tableblock halign-left valign-top"><p class="tableblock">프로젝트 카테고리: COMPUTER_VISION, SYSTEM_NETWORK, WEB_APPLICATION, SECURITY_SOFTWARE_ENGINEERING, NATURAL_LANGUAGE_PROCESSING, BIG_DATA_ANALYSIS, AI_MACHINE_LEARNING, INTERACTION_AUGMENTED_REALITY</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].awardStatuses</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content[].awards</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">수상 목록: FIRST, SECOND, THIRD, FOURTH, FIFTH</p></td>

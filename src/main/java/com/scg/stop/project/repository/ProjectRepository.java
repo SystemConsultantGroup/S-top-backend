@@ -43,7 +43,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     );
 
     @Query("SELECT DISTINCT p FROM Project p " +
-            "JOIN p.awardStatuses pas " +
+            "JOIN p.awards pas " +
             "WHERE p.year = :year")
    Page<Project> findAwardProjects(
            @Param("year") Integer year,

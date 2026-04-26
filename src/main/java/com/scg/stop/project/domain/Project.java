@@ -63,7 +63,7 @@ public class Project extends BaseTimeEntity {
     private List<Member> members = new ArrayList<>();
 
     @OneToMany(fetch = LAZY, mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProjectAwardStatus> awardStatuses = new ArrayList<>();
+    private List<ProjectAward> awards = new ArrayList<>();
 
     @OneToMany(fetch = LAZY, mappedBy = "project", cascade = CascadeType.REMOVE)
     private List<Likes> likes = new ArrayList<>();
@@ -89,10 +89,10 @@ public class Project extends BaseTimeEntity {
         this.thumbnail = project.getThumbnail();
         this.poster = project.getPoster();
         this.members = project.getMembers();
-        this.awardStatuses.clear();
-        project.getAwardStatuses().stream()
-                .map(ProjectAwardStatus::getAwardStatus)
-                .forEach(this::addAwardStatus);
+        this.awards.clear();
+        project.getAwards().stream()
+                .map(ProjectAward::getAward)
+                .forEach(this::addAward);
     }
 
     public void addLikes(Likes likes) {
@@ -111,7 +111,7 @@ public class Project extends BaseTimeEntity {
         this.favorites.remove(favoriteProject);
     }
 
-    public void addAwardStatus(AwardStatus awardStatus) {
-        this.awardStatuses.add(ProjectAwardStatus.of(this, awardStatus));
+    public void addAward(Award award) {
+        this.awards.add(ProjectAward.of(this, award));
     }
 }

@@ -21,7 +21,7 @@ public class ProjectDetailResponse {
     private String teamName;
     private String youtubeId;
     private Integer year;
-    private List<AwardStatus> awardStatuses;
+    private List<Award> awards;
     private List<String> studentNames;
     private List<String> professorNames;
     private Integer likeCount;
@@ -59,8 +59,8 @@ public class ProjectDetailResponse {
                 project.getTeam(),
                 project.getYoutubeId(),
                 project.getYear(),
-                project.getAwardStatuses().stream()
-                        .map(ProjectAwardStatus::getAwardStatus)
+                project.getAwards().stream()
+                        .map(ProjectAward::getAward)
                         .collect(Collectors.toList()),
                 studentNames,
                 professorNames,

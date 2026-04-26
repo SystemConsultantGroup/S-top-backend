@@ -7,7 +7,7 @@ import java.util.Map;
 
 import static com.scg.stop.global.exception.ExceptionCode.INVALID_AWARD_STATUS_KOREAN_NAME;
 
-public enum AwardStatus {
+public enum Award {
 
     FIRST("대상"),
     SECOND("최우수상"),
@@ -15,20 +15,20 @@ public enum AwardStatus {
     FOURTH("장려상"),
     FIFTH("인기상");
 
-    private static final Map<String, AwardStatus> KOREAN_NAME_MAP = new HashMap<>();
+    private static final Map<String, Award> KOREAN_NAME_MAP = new HashMap<>();
     private final String koreanName;
 
     static {
-        for (AwardStatus awardStatus : AwardStatus.values()) {
-            KOREAN_NAME_MAP.put(awardStatus.koreanName, awardStatus);
+        for (Award award : Award.values()) {
+            KOREAN_NAME_MAP.put(award.koreanName, award);
         }
     }
 
-    AwardStatus(String koreanName) {
+    Award(String koreanName) {
         this.koreanName = koreanName;
     }
 
-    public static AwardStatus fromKoreanName(String koreanName) {
+    public static Award fromKoreanName(String koreanName) {
         if (!KOREAN_NAME_MAP.containsKey(koreanName)) {
             throw new BadRequestException(
                     INVALID_AWARD_STATUS_KOREAN_NAME,

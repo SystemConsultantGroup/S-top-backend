@@ -2,7 +2,7 @@ package com.scg.stop.project.service;
 
 import com.scg.stop.global.exception.BadRequestException;
 import com.scg.stop.global.exception.InternalServerErrorException;
-import com.scg.stop.project.domain.AwardStatus;
+import com.scg.stop.project.domain.Award;
 import com.scg.stop.project.domain.ProjectCategory;
 import com.scg.stop.project.domain.ProjectType;
 import com.scg.stop.project.domain.Role;
@@ -84,7 +84,7 @@ public class ProjectExcelService {
         String url = row.getCell(headerMap.get("웹사이트")).getStringCellValue().strip();
         String description = row.getCell(headerMap.get("간략 설명")).getStringCellValue().strip();
         Integer year = validateAndParseNumericCellValue(row.getCell(headerMap.get("프로젝트 년도")));
-        String awardStatusStr = row.getCell(headerMap.get("수상 내역")).getStringCellValue().strip();
+        String awardStr = row.getCell(headerMap.get("수상 내역")).getStringCellValue().strip();
         String thumbnailImageName = row.getCell(headerMap.get("썸네일 이미지")).getStringCellValue().strip();
         String posterImageName = row.getCell(headerMap.get("포스터 이미지")).getStringCellValue().strip();
 
@@ -103,10 +103,10 @@ public class ProjectExcelService {
         // enum 변환
         ProjectType projectType = ProjectType.fromKoreanName(projectTypeStr);
         ProjectCategory projectCategory = ProjectCategory.fromKoreanName(projectCategoryStr);
-        List<AwardStatus> awardStatuses = Arrays.stream(awardStatusStr.split(","))
+        List<Award> awards = Arrays.stream(awardStr.split(","))
                 .map(String::strip)
                 .filter(value -> !value.isEmpty())
-                .map(AwardStatus::fromKoreanName)
+                .map(Award::fromKoreanName)
                 .distinct()
                 .toList();
 
@@ -124,7 +124,7 @@ public class ProjectExcelService {
                 teamName,
                 youtubeId,
                 year,
-                awardStatuses,
+                awards,
                 members,
                 url,
                 description);

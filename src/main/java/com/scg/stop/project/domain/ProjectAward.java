@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor
-public class ProjectAwardStatus extends BaseTimeEntity {
+public class ProjectAward extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -33,9 +33,9 @@ public class ProjectAwardStatus extends BaseTimeEntity {
 
     @Column(nullable = false)
     @Enumerated(value = STRING)
-    private AwardStatus awardStatus;
+    private Award award;
 
-    public static ProjectAwardStatus of(Project project, AwardStatus awardStatus) {
-        return new ProjectAwardStatus(null, project, awardStatus);
+    public static ProjectAward of(Project project, Award award) {
+        return new ProjectAward(null, project, award);
     }
 }
