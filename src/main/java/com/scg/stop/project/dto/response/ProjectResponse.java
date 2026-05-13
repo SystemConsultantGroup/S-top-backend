@@ -19,7 +19,7 @@ public class ProjectResponse {
     private List<String> professorNames;
     private ProjectType projectType;
     private ProjectCategory projectCategory;
-    private AwardStatus awardStatus;
+    private List<Award> awards;
     private Integer year;
     private Integer likeCount;
     private Boolean like;
@@ -50,7 +50,9 @@ public class ProjectResponse {
                 professorNames,
                 project.getType(),
                 project.getCategory(),
-                project.getAwardStatus(),
+                project.getAwards().stream()
+                        .map(ProjectAward::getAward)
+                        .collect(Collectors.toList()),
                 project.getYear(),
                 project.getLikes().size(),
                 like,
